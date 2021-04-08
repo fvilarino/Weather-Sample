@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Weather Sample</string>
+    <string name="search_city_hint">City</string>
+    <string name="city_result_label">City:</string>
+    <string name="country_result_label">Country:</string>
+    <string name="coordinates_result_label">Coordinates:</string>
+    <string name="coordinates_lat_lon">Lat: %1$.2f, Lon: %2$.2f</string>
+</resources>
