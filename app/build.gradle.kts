@@ -68,10 +68,6 @@ dependencies {
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     kapt("androidx.hilt:hilt-compiler:1.0.0-beta01")
 
-    implementation("com.airbnb.android:epoxy:4.4.4")
-    implementation("com.airbnb.android:epoxy-databinding:4.4.4")
-    kapt("com.airbnb.android:epoxy-processor:4.4.4")
-
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
