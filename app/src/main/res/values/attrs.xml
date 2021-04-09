@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TwoOptionsView">
+        <attr name="selectedOption" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+        <attr name="leftLabel" format="reference" />
+        <attr name="rightLabel" format="reference" />
+    </declare-styleable>
+</resources>

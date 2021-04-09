@@ -9,4 +9,6 @@
     <string name="weather">Weather</string>
     <string name="weather_city_label">City</string>
     <string name="weather_city_name">%1$s, %2$s</string>
+    <string name="today_weather_button_label">Today</string>
+    <string name="forecast_weather_button_label">Forecast</string>
 </resources>

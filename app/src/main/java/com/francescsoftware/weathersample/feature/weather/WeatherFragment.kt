@@ -46,6 +46,10 @@ class WeatherFragment : Fragment(), MviLifecycleView<WeatherState, WeatherEvent>
         super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(viewModel)
         viewModel.onIntent(WeatherIntent.CityParsed(args.city))
+        binding.weatherPager.adapter = WeatherPagerAdapter(this)
+        binding.weatherToggle.setCallback { options ->
+            binding.weatherPager.currentItem = WeatherFragments.fromToggleOption(options).ordinal
+        }
     }
 
     override fun onState(state: WeatherState) {
