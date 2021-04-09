@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.francescsoftware.weathersample.R
 import com.francescsoftware.weathersample.databinding.FragmentCityBinding
 import com.francescsoftware.weathersample.feature.common.mvi.MviLifecycleObserver
 import com.francescsoftware.weathersample.feature.common.mvi.MviLifecycleView
 import com.francescsoftware.weathersample.feature.common.recyclerview.VerticalSpaceItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
 
@@ -42,13 +44,25 @@ class CityFragment : Fragment(), MviLifecycleView<CityState, CityEvent> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         lifecycle.addObserver(viewModel)
         setupList()
-        binding.cityInput.doAfterTextChanged { text ->
-            viewModel.onIntent(CityMviIntent.PrefixUpdated(text?.toString().orEmpty()))
+        lifecycleScope.launchWhenResumed {
+            binding.cityInput.doAfterTextChanged { text ->
+                viewModel.onIntent(CityMviIntent.PrefixUpdated(text?.toString().orEmpty()))
+            }
         }
     }
 
     override fun onState(state: CityState) {
         binding.state = state
+    }
+
+    override fun onEvent(event: CityEvent) {
+        when (event) {
+            is CityEvent.ShowSnackBar -> Snackbar.make(
+                binding.root,
+                event.message,
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun setupList() {

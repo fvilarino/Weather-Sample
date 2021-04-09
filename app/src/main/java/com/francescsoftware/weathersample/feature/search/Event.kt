@@ -17,7 +17,9 @@ data class CityState(
     }
 }
 
-sealed class CityEvent : Event
+sealed class CityEvent : Event {
+    data class ShowSnackBar(val message: CharSequence) : CityEvent()
+}
 
 sealed class CityMviIntent : MviIntent {
     data class PrefixUpdated(val prefix: String) : CityMviIntent()

@@ -7,5 +7,21 @@
     <fragment
         android:id="@+id/cityFragment"
         android:name="com.francescsoftware.weathersample.feature.search.CityFragment"
-        android:label="CityFragment" />
+        android:label="@string/app_name" >
+        <action
+            android:id="@+id/action_cityFragment_to_weatherFragment"
+            app:destination="@id/weatherFragment"
+            app:enterAnim="@anim/fragment_enter_from_right"
+            app:exitAnim="@anim/fragment_exit_to_left"
+            app:popEnterAnim="@anim/fragment_enter_from_left"
+            app:popExitAnim="@anim/fragment_exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.francescsoftware.weathersample.feature.weather.WeatherFragment"
+        android:label="@string/weather" >
+        <argument
+            android:name="city"
+            app:argType="com.francescsoftware.weathersample.feature.weather.SelectedCity" />
+    </fragment>
 </navigation>

@@ -4,4 +4,5 @@
     <dimen name="margin_double">16dp</dimen>
     <dimen name="margin_triple">24dp</dimen>
     <dimen name="margin_quad">32dp</dimen>
+    <dimen name="app_bar_elevation">4dp</dimen>
 </resources>

@@ -8,11 +8,14 @@ import com.francescsoftware.weathersample.business.interactor.city.City
 import com.francescsoftware.weathersample.business.interactor.city.GetCitiesInteractor
 import com.francescsoftware.weathersample.feature.common.lookup.StringLookup
 import com.francescsoftware.weathersample.feature.common.mvi.MviViewModel
+import com.francescsoftware.weathersample.feature.common.navigator.Navigator
+import com.francescsoftware.weathersample.feature.weather.SelectedCity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -27,6 +30,7 @@ private val DebounceMillis = 400L.toDuration(DurationUnit.MILLISECONDS)
 @HiltViewModel
 class CityViewModel @Inject constructor(
     private val getCitiesInteractor: GetCitiesInteractor,
+    private val navigator: Navigator,
     private val stringLookup: StringLookup,
 ) :
     MviViewModel<CityState, CityEvent, CityMviIntent, CityReduceAction>(
@@ -38,11 +42,19 @@ class CityViewModel @Inject constructor(
 
     private val cityClickCallback = { city: CityResultModel ->
         Timber.tag(TAG).d("Clicked on city [$city]")
+        navigator.cityToWeather(
+            SelectedCity(
+                name = city.name.toString(),
+                country = city.country.toString(),
+                countryCode = city.countryCode,
+            )
+        )
     }
 
     override fun onStart(owner: LifecycleOwner) {
         searchJob = viewModelScope.launch {
             searchFlow
+                .distinctUntilChanged()
                 .debounce(DebounceMillis)
                 .map { prefix -> getCitiesInteractor.execute(prefix) }
                 .collectLatest { cities ->
@@ -51,7 +63,14 @@ class CityViewModel @Inject constructor(
                             val cityModels = list.map { city -> city.toCityResultModel() }
                             handle(CityReduceAction.Loaded(cities = cityModels))
                         },
-                        onFailure = { handle(CityReduceAction.LoadError) }
+                        onFailure = {
+                            handle(CityReduceAction.LoadError)
+                            onEvent(
+                                CityEvent.ShowSnackBar(
+                                    stringLookup.getString(R.string.city_error_loading)
+                                )
+                            )
+                        }
                     )
                 }
         }
