@@ -3,9 +3,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 rootProject.name = "Weather Sample"
 include(":app")
- 
+include(":business:interactor")
+include(":core:repository")
+include(":presentation:feature")
+include(":presentation:shared")

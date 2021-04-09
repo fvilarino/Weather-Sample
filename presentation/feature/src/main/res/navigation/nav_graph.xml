@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cityFragment">
+
+    <fragment
+        android:id="@+id/cityFragment"
+        android:name="com.francescsoftware.weathersample.presentation.feature.search.CityFragment"
+        android:label="@string/app_name" >
+        <action
+            android:id="@+id/action_cityFragment_to_weatherFragment"
+            app:destination="@id/weatherFragment"
+            app:enterAnim="@anim/fragment_enter_from_right"
+            app:exitAnim="@anim/fragment_exit_to_left"
+            app:popEnterAnim="@anim/fragment_enter_from_left"
+            app:popExitAnim="@anim/fragment_exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.francescsoftware.weathersample.presentation.feature.weather.WeatherFragment"
+        android:label="@string/weather" >
+        <argument
+            android:name="city"
+            app:argType="com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity" />
+    </fragment>
+</navigation>

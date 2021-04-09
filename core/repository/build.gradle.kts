@@ -1,8 +1,9 @@
 import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("kotlin-android")
+    id("kotlinx-serialization")
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
 }
@@ -11,16 +12,24 @@ android {
     compileSdk = 30
 
     defaultConfig {
-        applicationId = "com.francescsoftware.weathersample"
         minSdk = 23
         targetSdk = 30
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
+        all {
+            buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"https://wft-geo-db.p.rapidapi.com/\"")
+            buildConfigField("String", "WEATHER_SERVICE_BASE_URL", "\"https://community-open-weather-map.p.rapidapi.com/\"")
+            buildConfigField("String", "RAPID_SERVICE_KEY", "\"your key here\"")
+            buildConfigField("String", "RAPID_SERVICE_CITY_HOST", "\"your host here\"")
+            buildConfigField("String", "RAPID_SERVICE_WEATHER_HOST", "\"your host here\"")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -29,46 +38,22 @@ android {
             )
         }
     }
-    buildFeatures {
-        dataBinding = true
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-    kapt {
-        javacOptions {
-            option("-Xmaxerrs", 1000)
-        }
+        freeCompilerArgs = freeCompilerArgs + "-Xallow-result-return-type" + "-Xuse-experimental=kotlin.time.ExperimentalTime"
     }
 }
 
 dependencies {
-    implementation(project(":business:interactor"))
-    implementation(project(":core:repository"))
-    implementation(project(":presentation:feature"))
-    implementation(project(":presentation:shared"))
 
     implementation("androidx.core:core-ktx:1.3.2")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.3.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.3.1")
-
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
 
     implementation("com.google.dagger:hilt-android:2.33-beta")
     kapt("com.google.dagger:hilt-android-compiler:2.33-beta")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt("androidx.hilt:hilt-compiler:1.0.0-beta01")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
