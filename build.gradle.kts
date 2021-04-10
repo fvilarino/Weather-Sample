@@ -1,5 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    val minSdkVersion by extra { 23 }
+    val targetSdkVersion by extra { 30 }
+    val compileSdkVersion by extra { 30 }
+
     val kotlinVersion by extra { "1.4.32" }
     val cityServiceBaseUrl by extra { "https://wft-geo-db.p.rapidapi.com/" }
     val weatherServiceBaseUrl by extra { "https://community-open-weather-map.p.rapidapi.com/" }

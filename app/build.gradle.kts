@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = rootProject.extra.get("compileSdkVersion") as Int
 
     defaultConfig {
         applicationId = "com.francescsoftware.weathersample"
-        minSdk = 23
-        targetSdk = 30
+        minSdk = rootProject.extra.get("minSdkVersion") as Int
+        targetSdk = rootProject.extra.get("targetSdkVersion") as Int
         versionCode = 1
         versionName = "1.0.0"
 
