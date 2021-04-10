@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.WeatherSample" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    <style name="AppTheme.WeatherSample">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,6 +12,7 @@
         <item name="colorSurface">@color/grey_900</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <item name="textAppearanceOverline">@style/TextAppearance.Overline</item>
     </style>
 </resources>

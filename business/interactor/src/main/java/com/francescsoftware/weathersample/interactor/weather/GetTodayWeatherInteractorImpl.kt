@@ -63,7 +63,7 @@ class GetTodayWeatherInteractorImpl @Inject constructor(
             pressure != null
 
     private val Wind.isValid: Boolean
-        get() = deg != null && speed != null && gust != null
+        get() = deg != null && speed != null
 
     private val Clouds.isValid: Boolean
         get() = all != null

@@ -11,5 +11,6 @@ interface WeatherService {
         @Query("q") cityAndCountry: String? = null,
         @Query("lat") latitude: Double? = null,
         @Query("lon") longitude: Double? = null,
+        @Query("units") units: String = "metric",
     ): Response<TodayWeatherResponse>
 }

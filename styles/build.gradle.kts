@@ -1,18 +1,17 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
+    id(Depends.ModulePlugins.libraryPlugin)
+    id(Depends.ModulePlugins.kotlinPlugin)
 }
 
 android {
-    compileSdk = rootProject.extra.get("compileSdkVersion") as Int
+    compileSdkVersion(Versions.BuildConfig.compileSdkVersion)
 
     defaultConfig {
-        minSdk = rootProject.extra.get("minSdkVersion") as Int
-        targetSdk = rootProject.extra.get("targetSdkVersion") as Int
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion(Versions.BuildConfig.minSdkVersion)
+        targetSdkVersion(Versions.BuildConfig.targetSdkVersion)
+        versionCode = Versions.BuildConfig.appVersionCode
+        versionName = Versions.BuildConfig.appVersionName
+        testInstrumentationRunner = Depends.TestLibraries.testRunner
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -30,6 +29,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = Config.Compiler.jvmTarget
     }
 }

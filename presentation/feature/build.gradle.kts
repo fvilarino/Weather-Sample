@@ -1,24 +1,21 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-parcelize")
-    id("androidx.navigation.safeargs.kotlin")
-    id("dagger.hilt.android.plugin")
-    kotlin("kapt")
+    id(Depends.ModulePlugins.libraryPlugin)
+    id(Depends.ModulePlugins.kotlinPlugin)
+    id(Depends.ModulePlugins.daggerHiltPlugin)
+    id(Depends.ModulePlugins.kotlinParcelizePlugin)
+    id(Depends.ModulePlugins.safeArgsPlugin)
+    kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
 android {
-    compileSdk = rootProject.extra.get("compileSdkVersion") as Int
+    compileSdkVersion(Versions.BuildConfig.compileSdkVersion)
 
     defaultConfig {
-        minSdk = rootProject.extra.get("minSdkVersion") as Int
-        targetSdk = rootProject.extra.get("targetSdkVersion") as Int
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion(Versions.BuildConfig.minSdkVersion)
+        targetSdkVersion(Versions.BuildConfig.targetSdkVersion)
+        versionCode = Versions.BuildConfig.appVersionCode
+        versionName = Versions.BuildConfig.appVersionName
+        testInstrumentationRunner = Depends.TestLibraries.testRunner
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -39,8 +36,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs = freeCompilerArgs + "-Xallow-result-return-type" + "-Xuse-experimental=kotlin.time.ExperimentalTime"
+        jvmTarget = Config.Compiler.jvmTarget
+        Config.Compiler.freeCompilerArgs.forEach { arg ->
+            freeCompilerArgs = freeCompilerArgs + arg
+        }
     }
 }
 
@@ -50,27 +49,28 @@ dependencies {
     implementation(project(":presentation:shared"))
     implementation(project(":styles"))
 
-    implementation("androidx.core:core-ktx:1.3.2")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.3.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+    implementation(Depends.Android.ktx)
+    implementation(Depends.Android.appCompat)
+    implementation(Depends.Material.material)
+    implementation(Depends.Android.constraintLayout)
+    implementation(Depends.Android.navigationFragment)
+    implementation(Depends.Android.navigationUi)
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
+    implementation(Depends.Android.archLifeCycleViewModel)
+    implementation(Depends.Android.lifecycleCommon)
 
-    implementation("com.google.dagger:hilt-android:2.33-beta")
-    kapt("com.google.dagger:hilt-android-compiler:2.33-beta")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt("androidx.hilt:hilt-compiler:1.0.0-beta01")
+    implementation(Depends.Kotlin.kotlinStdLib)
+    implementation(Depends.Kotlin.coroutinesCore)
+    implementation(Depends.Kotlin.coroutinesAndroid)
 
-    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation(Depends.Hilt.daggerHiltAndroid)
+    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
+    implementation(Depends.Hilt.androidxHiltLifecycleViewModel)
+    kapt(Depends.Hilt.androidxHiltCompiler)
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    implementation(Depends.Logging.timber)
+
+    testImplementation(Depends.TestLibraries.jUnit)
+    androidTestImplementation(Depends.TestLibraries.androidJUnit)
+    androidTestImplementation(Depends.TestLibraries.espressoCore)
 }

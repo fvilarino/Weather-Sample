@@ -4,6 +4,8 @@ import android.content.Context
 import com.francescsoftware.weathersample.repository.city.CityRepository
 import com.francescsoftware.weathersample.repository.city.CityRepositoryImpl
 import com.francescsoftware.weathersample.repository.city.CityService
+import com.francescsoftware.weathersample.repository.weather.WeatherRepository
+import com.francescsoftware.weathersample.repository.weather.WeatherRepositoryImpl
 import com.francescsoftware.weathersample.repository.weather.WeatherService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
@@ -74,39 +76,38 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providedOkHttpClient(
+    fun providedOkHttpClientBuilder(
         cache: Cache,
         @HeaderLoggingInterceptor headerLoggingInterceptor: Interceptor,
-        @CityAuthorizationInterceptor authorizationInterceptor: Interceptor,
-    ): OkHttpClient = OkHttpClient
+    ): OkHttpClient.Builder = OkHttpClient
         .Builder()
         .cache(cache)
         .connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .addInterceptor(headerLoggingInterceptor)
-        .addInterceptor(authorizationInterceptor)
-        .build()
 
     @Provides
     @Singleton
     @CityRetrofit
     fun provideCityRetrofit(
-        okHttpClient: OkHttpClient,
+        okHttpClientBuilder: OkHttpClient.Builder,
+        @CityAuthorizationInterceptor interceptor: Interceptor,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.CITY_SERVICE_BASE_URL)
         .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(MEDIA_TYPE))
-        .client(okHttpClient)
+        .client(okHttpClientBuilder.addInterceptor(interceptor).build())
         .build()
 
     @Provides
     @Singleton
     @WeatherRetrofit
     fun provideWeatherRetrofit(
-        okHttpClient: OkHttpClient,
+        okHttpClientBuilder: OkHttpClient.Builder,
+        @WeatherAuthorizationInterceptor interceptor: Interceptor,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.WEATHER_SERVICE_BASE_URL)
         .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(MEDIA_TYPE))
-        .client(okHttpClient)
+        .client(okHttpClientBuilder.addInterceptor(interceptor).build())
         .build()
 
     @Provides
@@ -127,7 +128,15 @@ object RepositoryModule {
 abstract class RepositoryModuleBinds {
     @Binds
     @Singleton
-    abstract fun bindCityRepository(cityRepositoryImpl: CityRepositoryImpl): CityRepository
+    abstract fun bindCityRepository(
+        cityRepositoryImpl: CityRepositoryImpl
+    ): CityRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindWeatherRepository(
+        weatherRepositoryImpl: WeatherRepositoryImpl
+    ): WeatherRepository
 }
 
 @Qualifier

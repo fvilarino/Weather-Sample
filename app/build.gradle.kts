@@ -1,23 +1,20 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("dagger.hilt.android.plugin")
-    kotlin("kapt")
+    id(Depends.ModulePlugins.applicationPlugin)
+    id(Depends.ModulePlugins.kotlinPlugin)
+    id(Depends.ModulePlugins.daggerHiltPlugin)
+    kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
 android {
-    compileSdk = rootProject.extra.get("compileSdkVersion") as Int
+    compileSdkVersion(Versions.BuildConfig.compileSdkVersion)
 
     defaultConfig {
-        applicationId = "com.francescsoftware.weathersample"
-        minSdk = rootProject.extra.get("minSdkVersion") as Int
-        targetSdk = rootProject.extra.get("targetSdkVersion") as Int
-        versionCode = 1
-        versionName = "1.0.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = Config.Application.applicationId
+        minSdkVersion(Versions.BuildConfig.minSdkVersion)
+        targetSdkVersion(Versions.BuildConfig.targetSdkVersion)
+        versionCode = Versions.BuildConfig.appVersionCode
+        versionName = Versions.BuildConfig.appVersionName
+        testInstrumentationRunner = Depends.TestLibraries.testRunner
     }
 
     buildTypes {
@@ -37,7 +34,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = Config.Compiler.jvmTarget
     }
     kapt {
         javacOptions {
@@ -53,35 +50,41 @@ dependencies {
     implementation(project(":presentation:shared"))
     implementation(project(":styles"))
 
-    implementation("androidx.core:core-ktx:1.3.2")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.3.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+    // android
+    implementation(Depends.Android.ktx)
+    implementation(Depends.Android.appCompat)
+    implementation(Depends.Android.constraintLayout)
+    implementation(Depends.Android.navigationFragment)
+    implementation(Depends.Android.navigationUi)
+    implementation(Depends.Android.archLifeCycleViewModel)
+    implementation(Depends.Android.lifecycleCommon)
+    implementation(Depends.Material.material)
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
+    // dagger
+    implementation(Depends.Hilt.daggerHiltAndroid)
+    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
+    implementation(Depends.Hilt.androidxHiltLifecycleViewModel)
+    kapt(Depends.Hilt.androidxHiltCompiler)
 
-    implementation("com.google.dagger:hilt-android:2.33-beta")
-    kapt("com.google.dagger:hilt-android-compiler:2.33-beta")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt("androidx.hilt:hilt-compiler:1.0.0-beta01")
+    // kotlin
+    implementation(Depends.Kotlin.kotlinStdLib)
+    implementation(Depends.Kotlin.coroutinesCore)
+    implementation(Depends.Kotlin.coroutinesAndroid)
+    implementation(Depends.Kotlin.kotlinSerialization)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-    implementation("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
-    implementation("com.squareup.okio:okio:2.10.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+    // network
+    implementation(Depends.Network.okHttp)
+    implementation(Depends.Network.okHttpInterceptor)
+    implementation(Depends.Network.okIO)
+    implementation(Depends.Network.retrofit)
+    implementation(Depends.Network.retrofitAdapter)
+    implementation(Depends.Network.retrofitSerializationConverter)
 
-    implementation("com.jakewharton.timber:timber:4.7.1")
+    // logging
+    implementation(Depends.Logging.timber)
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    // test
+    testImplementation(Depends.TestLibraries.jUnit)
+    androidTestImplementation(Depends.TestLibraries.androidJUnit)
+    androidTestImplementation(Depends.TestLibraries.espressoCore)
 }
