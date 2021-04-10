@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":core:repository"))
     implementation(project(":presentation:feature"))
     implementation(project(":presentation:shared"))
+    implementation(project(":styles"))
 
     implementation("androidx.core:core-ktx:1.3.2")
     implementation("androidx.appcompat:appcompat:1.2.0")
