@@ -23,11 +23,11 @@ android {
 
     buildTypes {
         all {
-            buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"https://wft-geo-db.p.rapidapi.com/\"")
-            buildConfigField("String", "WEATHER_SERVICE_BASE_URL", "\"https://community-open-weather-map.p.rapidapi.com/\"")
-            buildConfigField("String", "RAPID_SERVICE_KEY", "\"your key here\"")
-            buildConfigField("String", "RAPID_SERVICE_CITY_HOST", "\"your host here\"")
-            buildConfigField("String", "RAPID_SERVICE_WEATHER_HOST", "\"your host here\"")
+            buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"${rootProject.extra.get("cityServiceBaseUrl")}\"")
+            buildConfigField("String", "WEATHER_SERVICE_BASE_URL", "\"${rootProject.extra.get("weatherServiceBaseUrl")}\"")
+            buildConfigField("String", "RAPID_SERVICE_KEY", "\"${rootProject.extra.get("rapidServiceKey")}\"")
+            buildConfigField("String", "RAPID_SERVICE_CITY_HOST", "\"${rootProject.extra.get("rapidServiceCityHost")}\"")
+            buildConfigField("String", "RAPID_SERVICE_WEATHER_HOST", "\"${rootProject.extra.get("rapidServiceWeatherHost")}\"")
         }
 
         release {
