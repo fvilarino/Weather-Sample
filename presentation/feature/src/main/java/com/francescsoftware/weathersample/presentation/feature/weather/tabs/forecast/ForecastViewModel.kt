@@ -106,7 +106,7 @@ class ForecastViewModel @Inject constructor(
     private fun Date.toHeaderLabel(): CharSequence = when {
         isToday -> stringLookup.getString(R.string.today)
         isTomorrow -> stringLookup.getString(R.string.tomorrow)
-        else -> timeFormatter.formatDay(this)
+        else -> timeFormatter.formatDayWithDayOfWeek(this)
     }
 
     private fun ForecastEntry.toForecastBindingItem(): RecyclerViewBindingItem =

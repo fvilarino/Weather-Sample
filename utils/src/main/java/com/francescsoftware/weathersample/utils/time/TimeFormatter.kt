@@ -26,6 +26,7 @@ fun Seconds.toDate():Date = Date(milliseconds())
 interface TimeFormatter {
     fun setToMidnight(date: Date): Date
     fun formatDayHour(date: Date): String
+    fun formatDayWithDayOfWeek(date: Date): String
     fun formatDay(date: Date): String
     fun formatHour(date: Date): String
 }
