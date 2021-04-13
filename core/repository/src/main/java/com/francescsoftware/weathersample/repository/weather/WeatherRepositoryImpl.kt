@@ -1,7 +1,8 @@
 package com.francescsoftware.weathersample.repository.weather
 
 import com.francescsoftware.weathersample.repository.safeApiCall
-import com.francescsoftware.weathersample.repository.weather.model.TodayWeatherResponse
+import com.francescsoftware.weathersample.repository.weather.model.forecast.ForecastResponse
+import com.francescsoftware.weathersample.repository.weather.model.today.TodayWeatherResponse
 import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
@@ -13,7 +14,7 @@ class WeatherRepositoryImpl @Inject constructor(
     ): Result<TodayWeatherResponse> = safeApiCall {
         when (location) {
             is WeatherLocation.City -> weatherService.getTodayWeather(
-                cityAndCountry = "${location.name},${location.countryCode}"
+                cityAndCountry = formatCityQuery(location)
             )
             is WeatherLocation.Coordinates -> weatherService.getTodayWeather(
                 latitude = location.latitude,
@@ -21,4 +22,19 @@ class WeatherRepositoryImpl @Inject constructor(
             )
         }
     }
+
+    override suspend fun getForecast(location: WeatherLocation): Result<ForecastResponse> = safeApiCall {
+        when (location) {
+            is WeatherLocation.City -> weatherService.getForecast(
+                cityAndCountry = formatCityQuery(location)
+            )
+            is WeatherLocation.Coordinates -> weatherService.getForecast(
+                latitude = location.latitude,
+                longitude = location.longitude,
+            )
+        }
+    }
+
+    private fun formatCityQuery(location: WeatherLocation.City) =
+        "${location.name},${location.countryCode}"
 }

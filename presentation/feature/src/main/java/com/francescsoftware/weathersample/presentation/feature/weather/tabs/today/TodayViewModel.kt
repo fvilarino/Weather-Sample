@@ -7,6 +7,12 @@ import com.francescsoftware.weathersample.interactor.weather.WeatherLocation
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
 import com.francescsoftware.weathersample.presentation.feature.weather.tabs.WeatherIcon
+import com.francescsoftware.weathersample.presentation.feature.weather.tabs.formatDescription
+import com.francescsoftware.weathersample.presentation.feature.weather.tabs.formatHumidity
+import com.francescsoftware.weathersample.presentation.feature.weather.tabs.formatPressure
+import com.francescsoftware.weathersample.presentation.feature.weather.tabs.formatTemperature
+import com.francescsoftware.weathersample.presentation.feature.weather.tabs.formatVisibility
+import com.francescsoftware.weathersample.presentation.feature.weather.tabs.formatWind
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -87,47 +93,19 @@ class TodayViewModel @Inject constructor(
     private fun onWeatherReceived(todayWeather: TodayWeather) {
         handle(
             TodayReduceAction.Loaded(
-                currentTemperature = todayWeather.main.temp.formatTemperature(),
-                minTemperature = todayWeather.main.tempMin.formatTemperature(),
-                maxTemperature = todayWeather.main.tempMax.formatTemperature(),
-                feelsLikeTemperature = todayWeather.main.feelsLike.formatTemperature(),
+                currentTemperature = todayWeather.main.temp.formatTemperature(stringLookup),
+                minTemperature = todayWeather.main.tempMin.formatTemperature(stringLookup),
+                maxTemperature = todayWeather.main.tempMax.formatTemperature(stringLookup),
+                feelsLikeTemperature = todayWeather.main.feelsLike.formatTemperature(stringLookup),
                 description = todayWeather.formatDescription(),
-                windSpeed = todayWeather.formatWind(),
-                humidity = todayWeather.formatHumidity(),
-                pressure = todayWeather.formatPressure(),
-                visibility = todayWeather.formatVisibility(),
+                windSpeed = todayWeather.wind.speed.formatWind(stringLookup),
+                humidity = todayWeather.main.humidity.formatHumidity(stringLookup),
+                pressure = todayWeather.main.pressure.formatPressure(stringLookup),
+                visibility = todayWeather.visibility.formatVisibility(stringLookup),
                 iconId = todayWeather.icon,
             )
         )
     }
-
-    private fun Double.formatTemperature(): CharSequence = stringLookup.getString(
-        R.string.formatted_temperature,
-        this,
-    )
-
-    private fun TodayWeather.formatDescription(): CharSequence =
-        weather.description.capitalize()
-
-    private fun TodayWeather.formatWind(): CharSequence = stringLookup.getString(
-        R.string.formatted_wind,
-        wind.speed,
-    )
-
-    private fun TodayWeather.formatHumidity(): CharSequence = stringLookup.getString(
-        R.string.formatted_humidity,
-        main.humidity,
-    )
-
-    private fun TodayWeather.formatPressure(): CharSequence = stringLookup.getString(
-        R.string.formatted_pressure,
-        main.pressure,
-    )
-
-    private fun TodayWeather.formatVisibility(): CharSequence = stringLookup.getString(
-        R.string.formatted_visibility,
-        visibility,
-    )
 
     private val TodayWeather.icon: Int
         get() = WeatherIcon.fromIconId(weather.icon).iconId

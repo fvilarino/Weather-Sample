@@ -3,7 +3,7 @@ package com.francescsoftware.weathersample.interactor.weather
 import com.francescsoftware.weathersample.repository.weather.WeatherRepository
 import com.francescsoftware.weathersample.repository.weather.model.Clouds
 import com.francescsoftware.weathersample.repository.weather.model.Main
-import com.francescsoftware.weathersample.repository.weather.model.TodayWeatherResponse
+import com.francescsoftware.weathersample.repository.weather.model.today.TodayWeatherResponse
 import com.francescsoftware.weathersample.repository.weather.model.WeatherItem
 import com.francescsoftware.weathersample.repository.weather.model.Wind
 import javax.inject.Inject
@@ -67,17 +67,6 @@ class GetTodayWeatherInteractorImpl @Inject constructor(
 
     private val Clouds.isValid: Boolean
         get() = all != null
-
-    private fun WeatherLocation.toRepositoryLocation() = when (this) {
-        is WeatherLocation.City -> RepositoryLocation.City(
-            name = name,
-            countryCode = countryCode
-        )
-        is WeatherLocation.Coordinates -> RepositoryLocation.Coordinates(
-            latitude = latitude,
-            longitude = longitude,
-        )
-    }
 
     private fun TodayWeatherResponse?.toWeather(): TodayWeatherItem {
         val item = this?.weather?.firstOrNull()

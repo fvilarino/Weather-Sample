@@ -2,4 +2,7 @@
 <resources>
     <dimen name="max_today_card_width">320dp</dimen>
     <dimen name="today_card_icon_height">80dp</dimen>
+    <dimen name="forecast_card_height">160dp</dimen>
+    <dimen name="max_forecast_card_width">352dp</dimen>
+    <dimen name="forecast_card_icon_height">64dp</dimen>
 </resources>

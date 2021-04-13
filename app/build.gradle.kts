@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":presentation:feature"))
     implementation(project(":presentation:shared"))
     implementation(project(":styles"))
+    implementation(project(":utils"))
 
     // android
     implementation(Depends.Android.ktx)

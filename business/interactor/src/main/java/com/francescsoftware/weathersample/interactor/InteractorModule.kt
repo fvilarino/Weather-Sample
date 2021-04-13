@@ -2,6 +2,8 @@ package com.francescsoftware.weathersample.interactor
 
 import com.francescsoftware.weathersample.interactor.city.GetCitiesInteractor
 import com.francescsoftware.weathersample.interactor.city.GetCitiesInteractorImpl
+import com.francescsoftware.weathersample.interactor.weather.GetForecastInteractor
+import com.francescsoftware.weathersample.interactor.weather.GetForecastInteractorImpl
 import com.francescsoftware.weathersample.interactor.weather.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.GetTodayWeatherInteractorImpl
 import dagger.Binds
@@ -21,4 +23,9 @@ abstract class InteractorModule {
     abstract fun bindGetTodayWeatherInteractor(
         getTodayWeatherInteractorImpl: GetTodayWeatherInteractorImpl
     ): GetTodayWeatherInteractor
+
+    @Binds
+    abstract fun bindGetForecastInteractor(
+        getForecastInteractorImpl: GetForecastInteractorImpl
+    ): GetForecastInteractor
 }

@@ -105,7 +105,7 @@ class CityViewModel @Inject constructor(
         }
 
     private fun City.toCityResultModel() = CityResultModel(
-        id = id,
+        id = id.toLong(),
         name = name,
         country = country,
         countryCode = countryCode,

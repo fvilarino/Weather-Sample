@@ -26,4 +26,11 @@
     <string name="formatted_visibility">%1$d m</string>
     <string name="retry">Retry</string>
     <string name="failed_to_load_weather_data">Failed to load weather data</string>
+    <string name="sunrise_label">Sunrise:</string>
+    <string name="sunset_label">Sunset:</string>
+    <string name="content_description_forecast_icon">Forecast icon</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="forecast_card_header">%1$s - %2$s</string>
+    <string name="failed_to_load_forecast">Failed to load forecast</string>
 </resources>

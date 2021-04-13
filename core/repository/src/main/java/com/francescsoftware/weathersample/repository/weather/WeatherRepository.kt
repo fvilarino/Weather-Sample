@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.repository.weather
 
-import com.francescsoftware.weathersample.repository.weather.model.TodayWeatherResponse
+import com.francescsoftware.weathersample.repository.weather.model.forecast.ForecastResponse
+import com.francescsoftware.weathersample.repository.weather.model.today.TodayWeatherResponse
 
 sealed class WeatherLocation {
     data class City(
@@ -16,4 +17,5 @@ sealed class WeatherLocation {
 
 interface WeatherRepository {
     suspend fun getTodayWeather(location: WeatherLocation): Result<TodayWeatherResponse>
+    suspend fun getForecast(location: WeatherLocation): Result<ForecastResponse>
 }

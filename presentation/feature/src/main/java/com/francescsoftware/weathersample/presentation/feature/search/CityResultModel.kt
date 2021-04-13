@@ -3,7 +3,7 @@ package com.francescsoftware.weathersample.presentation.feature.search
 import com.francescsoftware.weathersample.presentation.shared.recyclerview.Diffable
 
 data class CityResultModel(
-    override val id: Int,
+    override val id: Long,
     val name: CharSequence,
     val country: CharSequence,
     val countryCode: String,

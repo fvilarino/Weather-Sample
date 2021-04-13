@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":business:interactor"))
     implementation(project(":presentation:shared"))
     implementation(project(":styles"))
+    implementation(project(":utils"))
 
     implementation(Depends.Android.ktx)
     implementation(Depends.Android.appCompat)

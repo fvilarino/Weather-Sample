@@ -41,8 +41,10 @@ android {
 dependencies {
 
     implementation(project(":core:repository"))
+    implementation(project(":utils"))
 
     implementation(Depends.Android.ktx)
+    implementation(Depends.Kotlin.coroutinesCore)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)

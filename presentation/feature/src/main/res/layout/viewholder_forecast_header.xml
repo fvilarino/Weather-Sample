@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="state"
+            type="com.francescsoftware.weathersample.presentation.feature.weather.tabs.forecast.ForecastHeaderState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/forecast_header_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_double">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{state.date}"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Today" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_half"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".5" />
+
+        <TextView
+            android:id="@+id/sunrise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_single"
+            android:layout_marginEnd="@dimen/margin_single"
+            android:text="@{state.sunrise}"
+            android:textAppearance="?textAppearanceCaption"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/guide_half"
+            app:layout_constraintTop_toBottomOf="@+id/date"
+            tools:text="7:24" />
+
+        <TextView
+            android:id="@+id/sunrise_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_single"
+            android:text="@string/sunrise_label"
+            android:textAppearance="?textAppearanceCaption"
+            android:textColor="?android:textColorSecondary"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sunrise"
+            app:layout_constraintEnd_toStartOf="@+id/sunrise" />
+
+        <TextView
+            android:id="@+id/sunset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_single"
+            android:text="@{state.sunset}"
+            android:textAppearance="?textAppearanceCaption"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sunrise"
+            app:layout_constraintStart_toEndOf="@+id/sunset_label"
+            tools:text="7:24" />
+
+        <TextView
+            android:id="@+id/sunset_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_single"
+            android:text="@string/sunset_label"
+            android:textAppearance="?textAppearanceCaption"
+            android:textColor="?android:textColorSecondary"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sunrise"
+            app:layout_constraintStart_toEndOf="@+id/guide_half" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
