@@ -5,13 +5,25 @@ import com.francescsoftware.weathersample.presentation.shared.mvi.MviIntent
 import com.francescsoftware.weathersample.presentation.shared.mvi.ReduceAction
 import com.francescsoftware.weathersample.presentation.shared.mvi.State
 
+enum class LoadState {
+    IDLE,
+    LOADING,
+    LOADED,
+    NO_RESULTS,
+    ERROR
+}
+
 data class CityState(
-    val loading: Boolean,
+    val loadState: LoadState,
     val cities: List<CityResultModel>,
 ) : State {
+    val loading = loadState == LoadState.LOADING
+    val loaded = loadState == LoadState.LOADED
+    val noResults = loadState == LoadState.NO_RESULTS
+
     companion object {
         val initial = CityState(
-            loading = false,
+            loadState = LoadState.IDLE,
             cities = emptyList()
         )
     }
@@ -28,5 +40,6 @@ sealed class CityMviIntent : MviIntent {
 sealed class CityReduceAction : ReduceAction {
     object Loading : CityReduceAction()
     data class Loaded(val cities: List<CityResultModel>) : CityReduceAction()
+    object NoResults : CityReduceAction()
     object LoadError : CityReduceAction()
 }

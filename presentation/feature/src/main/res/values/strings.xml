@@ -33,4 +33,5 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="forecast_card_header">%1$s - %2$s</string>
     <string name="failed_to_load_forecast">Failed to load forecast</string>
+    <string name="no_results_found_label">No results found</string>
 </resources>

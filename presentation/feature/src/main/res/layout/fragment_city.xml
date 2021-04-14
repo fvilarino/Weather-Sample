@@ -27,7 +27,6 @@
             app:endIconDrawable="@drawable/ic_baseline_clear_24"
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="256dp"
@@ -40,6 +39,19 @@
                 android:inputType="textCapWords" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/no_results_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_results_found_label"
+            android:textAppearance="?textAppearanceBody1"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/city_input_layout"
+            bind:animatedVisibility="@{state.noResults}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/results_list"
@@ -55,6 +67,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/city_input_layout"
+            bind:animatedVisibility="@{state.loaded}"
             bind:recyclerViewItems="@{state.cities}"
             tools:listitem="@layout/viewholder_city_search_result" />
 
@@ -67,6 +80,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/city_input_layout"
-            bind:visibleIf="@{state.loading}" />
+            bind:animatedVisibility="@{state.loading}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

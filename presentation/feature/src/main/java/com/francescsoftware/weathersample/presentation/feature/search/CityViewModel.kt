@@ -60,8 +60,12 @@ class CityViewModel @Inject constructor(
                 .collectLatest { cities ->
                     cities.fold(
                         onSuccess = { list ->
-                            val cityModels = list.map { city -> city.toCityResultModel() }
-                            handle(CityReduceAction.Loaded(cities = cityModels))
+                            if (list.isNotEmpty()) {
+                                val cityModels = list.map { city -> city.toCityResultModel() }
+                                handle(CityReduceAction.Loaded(cities = cityModels))
+                            } else {
+                                handle(CityReduceAction.NoResults)
+                            }
                         },
                         onFailure = {
                             handle(CityReduceAction.LoadError)
@@ -96,12 +100,13 @@ class CityViewModel @Inject constructor(
 
     override fun reduce(state: CityState, reduceAction: CityReduceAction): CityState =
         when (reduceAction) {
-            CityReduceAction.Loading -> state.copy(loading = true)
+            CityReduceAction.Loading -> state.copy(loadState = LoadState.LOADING)
             is CityReduceAction.Loaded -> state.copy(
-                loading = false,
+                loadState = LoadState.LOADED,
                 cities = reduceAction.cities,
             )
-            CityReduceAction.LoadError -> state.copy(loading = false)
+            CityReduceAction.LoadError -> state.copy(loadState = LoadState.ERROR)
+            CityReduceAction.NoResults -> state.copy(loadState = LoadState.NO_RESULTS)
         }
 
     private fun City.toCityResultModel() = CityResultModel(
