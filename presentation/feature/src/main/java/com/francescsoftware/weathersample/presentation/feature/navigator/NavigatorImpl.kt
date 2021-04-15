@@ -1,50 +1,47 @@
 package com.francescsoftware.weathersample.presentation.feature.navigator
 
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.compose.navigate
 import com.francescsoftware.weathersample.presentation.feature.R
-import com.francescsoftware.weathersample.presentation.feature.search.CityFragmentDirections
 import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
-import com.francescsoftware.weathersample.presentation.shared.extension.locateActivity
+import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
-class NavigatorImpl @Inject constructor() : Navigator {
+class NavigatorImpl @Inject constructor(
+    private val stringLookup: StringLookup,
+) : Navigator {
 
-    private var owner: LifecycleOwner? = null
-    private val navController: NavController?
-        get() {
-            val activity = owner?.locateActivity
-            return if (activity != null) {
-                val navHostFragment = activity
-                    .supportFragmentManager
-                    .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-                navHostFragment.navController
-            } else {
-                null
-            }
-        }
-
-    override fun onStart(owner: LifecycleOwner) {
-        this.owner = owner
+    override fun onBackClick() {
+        navController.popBackStack()
+        currentDestination.value = CurrentDestination(
+            isRoot = true,
+            title = stringLookup.getString(NavigationDestination.CitySearch.titleId),
+            icon = NavigationDestination.CitySearch.iconId,
+        )
     }
 
-    override fun onStop(owner: LifecycleOwner) {
-        this.owner = null
+    override val currentDestination = MutableStateFlow<CurrentDestination>(
+        CurrentDestination(
+            isRoot = true,
+            icon = 0,
+            title = stringLookup.getString(R.string.app_name),
+        )
+    )
+
+    private lateinit var navController: NavController
+
+    override fun setNavController(navController: NavController) {
+        this.navController = navController
     }
 
     override fun cityToWeather(city: SelectedCity) {
-        CityFragmentDirections.actionCityFragmentToWeatherFragment(
-            city = city
-        ).navigate()
-    }
-
-    override fun goBack() {
-        navController?.popBackStack()
-    }
-
-    private fun NavDirections.navigate() {
-        navController?.navigate(this)
+        navController.currentBackStackEntry?.arguments?.putParcelable("city", city)
+        navController.navigate(NavigationDestination.Weather.route)
+        currentDestination.value = CurrentDestination(
+            isRoot = false,
+            title = stringLookup.getString(NavigationDestination.Weather.titleId),
+            icon = NavigationDestination.Weather.iconId,
+        )
     }
 }

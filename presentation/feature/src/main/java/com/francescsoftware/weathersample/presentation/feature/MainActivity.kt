@@ -1,15 +1,29 @@
 package com.francescsoftware.weathersample.presentation.feature
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.francescsoftware.weathersample.presentation.feature.databinding.ActivityMainBinding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.francescsoftware.weathersample.presentation.feature.navigator.NavigationDestination
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
+import com.francescsoftware.weathersample.presentation.feature.search.CityScreen
+import com.francescsoftware.weathersample.presentation.feature.search.CityViewModel
+import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
+import com.francescsoftware.weathersample.presentation.feature.weather.WeatherScreen
+import com.francescsoftware.weathersample.styles.MarginDouble
+import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,33 +33,48 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var navigator: Navigator
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var appBarConfiguration: AppBarConfiguration
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        configureToolbar()
-        lifecycle.addObserver(navigator)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = getNavController()
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    private fun configureToolbar() {
-        setSupportActionBar(binding.toolbar)
-        val navController = getNavController()
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        setSupportActionBar(binding.toolbar)
-    }
-
-    private fun getNavController(): NavController {
-        val navHostFragment = supportFragmentManager.findFragmentById(
-            R.id.nav_host_fragment
-        ) as NavHostFragment
-        return navHostFragment.navController
+        setContent {
+            WeatherSampleTheme {
+                val navController = rememberNavController()
+                navigator.setNavController(navController)
+                val state = navigator.currentDestination.collectAsState()
+                Scaffold(
+                    topBar = {
+                        TopAppBar {
+                            if (state.value.icon != 0) {
+                                IconButton(onClick = { navigator.onBackClick() }) {
+                                    Icon(
+                                        painter = painterResource(id = state.value.icon),
+                                        contentDescription = null,
+                                    )
+                                }
+                            }
+                            Text(
+                                text = state.value.title,
+                                modifier = Modifier.padding(start = MarginDouble)
+                            )
+                        }
+                    },
+                ) {
+                    NavHost(navController, startDestination = NavigationDestination.CitySearch.route) {
+                        composable(route = NavigationDestination.CitySearch.route) {
+                            val cityViewModel: CityViewModel = viewModel(
+                                NavigationDestination.CitySearch.route,
+                                factory = defaultViewModelProviderFactory
+                            )
+                            CityScreen(cityViewModel)
+                        }
+                        composable(
+                            NavigationDestination.Weather.route) { backstackEntry ->
+                            val city = navController.previousBackStackEntry?.arguments?.getParcelable<SelectedCity>("city")
+                                ?: throw IllegalStateException("No arguments available")
+                            WeatherScreen(city)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

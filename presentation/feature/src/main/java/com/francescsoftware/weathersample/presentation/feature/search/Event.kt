@@ -15,6 +15,7 @@ enum class LoadState {
 
 data class CityState(
     val loadState: LoadState,
+    val query: String,
     val cities: List<CityResultModel>,
 ) : State {
     val loading = loadState == LoadState.LOADING
@@ -24,6 +25,7 @@ data class CityState(
     companion object {
         val initial = CityState(
             loadState = LoadState.IDLE,
+            query = "",
             cities = emptyList()
         )
     }
@@ -42,6 +44,7 @@ sealed class CityMviIntent : MviIntent {
 
 sealed class CityReduceAction : ReduceAction {
     object Loading : CityReduceAction()
+    data class PrefixUpdated(val prefix: String) : CityReduceAction()
     data class Loaded(val cities: List<CityResultModel>) : CityReduceAction()
     object NoResults : CityReduceAction()
     object LoadError : CityReduceAction()

@@ -8,14 +8,6 @@ import com.francescsoftware.weathersample.presentation.shared.recyclerview.Recyc
 import com.francescsoftware.weathersample.presentation.shared.recyclerview.TypedBaseAdapter
 
 @Suppress("UNCHECKED_CAST")
-@BindingAdapter("recyclerViewItems")
-fun  <T : Diffable> bindRecyclerViewItems(recyclerView: RecyclerView, items: List<T>?) {
-    if (items != null) {
-        (recyclerView.adapter as? BaseAdapter<T, *>)?.update(items)
-    }
-}
-
-@Suppress("UNCHECKED_CAST")
 @BindingAdapter("recyclerViewTypedItems")
 fun <T : RecyclerViewBindingItem> bindRecyclerTypedViewItems(
     recyclerView: RecyclerView,

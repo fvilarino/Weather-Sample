@@ -1,7 +1,5 @@
 package com.francescsoftware.weathersample.presentation.feature.search
 
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.interactor.city.City
 import com.francescsoftware.weathersample.interactor.city.GetCitiesInteractor
@@ -14,11 +12,11 @@ import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.time.DurationUnit
@@ -33,15 +31,14 @@ class CityViewModel @Inject constructor(
     private val getCitiesInteractor: GetCitiesInteractor,
     private val navigator: Navigator,
     private val stringLookup: StringLookup,
-) :
-    MviViewModel<CityState, CityEvent, CityMviIntent, CityReduceAction>(
-        initialState = CityState.initial
-    ), DefaultLifecycleObserver {
+) : MviViewModel<CityState, CityEvent, CityMviIntent, CityReduceAction>(
+    initialState = CityState.initial
+), CityCallbacks {
 
     private val searchFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
     private var searchJob: Job? = null
 
-    private val cityClickCallback = { city: CityResultModel ->
+    override fun onCityClick(city: CityResultModel) {
         Timber.tag(TAG).d("Clicked on city [$city]")
         navigator.cityToWeather(
             SelectedCity(
@@ -52,36 +49,34 @@ class CityViewModel @Inject constructor(
         )
     }
 
-    override fun onStart(owner: LifecycleOwner) {
-        searchJob = viewModelScope.launch {
-            searchFlow
-                .distinctUntilChanged()
-                .debounce(DebounceMillis)
-                .map { prefix -> getCitiesInteractor.execute(prefix) }
-                .collectLatest { cities ->
-                    cities.fold(
-                        onSuccess = { list ->
-                            if (list.isNotEmpty()) {
-                                val cityModels = list.map { city -> city.toCityResultModel() }
-                                onIntent(CityMviIntent.CitiesLoaded(cityModels))
-                            } else {
-                                onIntent(CityMviIntent.NoResults)
-                            }
-                        },
-                        onFailure = {
-                            onIntent(CityMviIntent.LoadError)
-                            onEvent(
-                                CityEvent.ShowSnackBar(
-                                    stringLookup.getString(R.string.city_error_loading)
-                                )
-                            )
-                        }
-                    )
-                }
-        }
+    override fun onQueryChange(query: String) {
+        onIntent(CityMviIntent.PrefixUpdated(query))
     }
 
-    override fun onStop(owner: LifecycleOwner) {
+    fun onStart() {
+        searchJob = searchFlow
+            .distinctUntilChanged()
+            .debounce(DebounceMillis)
+            .map { prefix -> getCitiesInteractor.execute(prefix) }
+            .onEach { cities ->
+                cities.fold(
+                    onSuccess = { list ->
+                        if (list.isNotEmpty()) {
+                            val cityModels = list.map { city -> city.toCityResultModel() }
+                            onIntent(CityMviIntent.CitiesLoaded(cityModels))
+                        } else {
+                            onIntent(CityMviIntent.NoResults)
+                        }
+                    },
+                    onFailure = {
+                        onIntent(CityMviIntent.LoadError)
+                    }
+                )
+            }
+            .launchIn(viewModelScope)
+    }
+
+    fun onStop() {
         searchJob?.cancel()
         searchJob = null
     }
@@ -89,6 +84,7 @@ class CityViewModel @Inject constructor(
     override suspend fun executeIntent(intent: CityMviIntent) {
         when (intent) {
             is CityMviIntent.PrefixUpdated -> {
+                handle(CityReduceAction.PrefixUpdated(intent.prefix))
                 if (intent.prefix.length >= MIN_CITY_LENGTH_FOR_SEARCH) {
                     handle(CityReduceAction.Loading)
                     searchFlow.emit(intent.prefix)
@@ -105,6 +101,7 @@ class CityViewModel @Inject constructor(
     override fun reduce(state: CityState, reduceAction: CityReduceAction): CityState =
         when (reduceAction) {
             CityReduceAction.Loading -> state.copy(loadState = LoadState.LOADING)
+            is CityReduceAction.PrefixUpdated -> state.copy(query = reduceAction.prefix)
             is CityReduceAction.Loaded -> state.copy(
                 loadState = LoadState.LOADED,
                 cities = reduceAction.cities,
@@ -123,7 +120,5 @@ class CityViewModel @Inject constructor(
             coordinates.latitude.toFloat(),
             coordinates.longitude.toFloat(),
         )
-    ).apply {
-        clickCallback = cityClickCallback
-    }
+    )
 }

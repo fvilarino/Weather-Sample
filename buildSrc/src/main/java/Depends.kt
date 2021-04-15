@@ -24,6 +24,8 @@ object Depends {
         const val kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.Kotlin.kotlinSerializationVersion}"
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.coroutinesVersion}"
         const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.coroutinesVersion}"
+        // TODO: remove when compose moves from 0.3.3
+        const val collectionsImmutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:${Versions.Kotlin.collectionsImmutable}"
     }
 
     object Android {
@@ -34,6 +36,14 @@ object Depends {
         const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.Android.navigationVersion}"
         const val archLifeCycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Android.archLifeCycleViewModelVersion}"
         const val lifecycleCommon = "androidx.lifecycle:lifecycle-common-java8:${Versions.Android.lifecycleCommonVersion}"
+    }
+
+    object Compose {
+        const val composeUi =  "androidx.compose.ui:ui:${Versions.Compose.composeVersion}"
+        const val composeMaterial = "androidx.compose.material:material:${Versions.Compose.composeVersion}"
+        const val composeUiTooling = "androidx.compose.ui:ui-tooling:${Versions.Compose.composeVersion}"
+        const val activityCompose =  "androidx.activity:activity-compose:${Versions.Compose.activityCompose}"
+        const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.Compose.navigationCompose}"
     }
 
     object Hilt {

@@ -28,6 +28,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        compose = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -36,6 +37,9 @@ android {
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.composeVersion
     }
 }
 
@@ -46,6 +50,14 @@ dependencies {
     implementation(project(":presentation:shared"))
     implementation(project(":styles"))
     implementation(project(":utils"))
+
+    // compose
+    implementation(Depends.Compose.composeUi)
+    implementation(Depends.Compose.composeMaterial)
+    implementation(Depends.Compose.composeUiTooling)
+    implementation(Depends.Compose.activityCompose)
+    implementation(Depends.Compose.navigationCompose)
+    implementation(Depends.Kotlin.collectionsImmutable)
 
     implementation(Depends.Android.ktx)
     implementation(Depends.Android.appCompat)

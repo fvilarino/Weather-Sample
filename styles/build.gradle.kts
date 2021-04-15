@@ -29,4 +29,16 @@ android {
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
     }
+    buildFeatures {
+        compose = true
+    }
+}
+
+dependencies {
+    implementation(Depends.Kotlin.kotlinStdLib)
+    implementation(Depends.Kotlin.collectionsImmutable)
+    implementation(Depends.Compose.composeUi)
+    implementation(Depends.Compose.composeMaterial)
+    implementation(Depends.Compose.composeUiTooling)
+    implementation(Depends.Material.material)
 }

@@ -15,11 +15,18 @@ object Versions {
         const val versionsPluginVersion = "0.38.0"
     }
 
+    object Compose {
+        const val composeVersion = "1.0.0-beta04"
+        const val activityCompose = "1.3.0-alpha06"
+        const val navigationCompose = "1.0.0-alpha10"
+    }
+
     object Kotlin {
         const val kotlinVersion = "1.5.0"
         const val coroutinesVersion = "1.5.0"
         const val ktxVersion = "1.6.0-alpha02"
         const val kotlinSerializationVersion = "1.2.0"
+        const val collectionsImmutable = "0.3.4"
     }
 
     object Android {

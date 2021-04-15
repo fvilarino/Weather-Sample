@@ -26,6 +26,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        compose = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -49,6 +50,10 @@ dependencies {
 
     implementation(Depends.Kotlin.coroutinesCore)
     implementation(Depends.Kotlin.coroutinesAndroid)
+
+    implementation(Depends.Compose.composeUi)
+    implementation(Depends.Compose.composeMaterial)
+    implementation(Depends.Compose.composeUiTooling)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)

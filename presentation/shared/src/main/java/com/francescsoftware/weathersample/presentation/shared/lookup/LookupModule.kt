@@ -4,10 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.Reusable
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 abstract class LookupModule {
     @Binds
     @Reusable
