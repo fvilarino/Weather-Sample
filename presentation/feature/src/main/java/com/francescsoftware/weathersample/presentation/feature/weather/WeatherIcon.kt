@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.presentation.feature.weather.tabs
+package com.francescsoftware.weathersample.presentation.feature.weather
 
 import androidx.annotation.DrawableRes
 import com.francescsoftware.weathersample.presentation.feature.R

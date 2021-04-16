@@ -22,6 +22,7 @@ import com.francescsoftware.weathersample.presentation.feature.search.CityScreen
 import com.francescsoftware.weathersample.presentation.feature.search.CityViewModel
 import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
 import com.francescsoftware.weathersample.presentation.feature.weather.WeatherScreen
+import com.francescsoftware.weathersample.presentation.feature.weather.WeatherViewModel
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -66,11 +67,14 @@ class MainActivity : AppCompatActivity() {
                             )
                             CityScreen(cityViewModel)
                         }
-                        composable(
-                            NavigationDestination.Weather.route) { backstackEntry ->
+                        composable(NavigationDestination.Weather.route) {
+                            val weatherViewModel: WeatherViewModel = viewModel(
+                                NavigationDestination.Weather.route,
+                                factory = defaultViewModelProviderFactory
+                            )
                             val city = navController.previousBackStackEntry?.arguments?.getParcelable<SelectedCity>("city")
                                 ?: throw IllegalStateException("No arguments available")
-                            WeatherScreen(city)
+                            WeatherScreen(weatherViewModel, city)
                         }
                     }
                 }

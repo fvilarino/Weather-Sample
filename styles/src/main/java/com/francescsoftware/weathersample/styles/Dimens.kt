@@ -10,3 +10,4 @@ val MarginDouble = 16.dp
 val MarginTreble = 24.dp
 val MarginQuad = 32.dp
 
+val CardElevation = 4.dp

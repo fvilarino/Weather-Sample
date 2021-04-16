@@ -12,13 +12,15 @@ private val DarkColorPalette = darkColors(
     primaryVariant = Purple900,
     secondary = Teal200,
     onPrimary = Color.White,
+    onSecondary = Color.White,
 )
 
 private val LightColorPalette = lightColors(
     primary = Purple700,
     primaryVariant = Purple900,
     secondary = Teal700,
-    onPrimary = Color.White
+    onPrimary = Color.White,
+    onSecondary = Color.White,
 )
 
 @Composable
