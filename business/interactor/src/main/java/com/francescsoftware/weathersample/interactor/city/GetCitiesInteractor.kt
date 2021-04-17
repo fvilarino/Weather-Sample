@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.interactor.city
 
+import com.francescsoftware.weathersample.type.Result
 import java.io.IOException
 
 data class Coordinates(

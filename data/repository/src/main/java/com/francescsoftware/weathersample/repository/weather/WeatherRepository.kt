@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.repository.weather
 
 import com.francescsoftware.weathersample.repository.weather.model.forecast.ForecastResponse
 import com.francescsoftware.weathersample.repository.weather.model.today.TodayWeatherResponse
+import com.francescsoftware.weathersample.type.Result
 
 sealed class WeatherLocation {
     data class City(

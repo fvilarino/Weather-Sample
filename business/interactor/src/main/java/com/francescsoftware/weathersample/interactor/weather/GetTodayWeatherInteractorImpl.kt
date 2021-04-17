@@ -3,11 +3,12 @@ package com.francescsoftware.weathersample.interactor.weather
 import com.francescsoftware.weathersample.repository.weather.WeatherRepository
 import com.francescsoftware.weathersample.repository.weather.model.Clouds
 import com.francescsoftware.weathersample.repository.weather.model.Main
-import com.francescsoftware.weathersample.repository.weather.model.today.TodayWeatherResponse
 import com.francescsoftware.weathersample.repository.weather.model.WeatherItem
 import com.francescsoftware.weathersample.repository.weather.model.Wind
+import com.francescsoftware.weathersample.repository.weather.model.today.TodayWeatherResponse
+import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.fold
 import javax.inject.Inject
-import com.francescsoftware.weathersample.repository.weather.WeatherLocation as RepositoryLocation
 
 class GetTodayWeatherInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository
@@ -25,13 +26,13 @@ class GetTodayWeatherInteractorImpl @Inject constructor(
                         visibility = weatherResponse.visibility ?: 0,
                         clouds = weatherResponse.clouds.toClouds()
                     )
-                    Result.success(weather)
+                    Result.Success(weather)
                 } else {
-                    Result.failure(WeatherException("Invalid data received"))
+                    Result.Failure(WeatherException("Invalid data received"))
                 }
             },
             onFailure = { throwable ->
-                Result.failure(
+                Result.Failure(
                     WeatherException(
                         throwable.message ?: "Error fetching today weather",
                         throwable

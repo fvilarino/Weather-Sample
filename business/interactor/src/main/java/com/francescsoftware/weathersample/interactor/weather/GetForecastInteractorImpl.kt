@@ -3,6 +3,8 @@ package com.francescsoftware.weathersample.interactor.weather
 import com.francescsoftware.weathersample.repository.weather.WeatherRepository
 import com.francescsoftware.weathersample.repository.weather.model.forecast.City
 import com.francescsoftware.weathersample.repository.weather.model.forecast.ForecastItem
+import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.utils.dispatcher.DispatcherProvider
 import com.francescsoftware.weathersample.utils.time.Seconds
 import com.francescsoftware.weathersample.utils.time.TimeFormatter
@@ -24,13 +26,13 @@ class GetForecastInteractorImpl @Inject constructor(
                 val forecast = data.forecast
                 val city = data.city
                 if (forecast?.isNotEmpty() == true && city?.isValid == true) {
-                    Result.success(parseForecast(forecast, city))
+                    Result.Success(parseForecast(forecast, city))
                 } else {
-                    Result.failure(WeatherException("Invalid forecast data received"))
+                    Result.Failure(WeatherException("Invalid forecast data received"))
                 }
             },
             onFailure = { throwable ->
-                Result.failure(
+                Result.Failure(
                     WeatherException(
                         throwable.message ?: "Error fetching forecast",
                         throwable

@@ -15,6 +15,7 @@ import com.francescsoftware.weathersample.presentation.feature.weather.tabs.form
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.presentation.shared.recyclerview.RecyclerViewBindingItem
+import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.utils.time.TimeFormatter
 import com.francescsoftware.weathersample.utils.time.isToday
 import com.francescsoftware.weathersample.utils.time.isTomorrow

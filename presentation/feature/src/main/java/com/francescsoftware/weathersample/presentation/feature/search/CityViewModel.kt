@@ -10,6 +10,7 @@ import com.francescsoftware.weathersample.presentation.feature.navigator.Navigat
 import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
+import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -46,6 +46,7 @@ android {
 dependencies {
 
     implementation(project(":business:interactor"))
+    implementation(project(":core:type"))
     implementation(project(":presentation:shared"))
     implementation(project(":styles"))
     implementation(project(":utils"))

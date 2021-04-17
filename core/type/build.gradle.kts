@@ -1,7 +1,6 @@
 plugins {
     id(Depends.ModulePlugins.libraryPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
-    id(Depends.ModulePlugins.daggerHiltPlugin)
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
@@ -39,20 +38,5 @@ android {
 }
 
 dependencies {
-
-    implementation(project(":core:type"))
-    implementation(project(":data:repository"))
-    implementation(project(":utils"))
-
     implementation(Depends.Android.ktx)
-    implementation(Depends.Kotlin.coroutinesCore)
-
-    implementation(Depends.Hilt.daggerHiltAndroid)
-    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-
-    implementation(Depends.Logging.timber)
-
-    testImplementation(Depends.TestLibraries.jUnit)
-    androidTestImplementation(Depends.TestLibraries.androidJUnit)
-    androidTestImplementation(Depends.TestLibraries.espressoCore)
 }

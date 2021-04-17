@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:type"))
 
     implementation(Depends.Android.ktx)
 

@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.interactor.weather
 
+import com.francescsoftware.weathersample.type.Result
+
 data class TodayWeather(
     val weather: TodayWeatherItem,
     val main: TodayMain,

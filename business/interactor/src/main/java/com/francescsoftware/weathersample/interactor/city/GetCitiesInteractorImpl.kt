@@ -3,6 +3,8 @@ package com.francescsoftware.weathersample.interactor.city
 import com.francescsoftware.weathersample.repository.city.CityRepository
 import com.francescsoftware.weathersample.repository.city.model.CityItem
 import com.francescsoftware.weathersample.repository.city.model.CitySearchResponse
+import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.fold
 import javax.inject.Inject
 
 class GetCitiesInteractorImpl @Inject constructor(
@@ -18,14 +20,14 @@ class GetCitiesInteractorImpl @Inject constructor(
                     val cities = data
                         .filter { city -> city.isValid }
                         .map { city -> city.toCity() }
-                    Result.success(cities)
+                    Result.Success(cities)
                 } else {
-                    Result.success(emptyList())
+                    Result.Success(emptyList())
                 }
             },
             onFailure = { response ->
                 val cause = response.cause
-                Result.failure(
+                Result.Failure(
                     if (cause != null) {
                         CitiesException("Error fetching cities", cause)
                     } else {

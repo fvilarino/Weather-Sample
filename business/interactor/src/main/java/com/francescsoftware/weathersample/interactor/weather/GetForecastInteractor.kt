@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.interactor.weather
 
-import java.util.Date
+import com.francescsoftware.weathersample.type.Result
+import java.util.*
 
 data class Forecast(
     val items: List<ForecastDay>,
@@ -23,7 +24,7 @@ data class ForecastEntry(
     val windSpeed: Double,
     val humidityPercent: Int,
     val visibility: Int,
- )
+)
 
 interface GetForecastInteractor {
     suspend fun execute(location: WeatherLocation): Result<Forecast>

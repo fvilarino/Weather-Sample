@@ -15,6 +15,7 @@ import com.francescsoftware.weathersample.presentation.feature.weather.tabs.form
 import com.francescsoftware.weathersample.presentation.feature.weather.tabs.formatWind
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
+import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
