@@ -16,17 +16,23 @@ inline fun <R, T> Result<T>.fold(
 val <T> Result<T>.isSuccess: Boolean
     get() = when (this) {
         is Result.Success -> true
-        else -> false
+        is Result.Failure -> false
     }
 
 val <T> Result<T>.isFailure: Boolean
     get() = when (this) {
+        is Result.Success -> false
         is Result.Failure -> true
-        else -> false
     }
 
 fun <T> Result<T>.getOrNull(): T? =
     when (this) {
         is Result.Success -> value
-        else -> null
+        is Result.Failure -> null
+    }
+
+fun <T> Result<T>.throwableOrNull(): Throwable? =
+    when (this) {
+        is Result.Success -> null
+        is Result.Failure -> error
     }

@@ -57,5 +57,8 @@ object Versions {
         const val jUnitVersion = "4.13.2"
         const val androidJUnitVersion = "1.1.2"
         const val espressoCoreVersion = "3.3.0"
+        const val coreTestingVersion = "2.1.0"
+        const val coroutinesTestVersion = "1.4.3"
+        const val mockkVersion = "1.11.0"
     }
 }

@@ -64,6 +64,9 @@ object Depends {
         const val jUnit = "junit:junit:${Versions.Test.jUnitVersion}"
         const val androidJUnit = "androidx.test.ext:junit:${Versions.Test.androidJUnitVersion}"
         const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.Test.espressoCoreVersion}"
+        const val coreTesting = "androidx.arch.core:core-testing:${Versions.Test.coreTestingVersion}"
+        const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.coroutinesTestVersion}"
+        const val mockk = "io.mockk:mockk:${Versions.Test.mockkVersion}"
         const val testRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
