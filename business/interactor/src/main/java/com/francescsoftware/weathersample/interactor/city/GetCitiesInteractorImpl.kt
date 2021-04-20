@@ -44,9 +44,9 @@ class GetCitiesInteractorImpl @Inject constructor(
             region != null &&
             regionCode != null &&
             country != null &&
-            countryCode != null
-            && latitude != null
-            && longitude != null
+            countryCode != null &&
+            latitude != null &&
+            longitude != null
 
     private fun CityItem.toCity() = City(
         id = id ?: 0,

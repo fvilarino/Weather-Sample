@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.shared.recyclerview
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -25,5 +26,6 @@ abstract class BaseAdapter<T : Diffable, V : RecyclerView.ViewHolder> : Recycler
 class Differ <T : Diffable> : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem.equals(newItem)
+    @SuppressLint("DiffUtilEquals")
+    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
 }
