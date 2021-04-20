@@ -2,6 +2,7 @@ plugins {
     id(Depends.ModulePlugins.applicationPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
     id(Depends.ModulePlugins.daggerHiltPlugin)
+    id(Depends.ModulePlugins.versionsPlugin) version Versions.Plugin.versionsPluginVersion
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
