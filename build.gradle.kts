@@ -11,7 +11,6 @@ buildscript {
         classpath(Depends.BuildPlugins.kotlinSerializationPlugin)
         classpath(Depends.BuildPlugins.navigationPlugin)
         classpath(Depends.BuildPlugins.hiltPlugin)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32")
     }
 }
 
