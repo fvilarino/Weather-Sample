@@ -112,7 +112,7 @@
                 android:id="@+id/min_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_single"
+                android:layout_marginStart="@dimen/margin_half"
                 android:text="@{state.minTemperature}"
                 android:textAllCaps="false"
                 android:textAppearance="?textAppearanceCaption"
