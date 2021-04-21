@@ -68,10 +68,10 @@ private fun EqualSizeTilesPreview() {
     WeatherSampleTheme {
         Surface(modifier = Modifier
             .width(512.dp)
-            .height(64.dp)
             .background(color = Color.Yellow)) {
             EqualSizeTiles(
                 modifier = Modifier
+                    .height(64.dp)
                     .background(color = Color.Green)
                     .padding(all = 8.dp)
             ) {
