@@ -121,7 +121,7 @@ private fun WeatherContent(state: TodayState) {
         }
         WeatherSelectorOptions.Forecast -> LazyColumn(
             modifier = Modifier.fillMaxWidth().padding(bottom = MarginSingle),
-            verticalArrangement = Arrangement.spacedBy(MarginSingle),
+            verticalArrangement = Arrangement.spacedBy(MarginDouble),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(state.forecastItems) { item ->
