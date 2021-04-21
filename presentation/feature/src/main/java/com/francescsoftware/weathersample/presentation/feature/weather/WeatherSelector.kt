@@ -75,7 +75,7 @@ fun WeatherSelector(
     }
 
     Row(
-        modifier = modifier.selectableGroup()
+        modifier = modifier.selectableGroup(),
     ) {
         Text(
             text = stringResource(id = R.string.today_weather_button_label),
@@ -133,10 +133,31 @@ private fun PreviewWeatherSelector() {
             .width(256.dp)
             .padding(all = MarginSingle)) {
             WeatherSelector(
-                selectedOption = WeatherSelectorOptions.Today,
+                selectedOption = option,
                 onOptionSelect = { selected ->
                     option = selected
                 },
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewWeatherSelectorDarkMode() {
+    WeatherSampleTheme(darkTheme = true) {
+        var option by remember {
+            mutableStateOf(WeatherSelectorOptions.Today)
+        }
+        Surface(modifier = Modifier
+            .width(256.dp)
+            .padding(all = MarginSingle)) {
+            WeatherSelector(
+                selectedOption = option,
+                onOptionSelect = { selected ->
+                    option = selected
+                },
+                modifier = Modifier.padding(all = MarginSingle),
             )
         }
     }

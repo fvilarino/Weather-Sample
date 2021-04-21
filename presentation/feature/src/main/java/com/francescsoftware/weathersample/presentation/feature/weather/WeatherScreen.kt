@@ -149,26 +149,27 @@ private fun ErrorMessage(weatherCallbacks: WeatherCallbacks) {
         contentAlignment = Alignment.Center
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = stringResource(id = R.string.city_error_loading),
+                text = stringResource(id = R.string.weather_error_loading),
                 style = MaterialTheme.typography.body1,
             )
-            Spacer(modifier = Modifier.height(MarginSingle))
+            Spacer(modifier = Modifier.height(MarginDouble))
             OutlinedButton(onClick = { weatherCallbacks.retry() }) {
                 Text(
                     text = stringResource(id = R.string.retry),
                     modifier = Modifier.padding(horizontal = MarginDouble),
                 )
             }
+            Spacer(modifier = Modifier.height(MarginQuad))
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun WeatherScreenPreview() {
+private fun ForecastWeatherScreenPreview() {
     WeatherSampleTheme {
         Surface(modifier = Modifier.width(420.dp)) {
             val state = TodayState(
@@ -215,6 +216,38 @@ private fun WeatherScreenPreview() {
                         visibility = "10000 m",
                     ),
                 ),
+                option = WeatherSelectorOptions.Forecast,
+                errorMessage = ""
+            )
+            val city = SelectedCity(
+                name = "Vancouver",
+                country = "Canada",
+                countryCode = "CA"
+            )
+            WeatherScreen(
+                state = state,
+                selectedCity = city,
+                weatherCallbacks = object : WeatherCallbacks {
+                    override fun onOptionSelect(
+                        weatherSelectorOptions: WeatherSelectorOptions
+                    ) = Unit
+
+                    override fun retry() = Unit
+                }
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ErrorWeatherScreenPreview() {
+    WeatherSampleTheme {
+        Surface(modifier = Modifier.width(420.dp)) {
+            val state = TodayState(
+                loadState = WeatherLoadState.ERROR,
+                todayState = TodayWeatherCardState(),
+                forecastItems = emptyList(),
                 option = WeatherSelectorOptions.Forecast,
                 errorMessage = ""
             )

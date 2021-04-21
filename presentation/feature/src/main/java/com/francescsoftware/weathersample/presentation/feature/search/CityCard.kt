@@ -71,9 +71,7 @@ private fun PreviewCityCard() {
         coordinates = "Lat: 49.26, Lon: -123.11"
     )
     WeatherSampleTheme {
-        Surface(
-
-        ) {
+        Surface {
             CityCard(
                 city = card,
                 onClick = { },
