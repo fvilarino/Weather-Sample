@@ -4,7 +4,8 @@ import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
@@ -26,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.presentation.feature.R
+import com.francescsoftware.weathersample.presentation.shared.widget.EqualSizeTiles
+import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
@@ -74,14 +77,14 @@ fun WeatherSelector(
         }
     }
 
-    Row(
-        modifier = modifier.selectableGroup(),
+    EqualSizeTiles(
+        modifier = modifier.selectableGroup().height(40.dp)
     ) {
         Text(
             text = stringResource(id = R.string.today_weather_button_label),
             style = MaterialTheme.typography.body1,
             modifier = Modifier
-                .weight(1f)
+                .fillMaxHeight()
                 .clip(
                     RoundedCornerShape(
                         topStartPercent = 50,
@@ -94,7 +97,7 @@ fun WeatherSelector(
                     onClick = { onOptionSelect(WeatherSelectorOptions.Today) },
                     role = Role.RadioButton,
                 )
-                .padding(vertical = MarginSingle),
+                .padding(vertical = MarginSingle, horizontal = MarginDouble),
             textAlign = TextAlign.Center,
             color = leftTextColor,
         )
@@ -102,7 +105,7 @@ fun WeatherSelector(
             text = stringResource(id = R.string.forecast_weather_button_label),
             style = MaterialTheme.typography.body1,
             modifier = Modifier
-                .weight(1f)
+                .fillMaxHeight()
                 .clip(
                     RoundedCornerShape(
                         topEndPercent = 50,
@@ -115,7 +118,7 @@ fun WeatherSelector(
                     role = Role.RadioButton,
                 )
                 .background(rightBackgroundColor)
-                .padding(vertical = MarginSingle),
+                .padding(vertical = MarginSingle, horizontal = MarginDouble),
             textAlign = TextAlign.Center,
             color = rightTextColor,
         )

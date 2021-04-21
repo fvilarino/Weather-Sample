@@ -77,7 +77,6 @@ private fun WeatherScreen(
         WeatherSelector(
             selectedOption = state.option,
             onOptionSelect = { option -> weatherCallbacks.onOptionSelect(option) },
-            modifier = Modifier.width(256.dp),
         )
         Spacer(modifier = Modifier.height(MarginQuad))
         Crossfade(

@@ -16,7 +16,7 @@ object Versions {
     }
 
     object Compose {
-        const val composeVersion = "1.0.0-beta04"
+        const val composeVersion = "1.0.0-beta05"
         const val activityCompose = "1.3.0-alpha06"
         const val navigationCompose = "1.0.0-alpha10"
     }
