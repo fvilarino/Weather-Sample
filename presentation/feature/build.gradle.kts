@@ -74,6 +74,7 @@ dependencies {
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
+    implementation(Depends.Hilt.androidxHiltNavigation)
     kapt(Depends.Hilt.androidxHiltCompiler)
 
     implementation(Depends.Logging.timber)

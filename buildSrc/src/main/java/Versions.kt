@@ -44,6 +44,7 @@ object Versions {
     object Hilt {
         const val daggerHiltAndroidVersion = "2.36"
         const val daggerHiltAndroidCompilerVersion = "2.36"
+        const val androidxHiltNavigation = "1.0.0-alpha01"
         const val androidxHiltCompilerVersion = "1.0.0"
     }
 

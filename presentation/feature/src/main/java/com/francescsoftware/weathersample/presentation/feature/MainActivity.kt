@@ -12,7 +12,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -61,17 +61,11 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     NavHost(navController, startDestination = NavigationDestination.CitySearch.route) {
                         composable(route = NavigationDestination.CitySearch.route) {
-                            val cityViewModel: CityViewModel = viewModel(
-                                NavigationDestination.CitySearch.route,
-                                factory = defaultViewModelProviderFactory
-                            )
+                            val cityViewModel: CityViewModel = hiltNavGraphViewModel()
                             CityScreen(cityViewModel)
                         }
                         composable(NavigationDestination.Weather.route) {
-                            val weatherViewModel: WeatherViewModel = viewModel(
-                                NavigationDestination.Weather.route,
-                                factory = defaultViewModelProviderFactory
-                            )
+                            val weatherViewModel: WeatherViewModel = hiltNavGraphViewModel()
                             val city = navController.previousBackStackEntry?.arguments?.getParcelable<SelectedCity>("city")
                                 ?: throw IllegalStateException("No arguments available")
                             WeatherScreen(weatherViewModel, city)
