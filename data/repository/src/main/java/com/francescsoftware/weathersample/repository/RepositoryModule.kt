@@ -22,11 +22,13 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
 private val MEDIA_TYPE = "application/json".toMediaType()
+private const val OK_HTTP_TAG = "OkHttp"
 private const val CONNECT_TIMEOUT_SECONDS = 15L
 private const val READ_TIMEOUT_SECONDS = 30L
 private const val CACHE_SIZE = 10L * 1024L * 1024L
@@ -41,7 +43,9 @@ object RepositoryModule {
     @Singleton
     @HeaderLoggingInterceptor
     fun provideHeaderLoggingInterceptor(): Interceptor =
-        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS }
+        HttpLoggingInterceptor { message ->
+            Timber.tag(OK_HTTP_TAG).d(message)
+        }.apply { level = HttpLoggingInterceptor.Level.HEADERS }
 
     @Provides
     @Singleton
