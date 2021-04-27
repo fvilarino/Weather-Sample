@@ -87,7 +87,7 @@ private fun WeatherScreen(
                 WeatherLoadState.IDLE -> {
                 }
                 WeatherLoadState.LOADING -> LoadingSpinner()
-                WeatherLoadState.LOADED -> WeatherContent(state)
+                WeatherLoadState.LOADED -> WeatherContent(state, weatherCallbacks::refreshTodayWeather)
                 WeatherLoadState.ERROR -> ErrorMessage(weatherCallbacks)
             }
         }
@@ -105,21 +105,30 @@ private fun LoadingSpinner() {
 }
 
 @Composable
-private fun WeatherContent(state: TodayState) {
+private fun WeatherContent(
+    state: TodayState,
+    todayRefreshCallback: () -> Unit,
+) {
     when (state.option) {
         WeatherSelectorOptions.Today -> {
-            Box(
+            Column(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.TopCenter,
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 TodayWeatherCard(
                     state = state.todayState,
                     modifier = Modifier.fillMaxWidth(.85f),
                 )
+                Spacer(modifier = Modifier.height(MarginQuad))
+                OutlinedButton(onClick = todayRefreshCallback) {
+                    Text(text = stringResource(id = R.string.refresh))
+                }
             }
         }
         WeatherSelectorOptions.Forecast -> LazyColumn(
-            modifier = Modifier.fillMaxWidth().padding(bottom = MarginSingle),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = MarginSingle),
             verticalArrangement = Arrangement.spacedBy(MarginDouble),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -215,7 +224,7 @@ private fun ForecastWeatherScreenPreview() {
                         visibility = "10000 m",
                     ),
                 ),
-                option = WeatherSelectorOptions.Forecast,
+                option = WeatherSelectorOptions.Today,
                 errorMessage = ""
             )
             val city = SelectedCity(
@@ -230,6 +239,8 @@ private fun ForecastWeatherScreenPreview() {
                     override fun onOptionSelect(
                         weatherSelectorOptions: WeatherSelectorOptions
                     ) = Unit
+
+                    override fun refreshTodayWeather() = Unit
 
                     override fun retry() = Unit
                 }
@@ -262,6 +273,8 @@ private fun ErrorWeatherScreenPreview() {
                     override fun onOptionSelect(
                         weatherSelectorOptions: WeatherSelectorOptions
                     ) = Unit
+
+                    override fun refreshTodayWeather() = Unit
 
                     override fun retry() = Unit
                 }

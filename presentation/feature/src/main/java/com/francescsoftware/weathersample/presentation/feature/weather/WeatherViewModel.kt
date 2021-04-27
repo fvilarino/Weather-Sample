@@ -10,6 +10,7 @@ import com.francescsoftware.weathersample.interactor.weather.WeatherLocation
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
+import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.type.getOrNull
 import com.francescsoftware.weathersample.utils.time.TimeFormatter
 import com.francescsoftware.weathersample.utils.time.isToday
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 interface WeatherCallbacks {
     fun onOptionSelect(weatherSelectorOptions: WeatherSelectorOptions)
+    fun refreshTodayWeather()
     fun retry()
 }
 
@@ -39,6 +41,10 @@ class WeatherViewModel @Inject constructor(
         onIntent(TodayMviIntent.OnOptionSelected(weatherSelectorOptions))
     }
 
+    override fun refreshTodayWeather() {
+        onIntent(TodayMviIntent.RefreshTodayWeather)
+    }
+
     override fun retry() {
         onIntent(TodayMviIntent.Retry)
     }
@@ -49,6 +55,7 @@ class WeatherViewModel @Inject constructor(
                 selectedCity = intent.selectedCity
                 load()
             }
+            TodayMviIntent.RefreshTodayWeather -> loadTodayWeather()
             TodayMviIntent.Retry -> load()
             is TodayMviIntent.OnOptionSelected -> handle(
                 TodayReduceAction.OnOptionSelected(intent.option)
@@ -66,6 +73,10 @@ class WeatherViewModel @Inject constructor(
                 todayState = reduceAction.currentWeather,
                 forecastItems = reduceAction.forecastItems,
             )
+            is TodayReduceAction.TodayLoaded -> state.copy(
+                loadState = WeatherLoadState.LOADED,
+                todayState = reduceAction.currentWeather,
+            )
             is TodayReduceAction.LoadError -> state.copy(
                 loadState = WeatherLoadState.ERROR,
                 errorMessage = reduceAction.message,
@@ -74,6 +85,31 @@ class WeatherViewModel @Inject constructor(
                 option = reduceAction.option
             )
         }
+
+    private suspend fun loadTodayWeather() {
+        val city = selectedCity ?: return
+        handle(TodayReduceAction.Loading)
+        val location = WeatherLocation.City(
+            name = city.name,
+            countryCode = city.countryCode,
+        )
+        getTodayWeatherInteractor.execute(location).fold(
+            onSuccess = { todayWeather ->
+                handle(
+                    TodayReduceAction.TodayLoaded(
+                        currentWeather = todayWeather.toWeatherCardState(),
+                    )
+                )
+            },
+            onFailure = {
+                handle(
+                    TodayReduceAction.LoadError(
+                        message = stringLookup.getString(R.string.failed_to_load_weather_data)
+                    )
+                )
+            }
+        )
+    }
 
     private suspend fun load() {
         val city = selectedCity

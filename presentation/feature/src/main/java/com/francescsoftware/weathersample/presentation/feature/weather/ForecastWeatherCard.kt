@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.shared.widget.InfoLabels
 import com.francescsoftware.weathersample.styles.CardElevation
+import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
+import com.francescsoftware.weathersample.styles.MarginTreble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
@@ -50,8 +52,12 @@ fun ForecastWeatherCard(
                     textAlign = TextAlign.Center,
                 )
             }
-            Row(modifier = Modifier.fillMaxWidth()) {
-                InfoLabels(modifier = Modifier.weight(1f)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = MarginTreble)
+            ) {
+                InfoLabels(modifier = Modifier.weight(1f).padding(start = MarginDouble)) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             text = stringResource(id = R.string.min_temperature_label),
@@ -86,7 +92,7 @@ fun ForecastWeatherCard(
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
-                InfoLabels(modifier = Modifier.weight(1f)) {
+                InfoLabels(modifier = Modifier.weight(1f).padding(end = MarginDouble)) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             text = stringResource(id = R.string.wind_speed_label),

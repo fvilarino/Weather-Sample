@@ -35,6 +35,7 @@ sealed class TodayEvent : Event
 
 sealed class TodayMviIntent : MviIntent {
     data class Load(val selectedCity: SelectedCity) : TodayMviIntent()
+    object RefreshTodayWeather : TodayMviIntent()
     object Retry : TodayMviIntent()
     data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayMviIntent()
 }
@@ -44,6 +45,10 @@ sealed class TodayReduceAction : ReduceAction {
     data class Loaded(
         val currentWeather: TodayWeatherCardState,
         val forecastItems: List<ForecastItem>
+    ) : TodayReduceAction()
+
+    data class TodayLoaded(
+        val currentWeather: TodayWeatherCardState,
     ) : TodayReduceAction()
 
     data class LoadError(val message: String) : TodayReduceAction()

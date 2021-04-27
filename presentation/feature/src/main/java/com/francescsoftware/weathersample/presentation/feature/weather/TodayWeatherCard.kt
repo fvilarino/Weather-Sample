@@ -26,6 +26,7 @@ import com.francescsoftware.weathersample.presentation.shared.R
 import com.francescsoftware.weathersample.presentation.shared.widget.InfoLabels
 import com.francescsoftware.weathersample.styles.CardElevation
 import com.francescsoftware.weathersample.styles.MarginSingle
+import com.francescsoftware.weathersample.styles.MarginTreble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.presentation.feature.R as featureR
 
@@ -48,18 +49,18 @@ fun TodayWeatherCard(
                     painter = painterResource(id = state.iconId),
                     contentDescription = null,
                     modifier = Modifier
-                        .weight(3f)
+                        .weight(2.5f)
                         .height(80.dp),
                 )
                 Column(
-                    modifier = Modifier.weight(4f),
+                    modifier = Modifier.weight(5f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(text = state.temperature, style = MaterialTheme.typography.h4)
                     Text(text = state.description, style = MaterialTheme.typography.body1)
                 }
                 Column(
-                    modifier = Modifier.weight(3f),
+                    modifier = Modifier.weight(2.5f),
                 ) {
                     InfoLabels {
                         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
@@ -99,7 +100,7 @@ fun TodayWeatherCard(
                 }
             }
             Row {
-                InfoLabels(modifier = Modifier.weight(1f)) {
+                InfoLabels(modifier = Modifier.weight(1f).padding(horizontal = MarginTreble)) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             text = stringResource(id = featureR.string.wind_speed_label),
@@ -123,7 +124,7 @@ fun TodayWeatherCard(
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
-                InfoLabels(modifier = Modifier.weight(1f)) {
+                InfoLabels(modifier = Modifier.weight(1f).padding(horizontal = MarginTreble)) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             text = stringResource(id = featureR.string.pressure_label),

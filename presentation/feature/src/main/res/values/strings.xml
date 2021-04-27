@@ -36,4 +36,5 @@
     <string name="failed_to_load_forecast">Failed to load forecast</string>
     <string name="no_results_found_label">No results found</string>
     <string name="weather_label">Weather</string>
+    <string name="refresh">Refresh</string>
 </resources>
