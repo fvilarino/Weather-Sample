@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.presentation.shared.mvi
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 class MviLifecycleObserver<S : State, E : Event, I : MviIntent>(
@@ -22,10 +23,8 @@ class MviLifecycleObserver<S : State, E : Event, I : MviIntent>(
         owner.lifecycleScope.launchWhenStarted {
             viewModel
                 .event
-                .collectLatest { consumable ->
-                    consumable.consume { event ->
-                        mviView.onEvent(event)
-                    }
+                .collect { event ->
+                    mviView.onEvent(event)
                 }
         }
     }

@@ -2,13 +2,12 @@ package com.francescsoftware.weathersample.presentation.shared.mvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
@@ -29,12 +28,12 @@ abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceActio
 ) : ViewModel() {
 
     private val stateFlow = MutableStateFlow<S>(initialState)
+    private val eventFlow = MutableSharedFlow<E>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
     protected val currentState: S
         get() = stateFlow.value
 
-    private val _event = MutableStateFlow<ConsumableValue<E>?>(null)
     val state: StateFlow<S> = stateFlow.asStateFlow()
-    val event: Flow<ConsumableValue<E>> = _event.filterNotNull()
+    val event: Flow<E> = eventFlow.asSharedFlow()
     private val intentFlow = MutableSharedFlow<I>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
     private val reduceFlow = MutableSharedFlow<R>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
 
@@ -58,7 +57,7 @@ abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceActio
     }
 
     fun onEvent(event: E) {
-        _event.value = ConsumableValue(event)
+        eventFlow.tryEmit(event)
     }
 
     protected fun handle(reduceAction: R) {
