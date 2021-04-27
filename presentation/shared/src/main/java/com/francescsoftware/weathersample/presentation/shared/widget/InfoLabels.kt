@@ -70,25 +70,25 @@ private fun InfoLabelsPreview() {
     WeatherSampleTheme {
         Surface(modifier = Modifier.width(320.dp)) {
             InfoLabels {
-            Text(
-                text = "Short:",
-                style = MaterialTheme.typography.body2,
-            )
-            Text(
-                text = "Short description",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(start = 8.dp),
-            )
-            Text(
-                text = "Long label:",
-                style = MaterialTheme.typography.body2,
-            )
-            Text(
-                text = "Long description",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(start = 8.dp),
-            )
-        }
+                Text(
+                    text = "Short:",
+                    style = MaterialTheme.typography.body2,
+                )
+                Text(
+                    text = "Short description",
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+                Text(
+                    text = "Long label:",
+                    style = MaterialTheme.typography.body2,
+                )
+                Text(
+                    text = "Long description",
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.padding(start = 8.dp),
+                )
+            }
         }
     }
 }
