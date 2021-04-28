@@ -35,6 +35,9 @@ sealed class CityEvent : Event {
 
 sealed class CityMviIntent : MviIntent {
     data class PrefixUpdated(val prefix: String) : CityMviIntent()
+    data class CitiesLoaded(val cities: List<CityResultModel>) : CityMviIntent()
+    object NoResults : CityMviIntent()
+    object LoadError : CityMviIntent()
 }
 
 sealed class CityReduceAction : ReduceAction {

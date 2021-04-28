@@ -63,13 +63,13 @@ class CityViewModel @Inject constructor(
                         onSuccess = { list ->
                             if (list.isNotEmpty()) {
                                 val cityModels = list.map { city -> city.toCityResultModel() }
-                                handle(CityReduceAction.Loaded(cities = cityModels))
+                                onIntent(CityMviIntent.CitiesLoaded(cityModels))
                             } else {
-                                handle(CityReduceAction.NoResults)
+                                onIntent(CityMviIntent.NoResults)
                             }
                         },
                         onFailure = {
-                            handle(CityReduceAction.LoadError)
+                            onIntent(CityMviIntent.LoadError)
                             onEvent(
                                 CityEvent.ShowSnackBar(
                                     stringLookup.getString(R.string.city_error_loading)
@@ -96,6 +96,9 @@ class CityViewModel @Inject constructor(
                     handle(CityReduceAction.Loaded(emptyList()))
                 }
             }
+            is CityMviIntent.CitiesLoaded -> handle(CityReduceAction.Loaded(cities = intent.cities))
+            CityMviIntent.NoResults -> handle(CityReduceAction.NoResults)
+            CityMviIntent.LoadError -> handle(CityReduceAction.LoadError)
         }
     }
 
