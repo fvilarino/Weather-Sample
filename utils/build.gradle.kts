@@ -40,7 +40,6 @@ android {
 
 dependencies {
     implementation(Depends.Android.ktx)
-    implementation(Depends.Kotlin.kotlinStdLib)
     implementation(Depends.Kotlin.coroutinesCore)
     implementation(Depends.Kotlin.coroutinesAndroid)
     implementation(Depends.Hilt.daggerHiltAndroid)

@@ -69,7 +69,6 @@ dependencies {
     kapt(Depends.Hilt.androidxHiltCompiler)
 
     // kotlin
-    implementation(Depends.Kotlin.kotlinStdLib)
     implementation(Depends.Kotlin.coroutinesCore)
     implementation(Depends.Kotlin.coroutinesAndroid)
     implementation(Depends.Kotlin.kotlinSerialization)

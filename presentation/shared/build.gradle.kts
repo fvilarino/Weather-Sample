@@ -51,7 +51,6 @@ dependencies {
     implementation(Depends.Android.archLifeCycleViewModel)
     implementation(Depends.Android.lifecycleCommon)
 
-    implementation(Depends.Kotlin.kotlinStdLib)
     implementation(Depends.Kotlin.coroutinesCore)
     implementation(Depends.Kotlin.coroutinesAndroid)
 
