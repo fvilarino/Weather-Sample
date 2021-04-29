@@ -15,12 +15,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
@@ -37,48 +39,19 @@ enum class WeatherSelectorOptions {
     Forecast,
 }
 
+private const val SelectorTransitionDurationMillis = 300
+
 @Composable
 fun WeatherSelector(
     selectedOption: WeatherSelectorOptions,
     onOptionSelect: (WeatherSelectorOptions) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val transition = updateTransition(selectedOption, label = "selectorColor")
-    val leftBackgroundColor by transition.animateColor(
-        transitionSpec = { tween(durationMillis = 300) }, label = "leftColorSpec"
-    ) { state ->
-        when (state) {
-            WeatherSelectorOptions.Today -> MaterialTheme.colors.secondary
-            WeatherSelectorOptions.Forecast -> MaterialTheme.colors.surface
-        }
-    }
-    val rightTextColor by transition.animateColor(
-        transitionSpec = { tween(durationMillis = 300) }, label = "leftTextColorSpec"
-    ) { state ->
-        when (state) {
-            WeatherSelectorOptions.Today -> MaterialTheme.colors.onSurface
-            WeatherSelectorOptions.Forecast -> MaterialTheme.colors.onSecondary
-        }
-    }
-    val rightBackgroundColor by transition.animateColor(
-        transitionSpec = { tween(durationMillis = 300) }, label = "rightColorSpec"
-    ) { state ->
-        when (state) {
-            WeatherSelectorOptions.Today -> MaterialTheme.colors.surface
-            WeatherSelectorOptions.Forecast -> MaterialTheme.colors.secondary
-        }
-    }
-    val leftTextColor by transition.animateColor(
-        transitionSpec = { tween(durationMillis = 300) }, label = "rightTextColorSpec"
-    ) { state ->
-        when (state) {
-            WeatherSelectorOptions.Today -> MaterialTheme.colors.onSecondary
-            WeatherSelectorOptions.Forecast -> MaterialTheme.colors.onSurface
-        }
-    }
-
+    val transitionData = weatherSelectorTransitionData(selectedOption)
     EqualSizeTiles(
-        modifier = modifier.selectableGroup().height(40.dp)
+        modifier = modifier
+            .selectableGroup()
+            .height(40.dp)
     ) {
         Text(
             text = stringResource(id = R.string.today_weather_button_label),
@@ -91,7 +64,7 @@ fun WeatherSelector(
                         bottomStartPercent = 50,
                     )
                 )
-                .background(leftBackgroundColor)
+                .background(transitionData.leftBackgroundColor)
                 .selectable(
                     selected = selectedOption == WeatherSelectorOptions.Today,
                     onClick = { onOptionSelect(WeatherSelectorOptions.Today) },
@@ -99,7 +72,7 @@ fun WeatherSelector(
                 )
                 .padding(vertical = MarginSingle, horizontal = MarginDouble),
             textAlign = TextAlign.Center,
-            color = leftTextColor,
+            color = transitionData.leftTextColor,
         )
         Text(
             text = stringResource(id = R.string.forecast_weather_button_label),
@@ -117,10 +90,73 @@ fun WeatherSelector(
                     onClick = { onOptionSelect(WeatherSelectorOptions.Forecast) },
                     role = Role.RadioButton,
                 )
-                .background(rightBackgroundColor)
+                .background(transitionData.rightBackgroundColor)
                 .padding(vertical = MarginSingle, horizontal = MarginDouble),
             textAlign = TextAlign.Center,
-            color = rightTextColor,
+            color = transitionData.rightTextColor,
+        )
+    }
+}
+
+private class WeatherSelectorTransitionData(
+    leftBackgroundColor: State<Color>,
+    rightBackgroundColor: State<Color>,
+    leftTextColor: State<Color>,
+    rightTextColor: State<Color>,
+) {
+    val leftBackgroundColor by leftBackgroundColor
+    val rightBackgroundColor by rightBackgroundColor
+    val leftTextColor by leftTextColor
+    val rightTextColor by rightTextColor
+}
+
+@Composable
+private fun weatherSelectorTransitionData(
+    selectedOption: WeatherSelectorOptions
+): WeatherSelectorTransitionData {
+    val transition = updateTransition(selectedOption, label = "selectorColor")
+    val leftBackgroundColor = transition.animateColor(
+        transitionSpec = { tween(durationMillis = SelectorTransitionDurationMillis) },
+        label = "leftColorSpec"
+    ) { state ->
+        when (state) {
+            WeatherSelectorOptions.Today -> MaterialTheme.colors.secondary
+            WeatherSelectorOptions.Forecast -> MaterialTheme.colors.surface
+        }
+    }
+    val rightTextColor = transition.animateColor(
+        transitionSpec = { tween(durationMillis = SelectorTransitionDurationMillis) },
+        label = "leftTextColorSpec"
+    ) { state ->
+        when (state) {
+            WeatherSelectorOptions.Today -> MaterialTheme.colors.onSurface
+            WeatherSelectorOptions.Forecast -> MaterialTheme.colors.onSecondary
+        }
+    }
+    val rightBackgroundColor = transition.animateColor(
+        transitionSpec = { tween(durationMillis = SelectorTransitionDurationMillis) },
+        label = "rightColorSpec"
+    ) { state ->
+        when (state) {
+            WeatherSelectorOptions.Today -> MaterialTheme.colors.surface
+            WeatherSelectorOptions.Forecast -> MaterialTheme.colors.secondary
+        }
+    }
+    val leftTextColor = transition.animateColor(
+        transitionSpec = { tween(durationMillis = SelectorTransitionDurationMillis) },
+        label = "rightTextColorSpec"
+    ) { state ->
+        when (state) {
+            WeatherSelectorOptions.Today -> MaterialTheme.colors.onSecondary
+            WeatherSelectorOptions.Forecast -> MaterialTheme.colors.onSurface
+        }
+    }
+    return remember(selectedOption) {
+        WeatherSelectorTransitionData(
+            leftBackgroundColor = leftBackgroundColor,
+            rightBackgroundColor = rightBackgroundColor,
+            leftTextColor = leftTextColor,
+            rightTextColor = rightTextColor
         )
     }
 }
