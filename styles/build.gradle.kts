@@ -35,7 +35,6 @@ android {
 }
 
 dependencies {
-    implementation(Depends.Kotlin.kotlinStdLib)
     implementation(Depends.Kotlin.collectionsImmutable)
     implementation(Depends.Compose.composeUi)
     implementation(Depends.Compose.composeMaterial)
