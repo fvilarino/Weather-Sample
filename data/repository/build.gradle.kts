@@ -41,9 +41,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
-        Config.Compiler.freeCompilerArgs.forEach { arg ->
-            freeCompilerArgs = freeCompilerArgs + arg
-        }
+        freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
 }
 

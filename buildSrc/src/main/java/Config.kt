@@ -6,7 +6,7 @@ object Config {
 
     object Compiler {
         const val jvmTarget = "1.8"
-        val freeCompilerArgs = arrayOf(
+        val freeCompilerArgs = listOf(
             "-Xuse-experimental=kotlin.time.ExperimentalTime"
         )
     }
