@@ -34,16 +34,14 @@ import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 @Composable
 fun WeatherScreen(
     viewModel: WeatherViewModel,
-    selectedCity: SelectedCity,
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(key1 = viewModel) {
-        viewModel.onIntent(TodayMviIntent.Load(selectedCity))
+        viewModel.onIntent(TodayMviIntent.Load)
     }
     val state = viewModel.state.collectAsState()
     WeatherScreen(
         state.value,
-        selectedCity,
         viewModel,
         modifier
     )
@@ -52,7 +50,6 @@ fun WeatherScreen(
 @Composable
 private fun WeatherScreen(
     state: TodayState,
-    selectedCity: SelectedCity,
     weatherCallbacks: WeatherCallbacks,
     modifier: Modifier = Modifier,
 ) {
@@ -68,8 +65,8 @@ private fun WeatherScreen(
         Text(
             text = stringResource(
                 id = R.string.weather_city_name,
-                selectedCity.name,
-                selectedCity.countryCode
+                state.cityName,
+                state.cityCountryCode,
             ),
             style = MaterialTheme.typography.h4,
         )
@@ -182,6 +179,8 @@ private fun ForecastWeatherScreenPreview() {
         Surface(modifier = Modifier.width(420.dp)) {
             val state = TodayState(
                 loadState = WeatherLoadState.LOADED,
+                cityName = "Vancouver",
+                cityCountryCode = "CA",
                 todayState = TodayWeatherCardState(
                     temperature = "16.4°C",
                     minTemperature = "11.3°C",
@@ -227,14 +226,8 @@ private fun ForecastWeatherScreenPreview() {
                 option = WeatherSelectorOptions.Today,
                 errorMessage = ""
             )
-            val city = SelectedCity(
-                name = "Vancouver",
-                country = "Canada",
-                countryCode = "CA"
-            )
             WeatherScreen(
                 state = state,
-                selectedCity = city,
                 weatherCallbacks = object : WeatherCallbacks {
                     override fun onOptionSelect(
                         weatherSelectorOptions: WeatherSelectorOptions
@@ -256,19 +249,15 @@ private fun ErrorWeatherScreenPreview() {
         Surface(modifier = Modifier.width(420.dp)) {
             val state = TodayState(
                 loadState = WeatherLoadState.ERROR,
+                cityName = "Vancouver",
+                cityCountryCode = "CA",
                 todayState = TodayWeatherCardState(),
                 forecastItems = emptyList(),
                 option = WeatherSelectorOptions.Forecast,
                 errorMessage = ""
             )
-            val city = SelectedCity(
-                name = "Vancouver",
-                country = "Canada",
-                countryCode = "CA"
-            )
             WeatherScreen(
                 state = state,
-                selectedCity = city,
                 weatherCallbacks = object : WeatherCallbacks {
                     override fun onOptionSelect(
                         weatherSelectorOptions: WeatherSelectorOptions

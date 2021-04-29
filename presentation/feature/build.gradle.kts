@@ -3,6 +3,7 @@ plugins {
     id(Depends.ModulePlugins.kotlinPlugin)
     id(Depends.ModulePlugins.daggerHiltPlugin)
     id(Depends.ModulePlugins.kotlinParcelizePlugin)
+    id(Depends.ModulePlugins.kotlinSerializationPlugin)
     id(Depends.ModulePlugins.safeArgsPlugin)
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
@@ -71,6 +72,7 @@ dependencies {
 
     implementation(Depends.Kotlin.coroutinesCore)
     implementation(Depends.Kotlin.coroutinesAndroid)
+    implementation(Depends.Kotlin.kotlinSerialization)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)

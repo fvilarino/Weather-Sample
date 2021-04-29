@@ -20,7 +20,6 @@ import com.francescsoftware.weathersample.presentation.feature.navigator.Navigat
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
 import com.francescsoftware.weathersample.presentation.feature.search.CityScreen
 import com.francescsoftware.weathersample.presentation.feature.search.CityViewModel
-import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
 import com.francescsoftware.weathersample.presentation.feature.weather.WeatherScreen
 import com.francescsoftware.weathersample.presentation.feature.weather.WeatherViewModel
 import com.francescsoftware.weathersample.styles.MarginDouble
@@ -59,16 +58,17 @@ class MainActivity : AppCompatActivity() {
                         }
                     },
                 ) {
-                    NavHost(navController, startDestination = NavigationDestination.CitySearch.route) {
-                        composable(route = NavigationDestination.CitySearch.route) {
+                    NavHost(navController, startDestination = NavigationDestination.CitySearch.getRoute()) {
+                        composable(route = NavigationDestination.CitySearch.getRoute()) {
                             val cityViewModel: CityViewModel = hiltNavGraphViewModel()
                             CityScreen(cityViewModel)
                         }
-                        composable(NavigationDestination.Weather.route) {
+                        composable(
+                            route = NavigationDestination.Weather.getRoute(),
+                            arguments = NavigationDestination.Weather.getArguments(),
+                        ) {
                             val weatherViewModel: WeatherViewModel = hiltNavGraphViewModel()
-                            val city = navController.previousBackStackEntry?.arguments?.getParcelable<SelectedCity>("city")
-                                ?: throw IllegalStateException("No arguments available")
-                            WeatherScreen(weatherViewModel, city)
+                            WeatherScreen(weatherViewModel)
                         }
                     }
                 }

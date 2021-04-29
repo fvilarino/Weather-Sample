@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
+import androidx.lifecycle.SavedStateHandle
 import com.francescsoftware.weathersample.interactor.weather.Forecast
 import com.francescsoftware.weathersample.interactor.weather.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.ForecastEntry
@@ -8,6 +9,7 @@ import com.francescsoftware.weathersample.interactor.weather.GetTodayWeatherInte
 import com.francescsoftware.weathersample.interactor.weather.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.WeatherLocation
 import com.francescsoftware.weathersample.presentation.feature.R
+import com.francescsoftware.weathersample.presentation.feature.navigator.NavigationDestination
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.type.fold
@@ -27,6 +29,7 @@ interface WeatherCallbacks {
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
     private val getForecastInteractor: GetForecastInteractor,
     private val timeFormatter: TimeFormatter,
@@ -35,7 +38,7 @@ class WeatherViewModel @Inject constructor(
     TodayState.initial
 ), WeatherCallbacks {
 
-    private var selectedCity: SelectedCity? = null
+    private val selectedCity: SelectedCity = NavigationDestination.Weather.decode(savedStateHandle)
 
     override fun onOptionSelect(weatherSelectorOptions: WeatherSelectorOptions) {
         onIntent(TodayMviIntent.OnOptionSelected(weatherSelectorOptions))
@@ -51,10 +54,7 @@ class WeatherViewModel @Inject constructor(
 
     override suspend fun executeIntent(intent: TodayMviIntent) {
         when (intent) {
-            is TodayMviIntent.Load -> {
-                selectedCity = intent.selectedCity
-                load()
-            }
+            TodayMviIntent.Load -> load()
             TodayMviIntent.RefreshTodayWeather -> loadTodayWeather()
             TodayMviIntent.Retry -> load()
             is TodayMviIntent.OnOptionSelected -> handle(
@@ -65,6 +65,10 @@ class WeatherViewModel @Inject constructor(
 
     override fun reduce(state: TodayState, reduceAction: TodayReduceAction): TodayState =
         when (reduceAction) {
+            is TodayReduceAction.CityUpdated -> state.copy(
+                cityName = reduceAction.name,
+                cityCountryCode = reduceAction.countryCode,
+            )
             TodayReduceAction.Loading -> state.copy(
                 loadState = WeatherLoadState.LOADING,
             )
@@ -87,11 +91,10 @@ class WeatherViewModel @Inject constructor(
         }
 
     private suspend fun loadTodayWeather() {
-        val city = selectedCity ?: return
         handle(TodayReduceAction.Loading)
         val location = WeatherLocation.City(
-            name = city.name,
-            countryCode = city.countryCode,
+            name = selectedCity.name,
+            countryCode = selectedCity.countryCode,
         )
         getTodayWeatherInteractor.execute(location).fold(
             onSuccess = { todayWeather ->
@@ -112,12 +115,16 @@ class WeatherViewModel @Inject constructor(
     }
 
     private suspend fun load() {
-        val city = selectedCity
-        check(city != null) { "Invalid state, selected city is null" }
+        handle(
+            TodayReduceAction.CityUpdated(
+                name = selectedCity.name,
+                countryCode = selectedCity.countryCode
+            )
+        )
         handle(TodayReduceAction.Loading)
         val location = WeatherLocation.City(
-            name = city.name,
-            countryCode = city.countryCode,
+            name = selectedCity.name,
+            countryCode = selectedCity.countryCode,
         )
         val current = getTodayWeatherInteractor.execute(location).getOrNull()
         val forecast = getForecastInteractor.execute(location).getOrNull()

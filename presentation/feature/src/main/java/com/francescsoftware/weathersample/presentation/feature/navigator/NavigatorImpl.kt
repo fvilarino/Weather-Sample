@@ -36,8 +36,7 @@ class NavigatorImpl @Inject constructor(
     }
 
     override fun cityToWeather(city: SelectedCity) {
-        navController.currentBackStackEntry?.arguments?.putParcelable("city", city)
-        navController.navigate(NavigationDestination.Weather.route)
+        navController.navigate(NavigationDestination.Weather.getDestination(city))
         currentDestination.value = CurrentDestination(
             isRoot = false,
             title = stringLookup.getString(NavigationDestination.Weather.titleId),

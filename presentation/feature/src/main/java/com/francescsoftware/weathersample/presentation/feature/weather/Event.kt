@@ -15,6 +15,8 @@ enum class WeatherLoadState {
 data class TodayState(
     val loadState: WeatherLoadState,
     val option: WeatherSelectorOptions,
+    val cityName: String,
+    val cityCountryCode: String,
     val todayState: TodayWeatherCardState,
     val forecastItems: List<ForecastItem>,
     val errorMessage: String,
@@ -24,6 +26,8 @@ data class TodayState(
         val initial = TodayState(
             loadState = WeatherLoadState.IDLE,
             option = WeatherSelectorOptions.Today,
+            cityName = "",
+            cityCountryCode = "",
             todayState = TodayWeatherCardState(),
             forecastItems = emptyList(),
             errorMessage = "",
@@ -34,13 +38,14 @@ data class TodayState(
 sealed class TodayEvent : Event
 
 sealed class TodayMviIntent : MviIntent {
-    data class Load(val selectedCity: SelectedCity) : TodayMviIntent()
+    object Load : TodayMviIntent()
     object RefreshTodayWeather : TodayMviIntent()
     object Retry : TodayMviIntent()
     data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayMviIntent()
 }
 
 sealed class TodayReduceAction : ReduceAction {
+    data class CityUpdated(val name: String, val countryCode: String) : TodayReduceAction()
     object Loading : TodayReduceAction()
     data class Loaded(
         val currentWeather: TodayWeatherCardState,
