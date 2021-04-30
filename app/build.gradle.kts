@@ -36,6 +36,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
+        freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
     kapt {
         javacOptions {

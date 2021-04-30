@@ -7,7 +7,9 @@ object Config {
     object Compiler {
         const val jvmTarget = "1.8"
         val freeCompilerArgs = listOf(
-            "-Xuse-experimental=kotlin.time.ExperimentalTime"
+            "-Xuse-experimental=kotlin.time.ExperimentalTime",
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
         )
     }
 }
