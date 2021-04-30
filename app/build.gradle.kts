@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.BuildConfig.compileSdkVersion)
+    compileSdk = Versions.BuildConfig.compileSdkVersion
 
     defaultConfig {
         applicationId = Config.Application.applicationId
-        minSdkVersion(Versions.BuildConfig.minSdkVersion)
-        targetSdkVersion(Versions.BuildConfig.targetSdkVersion)
+        minSdk = Versions.BuildConfig.minSdkVersion
+        targetSdk = Versions.BuildConfig.targetSdkVersion
         versionCode = Versions.BuildConfig.appVersionCode
         versionName = Versions.BuildConfig.appVersionName
         testInstrumentationRunner = Depends.TestLibraries.testRunner

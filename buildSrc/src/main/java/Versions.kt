@@ -9,7 +9,7 @@ object Versions {
     }
 
     object Plugin {
-        const val androidGradlePluginVersion = "7.0.0-alpha14"
+        const val androidGradlePluginVersion = "7.0.0-alpha15"
         const val navigationGradlePluginVersion = "2.3.5"
         const val hiltGradlePluginVersion = "2.34.1-beta"
         const val versionsPluginVersion = "0.38.0"
