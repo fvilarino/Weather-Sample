@@ -9,12 +9,15 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.francescsoftware.weathersample.presentation.feature.navigator.NavigationDestination
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
@@ -38,21 +41,27 @@ class MainActivity : AppCompatActivity() {
         setContent {
             WeatherSampleTheme {
                 val navController = rememberNavController()
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE).orEmpty()
+                val currentDestination = when {
+                    NavigationDestination.CitySearch.isRoute(currentRoute) -> NavigationDestination.CitySearch
+                    NavigationDestination.Weather.isRoute(currentRoute) -> NavigationDestination.Weather
+                    else -> NavigationDestination.CitySearch
+                }
                 navigator.setNavController(navController)
-                val state = navigator.currentDestination.collectAsState()
                 Scaffold(
                     topBar = {
                         TopAppBar {
-                            if (state.value.icon != 0) {
+                            if (currentDestination.iconId != 0) {
                                 IconButton(onClick = { navigator.onBackClick() }) {
                                     Icon(
-                                        painter = painterResource(id = state.value.icon),
+                                        painter = painterResource(id = currentDestination.iconId),
                                         contentDescription = null,
                                     )
                                 }
                             }
                             Text(
-                                text = state.value.title,
+                                text = stringResource(id = currentDestination.titleId),
                                 modifier = Modifier.padding(start = MarginDouble)
                             )
                         }

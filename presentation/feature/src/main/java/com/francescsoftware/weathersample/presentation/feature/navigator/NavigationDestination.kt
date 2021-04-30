@@ -6,7 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NamedNavArgument
 import androidx.navigation.compose.navArgument
-import androidx.navigation.compose.navigate
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
 import kotlinx.serialization.decodeFromString
@@ -21,6 +20,7 @@ sealed class NavigationDestination {
     abstract val iconId: Int
 
     abstract fun getRoute(): String
+    abstract fun isRoute(route: String): Boolean
     abstract fun getArguments(): List<NamedNavArgument>
 
     object CitySearch : NavigationDestination() {
@@ -30,6 +30,7 @@ sealed class NavigationDestination {
         private const val route: String = "city_search"
 
         override fun getRoute(): String = route
+        override fun isRoute(route: String): Boolean = route == this.route
         override fun getArguments(): List<NamedNavArgument> = emptyList()
 
         fun getDestination(): String = route
@@ -43,7 +44,7 @@ sealed class NavigationDestination {
         private const val selectedCityArg: String = "selectedCity"
 
         override fun getRoute(): String = "$route/{${selectedCityArg}}"
-
+        override fun isRoute(route: String): Boolean = route.startsWith(this.route)
         override fun getArguments(): List<NamedNavArgument> =
             listOf(navArgument(selectedCityArg) { type = NavType.StringType })
 

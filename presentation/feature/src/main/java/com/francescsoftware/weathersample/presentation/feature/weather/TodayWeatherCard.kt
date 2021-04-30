@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.presentation.feature.weather
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -50,7 +51,8 @@ fun TodayWeatherCard(
                     contentDescription = null,
                     modifier = Modifier
                         .weight(2.5f)
-                        .height(80.dp),
+                        .height(80.dp)
+                        .aspectRatio(ratio = 1f, matchHeightConstraintsFirst = true),
                 )
                 Column(
                     modifier = Modifier.weight(5f),
