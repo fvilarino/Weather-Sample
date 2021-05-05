@@ -16,15 +16,15 @@ object Versions {
     }
 
     object Kotlin {
-        const val kotlinVersion = "1.4.32"
-        const val coroutinesVersion = "1.4.3"
+        const val kotlinVersion = "1.5.0"
+        const val coroutinesVersion = "1.5.0-RC"
         const val ktxVersion = "1.6.0-alpha02"
-        const val kotlinSerializationVersion = "1.1.0"
+        const val kotlinSerializationVersion = "1.2.0"
     }
 
     object Android {
         const val appCompatVersion = "1.3.0-rc01"
-        const val constraintLayoutVersion = "2.1.0-beta01"
+        const val constraintLayoutVersion = "2.1.0-beta02"
         const val archLifeCycleViewModelVersion = "2.4.0-alpha01"
         const val lifecycleCommonVersion = "2.4.0-alpha01"
         const val navigationVersion = "2.3.5"
@@ -35,8 +35,8 @@ object Versions {
     }
 
     object Hilt {
-        const val daggerHiltAndroidVersion = "2.34.1-beta"
-        const val daggerHiltAndroidCompilerVersion = "2.34.1-beta"
+        const val daggerHiltAndroidVersion = "2.35.1"
+        const val daggerHiltAndroidCompilerVersion = "2.35.1"
         const val androidxHiltLifecycleViewModelVersion = "1.0.0-alpha03"
         const val androidxHiltCompilerVersion = "1.0.0-beta01"
     }
