@@ -94,8 +94,8 @@ private fun CityScreen(
             }
         )
         Spacer(modifier = Modifier.height(MarginTreble))
-        Crossfade(targetState = state.loadState) {
-            when (state.loadState) {
+        Crossfade(targetState = state.loadState) { loadState ->
+            when (loadState) {
                 LoadState.IDLE -> {
                 }
                 LoadState.LOADING -> {
