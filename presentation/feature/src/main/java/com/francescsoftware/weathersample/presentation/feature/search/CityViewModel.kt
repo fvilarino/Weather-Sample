@@ -8,6 +8,7 @@ import com.francescsoftware.weathersample.presentation.feature.navigator.Navigat
 import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
+import com.francescsoftware.weathersample.storage.selectedcity.SelectedCityStore
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.time.DurationUnit
@@ -31,6 +33,7 @@ private val DebounceMillis = 400L.toDuration(DurationUnit.MILLISECONDS)
 class CityViewModel @Inject constructor(
     private val getCitiesInteractor: GetCitiesInteractor,
     private val navigator: Navigator,
+    private val cityStore: SelectedCityStore,
     private val stringLookup: StringLookup,
 ) : MviViewModel<CityState, CityEvent, CityMviIntent, CityReduceAction>(
     initialState = CityState.initial
@@ -41,13 +44,10 @@ class CityViewModel @Inject constructor(
 
     override fun onCityClick(city: CityResultModel) {
         Timber.tag(TAG).d("Clicked on city [$city]")
-        navigator.cityToWeather(
-            SelectedCity(
-                name = city.name.toString(),
-                country = city.country.toString(),
-                countryCode = city.countryCode,
-            )
-        )
+        viewModelScope.launch {
+            cityStore.setSelectedCity(city.name.toString(), city.country.toString(), city.countryCode)
+            navigator.cityToWeather()
+        }
     }
 
     override fun onQueryChange(query: String) {

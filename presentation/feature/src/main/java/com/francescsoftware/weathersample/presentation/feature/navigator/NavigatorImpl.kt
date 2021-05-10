@@ -2,7 +2,6 @@ package com.francescsoftware.weathersample.presentation.feature.navigator
 
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
-import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
 import javax.inject.Inject
 
 class NavigatorImpl @Inject constructor() : Navigator {
@@ -17,7 +16,7 @@ class NavigatorImpl @Inject constructor() : Navigator {
         this.navController = navController
     }
 
-    override fun cityToWeather(city: SelectedCity) {
-        navController.navigate(NavigationDestination.Weather.getDestination(city))
+    override fun cityToWeather() {
+        navController.navigate(NavigationDestination.Weather.getDestination())
     }
 }

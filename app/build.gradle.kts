@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":data:repository"))
     implementation(project(":presentation:feature"))
     implementation(project(":presentation:shared"))
+    implementation(project(":presentation:storage"))
     implementation(project(":styles"))
     implementation(project(":utils"))
 
@@ -62,6 +63,10 @@ dependencies {
     implementation(Depends.Android.archLifeCycleViewModel)
     implementation(Depends.Android.lifecycleCommon)
     implementation(Depends.Material.material)
+
+    // store
+    implementation(Depends.Android.dataStore)
+    implementation(Depends.Google.protoBufJavaLite)
 
     // dagger
     implementation(Depends.Hilt.daggerHiltAndroid)

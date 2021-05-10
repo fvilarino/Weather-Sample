@@ -1,10 +1,9 @@
+import com.google.protobuf.gradle.*
+
 plugins {
     id(Depends.ModulePlugins.libraryPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
     id(Depends.ModulePlugins.daggerHiltPlugin)
-    id(Depends.ModulePlugins.kotlinParcelizePlugin)
-    id(Depends.ModulePlugins.kotlinSerializationPlugin)
-    id(Depends.ModulePlugins.safeArgsPlugin)
     id(Depends.ModulePlugins.protoBuf) version Versions.Plugin.protobufPluginVersion
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
@@ -28,10 +27,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        dataBinding = true
-        compose = true
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,52 +35,35 @@ android {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.composeVersion
-    }
 }
 
 dependencies {
 
-    implementation(project(":business:interactor"))
-    implementation(project(":core:type"))
-    implementation(project(":presentation:shared"))
-    implementation(project(":presentation:storage"))
-    implementation(project(":styles"))
-    implementation(project(":utils"))
-
-    // compose
-    implementation(Depends.Compose.composeUi)
-    implementation(Depends.Compose.composeMaterial)
-    implementation(Depends.Compose.composeUiTooling)
-    implementation(Depends.Compose.activityCompose)
-    implementation(Depends.Compose.navigationCompose)
-    implementation(Depends.Kotlin.collectionsImmutable)
-
-    implementation(Depends.Android.ktx)
-    implementation(Depends.Android.appCompat)
-    implementation(Depends.Material.material)
-    implementation(Depends.Android.constraintLayout)
-    implementation(Depends.Android.navigationFragment)
-    implementation(Depends.Android.navigationUi)
     implementation(Depends.Android.dataStore)
     implementation(Depends.Google.protoBufJavaLite)
-
-    implementation(Depends.Android.archLifeCycleViewModel)
-    implementation(Depends.Android.lifecycleCommon)
-
     implementation(Depends.Kotlin.coroutinesCore)
     implementation(Depends.Kotlin.coroutinesAndroid)
-    implementation(Depends.Kotlin.kotlinSerialization)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-    implementation(Depends.Hilt.androidxHiltNavigation)
     kapt(Depends.Hilt.androidxHiltCompiler)
-
-    implementation(Depends.Logging.timber)
 
     testImplementation(Depends.TestLibraries.jUnit)
     androidTestImplementation(Depends.TestLibraries.androidJUnit)
     androidTestImplementation(Depends.TestLibraries.espressoCore)
+}
+
+protobuf {
+    protoc {
+        artifact = Depends.Google.protoBufProtoc
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.plugins{
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

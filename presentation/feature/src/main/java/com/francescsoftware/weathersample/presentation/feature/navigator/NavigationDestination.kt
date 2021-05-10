@@ -2,15 +2,8 @@ package com.francescsoftware.weathersample.presentation.feature.navigator
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.NavType
 import androidx.navigation.compose.NamedNavArgument
-import androidx.navigation.compose.navArgument
 import com.francescsoftware.weathersample.presentation.feature.R
-import com.francescsoftware.weathersample.presentation.feature.weather.SelectedCity
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 sealed class NavigationDestination {
     @get: StringRes
@@ -41,21 +34,11 @@ sealed class NavigationDestination {
         override val iconId: Int = R.drawable.ic_arrow_back
 
         private const val route: String = "weather"
-        private const val selectedCityArg: String = "selectedCity"
 
-        override fun getRoute(): String = "$route/{${selectedCityArg}}"
+        override fun getRoute(): String = route
         override fun isRoute(route: String): Boolean = route.startsWith(this.route)
-        override fun getArguments(): List<NamedNavArgument> =
-            listOf(navArgument(selectedCityArg) { type = NavType.StringType })
+        override fun getArguments(): List<NamedNavArgument> = emptyList()
 
-        fun getDestination(selectedCity: SelectedCity): String {
-            val encodedCity = Json.encodeToString(selectedCity)
-            return "$route/$encodedCity"
-        }
-
-        fun decode(handle: SavedStateHandle): SelectedCity {
-            val city = handle.get<String>(selectedCityArg) ?: throw IllegalStateException("No city provided")
-            return Json.decodeFromString(city)
-        }
+        fun getDestination(): String = route
     }
 }

@@ -12,11 +12,12 @@ object Versions {
         const val androidGradlePluginVersion = "7.0.0-beta03"
         const val navigationGradlePluginVersion = "2.4.0-alpha02"
         const val hiltGradlePluginVersion = "2.36"
+        const val protobufPluginVersion = "0.8.12"
         const val versionsPluginVersion = "0.38.0"
     }
 
     object Compose {
-        const val composeVersion = "1.0.0-beta05"
+        const val composeVersion = "1.0.0-beta06"
         const val activityCompose = "1.3.0-alpha06"
         const val navigationCompose = "1.0.0-alpha10"
     }
@@ -35,10 +36,16 @@ object Versions {
         const val archLifeCycleViewModelVersion = "2.4.0-alpha01"
         const val lifecycleCommonVersion = "2.4.0-alpha01"
         const val navigationVersion = "2.4.0-alpha02"
+        const val dataStoreVersion = "1.0.0-beta01"
     }
 
     object Material {
         const val materialVersion = "1.4.0-alpha02"
+    }
+
+    object Google {
+        const val protoBufJavaLiteVersion = "3.10.0"
+        const val protoBufProtocVersion = "3.10.0"
     }
 
     object Hilt {

@@ -6,5 +6,5 @@ import com.francescsoftware.weathersample.presentation.feature.weather.SelectedC
 interface Navigator {
     fun onBackClick()
     fun setNavController(navController: NavController)
-    fun cityToWeather(city: SelectedCity)
+    fun cityToWeather()
 }

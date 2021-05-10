@@ -13,6 +13,7 @@ object Depends {
         const val libraryPlugin = "com.android.library"
         const val kotlinPlugin = "kotlin-android"
         const val daggerHiltPlugin = "dagger.hilt.android.plugin"
+        const val protoBuf = "com.google.protobuf"
         const val kotlinSerializationPlugin = "kotlinx-serialization"
         const val kotlinParcelizePlugin = "kotlin-parcelize"
         const val safeArgsPlugin = "androidx.navigation.safeargs.kotlin"
@@ -36,6 +37,7 @@ object Depends {
         const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.Android.navigationVersion}"
         const val archLifeCycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Android.archLifeCycleViewModelVersion}"
         const val lifecycleCommon = "androidx.lifecycle:lifecycle-common-java8:${Versions.Android.lifecycleCommonVersion}"
+        const val dataStore = "androidx.datastore:datastore:${Versions.Android.dataStoreVersion}"
     }
 
     object Compose {
@@ -68,6 +70,11 @@ object Depends {
 
     object Material {
         const val material = "com.google.android.material:material:${Versions.Material.materialVersion}"
+    }
+
+    object Google {
+        const val protoBufJavaLite = "com.google.protobuf:protobuf-javalite:${Versions.Google.protoBufJavaLiteVersion}"
+        const val protoBufProtoc = "com.google.protobuf:protoc:${Versions.Google.protoBufProtocVersion}"
     }
 
     object TestLibraries {

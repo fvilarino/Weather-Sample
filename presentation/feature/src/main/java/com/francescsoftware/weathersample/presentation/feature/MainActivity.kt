@@ -68,13 +68,14 @@ class MainActivity : AppCompatActivity() {
                     },
                 ) {
                     NavHost(navController, startDestination = NavigationDestination.CitySearch.getRoute()) {
-                        composable(route = NavigationDestination.CitySearch.getRoute()) {
+                        composable(
+                            route = NavigationDestination.CitySearch.getRoute()
+                        ) {
                             val cityViewModel: CityViewModel = hiltNavGraphViewModel()
                             CityScreen(cityViewModel)
                         }
                         composable(
                             route = NavigationDestination.Weather.getRoute(),
-                            arguments = NavigationDestination.Weather.getArguments(),
                         ) {
                             val weatherViewModel: WeatherViewModel = hiltNavGraphViewModel()
                             WeatherScreen(weatherViewModel)
