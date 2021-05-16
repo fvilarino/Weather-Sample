@@ -9,6 +9,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -48,7 +49,6 @@ class MainActivity : AppCompatActivity() {
                     NavigationDestination.Weather.isRoute(currentRoute) -> NavigationDestination.Weather
                     else -> NavigationDestination.CitySearch
                 }
-                navigator.setNavController(navController)
                 Scaffold(
                     topBar = {
                         TopAppBar {
@@ -81,6 +81,9 @@ class MainActivity : AppCompatActivity() {
                             WeatherScreen(weatherViewModel)
                         }
                     }
+                }
+                LaunchedEffect(key1 = navController) {
+                    navigator.setNavController(navController)
                 }
             }
         }
