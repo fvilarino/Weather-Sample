@@ -17,7 +17,7 @@ object Versions {
 
     object Kotlin {
         const val kotlinVersion = "1.5.0"
-        const val coroutinesVersion = "1.5.0-RC"
+        const val coroutinesVersion = "1.5.0"
         const val ktxVersion = "1.6.0-alpha02"
         const val kotlinSerializationVersion = "1.2.0"
     }
