@@ -13,7 +13,9 @@ internal fun Double.formatTemperature(
 )
 
 internal fun TodayWeather.formatDescription(): CharSequence =
-    weather.description.capitalize(Locale.getDefault())
+    weather.description.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+    }
 
 internal fun Double.formatWind(
     stringLookup: StringLookup,
