@@ -11,7 +11,7 @@ object Versions {
     object Plugin {
         const val androidGradlePluginVersion = "7.0.0-alpha15"
         const val navigationGradlePluginVersion = "2.3.5"
-        const val hiltGradlePluginVersion = "2.34.1-beta"
+        const val hiltGradlePluginVersion = "2.36"
         const val versionsPluginVersion = "0.38.0"
     }
 
@@ -35,10 +35,9 @@ object Versions {
     }
 
     object Hilt {
-        const val daggerHiltAndroidVersion = "2.35.1"
-        const val daggerHiltAndroidCompilerVersion = "2.35.1"
-        const val androidxHiltLifecycleViewModelVersion = "1.0.0-alpha03"
-        const val androidxHiltCompilerVersion = "1.0.0-beta01"
+        const val daggerHiltAndroidVersion = "2.36"
+        const val daggerHiltAndroidCompilerVersion = "2.36"
+        const val androidxHiltCompilerVersion = "1.0.0"
     }
 
     object Network {

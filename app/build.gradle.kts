@@ -65,7 +65,6 @@ dependencies {
     // dagger
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-    implementation(Depends.Hilt.androidxHiltLifecycleViewModel)
     kapt(Depends.Hilt.androidxHiltCompiler)
 
     // kotlin
