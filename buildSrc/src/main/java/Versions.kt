@@ -9,24 +9,24 @@ object Versions {
     }
 
     object Plugin {
-        const val androidGradlePluginVersion = "7.0.0-beta03"
-        const val navigationGradlePluginVersion = "2.4.0-alpha02"
-        const val hiltGradlePluginVersion = "2.36"
+        const val androidGradlePluginVersion = "7.1.0-alpha02"
+        const val navigationGradlePluginVersion = "2.4.0-alpha03"
+        const val hiltGradlePluginVersion = "2.37"
         const val protobufPluginVersion = "0.8.12"
         const val versionsPluginVersion = "0.38.0"
     }
 
     object Compose {
-        const val composeVersion = "1.0.0-beta06"
+        const val composeVersion = "1.0.0-beta09"
         const val activityCompose = "1.3.0-alpha06"
-        const val navigationCompose = "1.0.0-alpha10"
+        const val navigationCompose = Plugin.navigationGradlePluginVersion
     }
 
     object Kotlin {
-        const val kotlinVersion = "1.5.0"
+        const val kotlinVersion = "1.5.10"
         const val coroutinesVersion = "1.5.0"
         const val ktxVersion = "1.6.0-alpha02"
-        const val kotlinSerializationVersion = "1.2.0"
+        const val kotlinSerializationVersion = "1.2.1"
         const val collectionsImmutable = "0.3.4"
     }
 
@@ -35,7 +35,7 @@ object Versions {
         const val constraintLayoutVersion = "2.1.0-beta02"
         const val archLifeCycleViewModelVersion = "2.4.0-alpha01"
         const val lifecycleCommonVersion = "2.4.0-alpha01"
-        const val navigationVersion = "2.4.0-alpha02"
+        const val navigationVersion = Plugin.navigationGradlePluginVersion
         const val dataStoreVersion = "1.0.0-beta01"
     }
 
@@ -49,10 +49,9 @@ object Versions {
     }
 
     object Hilt {
-        const val daggerHiltAndroidVersion = "2.36"
-        const val daggerHiltAndroidCompilerVersion = "2.36"
-        const val androidxHiltNavigation = "1.0.0-alpha01"
-        const val androidxHiltCompilerVersion = "1.0.0"
+        const val daggerHiltAndroidVersion = Plugin.hiltGradlePluginVersion
+        const val daggerHiltAndroidCompilerVersion = Plugin.hiltGradlePluginVersion
+        const val androidxHiltNavigation = "1.0.0-alpha03"
     }
 
     object Network {

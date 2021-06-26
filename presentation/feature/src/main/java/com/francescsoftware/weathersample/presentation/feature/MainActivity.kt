@@ -14,8 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
-import androidx.navigation.compose.KEY_ROUTE
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             WeatherSampleTheme {
                 val navController = rememberNavController()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE).orEmpty()
+                val currentRoute = navBackStackEntry?.destination?.route
                 val currentDestination = when {
                     NavigationDestination.CitySearch.isRoute(currentRoute) -> NavigationDestination.CitySearch
                     NavigationDestination.Weather.isRoute(currentRoute) -> NavigationDestination.Weather
@@ -71,13 +70,13 @@ class MainActivity : AppCompatActivity() {
                         composable(
                             route = NavigationDestination.CitySearch.getRoute()
                         ) {
-                            val cityViewModel: CityViewModel = hiltNavGraphViewModel()
+                            val cityViewModel: CityViewModel = hiltViewModel()
                             CityScreen(cityViewModel)
                         }
                         composable(
                             route = NavigationDestination.Weather.getRoute(),
                         ) {
-                            val weatherViewModel: WeatherViewModel = hiltNavGraphViewModel()
+                            val weatherViewModel: WeatherViewModel = hiltViewModel()
                             WeatherScreen(weatherViewModel)
                         }
                     }

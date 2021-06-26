@@ -1,7 +1,6 @@
 package com.francescsoftware.weathersample.presentation.feature.navigator
 
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import javax.inject.Inject
 
 class NavigatorImpl @Inject constructor() : Navigator {

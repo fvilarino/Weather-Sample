@@ -33,14 +33,15 @@ android {
         compose = true
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
     composeOptions {
+        kotlinCompilerVersion = Versions.Kotlin.kotlinVersion
         kotlinCompilerExtensionVersion = Versions.Compose.composeVersion
     }
 }
@@ -81,7 +82,6 @@ dependencies {
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
     implementation(Depends.Hilt.androidxHiltNavigation)
-    kapt(Depends.Hilt.androidxHiltCompiler)
 
     implementation(Depends.Logging.timber)
 

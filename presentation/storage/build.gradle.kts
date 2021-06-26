@@ -28,8 +28,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
@@ -46,7 +46,6 @@ dependencies {
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-    kapt(Depends.Hilt.androidxHiltCompiler)
 
     testImplementation(Depends.TestLibraries.jUnit)
     androidTestImplementation(Depends.TestLibraries.androidJUnit)
