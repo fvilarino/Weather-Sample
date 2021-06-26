@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.presentation.feature.R
@@ -68,6 +69,8 @@ private fun WeatherScreen(
                 state.cityName,
                 state.cityCountryCode,
             ),
+            modifier = Modifier.padding(horizontal = MarginDouble),
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.h4,
         )
         Spacer(modifier = Modifier.height(MarginQuad))
@@ -79,8 +82,8 @@ private fun WeatherScreen(
         Crossfade(
             targetState = state.loadState,
             modifier = Modifier.fillMaxSize()
-        ) {
-            when (state.loadState) {
+        ) { loadState ->
+            when (loadState) {
                 WeatherLoadState.IDLE -> {
                 }
                 WeatherLoadState.LOADING -> LoadingSpinner()
@@ -179,7 +182,7 @@ private fun ForecastWeatherScreenPreview() {
         Surface(modifier = Modifier.width(420.dp)) {
             val state = TodayState(
                 loadState = WeatherLoadState.LOADED,
-                cityName = "Vancouver",
+                cityName = "Coquitlam, British Columbia",
                 cityCountryCode = "CA",
                 todayState = TodayWeatherCardState(
                     temperature = "16.4°C",
