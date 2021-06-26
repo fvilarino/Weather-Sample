@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.presentation.feature.search
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
@@ -24,7 +23,10 @@ fun CityCard(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
 ) {
-    Card(modifier = modifier.clickable(onClick = { onClick(city) })) {
+    Card(
+        onClick = { onClick(city) },
+        modifier = modifier,
+    ) {
         InfoLabels(
             modifier = Modifier.padding(contentPadding)
         ) {
@@ -58,7 +60,6 @@ fun CityCard(
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
