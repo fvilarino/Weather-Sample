@@ -13,7 +13,7 @@ object Versions {
         const val navigationGradlePluginVersion = "2.4.0-alpha03"
         const val hiltGradlePluginVersion = "2.37"
         const val protobufPluginVersion = "0.8.12"
-        const val versionsPluginVersion = "0.38.0"
+        const val versionsPluginVersion = "0.39.0"
     }
 
     object Compose {
@@ -25,27 +25,27 @@ object Versions {
     object Kotlin {
         const val kotlinVersion = "1.5.10"
         const val coroutinesVersion = "1.5.0"
-        const val ktxVersion = "1.6.0-alpha02"
+        const val ktxVersion = "1.6.0-rc01"
         const val kotlinSerializationVersion = "1.2.1"
         const val collectionsImmutable = "0.3.4"
     }
 
     object Android {
-        const val appCompatVersion = "1.3.0-rc01"
+        const val appCompatVersion = "1.4.0-alpha02"
         const val constraintLayoutVersion = "2.1.0-beta02"
-        const val archLifeCycleViewModelVersion = "2.4.0-alpha01"
-        const val lifecycleCommonVersion = "2.4.0-alpha01"
+        const val archLifeCycleViewModelVersion = "2.4.0-alpha02"
+        const val lifecycleCommonVersion = "2.4.0-alpha02"
         const val navigationVersion = Plugin.navigationGradlePluginVersion
-        const val dataStoreVersion = "1.0.0-beta01"
+        const val dataStoreVersion = "1.0.0-beta02"
     }
 
     object Material {
-        const val materialVersion = "1.4.0-alpha02"
+        const val materialVersion = "1.4.0-rc01"
     }
 
     object Google {
-        const val protoBufJavaLiteVersion = "3.10.0"
-        const val protoBufProtocVersion = "3.10.0"
+        const val protoBufJavaLiteVersion = "4.0.0-rc-2"
+        const val protoBufProtocVersion = "4.0.0-rc-2"
     }
 
     object Hilt {
@@ -69,8 +69,8 @@ object Versions {
 
     object Test {
         const val jUnitVersion = "4.13.2"
-        const val androidJUnitVersion = "1.1.3-alpha05"
-        const val espressoCoreVersion = "3.3.0"
+        const val androidJUnitVersion = "1.1.3-rc01"
+        const val espressoCoreVersion = "3.4.0-rc01"
         const val coreTestingVersion = "2.1.0"
         const val coroutinesTestVersion = "1.4.3"
         const val mockkVersion = "1.11.0"
