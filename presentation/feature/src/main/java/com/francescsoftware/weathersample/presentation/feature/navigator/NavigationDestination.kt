@@ -25,8 +25,6 @@ sealed class NavigationDestination {
         override fun getRoute(): String = route
         override fun isRoute(route: String?): Boolean = route == this.route
         override fun getArguments(): List<NamedNavArgument> = emptyList()
-
-        fun getDestination(): String = route
     }
 
     object Weather : NavigationDestination() {
@@ -38,7 +36,5 @@ sealed class NavigationDestination {
         override fun getRoute(): String = route
         override fun isRoute(route: String?): Boolean = route?.startsWith(this.route) == true
         override fun getArguments(): List<NamedNavArgument> = emptyList()
-
-        fun getDestination(): String = route
     }
 }

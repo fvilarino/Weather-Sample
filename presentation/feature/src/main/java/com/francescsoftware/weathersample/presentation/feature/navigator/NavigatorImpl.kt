@@ -16,6 +16,6 @@ class NavigatorImpl @Inject constructor() : Navigator {
     }
 
     override fun cityToWeather() {
-        navController.navigate(NavigationDestination.Weather.getDestination())
+        navController.navigate(NavigationDestination.Weather.getRoute())
     }
 }

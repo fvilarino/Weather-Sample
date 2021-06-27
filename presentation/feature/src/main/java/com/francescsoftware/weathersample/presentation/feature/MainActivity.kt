@@ -9,6 +9,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -50,20 +51,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 Scaffold(
                     topBar = {
-                        TopAppBar {
-                            if (currentDestination.iconId != 0) {
-                                IconButton(onClick = { navigator.onBackClick() }) {
-                                    Icon(
-                                        painter = painterResource(id = currentDestination.iconId),
-                                        contentDescription = null,
-                                    )
-                                }
-                            }
-                            Text(
-                                text = stringResource(id = currentDestination.titleId),
-                                modifier = Modifier.padding(start = MarginDouble)
-                            )
-                        }
+                        AppBar(
+                            currentDestination = currentDestination,
+                            onIconClick = { navigator.onBackClick() },
+                        )
                     },
                 ) {
                     NavHost(navController, startDestination = NavigationDestination.CitySearch.getRoute()) {
@@ -86,5 +77,26 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun AppBar(
+    currentDestination: NavigationDestination,
+    onIconClick: () -> Unit,
+) {
+    TopAppBar {
+        if (currentDestination.iconId != 0) {
+            IconButton(onClick = onIconClick) {
+                Icon(
+                    painter = painterResource(id = currentDestination.iconId),
+                    contentDescription = null,
+                )
+            }
+        }
+        Text(
+            text = stringResource(id = currentDestination.titleId),
+            modifier = Modifier.padding(start = MarginDouble)
+        )
     }
 }
