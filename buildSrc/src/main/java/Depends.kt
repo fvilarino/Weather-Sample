@@ -25,14 +25,11 @@ object Depends {
         const val kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.Kotlin.kotlinSerializationVersion}"
         const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.Kotlin.coroutinesVersion}"
         const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.Kotlin.coroutinesVersion}"
-        // TODO: remove when compose moves from 0.3.3
-        const val collectionsImmutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:${Versions.Kotlin.collectionsImmutable}"
     }
 
     object Android {
         const val ktx = "androidx.core:core-ktx:${Versions.Kotlin.ktxVersion}"
         const val appCompat = "androidx.appcompat:appcompat:${Versions.Android.appCompatVersion}"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.Android.constraintLayoutVersion}"
         const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.Android.navigationVersion}"
         const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.Android.navigationVersion}"
         const val archLifeCycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Android.archLifeCycleViewModelVersion}"

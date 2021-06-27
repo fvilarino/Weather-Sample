@@ -41,7 +41,6 @@ android {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
     composeOptions {
-        kotlinCompilerVersion = Versions.Kotlin.kotlinVersion
         kotlinCompilerExtensionVersion = Versions.Compose.composeVersion
     }
 }
@@ -61,12 +60,10 @@ dependencies {
     implementation(Depends.Compose.composeUiTooling)
     implementation(Depends.Compose.activityCompose)
     implementation(Depends.Compose.navigationCompose)
-    implementation(Depends.Kotlin.collectionsImmutable)
 
     implementation(Depends.Android.ktx)
     implementation(Depends.Android.appCompat)
     implementation(Depends.Material.material)
-    implementation(Depends.Android.constraintLayout)
     implementation(Depends.Android.navigationFragment)
     implementation(Depends.Android.navigationUi)
     implementation(Depends.Android.dataStore)

@@ -27,12 +27,10 @@ object Versions {
         const val coroutinesVersion = "1.5.0"
         const val ktxVersion = "1.6.0-rc01"
         const val kotlinSerializationVersion = "1.2.1"
-        const val collectionsImmutable = "0.3.4"
     }
 
     object Android {
         const val appCompatVersion = "1.4.0-alpha02"
-        const val constraintLayoutVersion = "2.1.0-beta02"
         const val archLifeCycleViewModelVersion = "2.4.0-alpha02"
         const val lifecycleCommonVersion = "2.4.0-alpha02"
         const val navigationVersion = Plugin.navigationGradlePluginVersion

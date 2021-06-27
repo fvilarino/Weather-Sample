@@ -34,13 +34,11 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerVersion = Versions.Kotlin.kotlinVersion
         kotlinCompilerExtensionVersion = Versions.Compose.composeVersion
     }
 }
 
 dependencies {
-    implementation(Depends.Kotlin.collectionsImmutable)
     implementation(Depends.Compose.composeUi)
     implementation(Depends.Compose.composeMaterial)
     implementation(Depends.Compose.composeUiTooling)

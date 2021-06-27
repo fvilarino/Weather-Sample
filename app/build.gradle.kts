@@ -57,7 +57,6 @@ dependencies {
     // android
     implementation(Depends.Android.ktx)
     implementation(Depends.Android.appCompat)
-    implementation(Depends.Android.constraintLayout)
     implementation(Depends.Android.navigationFragment)
     implementation(Depends.Android.navigationUi)
     implementation(Depends.Android.archLifeCycleViewModel)
