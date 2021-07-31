@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
-import androidx.lifecycle.SavedStateHandle
 import com.francescsoftware.weathersample.interactor.weather.Forecast
 import com.francescsoftware.weathersample.interactor.weather.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.ForecastEntry
@@ -30,7 +29,6 @@ interface WeatherCallbacks {
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
     private val getForecastInteractor: GetForecastInteractor,
     private val cityStore: SelectedCityStore,
@@ -186,7 +184,9 @@ class WeatherViewModel @Inject constructor(
             header = stringLookup.getString(
                 R.string.forecast_card_header,
                 timeFormatter.formatHour(date),
-                description.capitalize(Locale.getDefault())
+                description.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                }
             ),
             iconId = WeatherIcon.fromIconId(icon).iconId,
             minTemperature = minTemperature.formatTemperature(stringLookup),

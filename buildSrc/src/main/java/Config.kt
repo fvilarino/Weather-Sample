@@ -8,7 +8,7 @@ object Config {
         const val jvmTarget = "11"
         val freeCompilerArgs = listOf(
             "-Xuse-experimental=kotlin.time.ExperimentalTime",
-            "-Xuse-experimental=androidx.compose.material.ExperimentalMaterialApi"
+            "-Xuse-experimental=androidx.compose.material.ExperimentalMaterialApi",
         )
     }
 }
