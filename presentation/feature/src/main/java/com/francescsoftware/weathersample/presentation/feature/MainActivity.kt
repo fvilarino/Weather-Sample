@@ -15,17 +15,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.francescsoftware.weathersample.presentation.feature.navigator.NavigationDestination
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
-import com.francescsoftware.weathersample.presentation.feature.search.CityScreen
-import com.francescsoftware.weathersample.presentation.feature.search.CityViewModel
-import com.francescsoftware.weathersample.presentation.feature.weather.WeatherScreen
-import com.francescsoftware.weathersample.presentation.feature.weather.WeatherViewModel
+import com.francescsoftware.weathersample.presentation.feature.search.addSearchDestination
+import com.francescsoftware.weathersample.presentation.feature.weather.addWeatherDetailsDestination
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,18 +54,8 @@ class MainActivity : AppCompatActivity() {
                     },
                 ) {
                     NavHost(navController, startDestination = NavigationDestination.CitySearch.getRoute()) {
-                        composable(
-                            route = NavigationDestination.CitySearch.getRoute()
-                        ) {
-                            val cityViewModel: CityViewModel = hiltViewModel()
-                            CityScreen(cityViewModel)
-                        }
-                        composable(
-                            route = NavigationDestination.Weather.getRoute(),
-                        ) {
-                            val weatherViewModel: WeatherViewModel = hiltViewModel()
-                            WeatherScreen(weatherViewModel)
-                        }
+                        addSearchDestination()
+                        addWeatherDetailsDestination()
                     }
                 }
                 LaunchedEffect(key1 = navController) {
