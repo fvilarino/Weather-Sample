@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.feature.search
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
@@ -61,7 +62,8 @@ fun CityCard(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
 @Composable
 private fun PreviewCityCard() {
     val card = CityResultModel(
@@ -72,28 +74,6 @@ private fun PreviewCityCard() {
         coordinates = "Lat: 49.26, Lon: -123.11"
     )
     WeatherSampleTheme {
-        Surface {
-            CityCard(
-                city = card,
-                onClick = { },
-                modifier = Modifier.padding(all = 8.dp),
-                contentPadding = PaddingValues(all = 16.dp),
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewCityCardDarkMode() {
-    val card = CityResultModel(
-        id = 1L,
-        name = "Vancouver",
-        country = "Canada",
-        countryCode = "CA",
-        coordinates = "Lat: 49.26, Lon: -123.11"
-    )
-    WeatherSampleTheme(darkTheme = true) {
         Surface {
             CityCard(
                 city = card,

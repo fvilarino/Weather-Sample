@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -132,34 +133,12 @@ fun ForecastWeatherCard(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
 @Composable
 private fun ForecastWeatherCardPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.width(360.dp)) {
-            ForecastWeatherCard(
-                state = ForecastItem.ForecastCard(
-                    id = 1L,
-                    header = "02:00 - Scattered Clouds",
-                    iconId = R.drawable.ic_partly_cloudy,
-                    minTemperature = "16.4°C",
-                    maxTemperature = "23.7°C",
-                    feelsLikeTemperature = "15.5°C",
-                    windSpeed = "5.4 kph",
-                    humidity = "48 %",
-                    visibility = "10000 m",
-                ),
-                modifier = Modifier.padding(vertical = MarginSingle),
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ForecastWeatherCardPreviewDarkMode() {
-    WeatherSampleTheme(darkTheme = true) {
-        Surface(modifier = Modifier.width(360.dp)) {
+        Surface(modifier = Modifier.fillMaxWidth()) {
             ForecastWeatherCard(
                 state = ForecastItem.ForecastCard(
                     id = 1L,

@@ -1,12 +1,12 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
@@ -102,7 +102,9 @@ fun TodayWeatherCard(
                 }
             }
             Row {
-                InfoLabels(modifier = Modifier.weight(1f).padding(horizontal = MarginTreble)) {
+                InfoLabels(modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = MarginTreble)) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             text = stringResource(id = featureR.string.wind_speed_label),
@@ -126,7 +128,9 @@ fun TodayWeatherCard(
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
-                InfoLabels(modifier = Modifier.weight(1f).padding(horizontal = MarginTreble)) {
+                InfoLabels(modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = MarginTreble)) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             text = stringResource(id = featureR.string.pressure_label),
@@ -155,11 +159,12 @@ fun TodayWeatherCard(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
 @Composable
 private fun TodayWeatherCardPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.width(360.dp)) {
+        Surface(modifier = Modifier.fillMaxWidth()) {
             val state = TodayWeatherCardState(
                 temperature = "16.4°C",
                 minTemperature = "11.3°C",
@@ -173,31 +178,6 @@ private fun TodayWeatherCardPreview() {
                 visibility = "10000 m"
             )
             TodayWeatherCard(state = state)
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun TodayWeatherCardPreviewDarkMode() {
-    WeatherSampleTheme(darkTheme = true) {
-        Surface(modifier = Modifier.width(360.dp)) {
-            val state = TodayWeatherCardState(
-                temperature = "16.4°C",
-                minTemperature = "11.3°C",
-                maxTemperature = "22.7°C",
-                feelsLikeTemperature = "14.3°C",
-                description = "Partly cloudy",
-                iconId = R.drawable.ic_partly_cloudy,
-                windSpeed = "4.3kph",
-                humidity = "54%",
-                pressure = "1024mb",
-                visibility = "10000 m"
-            )
-            TodayWeatherCard(
-                state = state,
-                modifier = Modifier.padding(all = MarginSingle)
-            )
         }
     }
 }

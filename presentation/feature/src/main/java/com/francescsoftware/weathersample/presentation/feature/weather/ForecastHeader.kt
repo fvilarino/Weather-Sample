@@ -1,9 +1,11 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
@@ -61,29 +63,12 @@ fun ForecastHeader(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 360)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
 @Composable
 private fun ForecastHeaderPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.width(360.dp)) {
-            ForecastHeader(
-                state = ForecastItem.ForecastHeader(
-                    id = 1L,
-                    date = "Sun April 18",
-                    sunrise = "06:23",
-                    sunset = "20:01",
-                ),
-                modifier = Modifier.padding(vertical = MarginSingle),
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ForecastHeaderPreviewDarkMode() {
-    WeatherSampleTheme(darkTheme = true) {
-        Surface(modifier = Modifier.width(360.dp)) {
+        Surface(modifier = Modifier.fillMaxWidth()) {
             ForecastHeader(
                 state = ForecastItem.ForecastHeader(
                     id = 1L,

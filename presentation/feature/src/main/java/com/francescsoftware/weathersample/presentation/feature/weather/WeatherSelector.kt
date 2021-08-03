@@ -1,13 +1,14 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
+import android.content.res.Configuration
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -161,42 +162,24 @@ private fun weatherSelectorTransitionData(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 256)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 256)
 @Composable
 private fun PreviewWeatherSelector() {
     WeatherSampleTheme {
         var option by remember {
             mutableStateOf(WeatherSelectorOptions.Today)
         }
-        Surface(modifier = Modifier
-            .width(256.dp)
-            .padding(all = MarginSingle)) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = MarginSingle)
+        ) {
             WeatherSelector(
                 selectedOption = option,
                 onOptionSelect = { selected ->
                     option = selected
                 },
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewWeatherSelectorDarkMode() {
-    WeatherSampleTheme(darkTheme = true) {
-        var option by remember {
-            mutableStateOf(WeatherSelectorOptions.Today)
-        }
-        Surface(modifier = Modifier
-            .width(256.dp)
-            .padding(all = MarginSingle)) {
-            WeatherSelector(
-                selectedOption = option,
-                onOptionSelect = { selected ->
-                    option = selected
-                },
-                modifier = Modifier.padding(all = MarginSingle),
             )
         }
     }

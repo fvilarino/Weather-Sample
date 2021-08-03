@@ -1,10 +1,11 @@
 package com.francescsoftware.weathersample.presentation.shared.widget
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -62,13 +63,15 @@ private fun MeasureScope.layoutTiles(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 512)
 @Composable
 private fun EqualSizeTilesPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier
-            .width(512.dp)
-            .background(color = Color.Yellow)) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.Yellow)
+        ) {
             EqualSizeTiles(
                 modifier = Modifier
                     .height(64.dp)

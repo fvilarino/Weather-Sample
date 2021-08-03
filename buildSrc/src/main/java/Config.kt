@@ -9,6 +9,7 @@ object Config {
         val freeCompilerArgs = listOf(
             "-Xuse-experimental=kotlin.time.ExperimentalTime",
             "-Xuse-experimental=androidx.compose.material.ExperimentalMaterialApi",
+            "-Xuse-experimental=androidx.compose.foundation.ExperimentalFoundationApi",
         )
     }
 }

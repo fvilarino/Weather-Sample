@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
+import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -87,7 +88,10 @@ private fun WeatherScreen(
                 WeatherLoadState.IDLE -> {
                 }
                 WeatherLoadState.LOADING -> LoadingSpinner()
-                WeatherLoadState.LOADED -> WeatherContent(state, weatherCallbacks::refreshTodayWeather)
+                WeatherLoadState.LOADED -> WeatherContent(
+                    state,
+                    weatherCallbacks::refreshTodayWeather
+                )
                 WeatherLoadState.ERROR -> ErrorMessage(weatherCallbacks)
             }
         }
@@ -245,11 +249,12 @@ private fun ForecastWeatherScreenPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 420)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
 @Composable
 private fun ErrorWeatherScreenPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.width(420.dp)) {
+        Surface(modifier = Modifier.fillMaxWidth()) {
             val state = TodayState(
                 loadState = WeatherLoadState.ERROR,
                 cityName = "Vancouver",
