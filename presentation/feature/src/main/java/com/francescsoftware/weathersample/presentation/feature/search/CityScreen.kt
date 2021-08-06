@@ -192,8 +192,8 @@ private fun CitiesLoadError() {
     }
 }
 
-@Preview(showBackground = true, widthDp = 420)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
+@Preview(showBackground = true, widthDp = 420, heightDp = 720)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420, heightDp = 720)
 @Preview(device = Devices.PIXEL_C)
 @Composable
 private fun CityScreenPreviewDarkMode() {
@@ -205,15 +205,14 @@ private fun CityScreenPreviewDarkMode() {
                     query = "",
                     cities = listOf(
                         vancouverCityModel,
+                        barcelonaCityModel,
                         londonCityModel,
                     )
                 )
             )
         }
         Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(720.dp)
+            modifier = Modifier.fillMaxSize()
         ) {
             CityScreen(
                 state = state,
@@ -237,8 +236,16 @@ private val vancouverCityModel = CityResultModel(
     coordinates = "Lat: 49.26, Lon: -123.11"
 )
 
-private val londonCityModel = CityResultModel(
+private val barcelonaCityModel = CityResultModel(
     id = 2L,
+    name = "Barcelona",
+    country = "Spain",
+    countryCode = "ES",
+    coordinates = "Lat: 41.39, Lon: 2.17"
+)
+
+private val londonCityModel = CityResultModel(
+    id = 3L,
     name = "London",
     country = "England",
     countryCode = "UK",

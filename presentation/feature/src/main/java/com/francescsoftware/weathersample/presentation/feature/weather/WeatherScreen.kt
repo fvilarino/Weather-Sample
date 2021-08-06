@@ -2,9 +2,10 @@ package com.francescsoftware.weathersample.presentation.feature.weather
 
 import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
@@ -23,8 +24,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.presentation.feature.R
@@ -32,6 +36,8 @@ import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+
+private val WeatherCardWidth = 420.dp
 
 @Composable
 fun WeatherScreen(
@@ -74,15 +80,16 @@ private fun WeatherScreen(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.h4,
         )
-        Spacer(modifier = Modifier.height(MarginQuad))
         WeatherSelector(
             selectedOption = state.option,
             onOptionSelect = { option -> weatherCallbacks.onOptionSelect(option) },
+            modifier = Modifier.padding(top = MarginQuad),
         )
-        Spacer(modifier = Modifier.height(MarginQuad))
         Crossfade(
             targetState = state.loadState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = MarginQuad),
         ) { loadState ->
             when (loadState) {
                 WeatherLoadState.IDLE -> {
@@ -114,40 +121,114 @@ private fun WeatherContent(
     todayRefreshCallback: () -> Unit,
 ) {
     when (state.option) {
-        WeatherSelectorOptions.Today -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                TodayWeatherCard(
-                    state = state.todayState,
-                    modifier = Modifier.fillMaxWidth(.85f),
-                )
-                Spacer(modifier = Modifier.height(MarginQuad))
-                OutlinedButton(onClick = todayRefreshCallback) {
-                    Text(text = stringResource(id = R.string.refresh))
+        WeatherSelectorOptions.Today -> TodayWeather(state, todayRefreshCallback)
+        WeatherSelectorOptions.Forecast -> WeatherForecast(state)
+    }
+}
+
+@Composable
+private fun TodayWeather(
+    state: TodayState,
+    todayRefreshCallback: () -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(horizontal = MarginDouble),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        TodayWeatherCard(
+            state = state.todayState,
+            modifier = Modifier.width(WeatherCardWidth),
+        )
+        OutlinedButton(
+            onClick = todayRefreshCallback,
+            modifier = Modifier.padding(top = MarginQuad),
+        ) {
+            Text(text = stringResource(id = R.string.refresh))
+        }
+    }
+}
+
+@Composable
+private fun WeatherForecast(state: TodayState) {
+    val width = LocalContext.current.resources.displayMetrics.widthPixels
+    val minColumnWidth = with(LocalDensity.current) { WeatherCardWidth.toPx() }
+    val numColumns = ((width / minColumnWidth).toInt()).coerceAtLeast(1)
+    val gridWidth = with(LocalDensity.current) { (numColumns * minColumnWidth).toDp() }
+    Box(modifier = Modifier.fillMaxSize().padding(horizontal = MarginSingle)) {
+        LazyColumn(
+            modifier = Modifier
+                .width(gridWidth)
+                .padding(bottom = MarginSingle)
+                .align(Alignment.TopCenter),
+            contentPadding = PaddingValues(bottom = MarginSingle),
+        ) {
+            var index = 0
+            while (index < state.forecastItems.size) {
+                when (val item = state.forecastItems[index++]) {
+                    is ForecastItem.ForecastHeader -> headerCard(item)
+                    is ForecastItem.ForecastCard -> {
+                        val forecastItems = mutableListOf(item)
+                        while (index < state.forecastItems.size) {
+                            val next = state.forecastItems[index]
+                            if (next is ForecastItem.ForecastCard) {
+                                forecastItems.add(next)
+                                ++index
+                            } else {
+                                break
+                            }
+                        }
+                        forecastCards(
+                            forecastItems = forecastItems,
+                            numColumns = numColumns,
+                        )
+                    }
                 }
             }
         }
-        WeatherSelectorOptions.Forecast -> LazyColumn(
+    }
+}
+
+private fun LazyListScope.headerCard(item: ForecastItem.ForecastHeader) {
+    item {
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = MarginSingle),
-            verticalArrangement = Arrangement.spacedBy(MarginDouble),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(vertical = MarginSingle)
         ) {
-            items(state.forecastItems) { item ->
-                when (item) {
-                    is ForecastItem.ForecastHeader -> ForecastHeader(
-                        state = item,
-                        modifier = Modifier.fillMaxWidth(.85f),
-                    )
-                    is ForecastItem.ForecastCard -> ForecastWeatherCard(
-                        state = item,
+            ForecastHeader(
+                state = item,
+                modifier = Modifier
+                    .width(WeatherCardWidth)
+                    .align(Alignment.TopCenter),
+            )
+        }
+    }
+}
+
+private fun LazyListScope.forecastCards(
+    forecastItems: List<ForecastItem.ForecastCard>,
+    numColumns: Int,
+) {
+    val rows = forecastItems.chunked(numColumns)
+    rows.forEach { row ->
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = MarginSingle)
+            ) {
+                row.forEach { state ->
+                    ForecastWeatherCard(
+                        state = state,
                         modifier = Modifier
-                            .fillMaxWidth(.85f)
+                            .weight(1f)
                             .padding(horizontal = MarginSingle),
                     )
+                }
+                if (row.size < numColumns) {
+                    repeat(numColumns - row.size) {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
                 }
             }
         }
@@ -180,10 +261,12 @@ private fun ErrorMessage(weatherCallbacks: WeatherCallbacks) {
 }
 
 @Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
+@Preview(device = Devices.PIXEL_C)
 @Composable
 private fun ForecastWeatherScreenPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.width(420.dp)) {
+        Surface(modifier = Modifier.fillMaxWidth()) {
             val state = TodayState(
                 loadState = WeatherLoadState.LOADED,
                 cityName = "Coquitlam, British Columbia",
@@ -250,7 +333,6 @@ private fun ForecastWeatherScreenPreview() {
 }
 
 @Preview(showBackground = true, widthDp = 420)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
 @Composable
 private fun ErrorWeatherScreenPreview() {
     WeatherSampleTheme {
