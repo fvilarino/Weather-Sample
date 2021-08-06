@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -40,7 +39,7 @@ import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 private val WeatherCardWidth = 420.dp
 
 @Composable
-fun WeatherScreen(
+internal fun WeatherScreen(
     viewModel: WeatherViewModel,
     modifier: Modifier = Modifier,
 ) {
@@ -99,7 +98,7 @@ private fun WeatherScreen(
                     state,
                     weatherCallbacks::refreshTodayWeather
                 )
-                WeatherLoadState.ERROR -> ErrorMessage(weatherCallbacks)
+                WeatherLoadState.ERROR -> WeatherError(weatherCallbacks)
             }
         }
     }
@@ -235,31 +234,6 @@ private fun LazyListScope.forecastCards(
     }
 }
 
-@Composable
-private fun ErrorMessage(weatherCallbacks: WeatherCallbacks) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                text = stringResource(id = R.string.weather_error_loading),
-                style = MaterialTheme.typography.body1,
-            )
-            Spacer(modifier = Modifier.height(MarginDouble))
-            OutlinedButton(onClick = { weatherCallbacks.retry() }) {
-                Text(
-                    text = stringResource(id = R.string.retry),
-                    modifier = Modifier.padding(horizontal = MarginDouble),
-                )
-            }
-            Spacer(modifier = Modifier.height(MarginQuad))
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
 @Preview(device = Devices.PIXEL_C)
@@ -314,36 +288,6 @@ private fun ForecastWeatherScreenPreview() {
                     ),
                 ),
                 option = WeatherSelectorOptions.Today,
-                errorMessage = ""
-            )
-            WeatherScreen(
-                state = state,
-                weatherCallbacks = object : WeatherCallbacks {
-                    override fun onOptionSelect(
-                        weatherSelectorOptions: WeatherSelectorOptions
-                    ) = Unit
-
-                    override fun refreshTodayWeather() = Unit
-
-                    override fun retry() = Unit
-                }
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, widthDp = 420)
-@Composable
-private fun ErrorWeatherScreenPreview() {
-    WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
-            val state = TodayState(
-                loadState = WeatherLoadState.ERROR,
-                cityName = "Vancouver",
-                cityCountryCode = "CA",
-                todayState = TodayWeatherCardState(),
-                forecastItems = emptyList(),
-                option = WeatherSelectorOptions.Forecast,
                 errorMessage = ""
             )
             WeatherScreen(
