@@ -98,7 +98,10 @@ private fun WeatherScreen(
                     state,
                     weatherCallbacks::refreshTodayWeather
                 )
-                WeatherLoadState.ERROR -> WeatherError(weatherCallbacks)
+                WeatherLoadState.ERROR -> WeatherError(
+                    modifier = Modifier.fillMaxSize(),
+                    weatherCallbacks::retry
+                )
             }
         }
     }
@@ -131,7 +134,9 @@ private fun TodayWeather(
     todayRefreshCallback: () -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(horizontal = MarginDouble),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = MarginDouble),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TodayWeatherCard(
@@ -153,7 +158,9 @@ private fun WeatherForecast(state: TodayState) {
     val minColumnWidth = with(LocalDensity.current) { WeatherCardWidth.toPx() }
     val numColumns = ((width / minColumnWidth).toInt()).coerceAtLeast(1)
     val gridWidth = with(LocalDensity.current) { (numColumns * minColumnWidth).toDp() }
-    Box(modifier = Modifier.fillMaxSize().padding(horizontal = MarginSingle)) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = MarginSingle)) {
         LazyColumn(
             modifier = Modifier
                 .width(gridWidth)

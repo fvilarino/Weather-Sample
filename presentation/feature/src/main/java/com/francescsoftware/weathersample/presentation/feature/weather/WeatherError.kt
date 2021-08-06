@@ -22,9 +22,12 @@ import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
-internal fun WeatherError(weatherCallbacks: WeatherCallbacks) {
+internal fun WeatherError(
+    modifier: Modifier = Modifier,
+    retry: () -> Unit = {},
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -35,7 +38,7 @@ internal fun WeatherError(weatherCallbacks: WeatherCallbacks) {
                 style = MaterialTheme.typography.body1,
             )
             Spacer(modifier = Modifier.height(MarginDouble))
-            OutlinedButton(onClick = { weatherCallbacks.retry() }) {
+            OutlinedButton(onClick = retry) {
                 Text(
                     text = stringResource(id = R.string.retry),
                     modifier = Modifier.padding(horizontal = MarginDouble),
@@ -50,18 +53,8 @@ internal fun WeatherError(weatherCallbacks: WeatherCallbacks) {
 @Composable
 private fun WeatherErrorPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
-            WeatherError(
-                weatherCallbacks = object : WeatherCallbacks {
-                    override fun onOptionSelect(
-                        weatherSelectorOptions: WeatherSelectorOptions
-                    ) = Unit
-
-                    override fun refreshTodayWeather() = Unit
-
-                    override fun retry() = Unit
-                }
-            )
+        Surface(modifier = Modifier.fillMaxWidth().padding(vertical = MarginDouble)) {
+            WeatherError(modifier = Modifier.fillMaxWidth())
         }
     }
 }
