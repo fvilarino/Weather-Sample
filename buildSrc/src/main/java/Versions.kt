@@ -1,29 +1,29 @@
 object Versions {
 
     object BuildConfig {
-        const val compileSdkVersion = 30
+        const val compileSdkVersion = 31
         const val minSdkVersion = 23
-        const val targetSdkVersion = 30
+        const val targetSdkVersion = 31
         const val appVersionCode = 1
-        const val appVersionName = "1.0.0"
+        const val appVersionName = "1.0.1"
     }
 
     object Plugin {
-        const val androidGradlePluginVersion = "7.1.0-alpha06"
-        const val navigationGradlePluginVersion = "2.4.0-alpha05"
+        const val androidGradlePluginVersion = "7.1.0-alpha10"
+        const val navigationGradlePluginVersion = "2.4.0-alpha07"
         const val hiltGradlePluginVersion = "2.38.1"
         const val protobufPluginVersion = "0.8.12"
         const val versionsPluginVersion = "0.39.0"
     }
 
     object Compose {
-        const val composeVersion = "1.0.0"
+        const val composeVersion = "1.0.1"
         const val activityCompose = "1.3.0-alpha06"
         const val navigationCompose = Plugin.navigationGradlePluginVersion
     }
 
     object Kotlin {
-        const val kotlinVersion = "1.5.10"
+        const val kotlinVersion = "1.5.21"
         const val coroutinesVersion = "1.5.1"
         const val ktxVersion = "1.7.0-alpha01"
         const val kotlinSerializationVersion = "1.2.2"
@@ -31,14 +31,14 @@ object Versions {
 
     object Android {
         const val appCompatVersion = "1.4.0-alpha03"
-        const val archLifeCycleViewModelVersion = "2.4.0-alpha02"
-        const val lifecycleCommonVersion = "2.4.0-alpha02"
+        const val archLifeCycleViewModelVersion = "2.4.0-alpha03"
+        const val lifecycleCommonVersion = "2.4.0-alpha03"
         const val navigationVersion = Plugin.navigationGradlePluginVersion
-        const val dataStoreVersion = "1.0.0-rc02"
+        const val dataStoreVersion = "1.0.0"
     }
 
     object Material {
-        const val materialVersion = "1.5.0-alpha01"
+        const val materialVersion = "1.5.0-alpha02"
     }
 
     object Google {
@@ -62,7 +62,7 @@ object Versions {
     }
 
     object Logging {
-        const val timberVersion = "4.7.1"
+        const val timberVersion = "5.0.1"
     }
 
     object Test {
