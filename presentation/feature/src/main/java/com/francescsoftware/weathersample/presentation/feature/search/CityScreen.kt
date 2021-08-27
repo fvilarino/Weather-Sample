@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.GridCells
@@ -43,7 +42,7 @@ import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.MarginTreble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
-private val MIN_COLUMN_WIDTH = 360.dp
+private val MinColumnWidth = 360.dp
 
 interface CityCallbacks {
     fun onQueryChange(query: String)
@@ -104,7 +103,7 @@ private fun CitiesSearchBox(
         value = state.query,
         onValueChange = { value -> callbacks.onQueryChange(value) },
         modifier = Modifier
-            .width(MIN_COLUMN_WIDTH)
+            .width(MinColumnWidth)
             .padding(top = MarginQuad),
         label = { Text(text = stringResource(id = R.string.search_city_hint)) },
         singleLine = true,
@@ -141,7 +140,7 @@ private fun CitiesList(
     callbacks: CityCallbacks
 ) {
     val width = LocalContext.current.resources.displayMetrics.widthPixels
-    val minColumnWidth = with(LocalDensity.current) { MIN_COLUMN_WIDTH.toPx() }
+    val minColumnWidth = with(LocalDensity.current) { MinColumnWidth.toPx() }
     val numColumns = ((width / minColumnWidth).toInt()).coerceAtLeast(1)
     val gridWidth = with(LocalDensity.current) { (numColumns * minColumnWidth).toDp() }
     LazyVerticalGrid(
