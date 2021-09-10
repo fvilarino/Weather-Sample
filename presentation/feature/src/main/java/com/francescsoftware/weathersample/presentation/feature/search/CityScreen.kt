@@ -55,15 +55,10 @@ fun CityScreen(
     modifier: Modifier = Modifier,
 ) {
     val state = viewModel.state.collectAsState()
-
-    DisposableEffect(key1 = viewModel) {
-        viewModel.onStart()
-        onDispose { viewModel.onStop() }
-    }
     CityScreen(
         state = state.value,
         callbacks = viewModel,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -97,7 +92,7 @@ private fun CityScreen(
 @Composable
 private fun CitiesSearchBox(
     state: CityState,
-    callbacks: CityCallbacks
+    callbacks: CityCallbacks,
 ) {
     OutlinedTextField(
         value = state.query,
@@ -137,7 +132,7 @@ private fun CitiesLoading() {
 @Composable
 private fun CitiesList(
     state: CityState,
-    callbacks: CityCallbacks
+    callbacks: CityCallbacks,
 ) {
     val width = LocalContext.current.resources.displayMetrics.widthPixels
     val minColumnWidth = with(LocalDensity.current) { MinColumnWidth.toPx() }
@@ -191,9 +186,9 @@ private fun CitiesLoadError() {
     }
 }
 
-@Preview(showBackground = true, widthDp = 420, heightDp = 720)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420, heightDp = 720)
-@Preview(device = Devices.PIXEL_C)
+@Preview(group = "city", showBackground = true, widthDp = 420, heightDp = 720)
+@Preview(group = "city", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420, heightDp = 720)
+@Preview(group = "city", device = Devices.PIXEL_C)
 @Composable
 private fun CityScreenPreviewDarkMode() {
     WeatherSampleTheme {

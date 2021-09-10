@@ -9,15 +9,15 @@ object Versions {
     }
 
     object Plugin {
-        const val androidGradlePluginVersion = "7.1.0-alpha10"
-        const val navigationGradlePluginVersion = "2.4.0-alpha07"
+        const val androidGradlePluginVersion = "7.1.0-alpha11"
+        const val navigationGradlePluginVersion = "2.4.0-alpha08"
         const val hiltGradlePluginVersion = "2.38.1"
         const val protobufPluginVersion = "0.8.12"
         const val versionsPluginVersion = "0.39.0"
     }
 
     object Compose {
-        const val composeVersion = "1.0.1"
+        const val composeVersion = "1.0.2"
         const val activityCompose = "1.3.0-alpha06"
         const val navigationCompose = Plugin.navigationGradlePluginVersion
     }
@@ -25,7 +25,7 @@ object Versions {
     object Kotlin {
         const val kotlinVersion = "1.5.21"
         const val coroutinesVersion = "1.5.1"
-        const val ktxVersion = "1.7.0-alpha01"
+        const val ktxVersion = "1.7.0-alpha02"
         const val kotlinSerializationVersion = "1.2.2"
     }
 
@@ -38,7 +38,7 @@ object Versions {
     }
 
     object Material {
-        const val materialVersion = "1.5.0-alpha02"
+        const val materialVersion = "1.5.0-alpha03"
     }
 
     object Google {

@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
+import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.interactor.weather.Forecast
 import com.francescsoftware.weathersample.interactor.weather.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.ForecastEntry
@@ -18,6 +19,7 @@ import com.francescsoftware.weathersample.utils.time.isToday
 import com.francescsoftware.weathersample.utils.time.isTomorrow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -38,6 +40,10 @@ class WeatherViewModel @Inject constructor(
     TodayState.initial
 ), WeatherCallbacks {
 
+    init {
+        viewModelScope.launch { load() }
+    }
+
     override fun onOptionSelect(weatherSelectorOptions: WeatherSelectorOptions) {
         onIntent(TodayMviIntent.OnOptionSelected(weatherSelectorOptions))
     }
@@ -52,7 +58,6 @@ class WeatherViewModel @Inject constructor(
 
     override suspend fun executeIntent(intent: TodayMviIntent) {
         when (intent) {
-            TodayMviIntent.Load -> load()
             TodayMviIntent.RefreshTodayWeather -> loadTodayWeather()
             TodayMviIntent.Retry -> load()
             is TodayMviIntent.OnOptionSelected -> handle(

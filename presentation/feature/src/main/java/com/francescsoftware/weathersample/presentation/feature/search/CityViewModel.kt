@@ -38,7 +38,10 @@ class CityViewModel @Inject constructor(
 ), CityCallbacks {
 
     private val searchFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
-    private var searchJob: Job? = null
+
+    init {
+        onStart()
+    }
 
     override fun onCityClick(city: CityResultModel) {
         Timber.tag(TAG).d("Clicked on city [$city]")
@@ -50,34 +53,6 @@ class CityViewModel @Inject constructor(
 
     override fun onQueryChange(query: String) {
         onIntent(CityMviIntent.PrefixUpdated(query))
-    }
-
-    fun onStart() {
-        searchJob = searchFlow
-            .distinctUntilChanged()
-            .debounce(DebounceMillis)
-            .map { prefix -> getCitiesInteractor.execute(prefix) }
-            .onEach { cities ->
-                cities.fold(
-                    onSuccess = { list ->
-                        if (list.isNotEmpty()) {
-                            val cityModels = list.map { city -> city.toCityResultModel() }
-                            onIntent(CityMviIntent.CitiesLoaded(cityModels))
-                        } else {
-                            onIntent(CityMviIntent.NoResults)
-                        }
-                    },
-                    onFailure = {
-                        onIntent(CityMviIntent.LoadError)
-                    }
-                )
-            }
-            .launchIn(viewModelScope)
-    }
-
-    fun onStop() {
-        searchJob?.cancel()
-        searchJob = null
     }
 
     override suspend fun executeIntent(intent: CityMviIntent) {
@@ -108,6 +83,29 @@ class CityViewModel @Inject constructor(
             CityReduceAction.LoadError -> state.copy(loadState = LoadState.ERROR)
             CityReduceAction.NoResults -> state.copy(loadState = LoadState.NO_RESULTS)
         }
+
+    private fun onStart() {
+        searchFlow
+            .distinctUntilChanged()
+            .debounce(DebounceMillis)
+            .map { prefix -> getCitiesInteractor.execute(prefix) }
+            .onEach { cities ->
+                cities.fold(
+                    onSuccess = { list ->
+                        if (list.isNotEmpty()) {
+                            val cityModels = list.map { city -> city.toCityResultModel() }
+                            onIntent(CityMviIntent.CitiesLoaded(cityModels))
+                        } else {
+                            onIntent(CityMviIntent.NoResults)
+                        }
+                    },
+                    onFailure = {
+                        onIntent(CityMviIntent.LoadError)
+                    }
+                )
+            }
+            .launchIn(viewModelScope)
+    }
 
     private fun City.toCityResultModel() = CityResultModel(
         id = id.toLong(),

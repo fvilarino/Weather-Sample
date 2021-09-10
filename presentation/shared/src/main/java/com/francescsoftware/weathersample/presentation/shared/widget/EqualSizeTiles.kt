@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.presentation.shared.widget
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth

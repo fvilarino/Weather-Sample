@@ -38,7 +38,6 @@ data class TodayState(
 sealed class TodayEvent : Event
 
 sealed class TodayMviIntent : MviIntent {
-    object Load : TodayMviIntent()
     object RefreshTodayWeather : TodayMviIntent()
     object Retry : TodayMviIntent()
     data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayMviIntent()
