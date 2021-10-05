@@ -2,7 +2,7 @@ package com.francescsoftware.weathersample.presentation.feature.navigator
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.navigation.compose.NamedNavArgument
+import androidx.navigation.NamedNavArgument
 import com.francescsoftware.weathersample.presentation.feature.R
 
 sealed class NavigationDestination {

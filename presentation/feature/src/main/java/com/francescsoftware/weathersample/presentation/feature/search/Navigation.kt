@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.presentation.feature.search
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
