@@ -1,13 +1,11 @@
 package com.francescsoftware.weathersample.presentation.shared.mvi
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -50,12 +48,12 @@ abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceActio
     initialState: S
 ) : ViewModel(), Processor<R> {
 
-    private val stateFlow = MutableStateFlow<S>(initialState)
+    private val stateFlow = mutableStateOf(initialState)
     private val eventFlow = MutableSharedFlow<E>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
     protected val currentState: S
         get() = stateFlow.value
 
-    val state: StateFlow<S> = stateFlow.asStateFlow()
+    val state: androidx.compose.runtime.State<S> = stateFlow
     val event: Flow<E> = eventFlow.asSharedFlow()
     private val intentFlow = MutableSharedFlow<I>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
     private val reduceFlow = MutableSharedFlow<R>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)

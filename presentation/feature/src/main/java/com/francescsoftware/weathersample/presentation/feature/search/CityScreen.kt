@@ -22,7 +22,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,9 +53,8 @@ fun CityScreen(
     viewModel: CityViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val state = viewModel.state.collectAsState()
     CityScreen(
-        state = state.value,
+        state = viewModel.state.value,
         callbacks = viewModel,
         modifier = modifier,
     )

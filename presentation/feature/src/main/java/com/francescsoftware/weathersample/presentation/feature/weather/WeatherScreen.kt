@@ -10,7 +10,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,9 +28,8 @@ internal fun WeatherScreen(
     viewModel: WeatherViewModel,
     modifier: Modifier = Modifier,
 ) {
-    val state = viewModel.state.collectAsState()
     WeatherScreen(
-        state.value,
+        viewModel.state.value,
         viewModel,
         modifier
     )
