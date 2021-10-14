@@ -117,7 +117,13 @@ class ForecastViewModel @Inject constructor(
                 header = stringLookup.getString(
                     R.string.forecast_card_header,
                     timeFormatter.formatHour(date),
-                    description.capitalize(Locale.getDefault())
+                    description.replaceFirstChar {
+                        if (it.isLowerCase()) {
+                            it.titlecase(Locale.getDefault())
+                        } else {
+                            it.toString()
+                        }
+                    }
                 ),
                 iconId = WeatherIcon.fromIconId(icon).iconId,
                 minTemperature = minTemperature.formatTemperature(stringLookup),
