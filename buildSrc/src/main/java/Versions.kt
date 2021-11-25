@@ -9,29 +9,29 @@ object Versions {
     }
 
     object Plugin {
-        const val androidGradlePluginVersion = "7.1.0-alpha13"
-        const val navigationGradlePluginVersion = "2.4.0-alpha10"
-        const val hiltGradlePluginVersion = "2.39.1"
+        const val androidGradlePluginVersion = "7.2.0-alpha04"
+        const val navigationGradlePluginVersion = "2.4.0-beta02"
+        const val hiltGradlePluginVersion = "2.40.2"
         const val versionsPluginVersion = "0.39.0"
     }
 
     object Kotlin {
         const val kotlinVersion = "1.5.31"
         const val coroutinesVersion = "1.5.2"
-        const val ktxVersion = "1.7.0-rc01"
-        const val kotlinSerializationVersion = "1.3.0"
+        const val ktxVersion = "1.7.0"
+        const val kotlinSerializationVersion = "1.3.1"
     }
 
     object Android {
-        const val appCompatVersion = "1.4.0-beta01"
-        const val constraintLayoutVersion = "2.1.1"
-        const val archLifeCycleViewModelVersion = "2.4.0-rc01"
-        const val lifecycleCommonVersion = "2.4.0-rc01"
+        const val appCompatVersion = "1.4.0"
+        const val constraintLayoutVersion = "2.1.2"
+        const val archLifeCycleViewModelVersion = "2.4.0"
+        const val lifecycleCommonVersion = "2.4.0"
         const val navigationVersion = Plugin.navigationGradlePluginVersion
     }
 
     object Material {
-        const val materialVersion = "1.5.0-alpha04"
+        const val materialVersion = "1.5.0-beta01"
     }
 
     object Hilt {
