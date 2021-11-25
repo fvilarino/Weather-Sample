@@ -16,7 +16,6 @@ object Depends {
         const val protoBuf = "com.google.protobuf"
         const val kotlinSerializationPlugin = "kotlinx-serialization"
         const val kotlinParcelizePlugin = "kotlin-parcelize"
-        const val safeArgsPlugin = "androidx.navigation.safeargs.kotlin"
         const val kotlinKapt = "kapt"
         const val versionsPlugin = "com.github.ben-manes.versions"
     }

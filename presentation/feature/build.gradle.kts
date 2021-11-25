@@ -4,7 +4,6 @@ plugins {
     id(Depends.ModulePlugins.daggerHiltPlugin)
     id(Depends.ModulePlugins.kotlinParcelizePlugin)
     id(Depends.ModulePlugins.kotlinSerializationPlugin)
-    id(Depends.ModulePlugins.safeArgsPlugin)
     id(Depends.ModulePlugins.protoBuf) version Versions.Plugin.protobufPluginVersion
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
