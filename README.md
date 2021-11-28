@@ -1,7 +1,7 @@
 # Weather-Sample
 A simple weather app showcasing some of the material principles.
 
-The app consists of 2 screens, a city search screen and a weahter screen. The weather screen is itself split into 2 sections, current weather and forecast.
+The app consists of 2 screens, a city search screen and a weather screen. The weather screen is itself split into 2 sections, current weather and forecast.
 
 There are 2 branches in this project:
 * main: uses Android's View system
