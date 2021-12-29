@@ -9,24 +9,25 @@ object Versions {
     }
 
     object Plugin {
-        const val androidGradlePluginVersion = "7.2.0-alpha05"
-        const val navigationGradlePluginVersion = "2.4.0-beta02"
-        const val hiltGradlePluginVersion = "2.40.2"
+        const val androidGradlePluginVersion = "7.2.0-alpha06"
+        const val navigationGradlePluginVersion = "2.4.0-rc01"
+        const val hiltGradlePluginVersion = "2.40.5"
         const val protobufPluginVersion = "0.8.12"
         const val versionsPluginVersion = "0.39.0"
     }
 
     object Compose {
-        const val composeVersion = "1.1.0-beta03"
+        const val composeCompilerVersion = "1.1.0-rc02"
+        const val composeVersion = "1.1.0-rc01"
         const val activityCompose = "1.3.0-alpha06"
         const val navigationCompose = Plugin.navigationGradlePluginVersion
     }
 
     object Kotlin {
-        const val kotlinVersion = "1.5.31"
-        const val coroutinesVersion = "1.5.2"
-        const val ktxVersion = "1.7.0"
-        const val kotlinSerializationVersion = "1.3.1"
+        const val kotlinVersion = "1.6.10"
+        const val coroutinesVersion = "1.6.0"
+        const val ktxVersion = "1.8.0-alpha02"
+        const val kotlinSerializationVersion = "1.3.2"
     }
 
     object Android {
@@ -38,7 +39,7 @@ object Versions {
     }
 
     object Material {
-        const val materialVersion = "1.5.0-beta01"
+        const val materialVersion = "1.6.0-alpha01"
     }
 
     object Google {
@@ -55,7 +56,7 @@ object Versions {
     object Network {
         const val okHttpVersion = "4.9.0"
         const val okHttpInterceptorVersion = "4.9.0"
-        const val okIOVersion = "2.10.0"
+        const val okIOVersion = "3.0.0"
         const val retrofitVersion = "2.9.0"
         const val retrofitAdapterVersion = "0.9.2"
         const val retrofitSerializationConverterVersion = "0.8.0"

@@ -37,7 +37,7 @@ android {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.composeVersion
+        kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
     }
 }
 
