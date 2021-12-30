@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +25,9 @@ import com.francescsoftware.weathersample.presentation.feature.weather.ForecastI
 import com.francescsoftware.weathersample.presentation.feature.weather.ForecastWeatherCard
 import com.francescsoftware.weathersample.presentation.feature.weather.TodayState
 import com.francescsoftware.weathersample.presentation.feature.weather.TodayWeatherCard
+import com.francescsoftware.weathersample.presentation.feature.weather.WeatherLoadState
 import com.francescsoftware.weathersample.presentation.feature.weather.WeatherSelectorOptions
+import com.francescsoftware.weathersample.presentation.shared.widget.LoadingButton
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.MarginSingle
@@ -59,9 +60,10 @@ private fun TodayWeather(
             state = state.todayState,
             modifier = Modifier.width(WeatherCardWidth),
         )
-        OutlinedButton(
+        LoadingButton(
             onClick = todayRefreshCallback,
             modifier = Modifier.padding(top = MarginQuad),
+            loading = state.loadState == WeatherLoadState.REFRESHING,
         ) {
             Text(text = stringResource(id = R.string.refresh))
         }
@@ -74,9 +76,11 @@ private fun WeatherForecast(state: TodayState) {
     val minColumnWidth = with(LocalDensity.current) { WeatherCardWidth.toPx() }
     val numColumns = ((width / minColumnWidth).toInt()).coerceAtLeast(1)
     val gridWidth = with(LocalDensity.current) { (numColumns * minColumnWidth).toDp() }
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = MarginSingle)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = MarginSingle)
+    ) {
         LazyColumn(
             modifier = Modifier
                 .width(gridWidth)

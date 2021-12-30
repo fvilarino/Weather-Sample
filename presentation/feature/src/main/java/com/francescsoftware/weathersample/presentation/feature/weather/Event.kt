@@ -8,6 +8,7 @@ import com.francescsoftware.weathersample.presentation.shared.mvi.State
 enum class WeatherLoadState {
     IDLE,
     LOADING,
+    REFRESHING,
     LOADED,
     ERROR
 }
@@ -46,6 +47,7 @@ sealed class TodayMviIntent : MviIntent {
 sealed class TodayReduceAction : ReduceAction {
     data class CityUpdated(val name: String, val countryCode: String) : TodayReduceAction()
     object Loading : TodayReduceAction()
+    object Refreshing : TodayReduceAction()
     data class Loaded(
         val currentWeather: TodayWeatherCardState,
         val forecastItems: List<ForecastItem>

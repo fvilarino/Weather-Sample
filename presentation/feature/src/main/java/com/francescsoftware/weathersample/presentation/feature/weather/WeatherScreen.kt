@@ -75,7 +75,8 @@ private fun WeatherScreen(
                 WeatherLoadState.IDLE -> {
                 }
                 WeatherLoadState.LOADING -> LoadingSpinner()
-                WeatherLoadState.LOADED -> WeatherContent(
+                WeatherLoadState.LOADED,
+                WeatherLoadState.REFRESHING -> WeatherContent(
                     state,
                     weatherCallbacks::refreshTodayWeather
                 )

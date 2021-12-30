@@ -75,6 +75,9 @@ class WeatherViewModel @Inject constructor(
             TodayReduceAction.Loading -> state.copy(
                 loadState = WeatherLoadState.LOADING,
             )
+            TodayReduceAction.Refreshing -> state.copy(
+                loadState = WeatherLoadState.REFRESHING,
+            )
             is TodayReduceAction.Loaded -> state.copy(
                 loadState = WeatherLoadState.LOADED,
                 todayState = reduceAction.currentWeather,
@@ -94,7 +97,7 @@ class WeatherViewModel @Inject constructor(
         }
 
     private suspend fun loadTodayWeather() {
-        handle(TodayReduceAction.Loading)
+        handle(TodayReduceAction.Refreshing)
         val selectedCity = cityStore.city.first()
         val location = WeatherLocation.City(
             name = selectedCity.name,
