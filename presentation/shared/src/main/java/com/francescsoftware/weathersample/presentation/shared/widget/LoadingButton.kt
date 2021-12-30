@@ -1,10 +1,12 @@
 package com.francescsoftware.weathersample.presentation.shared.widget
 
+import androidx.compose.animation.core.DurationBasedAnimationSpec
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.StartOffset
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -40,10 +42,10 @@ import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.styles.MarginHalf
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
-import kotlinx.coroutines.delay
 
 enum class AnimationType {
     Bounce,
+    LazyBounce,
     Fade,
 }
 
@@ -90,9 +92,23 @@ fun LoadingButton(
     }
 }
 
+private val AnimationType.animationSpec: DurationBasedAnimationSpec<Float>
+    get() = when (this) {
+        AnimationType.Bounce,
+        AnimationType.Fade -> tween(durationMillis = animationDuration)
+        AnimationType.LazyBounce -> keyframes {
+            durationMillis = animationDuration
+            initialValue at 0
+            0f at animationDuration / 4
+            targetValue / 2f at animationDuration / 2
+            targetValue / 2f at animationDuration
+        }
+    }
+
 private val AnimationType.animationDuration: Int
     get() = when (this) {
-        AnimationType.Bounce -> BounceAnimationDurationMillis
+        AnimationType.Bounce,
+        AnimationType.LazyBounce -> BounceAnimationDurationMillis
         AnimationType.Fade -> FadeAnimationDurationMillis
     }
 
@@ -102,12 +118,14 @@ private val AnimationType.animationDelay: Int
 private val AnimationType.initialValue: Float
     get() = when (this) {
         AnimationType.Bounce -> IndicatorSize / 2f
+        AnimationType.LazyBounce -> -IndicatorSize / 2f
         AnimationType.Fade -> 1f
     }
 
 private val AnimationType.targetValue: Float
     get() = when (this) {
         AnimationType.Bounce -> -IndicatorSize / 2f
+        AnimationType.LazyBounce -> IndicatorSize / 2f
         AnimationType.Fade -> .2f
     }
 
@@ -127,7 +145,8 @@ private fun LoadingIndicator(
                     initialValue = animationType.initialValue,
                     targetValue = animationType.targetValue,
                     animationSpec = infiniteRepeatable(
-                        animation = tween(durationMillis = animationType.animationDuration),
+                        //animation = tween(durationMillis = animationType.animationDuration),
+                        animation = animationType.animationSpec,
                         repeatMode = RepeatMode.Reverse,
                         initialStartOffset = StartOffset(animationType.animationDelay * index)
                     ),
@@ -145,7 +164,8 @@ private fun LoadingIndicator(
                     .aspectRatio(1f)
                     .then(
                         when (animationType) {
-                            AnimationType.Bounce -> Modifier.offset(y = animatedValue.dp)
+                            AnimationType.Bounce,
+                            AnimationType.LazyBounce -> Modifier.offset(y = animatedValue.coerceAtMost(IndicatorSize / 2f).dp)
                             AnimationType.Fade -> Modifier.graphicsLayer { alpha = animatedValue }
                         }
                     ),
