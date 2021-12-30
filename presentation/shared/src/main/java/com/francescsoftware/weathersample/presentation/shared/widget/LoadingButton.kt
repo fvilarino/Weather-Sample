@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.presentation.shared.widget
 
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.StartOffset
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
@@ -48,8 +49,8 @@ enum class AnimationType {
 
 private const val NumIndicators = 3
 private const val IndicatorSize = 12
-private const val AnimationDurationMillis = 300
-private const val AnimationDelayMillis = AnimationDurationMillis / NumIndicators
+private const val BounceAnimationDurationMillis = 300
+private const val FadeAnimationDurationMillis = 600
 
 @Composable
 fun LoadingButton(
@@ -91,8 +92,8 @@ fun LoadingButton(
 
 private val AnimationType.animationDuration: Int
     get() = when (this) {
-        AnimationType.Bounce -> 300
-        AnimationType.Fade -> 600
+        AnimationType.Bounce -> BounceAnimationDurationMillis
+        AnimationType.Fade -> FadeAnimationDurationMillis
     }
 
 private val AnimationType.animationDelay: Int
@@ -122,13 +123,13 @@ private fun LoadingIndicator(
         var animatedValue by remember(key1 = animating, key2 = animationType) { mutableStateOf(0f) }
         LaunchedEffect(key1 = animating, key2 = animationType) {
             if (animating) {
-                delay(animationType.animationDelay.toLong() * index)
                 animate(
                     initialValue = animationType.initialValue,
                     targetValue = animationType.targetValue,
                     animationSpec = infiniteRepeatable(
                         animation = tween(durationMillis = animationType.animationDuration),
                         repeatMode = RepeatMode.Reverse,
+                        initialStartOffset = StartOffset(animationType.animationDelay * index)
                     ),
                 ) { value, _ -> animatedValue = value }
             }
