@@ -22,9 +22,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -186,6 +189,7 @@ private fun LoadingDot(
             .background(color = color)
     )
 }
+/*
 
 @Preview(widthDp = 360, heightDp = 360)
 @Composable
@@ -223,6 +227,26 @@ private fun PreviewLoadingIndicator() {
                     .padding(all = 16.dp),
                 animationType = AnimationType.Bounce,
             )
+        }
+    }
+}
+*/
+
+@Preview(widthDp = 200, heightDp = 200)
+@Composable
+fun IcconPreview() {
+    WeatherSampleTheme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    Icons.Default.Add,
+                    modifier = Modifier.width(100.dp).aspectRatio(1f),
+                    contentDescription = null,
+                )
+            }
         }
     }
 }

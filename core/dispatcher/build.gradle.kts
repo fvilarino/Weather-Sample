@@ -24,10 +24,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        dataBinding = true
-        compose = true
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -36,34 +32,11 @@ android {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
-    }
 }
 
 dependencies {
-    implementation(project(":core:dispatcher"))
-    implementation(project(":styles"))
-
-    implementation(Depends.Android.ktx)
-    implementation(Depends.Android.appCompat)
-    implementation(Depends.Material.material)
-    implementation(Depends.Android.archLifeCycleViewModel)
-    implementation(Depends.Android.lifecycleCommon)
-
     implementation(Depends.Kotlin.coroutinesCore)
     implementation(Depends.Kotlin.coroutinesAndroid)
-
-    implementation(Depends.Compose.composeUi)
-    implementation(Depends.Compose.composeMaterial)
-    implementation(Depends.Compose.composeUiTooling)
-
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-
-    implementation(Depends.Logging.timber)
-
-    testImplementation(Depends.TestLibraries.jUnit)
-    androidTestImplementation(Depends.TestLibraries.androidJUnit)
-    androidTestImplementation(Depends.TestLibraries.espressoCore)
 }

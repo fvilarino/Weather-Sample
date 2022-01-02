@@ -1,16 +1,16 @@
 package com.francescsoftware.weathersample.interactor.weather
 
+import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.repository.weather.WeatherRepository
 import com.francescsoftware.weathersample.repository.weather.model.forecast.City
 import com.francescsoftware.weathersample.repository.weather.model.forecast.ForecastItem
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.fold
-import com.francescsoftware.weathersample.utils.dispatcher.DispatcherProvider
 import com.francescsoftware.weathersample.utils.time.Seconds
 import com.francescsoftware.weathersample.utils.time.TimeFormatter
 import com.francescsoftware.weathersample.utils.time.toDate
 import kotlinx.coroutines.withContext
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 class GetForecastInteractorImpl @Inject constructor(

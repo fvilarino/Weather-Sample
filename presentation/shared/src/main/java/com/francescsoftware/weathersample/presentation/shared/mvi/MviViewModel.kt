@@ -3,6 +3,8 @@ package com.francescsoftware.weathersample.presentation.shared.mvi
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.francescsoftware.weathersample.dispather.DispatcherProviderInstance
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -48,15 +50,15 @@ abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceActio
     initialState: S
 ) : ViewModel(), Processor<R> {
 
-    private val stateFlow = mutableStateOf(initialState)
-    private val eventFlow = MutableSharedFlow<E>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
+    private val _state = mutableStateOf(initialState)
+    private val _events = MutableSharedFlow<E>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
     protected val currentState: S
-        get() = stateFlow.value
+        get() = _state.value
 
-    val state: androidx.compose.runtime.State<S> = stateFlow
-    val event: Flow<E> = eventFlow.asSharedFlow()
-    private val intentFlow = MutableSharedFlow<I>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
-    private val reduceFlow = MutableSharedFlow<R>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
+    val state: androidx.compose.runtime.State<S> = _state
+    val events: Flow<E> = _events.asSharedFlow()
+    private val intents = MutableSharedFlow<I>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
+    private val reduceActions = MutableSharedFlow<R>(extraBufferCapacity = FLOW_BUFFER_CAPACITY)
 
     protected open val middleware: List<Middleware<I, R>> = emptyList()
 
@@ -73,7 +75,7 @@ abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceActio
     }
 
     init {
-        intentFlow
+        intents
             .onEach { intent ->
                 Timber.tag(TAG).v("Processing [$intent]")
                 preMiddleware.forEach { middleware -> middleware.executeIntent(intent) }
@@ -81,10 +83,10 @@ abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceActio
                 postMiddleware.forEach { middleware -> middleware.executeIntent(intent) }
             }
             .launchIn(viewModelScope)
-        reduceFlow
+        reduceActions
             .onEach { action ->
                 Timber.tag(TAG).v("Reducing [$action]")
-                stateFlow.value = reduce(stateFlow.value, action)
+                _state.value = reduce(_state.value, action)
             }
             .launchIn(viewModelScope)
 
@@ -95,15 +97,24 @@ abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceActio
     }
 
     fun onIntent(intent: I) {
-        intentFlow.tryEmit(intent)
+        intents.tryEmit(intent)
     }
 
     fun onEvent(event: E) {
-        eventFlow.tryEmit(event)
+        _events.tryEmit(event)
     }
 
     override fun handle(reduceAction: R) {
-        reduceFlow.tryEmit(reduceAction)
+        reduceActions.tryEmit(reduceAction)
+    }
+
+    protected fun onBackground(
+        block: suspend CoroutineScope.() -> Unit,
+    ) {
+        viewModelScope.launch(
+            context = DispatcherProviderInstance.default,
+            block = block,
+        )
     }
 
     protected abstract suspend fun executeIntent(intent: I)

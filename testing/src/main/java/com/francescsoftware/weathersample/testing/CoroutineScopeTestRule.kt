@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.testing
 
-import com.francescsoftware.weathersample.utils.dispatcher.DispatcherProvider
+import com.francescsoftware.weathersample.dispather.DispatcherProvider
+import com.francescsoftware.weathersample.dispather.DispatcherProviderInstance
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,14 +13,20 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 val testDispatcherProvider = object : DispatcherProvider {
+    private var dispatcher: CoroutineDispatcher? = null
+
     override val main: CoroutineDispatcher
-        get() = Dispatchers.Main
+        get() = dispatcher ?: Dispatchers.Main
     override val io: CoroutineDispatcher
-        get() = Dispatchers.Main
+        get() = dispatcher ?: Dispatchers.Main
     override val default: CoroutineDispatcher
-        get() = Dispatchers.Main
+        get() = dispatcher ?: Dispatchers.Main
     override val unconfined: CoroutineDispatcher
-        get() = Dispatchers.Main
+        get() = dispatcher ?: Dispatchers.Main
+
+    override fun setDispatcher(dispatcher: CoroutineDispatcher?) {
+        this.dispatcher = dispatcher
+    }
 }
 
 @ExperimentalCoroutinesApi
@@ -35,11 +42,13 @@ class MainCoroutineRule(
     override fun starting(description: Description?) {
         super.starting(description)
         Dispatchers.setMain(testDispatcher)
+        DispatcherProviderInstance.setDispatcher(testDispatcher)
     }
 
     override fun finished(description: Description?) {
         super.finished(description)
         Dispatchers.resetMain()
         testDispatcher.cleanupTestCoroutines()
+        DispatcherProviderInstance.setDispatcher(null)
     }
 }

@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:dispatcher"))
     implementation(project(":utils"))
 
     implementation(Depends.Kotlin.coroutinesCore)
