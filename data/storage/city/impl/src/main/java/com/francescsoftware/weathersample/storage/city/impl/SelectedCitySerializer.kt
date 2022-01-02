@@ -1,8 +1,7 @@
-package com.francescsoftware.weathersample.storage.selectedcity
+package com.francescsoftware.weathersample.storage.city.impl
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.francescsoftware.weathersample.presentation.storage.SelectedCity
 import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream

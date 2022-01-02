@@ -11,7 +11,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
-import com.francescsoftware.weathersample.storage.selectedcity.SelectedCityStore
+import com.francescsoftware.weathersample.storage.city.api.SelectedCityStore
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.type.getOrNull

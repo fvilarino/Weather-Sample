@@ -7,7 +7,7 @@ import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
-import com.francescsoftware.weathersample.storage.selectedcity.SelectedCityStore
+import com.francescsoftware.weathersample.storage.city.api.SelectedCityStore
 import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

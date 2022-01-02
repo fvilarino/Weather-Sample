@@ -56,6 +56,8 @@ dependencies {
     implementation(project(":core:time:api"))
     implementation(project(":core:time:impl"))
 
+    implementation(project(":data:storage:city:api"))
+    implementation(project(":data:storage:city:impl"))
     implementation(project(":data:repository:city:api"))
     implementation(project(":data:repository:city:impl"))
     implementation(project(":data:repository:weather:api"))
@@ -63,7 +65,6 @@ dependencies {
 
     implementation(project(":presentation:feature"))
     implementation(project(":presentation:shared"))
-    implementation(project(":presentation:storage"))
 
     implementation(project(":styles"))
     implementation(project(":utils"))

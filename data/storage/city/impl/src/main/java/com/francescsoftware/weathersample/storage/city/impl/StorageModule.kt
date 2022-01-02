@@ -1,13 +1,10 @@
-package com.francescsoftware.weathersample.storage
+package com.francescsoftware.weathersample.storage.city.impl
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
-import com.francescsoftware.weathersample.presentation.storage.SelectedCity
-import com.francescsoftware.weathersample.storage.selectedcity.SelectedCitySerializer
-import com.francescsoftware.weathersample.storage.selectedcity.SelectedCityStore
-import com.francescsoftware.weathersample.storage.selectedcity.SelectedCityStoreImpl
+import com.francescsoftware.weathersample.storage.city.api.SelectedCityStore
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -23,7 +20,7 @@ private const val SELECTED_CITY_STORAGE_FILE = "selected_city"
 abstract class StorageModule {
     @Binds
     @Singleton
-    abstract fun bindSelectedCityStore(
+    internal abstract fun bindSelectedCityStore(
         selectedCityStore: SelectedCityStoreImpl
     ): SelectedCityStore
 }
@@ -33,7 +30,7 @@ abstract class StorageModule {
 object DataStoreModule {
     @Provides
     @Singleton
-    fun provideSelectedCityDataStore(
+    internal fun provideSelectedCityDataStore(
         @ApplicationContext context: Context,
     ): DataStore<SelectedCity> =
         DataStoreFactory.create(

@@ -38,11 +38,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":data:storage:city:api"))
 
     implementation(Depends.Android.dataStore)
     implementation(Depends.Google.protoBufJavaLite)
     implementation(Depends.Kotlin.coroutinesCore)
-    implementation(Depends.Kotlin.coroutinesAndroid)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)

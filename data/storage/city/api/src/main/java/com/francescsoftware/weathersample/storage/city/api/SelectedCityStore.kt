@@ -1,7 +1,12 @@
-package com.francescsoftware.weathersample.storage.selectedcity
+package com.francescsoftware.weathersample.storage.city.api
 
-import com.francescsoftware.weathersample.presentation.storage.SelectedCity
 import kotlinx.coroutines.flow.Flow
+
+data class SelectedCity(
+    val name: String,
+    val country: String,
+    val countryCode :String,
+)
 
 interface SelectedCityStore {
     val city: Flow<SelectedCity>

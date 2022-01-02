@@ -51,8 +51,8 @@ dependencies {
     implementation(project(":core:dispatcher"))
     implementation(project(":core:type"))
     implementation(project(":core:time:api"))
+    implementation(project(":data:storage:city:api"))
     implementation(project(":presentation:shared"))
-    implementation(project(":presentation:storage"))
     implementation(project(":styles"))
     implementation(project(":utils"))
 
