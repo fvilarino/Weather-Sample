@@ -1,6 +1,8 @@
 plugins {
     id(Depends.ModulePlugins.libraryPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
+    id(Depends.ModulePlugins.daggerHiltPlugin)
+    kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
 android {
@@ -33,5 +35,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:time:api"))
     implementation(Depends.Android.ktx)
+    implementation(Depends.Hilt.daggerHiltAndroid)
+    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
 }

@@ -12,12 +12,12 @@ import com.francescsoftware.weathersample.repository.weather.model.forecast.Fore
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
 import com.francescsoftware.weathersample.testing.runBlockingTest
 import com.francescsoftware.weathersample.testing.testDispatcherProvider
+import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.getOrNull
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
 import com.francescsoftware.weathersample.type.throwableOrNull
-import com.francescsoftware.weathersample.utils.time.TimeFormatter
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

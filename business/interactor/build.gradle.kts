@@ -36,6 +36,7 @@ android {
 
 dependencies {
     implementation(project(":core:dispatcher"))
+    implementation(project(":core:time:api"))
     implementation(project(":core:type"))
     implementation(project(":data:repository"))
     implementation(project(":utils"))

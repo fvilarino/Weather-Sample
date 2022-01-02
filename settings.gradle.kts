@@ -9,6 +9,8 @@ rootProject.name = "Weather Sample"
 include(":app")
 include(":business:interactor")
 include(":core:dispatcher")
+include(":core:time:api")
+include(":core:time:impl")
 include(":core:type")
 include(":data:repository")
 include(":presentation:feature")

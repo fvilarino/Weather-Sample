@@ -48,6 +48,8 @@ android {
 dependencies {
     implementation(project(":business:interactor"))
     implementation(project(":core:dispatcher"))
+    implementation(project(":core:time:api"))
+    implementation(project(":core:time:impl"))
     implementation(project(":data:repository"))
     implementation(project(":presentation:feature"))
     implementation(project(":presentation:shared"))

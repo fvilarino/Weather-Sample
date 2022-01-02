@@ -1,7 +1,10 @@
-package com.francescsoftware.weathersample.utils.time
+package com.francescsoftware.weathersample.time.impl
 
+import com.francescsoftware.weathersample.time.api.TimeFormatter
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 private const val DAY_HOUR_FORMAT = "MMMM, dd HH:mm"
@@ -9,7 +12,7 @@ private const val DAY_WITH_DAY_OF_WEEK_FORMAT = "EEE MMMM, dd"
 private const val DAY_FORMAT = "MMMM, dd"
 private const val HOUR_FORMAT = "HH:mm"
 
-class TimeFormatterImpl @Inject constructor() : TimeFormatter {
+internal class TimeFormatterImpl @Inject constructor() : TimeFormatter {
     override fun setToMidnight(date: Date): Date = Calendar.getInstance().let { calendar ->
         calendar.time = date
         calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -38,3 +41,4 @@ class TimeFormatterImpl @Inject constructor() : TimeFormatter {
         return formatter.format(date)
     }
 }
+

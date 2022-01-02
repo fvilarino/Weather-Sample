@@ -1,7 +1,6 @@
-package com.francescsoftware.weathersample.utils
+package com.francescsoftware.weathersample.time.impl
 
-import com.francescsoftware.weathersample.utils.time.TimeFormatter
-import com.francescsoftware.weathersample.utils.time.TimeFormatterImpl
+import com.francescsoftware.weathersample.time.api.TimeFormatter
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
@@ -10,10 +9,10 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class UtilsModule {
+abstract class TimeFormatterModule {
     @Binds
     @Reusable
-    abstract fun bindTimeFormatter(
+    internal abstract fun bindTimeFormatter(
         timeFormatterImpl: TimeFormatterImpl
     ): TimeFormatter
 }

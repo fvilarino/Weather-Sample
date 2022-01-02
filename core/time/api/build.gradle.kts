@@ -31,7 +31,3 @@ android {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
 }
-
-dependencies {
-    implementation(Depends.Android.ktx)
-}
