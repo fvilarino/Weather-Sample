@@ -46,18 +46,25 @@ android {
 }
 
 dependencies {
-    implementation(project(":business:interactor"))
+    implementation(project(":business:interactor:city:api"))
+    implementation(project(":business:interactor:city:impl"))
+    implementation(project(":business:interactor:weather:api"))
+    implementation(project(":business:interactor:weather:impl"))
+
     implementation(project(":core:dispatcher"))
     implementation(project(":core:network"))
     implementation(project(":core:time:api"))
     implementation(project(":core:time:impl"))
+
     implementation(project(":data:city:api"))
     implementation(project(":data:city:impl"))
     implementation(project(":data:weather:api"))
     implementation(project(":data:weather:impl"))
+
     implementation(project(":presentation:feature"))
     implementation(project(":presentation:shared"))
     implementation(project(":presentation:storage"))
+
     implementation(project(":styles"))
     implementation(project(":utils"))
 

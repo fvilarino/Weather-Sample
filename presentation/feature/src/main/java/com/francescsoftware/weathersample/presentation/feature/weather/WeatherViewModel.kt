@@ -1,13 +1,13 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
 import androidx.lifecycle.viewModelScope
-import com.francescsoftware.weathersample.interactor.weather.Forecast
-import com.francescsoftware.weathersample.interactor.weather.ForecastDay
-import com.francescsoftware.weathersample.interactor.weather.ForecastEntry
-import com.francescsoftware.weathersample.interactor.weather.GetForecastInteractor
-import com.francescsoftware.weathersample.interactor.weather.GetTodayWeatherInteractor
-import com.francescsoftware.weathersample.interactor.weather.TodayWeather
-import com.francescsoftware.weathersample.interactor.weather.WeatherLocation
+import com.francescsoftware.weathersample.interactor.weather.api.Forecast
+import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
+import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
+import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInteractor
+import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
+import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
+import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel

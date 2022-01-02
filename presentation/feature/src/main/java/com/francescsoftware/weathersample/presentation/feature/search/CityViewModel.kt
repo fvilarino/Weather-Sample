@@ -1,8 +1,8 @@
 package com.francescsoftware.weathersample.presentation.feature.search
 
 import androidx.lifecycle.viewModelScope
-import com.francescsoftware.weathersample.interactor.city.City
-import com.francescsoftware.weathersample.interactor.city.GetCitiesInteractor
+import com.francescsoftware.weathersample.interactor.city.api.City
+import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
@@ -10,7 +10,6 @@ import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.storage.selectedcity.SelectedCityStore
 import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged

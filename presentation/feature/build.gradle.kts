@@ -46,7 +46,8 @@ android {
 
 dependencies {
 
-    implementation(project(":business:interactor"))
+    implementation(project(":business:interactor:city:api"))
+    implementation(project(":business:interactor:weather:api"))
     implementation(project(":core:dispatcher"))
     implementation(project(":core:type"))
     implementation(project(":core:time:api"))

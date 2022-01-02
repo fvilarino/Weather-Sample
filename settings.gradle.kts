@@ -7,7 +7,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Weather Sample"
 include(":app")
-include(":business:interactor")
+include(":business:interactor:city:api")
+include(":business:interactor:city:impl")
+include(":business:interactor:weather:api")
+include(":business:interactor:weather:impl")
 include(":core:dispatcher")
 include(":core:network")
 include(":core:time:api")
