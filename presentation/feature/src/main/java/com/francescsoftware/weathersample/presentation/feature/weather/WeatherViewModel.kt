@@ -98,27 +98,29 @@ class WeatherViewModel @Inject constructor(
 
     private suspend fun loadTodayWeather() {
         handle(TodayReduceAction.Refreshing)
-        val selectedCity = cityStore.city.first()
-        val location = WeatherLocation.City(
-            name = selectedCity.name,
-            countryCode = selectedCity.countryCode,
-        )
-        getTodayWeatherInteractor.execute(location).fold(
-            onSuccess = { todayWeather ->
-                handle(
-                    TodayReduceAction.TodayLoaded(
-                        currentWeather = todayWeather.toWeatherCardState(),
+        onBackground {
+            val selectedCity = cityStore.city.first()
+            val location = WeatherLocation.City(
+                name = selectedCity.name,
+                countryCode = selectedCity.countryCode,
+            )
+            getTodayWeatherInteractor.execute(location).fold(
+                onSuccess = { todayWeather ->
+                    handle(
+                        TodayReduceAction.TodayLoaded(
+                            currentWeather = todayWeather.toWeatherCardState(),
+                        )
                     )
-                )
-            },
-            onFailure = {
-                handle(
-                    TodayReduceAction.LoadError(
-                        message = stringLookup.getString(R.string.failed_to_load_weather_data)
+                },
+                onFailure = {
+                    handle(
+                        TodayReduceAction.LoadError(
+                            message = stringLookup.getString(R.string.failed_to_load_weather_data)
+                        )
                     )
-                )
-            }
-        )
+                }
+            )
+        }
     }
 
     private suspend fun load() {
@@ -130,25 +132,27 @@ class WeatherViewModel @Inject constructor(
             )
         )
         handle(TodayReduceAction.Loading)
-        val location = WeatherLocation.City(
-            name = selectedCity.name,
-            countryCode = selectedCity.countryCode,
-        )
-        val current = getTodayWeatherInteractor.execute(location).getOrNull()
-        val forecast = getForecastInteractor.execute(location).getOrNull()
-        if (current != null && forecast != null) {
-            handle(
-                TodayReduceAction.Loaded(
-                    currentWeather = current.toWeatherCardState(),
-                    forecastItems = forecast.toForecastItems()
-                )
+        onBackground {
+            val location = WeatherLocation.City(
+                name = selectedCity.name,
+                countryCode = selectedCity.countryCode,
             )
-        } else {
-            handle(
-                TodayReduceAction.LoadError(
-                    message = stringLookup.getString(R.string.failed_to_load_weather_data)
+            val current = getTodayWeatherInteractor.execute(location).getOrNull()
+            val forecast = getForecastInteractor.execute(location).getOrNull()
+            if (current != null && forecast != null) {
+                handle(
+                    TodayReduceAction.Loaded(
+                        currentWeather = current.toWeatherCardState(),
+                        forecastItems = forecast.toForecastItems()
+                    )
                 )
-            )
+            } else {
+                handle(
+                    TodayReduceAction.LoadError(
+                        message = stringLookup.getString(R.string.failed_to_load_weather_data)
+                    )
+                )
+            }
         }
     }
 
