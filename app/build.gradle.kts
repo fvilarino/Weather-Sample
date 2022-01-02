@@ -56,10 +56,10 @@ dependencies {
     implementation(project(":core:time:api"))
     implementation(project(":core:time:impl"))
 
-    implementation(project(":data:city:api"))
-    implementation(project(":data:city:impl"))
-    implementation(project(":data:weather:api"))
-    implementation(project(":data:weather:impl"))
+    implementation(project(":data:repository:city:api"))
+    implementation(project(":data:repository:city:impl"))
+    implementation(project(":data:repository:weather:api"))
+    implementation(project(":data:repository:weather:impl"))
 
     implementation(project(":presentation:feature"))
     implementation(project(":presentation:shared"))

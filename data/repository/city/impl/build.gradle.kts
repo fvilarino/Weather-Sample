@@ -2,6 +2,7 @@ plugins {
     id(Depends.ModulePlugins.libraryPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
     id(Depends.ModulePlugins.daggerHiltPlugin)
+    id(Depends.ModulePlugins.kotlinSerializationPlugin)
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
@@ -16,6 +17,12 @@ android {
     }
 
     buildTypes {
+        all {
+            buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"${Keys.cityServiceBaseUrl}\"")
+            buildConfigField("String", "RAPID_SERVICE_KEY", "\"${Keys.rapidServiceKey}\"")
+            buildConfigField("String", "RAPID_SERVICE_CITY_HOST", "\"${Keys.rapidServiceCityHost}\"")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -35,24 +42,23 @@ android {
 }
 
 dependencies {
-    implementation(project(":business:interactor:weather:api"))
-    implementation(project(":core:dispatcher"))
-    implementation(project(":core:time:api"))
+    implementation(project(":core:network"))
     implementation(project(":core:type"))
-    implementation(project(":data:repository:weather:api"))
-    implementation(project(":utils"))
-
-    implementation(Depends.Android.ktx)
-    implementation(Depends.Kotlin.coroutinesCore)
+    implementation(project(":data:repository:city:api"))
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
 
+    implementation(Depends.Kotlin.kotlinSerialization)
+    implementation(Depends.Network.okHttp)
+    implementation(Depends.Network.okHttpInterceptor)
+    implementation(Depends.Network.retrofit)
+    implementation(Depends.Network.retrofitAdapter)
+    implementation(Depends.Network.retrofitSerializationConverter)
+
     implementation(Depends.Logging.timber)
 
-    testImplementation(project(":testing"))
     testImplementation(Depends.TestLibraries.jUnit)
-    testImplementation(Depends.TestLibraries.coreTesting)
-    testImplementation(Depends.TestLibraries.coroutinesTest)
-    testImplementation(Depends.TestLibraries.mockk)
+    androidTestImplementation(Depends.TestLibraries.androidJUnit)
+    androidTestImplementation(Depends.TestLibraries.espressoCore)
 }

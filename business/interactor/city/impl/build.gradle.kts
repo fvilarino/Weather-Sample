@@ -39,7 +39,7 @@ dependencies {
     implementation(project(":core:dispatcher"))
     implementation(project(":core:time:api"))
     implementation(project(":core:type"))
-    implementation(project(":data:city:api"))
+    implementation(project(":data:repository:city:api"))
     implementation(project(":utils"))
 
     implementation(Depends.Android.ktx)
