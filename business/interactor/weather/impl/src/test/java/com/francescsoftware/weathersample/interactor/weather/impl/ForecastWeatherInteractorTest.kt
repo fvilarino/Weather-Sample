@@ -5,6 +5,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.Forecast
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
+import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
 import com.francescsoftware.weathersample.testing.runBlockingTest
 import com.francescsoftware.weathersample.testing.testDispatcherProvider
@@ -166,12 +167,12 @@ class ForecastWeatherInteractorTest {
         )
     )
 
-    private val incomingCity = RepositoryLocation.City(
+    private val incomingCity = WeatherLocation.City(
         name = cityName,
         countryCode = countryCode,
     )
 
-    private val incomingCoordinates = RepositoryLocation.Coordinates(
+    private val incomingCoordinates = WeatherLocation.Coordinates(
         latitude = CityLatitude,
         longitude = CityLongitude,
     )

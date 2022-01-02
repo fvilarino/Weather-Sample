@@ -7,6 +7,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeatherItem
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
+import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
 import com.francescsoftware.weathersample.testing.runBlockingTest
 import com.francescsoftware.weathersample.type.Result
@@ -115,22 +116,22 @@ class TodayWeatherInteractorTest {
         visibility = visibilityMeters,
     )
 
-    private val incomingCity = RepositoryLocation.City(
+    private val incomingCity: WeatherLocation = WeatherLocation.City(
         name = cityName,
         countryCode = countryCode,
     )
 
-    private val incomingCoordinates = RepositoryLocation.Coordinates(
+    private val incomingCoordinates: WeatherLocation = WeatherLocation.Coordinates(
         latitude = CityLatitude,
         longitude = CityLongitude,
     )
 
-    private val queryCity = RepositoryLocation.City(
+    private val queryCity: RepositoryLocation = RepositoryLocation.City(
         name = cityName,
         countryCode = countryCode,
     )
 
-    private val queryCoordinates = RepositoryLocation.Coordinates(
+    private val queryCoordinates: RepositoryLocation = RepositoryLocation.Coordinates(
         latitude = CityLatitude,
         longitude = CityLongitude,
     )
