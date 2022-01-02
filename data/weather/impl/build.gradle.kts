@@ -2,6 +2,7 @@ plugins {
     id(Depends.ModulePlugins.libraryPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
     id(Depends.ModulePlugins.daggerHiltPlugin)
+    id(Depends.ModulePlugins.kotlinSerializationPlugin)
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
@@ -16,6 +17,12 @@ android {
     }
 
     buildTypes {
+        all {
+            buildConfigField("String", "WEATHER_SERVICE_BASE_URL", "\"${Keys.weatherServiceBaseUrl}\"")
+            buildConfigField("String", "RAPID_SERVICE_KEY", "\"${Keys.rapidServiceKey}\"")
+            buildConfigField("String", "RAPID_SERVICE_WEATHER_HOST", "\"${Keys.rapidServiceWeatherHost}\"")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -35,24 +42,23 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:dispatcher"))
-    implementation(project(":core:time:api"))
+    implementation(project(":core:network"))
     implementation(project(":core:type"))
-    implementation(project(":data:city:api"))
     implementation(project(":data:weather:api"))
-    implementation(project(":utils"))
-
-    implementation(Depends.Android.ktx)
-    implementation(Depends.Kotlin.coroutinesCore)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
 
+    implementation(Depends.Kotlin.kotlinSerialization)
+    implementation(Depends.Network.okHttp)
+    implementation(Depends.Network.okHttpInterceptor)
+    implementation(Depends.Network.retrofit)
+    implementation(Depends.Network.retrofitAdapter)
+    implementation(Depends.Network.retrofitSerializationConverter)
+
     implementation(Depends.Logging.timber)
 
-    testImplementation(project(":testing"))
     testImplementation(Depends.TestLibraries.jUnit)
-    testImplementation(Depends.TestLibraries.coreTesting)
-    testImplementation(Depends.TestLibraries.coroutinesTest)
-    testImplementation(Depends.TestLibraries.mockk)
+    androidTestImplementation(Depends.TestLibraries.androidJUnit)
+    androidTestImplementation(Depends.TestLibraries.espressoCore)
 }

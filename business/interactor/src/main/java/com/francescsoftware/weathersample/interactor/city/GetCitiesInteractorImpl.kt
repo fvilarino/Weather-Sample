@@ -1,10 +1,10 @@
 package com.francescsoftware.weathersample.interactor.city
 
-import com.francescsoftware.weathersample.repository.city.CityRepository
-import com.francescsoftware.weathersample.repository.city.model.CityItem
-import com.francescsoftware.weathersample.repository.city.model.CitySearchResponse
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.fold
+import com.francescsoftware.weathersaple.cityrepository.api.CityRepository
+import com.francescsoftware.weathersaple.cityrepository.api.model.CityItem
+import com.francescsoftware.weathersaple.cityrepository.api.model.CitySearchResponse
 import javax.inject.Inject
 
 class GetCitiesInteractorImpl @Inject constructor(

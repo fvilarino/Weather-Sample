@@ -2,6 +2,7 @@ plugins {
     id(Depends.ModulePlugins.libraryPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
     id(Depends.ModulePlugins.daggerHiltPlugin)
+    id(Depends.ModulePlugins.kotlinSerializationPlugin)
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
@@ -35,24 +36,20 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:dispatcher"))
-    implementation(project(":core:time:api"))
     implementation(project(":core:type"))
-    implementation(project(":data:city:api"))
-    implementation(project(":data:weather:api"))
-    implementation(project(":utils"))
 
     implementation(Depends.Android.ktx)
-    implementation(Depends.Kotlin.coroutinesCore)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
+    implementation(Depends.Network.okHttp)
+    implementation(Depends.Network.okHttpInterceptor)
+    implementation(Depends.Network.okIO)
+    implementation(Depends.Network.retrofit)
 
     implementation(Depends.Logging.timber)
 
-    testImplementation(project(":testing"))
     testImplementation(Depends.TestLibraries.jUnit)
-    testImplementation(Depends.TestLibraries.coreTesting)
-    testImplementation(Depends.TestLibraries.coroutinesTest)
-    testImplementation(Depends.TestLibraries.mockk)
+    androidTestImplementation(Depends.TestLibraries.androidJUnit)
+    androidTestImplementation(Depends.TestLibraries.espressoCore)
 }

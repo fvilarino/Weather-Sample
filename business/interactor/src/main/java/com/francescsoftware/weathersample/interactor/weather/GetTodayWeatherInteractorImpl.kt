@@ -1,17 +1,17 @@
 package com.francescsoftware.weathersample.interactor.weather
 
-import com.francescsoftware.weathersample.repository.weather.WeatherRepository
-import com.francescsoftware.weathersample.repository.weather.model.Clouds
-import com.francescsoftware.weathersample.repository.weather.model.Main
-import com.francescsoftware.weathersample.repository.weather.model.WeatherItem
-import com.francescsoftware.weathersample.repository.weather.model.Wind
-import com.francescsoftware.weathersample.repository.weather.model.today.TodayWeatherResponse
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.fold
+import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
+import com.francescsoftware.weathersample.weatherrepository.api.model.Clouds
+import com.francescsoftware.weathersample.weatherrepository.api.model.Main
+import com.francescsoftware.weathersample.weatherrepository.api.model.WeatherItem
+import com.francescsoftware.weathersample.weatherrepository.api.model.Wind
+import com.francescsoftware.weathersample.weatherrepository.api.model.today.TodayWeatherResponse
 import javax.inject.Inject
 
 class GetTodayWeatherInteractorImpl @Inject constructor(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
 ) : GetTodayWeatherInteractor {
 
     override suspend fun execute(location: WeatherLocation): Result<TodayWeather> {
