@@ -4,10 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
 import com.francescsoftware.weathersample.presentation.feature.R
+import com.francescsoftware.weathersample.presentation.feature.navigator.NavigationDestination
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
-import com.francescsoftware.weathersample.storage.city.api.SelectedCity
 import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -113,7 +113,7 @@ class CityViewModel @Inject constructor(
         )
     )
 
-    private fun CityResultModel.toSelectedCity() = SelectedCity(
+    private fun CityResultModel.toSelectedCity() = NavigationDestination.Weather.SelectedCity(
         name = name.toString(),
         country = country.toString(),
         countryCode = countryCode,

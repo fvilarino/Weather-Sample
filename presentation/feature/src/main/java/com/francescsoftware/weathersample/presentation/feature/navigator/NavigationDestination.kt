@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.SavedStateHandle
 import com.francescsoftware.weathersample.presentation.feature.R
-import com.francescsoftware.weathersample.storage.city.api.SelectedCity
 
 sealed interface NavigationDestination {
     @get: StringRes
@@ -26,6 +25,12 @@ sealed interface NavigationDestination {
     }
 
     object Weather : NavigationDestination {
+        data class SelectedCity(
+            val name: String,
+            val country: String,
+            val countryCode :String,
+        )
+
         override val titleId: Int = R.string.weather_label
         override val iconId: Int = R.drawable.ic_arrow_back
 

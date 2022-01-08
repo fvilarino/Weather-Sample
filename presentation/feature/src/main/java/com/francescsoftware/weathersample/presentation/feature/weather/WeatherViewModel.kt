@@ -13,7 +13,6 @@ import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.navigator.NavigationDestination
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
-import com.francescsoftware.weathersample.storage.city.api.SelectedCity
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.type.getOrNull
@@ -41,7 +40,7 @@ class WeatherViewModel @Inject constructor(
     TodayState.initial,
 ), WeatherCallbacks {
 
-    private val selectedCity: SelectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
+    private val selectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
 
     init {
         viewModelScope.launch { load() }
