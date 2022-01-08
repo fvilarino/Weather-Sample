@@ -1,8 +1,8 @@
 package com.francescsoftware.weathersample.type
 
-sealed class Result<out T> {
-    class Success<T>(val value: T) : Result<T>()
-    class Failure(val error: Throwable) : Result<Nothing>()
+sealed interface Result<out T> {
+    class Success<T>(val value: T) : Result<T>
+    class Failure(val error: Throwable) : Result<Nothing>
 }
 
 inline fun <R, T> Result<T>.fold(

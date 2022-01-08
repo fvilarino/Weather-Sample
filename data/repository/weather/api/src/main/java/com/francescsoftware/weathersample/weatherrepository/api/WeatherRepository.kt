@@ -4,16 +4,16 @@ import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastResponse
 import com.francescsoftware.weathersample.weatherrepository.api.model.today.TodayWeatherResponse
 
-sealed class WeatherLocation {
+sealed interface WeatherLocation {
     data class City(
         val name: String,
         val countryCode: String,
-    ) : WeatherLocation()
+    ) : WeatherLocation
 
     data class Coordinates(
         val latitude: Double,
         val longitude: Double,
-    ) : WeatherLocation()
+    ) : WeatherLocation
 }
 
 interface WeatherRepository {

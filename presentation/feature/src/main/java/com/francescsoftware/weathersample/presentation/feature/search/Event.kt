@@ -31,21 +31,21 @@ data class CityState(
     }
 }
 
-sealed class CityEvent : Event {
-    data class ShowSnackBar(val message: CharSequence) : CityEvent()
+sealed interface CityEvent : Event {
+    data class ShowSnackBar(val message: CharSequence) : CityEvent
 }
 
-sealed class CityMviIntent : MviIntent {
-    data class PrefixUpdated(val prefix: String) : CityMviIntent()
-    data class CitiesLoaded(val cities: List<CityResultModel>) : CityMviIntent()
-    object NoResults : CityMviIntent()
-    object LoadError : CityMviIntent()
+sealed interface CityMviIntent : MviIntent {
+    data class PrefixUpdated(val prefix: String) : CityMviIntent
+    data class CitiesLoaded(val cities: List<CityResultModel>) : CityMviIntent
+    object NoResults : CityMviIntent
+    object LoadError : CityMviIntent
 }
 
-sealed class CityReduceAction : ReduceAction {
-    object Loading : CityReduceAction()
-    data class PrefixUpdated(val prefix: String) : CityReduceAction()
-    data class Loaded(val cities: List<CityResultModel>) : CityReduceAction()
-    object NoResults : CityReduceAction()
-    object LoadError : CityReduceAction()
+sealed interface CityReduceAction : ReduceAction {
+    object Loading : CityReduceAction
+    data class PrefixUpdated(val prefix: String) : CityReduceAction
+    data class Loaded(val cities: List<CityResultModel>) : CityReduceAction
+    object NoResults : CityReduceAction
+    object LoadError : CityReduceAction
 }

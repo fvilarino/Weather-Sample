@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.interactor.weather.api.Forecast
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
@@ -9,16 +10,16 @@ import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.presentation.feature.R
+import com.francescsoftware.weathersample.presentation.feature.navigator.NavigationDestination
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
-import com.francescsoftware.weathersample.storage.city.api.SelectedCityStore
+import com.francescsoftware.weathersample.storage.city.api.SelectedCity
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.type.getOrNull
 import com.francescsoftware.weathersample.utils.time.isToday
 import com.francescsoftware.weathersample.utils.time.isTomorrow
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -31,14 +32,16 @@ interface WeatherCallbacks {
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
     private val getForecastInteractor: GetForecastInteractor,
-    private val cityStore: SelectedCityStore,
     private val timeFormatter: TimeFormatter,
     private val stringLookup: StringLookup,
 ) : MviViewModel<TodayState, TodayEvent, TodayMviIntent, TodayReduceAction>(
-    TodayState.initial
+    TodayState.initial,
 ), WeatherCallbacks {
+
+    private val selectedCity: SelectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
 
     init {
         viewModelScope.launch { load() }
@@ -96,10 +99,9 @@ class WeatherViewModel @Inject constructor(
             )
         }
 
-    private suspend fun loadTodayWeather() {
+    private fun loadTodayWeather() {
         handle(TodayReduceAction.Refreshing)
         onBackground {
-            val selectedCity = cityStore.city.first()
             val location = WeatherLocation.City(
                 name = selectedCity.name,
                 countryCode = selectedCity.countryCode,
@@ -124,7 +126,6 @@ class WeatherViewModel @Inject constructor(
     }
 
     private suspend fun load() {
-        val selectedCity = cityStore.city.first()
         handle(
             TodayReduceAction.CityUpdated(
                 name = selectedCity.name,

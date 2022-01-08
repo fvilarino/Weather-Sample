@@ -2,13 +2,13 @@ package com.francescsoftware.weathersample.presentation.feature.weather
 
 import androidx.annotation.DrawableRes
 
-sealed class ForecastItem {
+sealed interface ForecastItem {
     data class ForecastHeader(
         val id: Long,
         val date: String,
         val sunrise: String,
         val sunset: String,
-    ) : ForecastItem()
+    ) : ForecastItem
 
     data class ForecastCard(
         val id: Long,
@@ -20,5 +20,5 @@ sealed class ForecastItem {
         val windSpeed: String,
         val humidity: String,
         val visibility: String,
-    ) : ForecastItem()
+    ) : ForecastItem
 }

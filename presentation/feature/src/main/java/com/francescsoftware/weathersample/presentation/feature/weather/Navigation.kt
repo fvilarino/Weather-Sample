@@ -7,7 +7,7 @@ import com.francescsoftware.weathersample.presentation.feature.navigator.Navigat
 
 fun NavGraphBuilder.addWeatherDetailsDestination() {
     composable(
-        route = NavigationDestination.Weather.getRoute(),
+        route = NavigationDestination.Weather.weatherRoute,
     ) {
         val weatherViewModel: WeatherViewModel = hiltViewModel()
         WeatherScreen(weatherViewModel)

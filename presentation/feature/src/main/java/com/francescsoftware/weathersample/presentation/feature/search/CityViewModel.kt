@@ -7,7 +7,7 @@ import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
 import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
-import com.francescsoftware.weathersample.storage.city.api.SelectedCityStore
+import com.francescsoftware.weathersample.storage.city.api.SelectedCity
 import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.time.DurationUnit
@@ -30,7 +29,6 @@ private val DebounceMillis = 400L.toDuration(DurationUnit.MILLISECONDS)
 class CityViewModel @Inject constructor(
     private val getCitiesInteractor: GetCitiesInteractor,
     private val navigator: Navigator,
-    private val cityStore: SelectedCityStore,
     private val stringLookup: StringLookup,
 ) : MviViewModel<CityState, CityEvent, CityMviIntent, CityReduceAction>(
     initialState = CityState.initial
@@ -44,10 +42,7 @@ class CityViewModel @Inject constructor(
 
     override fun onCityClick(city: CityResultModel) {
         Timber.tag(TAG).d("Clicked on city [$city]")
-        viewModelScope.launch {
-            cityStore.setSelectedCity(city.name.toString(), city.country.toString(), city.countryCode)
-            navigator.cityToWeather()
-        }
+        navigator.cityToWeather(city.toSelectedCity())
     }
 
     override fun onQueryChange(query: String) {
@@ -116,5 +111,11 @@ class CityViewModel @Inject constructor(
             coordinates.latitude.toFloat(),
             coordinates.longitude.toFloat(),
         )
+    )
+
+    private fun CityResultModel.toSelectedCity() = SelectedCity(
+        name = name.toString(),
+        country = country.toString(),
+        countryCode = countryCode,
     )
 }

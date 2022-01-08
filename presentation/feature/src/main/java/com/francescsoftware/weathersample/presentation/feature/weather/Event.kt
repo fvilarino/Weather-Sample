@@ -36,29 +36,28 @@ data class TodayState(
     }
 }
 
-sealed class TodayEvent : Event
+sealed interface TodayEvent : Event
 
-sealed class TodayMviIntent : MviIntent {
-    object RefreshTodayWeather : TodayMviIntent()
-    object Retry : TodayMviIntent()
-    data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayMviIntent()
+sealed interface TodayMviIntent : MviIntent {
+    object RefreshTodayWeather : TodayMviIntent
+    object Retry : TodayMviIntent
+    data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayMviIntent
 }
 
-sealed class TodayReduceAction : ReduceAction {
-    data class CityUpdated(val name: String, val countryCode: String) : TodayReduceAction()
-    object Loading : TodayReduceAction()
-    object Refreshing : TodayReduceAction()
+sealed interface TodayReduceAction : ReduceAction {
+    data class CityUpdated(val name: String, val countryCode: String) : TodayReduceAction
+    object Loading : TodayReduceAction
+    object Refreshing : TodayReduceAction
     data class Loaded(
         val currentWeather: TodayWeatherCardState,
         val forecastItems: List<ForecastItem>
-    ) : TodayReduceAction()
+    ) : TodayReduceAction
 
     data class TodayLoaded(
         val currentWeather: TodayWeatherCardState,
-    ) : TodayReduceAction()
+    ) : TodayReduceAction
 
-    data class LoadError(val message: String) : TodayReduceAction()
+    data class LoadError(val message: String) : TodayReduceAction
 
-    data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayReduceAction()
+    data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayReduceAction
 }
-
