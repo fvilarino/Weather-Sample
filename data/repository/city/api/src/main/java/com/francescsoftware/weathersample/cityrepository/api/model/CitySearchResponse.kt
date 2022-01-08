@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersaple.cityrepository.api.model
+ package com.francescsoftware.weathersample.cityrepository.api.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

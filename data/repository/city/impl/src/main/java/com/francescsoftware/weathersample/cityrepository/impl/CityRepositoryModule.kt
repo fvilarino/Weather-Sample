@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.cityrepository.impl
 
-import com.francescsoftware.weathersaple.cityrepository.api.CityRepository
+import com.francescsoftware.weathersample.cityrepository.api.CityRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Binds
 import dagger.Module

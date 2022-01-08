@@ -6,9 +6,9 @@ import com.francescsoftware.weathersample.interactor.city.api.Coordinates
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.fold
-import com.francescsoftware.weathersaple.cityrepository.api.CityRepository
-import com.francescsoftware.weathersaple.cityrepository.api.model.CityItem
-import com.francescsoftware.weathersaple.cityrepository.api.model.CitySearchResponse
+import com.francescsoftware.weathersample.cityrepository.api.CityRepository
+ import com.francescsoftware.weathersample.cityrepository.api.model.CityItem
+ import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
 import javax.inject.Inject
 
 internal class GetCitiesInteractorImpl @Inject constructor(
