@@ -15,6 +15,21 @@ buildscript {
     }
 }
 
+subprojects {
+    tasks.withType<Test> {
+        useJUnitPlatform {
+            includeEngines("junit-jupiter", "junit-vintage")
+        }
+        testLogging {
+            events("passed", "skipped", "failed")
+            showStandardStreams = true
+            showStackTraces = true
+            showCauses = true
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+        }
+    }
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }

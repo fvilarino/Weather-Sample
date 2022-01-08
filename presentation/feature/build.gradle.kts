@@ -84,7 +84,5 @@ dependencies {
 
     implementation(Depends.Logging.timber)
 
-    testImplementation(Depends.TestLibraries.jUnit)
-    androidTestImplementation(Depends.TestLibraries.androidJUnit)
-    androidTestImplementation(Depends.TestLibraries.espressoCore)
+    testImplementation(project(":testing"))
 }

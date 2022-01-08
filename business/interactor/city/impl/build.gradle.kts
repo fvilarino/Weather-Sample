@@ -51,8 +51,4 @@ dependencies {
     implementation(Depends.Logging.timber)
 
     testImplementation(project(":testing"))
-    testImplementation(Depends.TestLibraries.jUnit)
-    testImplementation(Depends.TestLibraries.coreTesting)
-    testImplementation(Depends.TestLibraries.coroutinesTest)
-    testImplementation(Depends.TestLibraries.mockk)
 }

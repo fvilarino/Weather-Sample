@@ -34,12 +34,20 @@ android {
 }
 
 dependencies {
+    implementation(project(":business:interactor:city:api"))
     implementation(project(":core:dispatcher"))
+    implementation(project(":core:type"))
+    implementation(project(":data:repository:city:api"))
+    implementation(project(":data:storage:city:api"))
+    implementation(project(":presentation:shared"))
     implementation(project(":utils"))
 
-    implementation(Depends.Kotlin.coroutinesCore)
-    implementation(Depends.TestLibraries.coroutinesTest)
-    implementation(Depends.TestLibraries.jUnit)
-    implementation(Depends.TestLibraries.coreTesting)
-    implementation(Depends.TestLibraries.mockk)
+    api(Depends.Kotlin.coroutinesCore)
+    api(Depends.TestLibraries.coroutinesTest)
+    api(Depends.TestLibraries.junitJupiterApi)
+    api(Depends.TestLibraries.junitJupiterParams)
+    api(Depends.TestLibraries.junitJupiterEngine)
+    api(Depends.TestLibraries.junitJupiterVintageEngine)
+    api(Depends.TestLibraries.coreTesting)
+    api(Depends.TestLibraries.mockk)
 }

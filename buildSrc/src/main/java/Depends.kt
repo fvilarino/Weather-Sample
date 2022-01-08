@@ -73,8 +73,12 @@ object Depends {
     }
 
     object TestLibraries {
-        const val jUnit = "junit:junit:${Versions.Test.jUnitVersion}"
+        // Test dependencies
         const val androidJUnit = "androidx.test.ext:junit:${Versions.Test.androidJUnitVersion}"
+        const val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:${Versions.Test.jUnitJupiterVersion}"
+        const val junitJupiterParams = "org.junit.jupiter:junit-jupiter-params:${Versions.Test.jUnitJupiterVersion}"
+        const val junitJupiterEngine = "org.junit.jupiter:junit-jupiter-engine:${Versions.Test.jUnitJupiterVersion}"
+        const val junitJupiterVintageEngine = "org.junit.vintage:junit-vintage-engine:${Versions.Test.jUnitJupiterVersion}"
         const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.Test.espressoCoreVersion}"
         const val coreTesting = "androidx.arch.core:core-testing:${Versions.Test.coreTestingVersion}"
         const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.Test.coroutinesTestVersion}"
