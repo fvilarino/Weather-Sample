@@ -3,6 +3,7 @@ plugins {
     id(Depends.ModulePlugins.kotlinPlugin)
     id(Depends.ModulePlugins.daggerHiltPlugin)
     kotlin(Depends.ModulePlugins.kotlinKapt)
+    id(Depends.ModulePlugins.testFixturesPlugin)
 }
 
 android {
@@ -25,7 +26,6 @@ android {
         }
     }
     buildFeatures {
-        dataBinding = true
         compose = true
     }
     compileOptions {
@@ -38,6 +38,9 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
+    }
+    testFixtures {
+        enable = true
     }
 }
 

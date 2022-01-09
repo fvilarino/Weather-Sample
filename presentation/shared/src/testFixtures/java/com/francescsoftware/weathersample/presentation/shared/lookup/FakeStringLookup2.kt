@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.shared.lookup
 
+/*
 class FakeStringLookup : StringLookup {
     var result: String = ""
 
@@ -7,3 +8,4 @@ class FakeStringLookup : StringLookup {
 
     override fun getString(id: Int, vararg formatArgs: Any): String = result
 }
+*/

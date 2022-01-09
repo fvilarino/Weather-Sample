@@ -1,6 +1,7 @@
 plugins {
     id(Depends.ModulePlugins.libraryPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
+    id(Depends.ModulePlugins.testFixturesPlugin)
 }
 
 android {
@@ -30,10 +31,14 @@ android {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
+    testFixtures {
+        enable = true
+    }
 }
 
 dependencies {
     implementation(project(":core:type"))
+    testFixturesImplementation(project(":core:type"))
 
     implementation(Depends.Android.ktx)
     implementation(Depends.Kotlin.coroutinesCore)

@@ -6,6 +6,7 @@ plugins {
     id(Depends.ModulePlugins.kotlinSerializationPlugin)
     id(Depends.ModulePlugins.protoBuf) version Versions.Plugin.protobufPluginVersion
     kotlin(Depends.ModulePlugins.kotlinKapt)
+    id(Depends.ModulePlugins.testFixturesPlugin)
 }
 
 android {
@@ -28,7 +29,6 @@ android {
         }
     }
     buildFeatures {
-        dataBinding = true
         compose = true
     }
     compileOptions {
@@ -41,6 +41,9 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
+    }
+    testFixtures {
+        enable = true
     }
 }
 
@@ -84,5 +87,7 @@ dependencies {
 
     implementation(Depends.Logging.timber)
 
+    testImplementation(testFixtures(project(":business:interactor:city:api")))
+    testImplementation(testFixtures(project(":presentation:shared")))
     testImplementation(project(":testing"))
 }

@@ -18,6 +18,7 @@ object Depends {
         const val kotlinParcelizePlugin = "kotlin-parcelize"
         const val kotlinKapt = "kapt"
         const val versionsPlugin = "com.github.ben-manes.versions"
+        const val testFixturesPlugin = "java-test-fixtures"
     }
 
     object Kotlin {

@@ -34,13 +34,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":business:interactor:city:api"))
     implementation(project(":core:dispatcher"))
-    implementation(project(":core:type"))
-    implementation(project(":data:repository:city:api"))
-    implementation(project(":data:storage:city:api"))
-    implementation(project(":presentation:shared"))
-    implementation(project(":utils"))
 
     api(Depends.Kotlin.coroutinesCore)
     api(Depends.TestLibraries.coroutinesTest)
