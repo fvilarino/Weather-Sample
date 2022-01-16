@@ -24,6 +24,8 @@ private const val HEADER_HOST = "x-rapidapi-host"
 @InstallIn(SingletonComponent::class)
 object CityRepositoryModule {
 
+    private val json = Json { ignoreUnknownKeys = true }
+
     @Provides
     @Singleton
     @CityAuthorizationInterceptor
@@ -45,7 +47,7 @@ object CityRepositoryModule {
         @CityAuthorizationInterceptor interceptor: Interceptor,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.CITY_SERVICE_BASE_URL)
-        .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(MEDIA_TYPE))
+        .addConverterFactory(json.asConverterFactory(MEDIA_TYPE))
         .client(okHttpClientBuilder.addInterceptor(interceptor).build())
         .build()
 
