@@ -20,6 +20,7 @@ import com.francescsoftware.weathersample.type.getOrNull
 import com.francescsoftware.weathersample.utils.time.isToday
 import com.francescsoftware.weathersample.utils.time.isTomorrow
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -125,7 +126,7 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
-    private suspend fun load() {
+    private fun load() {
         handle(
             TodayReduceAction.CityUpdated(
                 name = selectedCity.name,
@@ -138,8 +139,10 @@ class WeatherViewModel @Inject constructor(
                 name = selectedCity.name,
                 countryCode = selectedCity.countryCode,
             )
-            val current = getTodayWeatherInteractor.execute(location).getOrNull()
-            val forecast = getForecastInteractor.execute(location).getOrNull()
+            val currentAsync = async { getTodayWeatherInteractor.execute(location) }
+            val forecastAsync = async { getForecastInteractor.execute(location) }
+            val current = currentAsync.await().getOrNull()
+            val forecast = forecastAsync.await().getOrNull()
             if (current != null && forecast != null) {
                 handle(
                     TodayReduceAction.Loaded(
