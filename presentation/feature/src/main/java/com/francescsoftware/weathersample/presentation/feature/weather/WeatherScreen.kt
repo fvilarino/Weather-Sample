@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.search.LoadingSpinner
 import com.francescsoftware.weathersample.presentation.feature.search.WeatherContent
-import com.francescsoftware.weathersample.presentation.shared.widget.TwoOptionsSelector
-import com.francescsoftware.weathersample.presentation.shared.widget.TwoOptionsSelectorOptions
+import com.francescsoftware.weathersample.shared.composable.TwoOptionsSelector
+import com.francescsoftware.weathersample.shared.composable.TwoOptionsSelectorOptions
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme

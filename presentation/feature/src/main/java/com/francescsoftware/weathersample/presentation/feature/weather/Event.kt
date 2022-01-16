@@ -1,9 +1,9 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
-import com.francescsoftware.weathersample.presentation.shared.mvi.Event
-import com.francescsoftware.weathersample.presentation.shared.mvi.MviIntent
-import com.francescsoftware.weathersample.presentation.shared.mvi.ReduceAction
-import com.francescsoftware.weathersample.presentation.shared.mvi.State
+import com.francescsoftware.weathersample.mvi.Event
+import com.francescsoftware.weathersample.mvi.MviIntent
+import com.francescsoftware.weathersample.mvi.ReduceAction
+import com.francescsoftware.weathersample.mvi.State
 
 enum class WeatherLoadState {
     IDLE,

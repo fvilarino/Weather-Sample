@@ -23,8 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.francescsoftware.weathersample.presentation.shared.R
-import com.francescsoftware.weathersample.presentation.shared.widget.InfoLabels
+import com.francescsoftware.weathersample.shared.composable.InfoLabels
 import com.francescsoftware.weathersample.styles.CardElevation
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.MarginTreble
@@ -171,7 +170,7 @@ private fun TodayWeatherCardPreview() {
                 maxTemperature = "22.7°C",
                 feelsLikeTemperature = "14.3°C",
                 description = "Partly cloudy",
-                iconId = R.drawable.ic_partly_cloudy,
+                iconId = featureR.drawable.ic_partly_cloudy,
                 windSpeed = "4.3kph",
                 humidity = "54%",
                 pressure = "1024mb",

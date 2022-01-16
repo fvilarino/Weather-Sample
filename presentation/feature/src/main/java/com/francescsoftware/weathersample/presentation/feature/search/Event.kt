@@ -1,10 +1,10 @@
 package com.francescsoftware.weathersample.presentation.feature.search
 
 import com.francescsoftware.weathersample.interactor.city.api.City
-import com.francescsoftware.weathersample.presentation.shared.mvi.Event
-import com.francescsoftware.weathersample.presentation.shared.mvi.MviIntent
-import com.francescsoftware.weathersample.presentation.shared.mvi.ReduceAction
-import com.francescsoftware.weathersample.presentation.shared.mvi.State
+import com.francescsoftware.weathersample.mvi.Event
+import com.francescsoftware.weathersample.mvi.MviIntent
+import com.francescsoftware.weathersample.mvi.ReduceAction
+import com.francescsoftware.weathersample.mvi.State
 
 enum class LoadState {
     IDLE,

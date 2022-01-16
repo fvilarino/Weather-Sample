@@ -27,7 +27,7 @@ import com.francescsoftware.weathersample.presentation.feature.weather.TodayStat
 import com.francescsoftware.weathersample.presentation.feature.weather.TodayWeatherCard
 import com.francescsoftware.weathersample.presentation.feature.weather.WeatherLoadState
 import com.francescsoftware.weathersample.presentation.feature.weather.SelectedWeatherScreen
-import com.francescsoftware.weathersample.presentation.shared.widget.LoadingButton
+import com.francescsoftware.weathersample.shared.composable.LoadingButton
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.MarginSingle

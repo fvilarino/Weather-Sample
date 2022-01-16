@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.presentation.shared.widget
+package com.francescsoftware.weathersample.shared.composable
 
 import androidx.compose.animation.core.DurationBasedAnimationSpec
 import androidx.compose.animation.core.RepeatMode
@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -25,7 +23,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -168,7 +165,8 @@ private fun LoadingIndicator(
                     .then(
                         when (animationType) {
                             AnimationType.Bounce,
-                            AnimationType.LazyBounce -> Modifier.offset(y = animatedValue.coerceAtMost(IndicatorSize / 2f).dp)
+                            AnimationType.LazyBounce -> Modifier.offset(y = animatedValue.coerceAtMost(
+                                IndicatorSize / 2f).dp)
                             AnimationType.Fade -> Modifier.graphicsLayer { alpha = animatedValue }
                         }
                     ),

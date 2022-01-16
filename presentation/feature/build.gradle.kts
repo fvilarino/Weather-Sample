@@ -53,7 +53,8 @@ dependencies {
     implementation(project(":core:type"))
     implementation(project(":core:time:api"))
     implementation(project(":data:storage:city:api"))
-    implementation(project(":presentation:shared"))
+    implementation(project(":presentation:shared:composable"))
+    implementation(project(":presentation:shared:mvi"))
     implementation(project(":styles"))
     implementation(project(":utils"))
 

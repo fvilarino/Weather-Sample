@@ -1,9 +1,12 @@
-package com.francescsoftware.weathersample.presentation.shared.mvi
+package com.francescsoftware.weathersample.mvi
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.dispather.DispatcherProviderInstance
+import com.francescsoftware.weathersample.shared.mvi.Middleware
+import com.francescsoftware.weathersample.shared.mvi.MiddlewareOrdering
+import com.francescsoftware.weathersample.shared.mvi.Processor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,28 +26,6 @@ interface ReduceAction
 
 private const val TAG = "MviViewModel"
 private const val FLOW_BUFFER_CAPACITY = 64
-
-enum class MiddlewareOrdering {
-    BEFORE_VIEWMODEL,
-    AFTER_VIEWMODEL
-}
-
-abstract class Middleware<I : MviIntent, R : ReduceAction> {
-    abstract val ordering: MiddlewareOrdering
-    private lateinit var processor: Processor<R>
-
-    abstract suspend fun executeIntent(intent: I)
-
-    fun handle(reduceAction: R) = processor.handle(reduceAction)
-
-    internal fun setProcessor(processor: Processor<R>) {
-        this.processor = processor
-    }
-}
-
-interface Processor<R : ReduceAction> {
-    fun handle(reduceAction: R)
-}
 
 abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceAction>(
     initialState: S
