@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.presentation.feature.search
 
+import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.presentation.shared.mvi.Event
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviIntent
 import com.francescsoftware.weathersample.presentation.shared.mvi.ReduceAction
@@ -26,18 +27,16 @@ data class CityState(
         val initial = CityState(
             loadState = LoadState.IDLE,
             query = "",
-            cities = emptyList()
+            cities = emptyList(),
         )
     }
 }
 
-sealed interface CityEvent : Event {
-    data class ShowSnackBar(val message: CharSequence) : CityEvent
-}
+sealed interface CityEvent : Event
 
 sealed interface CityMviIntent : MviIntent {
     data class PrefixUpdated(val prefix: String) : CityMviIntent
-    data class CitiesLoaded(val cities: List<CityResultModel>) : CityMviIntent
+    data class CitiesLoaded(val cities: List<City>) : CityMviIntent
     object NoResults : CityMviIntent
     object LoadError : CityMviIntent
 }

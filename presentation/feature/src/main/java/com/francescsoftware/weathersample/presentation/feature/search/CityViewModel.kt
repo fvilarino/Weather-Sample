@@ -31,7 +31,7 @@ class CityViewModel @Inject constructor(
     private val navigator: Navigator,
     private val stringLookup: StringLookup,
 ) : MviViewModel<CityState, CityEvent, CityMviIntent, CityReduceAction>(
-    initialState = CityState.initial
+    initialState = CityState.initial,
 ), CityCallbacks {
 
     private val searchFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
@@ -51,16 +51,8 @@ class CityViewModel @Inject constructor(
 
     override suspend fun executeIntent(intent: CityMviIntent) {
         when (intent) {
-            is CityMviIntent.PrefixUpdated -> {
-                handle(CityReduceAction.PrefixUpdated(intent.prefix))
-                if (intent.prefix.length >= MIN_CITY_LENGTH_FOR_SEARCH) {
-                    handle(CityReduceAction.Loading)
-                    searchFlow.emit(intent.prefix)
-                } else {
-                    handle(CityReduceAction.Loaded(emptyList()))
-                }
-            }
-            is CityMviIntent.CitiesLoaded -> handle(CityReduceAction.Loaded(cities = intent.cities))
+            is CityMviIntent.PrefixUpdated -> onPrefixUpdated(intent.prefix)
+            is CityMviIntent.CitiesLoaded -> onCitiesLoaded(intent.cities)
             CityMviIntent.NoResults -> handle(CityReduceAction.NoResults)
             CityMviIntent.LoadError -> handle(CityReduceAction.LoadError)
         }
@@ -86,12 +78,7 @@ class CityViewModel @Inject constructor(
             .onEach { cities ->
                 cities.fold(
                     onSuccess = { list ->
-                        if (list.isNotEmpty()) {
-                            val cityModels = list.map { city -> city.toCityResultModel() }
-                            onIntent(CityMviIntent.CitiesLoaded(cityModels))
-                        } else {
-                            onIntent(CityMviIntent.NoResults)
-                        }
+                        onIntent(CityMviIntent.CitiesLoaded(list))
                     },
                     onFailure = {
                         onIntent(CityMviIntent.LoadError)
@@ -99,6 +86,25 @@ class CityViewModel @Inject constructor(
                 )
             }
             .launchIn(viewModelScope)
+    }
+
+    private suspend fun onPrefixUpdated(prefix: String) {
+        handle(CityReduceAction.PrefixUpdated(prefix))
+        if (prefix.length >= MIN_CITY_LENGTH_FOR_SEARCH) {
+            handle(CityReduceAction.Loading)
+            searchFlow.emit(prefix)
+        } else {
+            handle(CityReduceAction.Loaded(emptyList()))
+        }
+    }
+
+    private fun onCitiesLoaded(cities: List<City>) {
+        if (cities.isNotEmpty()) {
+            val cityModels = cities.map { city -> city.toCityResultModel() }
+            handle(CityReduceAction.Loaded(cities = cityModels))
+        } else {
+            handle(CityReduceAction.NoResults)
+        }
     }
 
     private fun City.toCityResultModel() = CityResultModel(
