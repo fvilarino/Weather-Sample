@@ -1,8 +1,8 @@
 package com.francescsoftware.weathersample.presentation.feature.weather
 
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
+import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.presentation.feature.R
-import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import java.util.*
 
 internal fun Double.formatTemperature(

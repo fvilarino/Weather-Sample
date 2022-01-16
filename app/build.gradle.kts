@@ -52,6 +52,8 @@ dependencies {
     implementation(project(":business:interactor:weather:impl"))
 
     implementation(project(":core:dispatcher"))
+    implementation(project(":core:lookup:api"))
+    implementation(project(":core:lookup:impl"))
     implementation(project(":core:network"))
     implementation(project(":core:time:api"))
     implementation(project(":core:time:impl"))

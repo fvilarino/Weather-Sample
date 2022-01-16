@@ -9,9 +9,9 @@ import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInte
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
+import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.navigator.NavigationDestination
-import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.storage.city.api.SelectedCity
 import com.francescsoftware.weathersample.time.api.TimeFormatter

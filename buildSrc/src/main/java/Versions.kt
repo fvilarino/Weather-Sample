@@ -9,7 +9,7 @@ object Versions {
     }
 
     object Plugin {
-        const val androidGradlePluginVersion = "7.2.0-alpha06"
+        const val androidGradlePluginVersion = "7.2.0-alpha07"
         const val navigationGradlePluginVersion = "2.4.0-rc01"
         const val hiltGradlePluginVersion = "2.40.5"
         const val protobufPluginVersion = "0.8.12"
@@ -36,6 +36,7 @@ object Versions {
         const val lifecycleCommonVersion = "2.4.0"
         const val navigationVersion = Plugin.navigationGradlePluginVersion
         const val dataStoreVersion = "1.0.0"
+        const val androidXAnnotation = "1.3.0"
     }
 
     object Material {

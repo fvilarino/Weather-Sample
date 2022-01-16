@@ -3,9 +3,9 @@ package com.francescsoftware.weathersample.presentation.feature.search
 import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
+import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.navigator.Navigator
-import com.francescsoftware.weathersample.presentation.shared.lookup.StringLookup
 import com.francescsoftware.weathersample.presentation.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.storage.city.api.SelectedCity
 import com.francescsoftware.weathersample.type.fold

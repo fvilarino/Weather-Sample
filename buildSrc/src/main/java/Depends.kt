@@ -34,6 +34,7 @@ object Depends {
         const val archLifeCycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.Android.archLifeCycleViewModelVersion}"
         const val lifecycleCommon = "androidx.lifecycle:lifecycle-common-java8:${Versions.Android.lifecycleCommonVersion}"
         const val dataStore = "androidx.datastore:datastore:${Versions.Android.dataStoreVersion}"
+        const val androidXAnnotation = "androidx.annotation:annotation:${Versions.Android.androidXAnnotation}"
     }
 
     object Compose {
