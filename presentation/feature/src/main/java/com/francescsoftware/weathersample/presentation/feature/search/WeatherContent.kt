@@ -26,7 +26,7 @@ import com.francescsoftware.weathersample.presentation.feature.weather.ForecastW
 import com.francescsoftware.weathersample.presentation.feature.weather.TodayState
 import com.francescsoftware.weathersample.presentation.feature.weather.TodayWeatherCard
 import com.francescsoftware.weathersample.presentation.feature.weather.WeatherLoadState
-import com.francescsoftware.weathersample.presentation.feature.weather.WeatherSelectorOptions
+import com.francescsoftware.weathersample.presentation.feature.weather.SelectedWeatherScreen
 import com.francescsoftware.weathersample.presentation.shared.widget.LoadingButton
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
@@ -40,8 +40,8 @@ internal fun WeatherContent(
     todayRefreshCallback: () -> Unit,
 ) {
     when (state.option) {
-        WeatherSelectorOptions.Today -> TodayWeather(state, todayRefreshCallback)
-        WeatherSelectorOptions.Forecast -> WeatherForecast(state)
+        SelectedWeatherScreen.Today -> TodayWeather(state, todayRefreshCallback)
+        SelectedWeatherScreen.Forecast -> WeatherForecast(state)
     }
 }
 

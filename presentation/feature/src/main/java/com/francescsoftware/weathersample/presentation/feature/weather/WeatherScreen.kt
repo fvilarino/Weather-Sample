@@ -5,6 +5,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -16,9 +17,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.presentation.feature.R
 import com.francescsoftware.weathersample.presentation.feature.search.LoadingSpinner
 import com.francescsoftware.weathersample.presentation.feature.search.WeatherContent
+import com.francescsoftware.weathersample.presentation.shared.widget.TwoOptionsSelector
+import com.francescsoftware.weathersample.presentation.shared.widget.TwoOptionsSelectorOptions
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
@@ -60,10 +64,26 @@ private fun WeatherScreen(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.h4,
         )
-        WeatherSelector(
-            selectedOption = state.option,
-            onOptionSelect = { option -> weatherCallbacks.onOptionSelect(option) },
-            modifier = Modifier.padding(top = MarginQuad),
+        TwoOptionsSelector(
+            leftLabel = stringResource(id = R.string.today_weather_button_label),
+            rightLabel = stringResource(id = R.string.forecast_weather_button_label),
+            selectedOption = when (state.option) {
+                SelectedWeatherScreen.Today -> TwoOptionsSelectorOptions.Left
+                SelectedWeatherScreen.Forecast -> TwoOptionsSelectorOptions.Right
+            },
+            selectedColor = MaterialTheme.colors.secondary,
+            deselectedColor = MaterialTheme.colors.surface,
+            onOptionSelect = { option ->
+                weatherCallbacks.onOptionSelect(
+                    when (option) {
+                        TwoOptionsSelectorOptions.Left -> SelectedWeatherScreen.Today
+                        TwoOptionsSelectorOptions.Right -> SelectedWeatherScreen.Forecast
+                    }
+                )
+            },
+            modifier = Modifier
+                .padding(top = MarginQuad)
+                .height(40.dp),
         )
         Crossfade(
             targetState = state.loadState,
@@ -90,7 +110,7 @@ private fun WeatherScreen(
 }
 
 private class WeatherCallbacksPreview : WeatherCallbacks {
-    override fun onOptionSelect(weatherSelectorOptions: WeatherSelectorOptions) = Unit
+    override fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) = Unit
 
     override fun refreshTodayWeather() = Unit
 
@@ -150,7 +170,7 @@ private fun ForecastWeatherScreenPreview() {
                         visibility = "10000 m",
                     ),
                 ),
-                option = WeatherSelectorOptions.Today,
+                option = SelectedWeatherScreen.Today,
                 errorMessage = ""
             )
             WeatherScreen(

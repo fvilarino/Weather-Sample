@@ -25,7 +25,7 @@ import java.util.*
 import javax.inject.Inject
 
 interface WeatherCallbacks {
-    fun onOptionSelect(weatherSelectorOptions: WeatherSelectorOptions)
+    fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen)
     fun refreshTodayWeather()
     fun retry()
 }
@@ -47,8 +47,8 @@ class WeatherViewModel @Inject constructor(
         viewModelScope.launch { load() }
     }
 
-    override fun onOptionSelect(weatherSelectorOptions: WeatherSelectorOptions) {
-        onIntent(TodayMviIntent.OnOptionSelected(weatherSelectorOptions))
+    override fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) {
+        onIntent(TodayMviIntent.OnOptionSelected(selectedWeatherScreen))
     }
 
     override fun refreshTodayWeather() {

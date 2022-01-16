@@ -13,9 +13,14 @@ enum class WeatherLoadState {
     ERROR
 }
 
+enum class SelectedWeatherScreen {
+    Today,
+    Forecast,
+}
+
 data class TodayState(
     val loadState: WeatherLoadState,
-    val option: WeatherSelectorOptions,
+    val option: SelectedWeatherScreen,
     val cityName: String,
     val cityCountryCode: String,
     val todayState: TodayWeatherCardState,
@@ -26,7 +31,7 @@ data class TodayState(
     companion object {
         val initial = TodayState(
             loadState = WeatherLoadState.IDLE,
-            option = WeatherSelectorOptions.Today,
+            option = SelectedWeatherScreen.Today,
             cityName = "",
             cityCountryCode = "",
             todayState = TodayWeatherCardState(),
@@ -41,7 +46,7 @@ sealed interface TodayEvent : Event
 sealed interface TodayMviIntent : MviIntent {
     object RefreshTodayWeather : TodayMviIntent
     object Retry : TodayMviIntent
-    data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayMviIntent
+    data class OnOptionSelected(val option: SelectedWeatherScreen) : TodayMviIntent
 }
 
 sealed interface TodayReduceAction : ReduceAction {
@@ -59,5 +64,5 @@ sealed interface TodayReduceAction : ReduceAction {
 
     data class LoadError(val message: String) : TodayReduceAction
 
-    data class OnOptionSelected(val option: WeatherSelectorOptions) : TodayReduceAction
+    data class OnOptionSelected(val option: SelectedWeatherScreen) : TodayReduceAction
 }
