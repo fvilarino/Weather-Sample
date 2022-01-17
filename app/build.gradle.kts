@@ -66,7 +66,7 @@ dependencies {
     implementation(project(":data:repository:weather:impl"))
 
     implementation(project(":presentation:feature:city"))
-    implementation(project(":presentation:feature:main"))
+    implementation(project(":presentation:feature:landing"))
     implementation(project(":presentation:feature:navigation:api"))
     implementation(project(":presentation:feature:navigation:impl"))
     implementation(project(":presentation:feature:weather"))
