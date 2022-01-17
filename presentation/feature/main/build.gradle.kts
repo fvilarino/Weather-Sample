@@ -47,7 +47,7 @@ dependencies {
     implementation(project(":presentation:feature:navigation:api"))
     implementation(project(":presentation:feature:weather"))
     implementation(project(":presentation:shared:composable"))
-    implementation(project(":styles"))
+    implementation(project(":presentation:shared:styles"))
 
     // compose
     implementation(Depends.Compose.composeUi)

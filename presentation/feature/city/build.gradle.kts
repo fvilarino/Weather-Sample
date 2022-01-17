@@ -54,7 +54,7 @@ dependencies {
     implementation(project(":presentation:feature:navigation:api"))
     implementation(project(":presentation:shared:composable"))
     implementation(project(":presentation:shared:mvi"))
-    implementation(project(":styles"))
+    implementation(project(":presentation:shared:styles"))
     implementation(project(":utils"))
 
     // compose

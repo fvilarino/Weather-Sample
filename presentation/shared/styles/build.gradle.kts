@@ -30,15 +30,11 @@ android {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
-    }
 }
 
 dependencies {
+    implementation(project(":presentation:shared:assets"))
+
     implementation(Depends.Compose.composeUi)
     implementation(Depends.Compose.composeMaterial)
     implementation(Depends.Compose.composeUiTooling)

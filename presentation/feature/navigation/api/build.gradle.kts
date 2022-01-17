@@ -42,7 +42,7 @@ android {
 
 dependencies {
 
-    implementation(project(":styles"))
+    implementation(project(":presentation:shared:styles"))
 
     // compose
     implementation(Depends.Compose.composeUi)

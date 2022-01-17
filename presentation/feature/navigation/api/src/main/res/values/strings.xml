@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="city_label">Weather Sample</string>
+    <string name="weather_label">Weather</string>
+</resources>

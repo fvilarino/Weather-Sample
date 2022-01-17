@@ -1,11 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Weather Sample</string>
-    <string name="search_city_hint">City</string>
-    <string name="city_result_label">City:</string>
-    <string name="country_result_label">Country:</string>
-    <string name="coordinates_result_label">Coordinates:</string>
-    <string name="coordinates_lat_lon">Lat: %1$.2f, Lon: %2$.2f</string>
-    <string name="city_error_loading">Could not load cities</string>
     <string name="weather_error_loading">Could not load weather</string>
     <string name="weather">Weather</string>
     <string name="weather_city_label">City</string>
@@ -34,7 +28,5 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="forecast_card_header">%1$s - %2$s</string>
     <string name="failed_to_load_forecast">Failed to load forecast</string>
-    <string name="no_results_found_label">No results found</string>
-    <string name="weather_label">Weather</string>
     <string name="refresh">Refresh</string>
 </resources>

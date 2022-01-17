@@ -44,7 +44,7 @@ android {
 dependencies {
 
     implementation(project(":presentation:feature:navigation:api"))
-    implementation(project(":styles"))
+    implementation(project(":presentation:shared:styles"))
 
     // compose
     implementation(Depends.Compose.composeUi)

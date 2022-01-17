@@ -14,7 +14,7 @@ sealed interface NavigationDestination {
     fun isRoute(route: String?): Boolean
 
     object CitySearch : NavigationDestination {
-        override val titleId: Int = R.string.app_name
+        override val titleId: Int = R.string.city_label
         override val iconId: Int = 0
 
         const val cityRoute: String = "city_search"
