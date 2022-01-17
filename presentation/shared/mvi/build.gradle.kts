@@ -25,7 +25,6 @@ android {
         }
     }
     buildFeatures {
-        dataBinding = true
         compose = true
     }
     compileOptions {
@@ -46,7 +45,6 @@ dependencies {
 
     implementation(Depends.Android.archLifeCycleViewModel)
     implementation(Depends.Compose.composeUiTooling)
-
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
 

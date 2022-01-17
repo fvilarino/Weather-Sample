@@ -24,7 +24,6 @@ android {
         }
     }
     buildFeatures {
-        dataBinding = true
         compose = true
     }
     compileOptions {
@@ -44,12 +43,10 @@ dependencies {
     implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:styles"))
 
-    implementation(Depends.Android.ktx)
-    implementation(Depends.Material.material)
-
     implementation(Depends.Compose.composeUi)
     implementation(Depends.Compose.composeMaterial)
     implementation(Depends.Compose.composeUiTooling)
+    implementation(Depends.Android.ktx)
 
     implementation(Depends.Logging.timber)
 

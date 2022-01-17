@@ -48,14 +48,12 @@ dependencies {
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-
     implementation(Depends.Kotlin.kotlinSerialization)
     implementation(Depends.Network.okHttp)
     implementation(Depends.Network.okHttpInterceptor)
     implementation(Depends.Network.retrofit)
     implementation(Depends.Network.retrofitAdapter)
     implementation(Depends.Network.retrofitSerializationConverter)
-
     implementation(Depends.Logging.timber)
 
     testImplementation(Depends.TestLibraries.jUnit)

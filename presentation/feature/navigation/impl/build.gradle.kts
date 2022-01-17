@@ -25,7 +25,6 @@ android {
         }
     }
     buildFeatures {
-        dataBinding = true
         compose = true
     }
     compileOptions {
@@ -51,7 +50,6 @@ dependencies {
     implementation(Depends.Compose.composeMaterial)
     implementation(Depends.Compose.composeUiTooling)
     implementation(Depends.Compose.navigationCompose)
-    implementation(Depends.Android.navigationUi)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)

@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     NavHost(
                         navController,
-                        startDestination = NavigationDestination.CitySearch.cityRoute
+                        startDestination = NavigationDestination.CitySearch.cityRoute,
                     ) {
                         addSearchDestination()
                         addWeatherDetailsDestination()

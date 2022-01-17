@@ -2,8 +2,6 @@ plugins {
     id(Depends.ModulePlugins.libraryPlugin)
     id(Depends.ModulePlugins.kotlinPlugin)
     id(Depends.ModulePlugins.daggerHiltPlugin)
-    id(Depends.ModulePlugins.kotlinParcelizePlugin)
-    id(Depends.ModulePlugins.kotlinSerializationPlugin)
     kotlin(Depends.ModulePlugins.kotlinKapt)
 }
 
@@ -27,7 +25,6 @@ android {
         }
     }
     buildFeatures {
-        dataBinding = true
         compose = true
     }
     compileOptions {
@@ -46,33 +43,20 @@ android {
 dependencies {
 
     implementation(project(":business:interactor:city:api"))
-    implementation(project(":core:dispatcher"))
     implementation(project(":core:lookup:api"))
     implementation(project(":core:type"))
-    implementation(project(":core:time:api"))
-    implementation(project(":data:storage:city:api"))
     implementation(project(":presentation:feature:navigation:api"))
     implementation(project(":presentation:shared:composable"))
     implementation(project(":presentation:shared:mvi"))
     implementation(project(":presentation:shared:styles"))
-    implementation(project(":utils"))
 
     // compose
     implementation(Depends.Compose.composeUi)
     implementation(Depends.Compose.composeMaterial)
     implementation(Depends.Compose.composeUiTooling)
     implementation(Depends.Compose.navigationCompose)
-
     implementation(Depends.Android.ktx)
-    implementation(Depends.Android.appCompat)
-    implementation(Depends.Material.material)
-
     implementation(Depends.Android.archLifeCycleViewModel)
-    implementation(Depends.Android.lifecycleCommon)
-
-    implementation(Depends.Kotlin.coroutinesCore)
-    implementation(Depends.Kotlin.coroutinesAndroid)
-    implementation(Depends.Kotlin.kotlinSerialization)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)

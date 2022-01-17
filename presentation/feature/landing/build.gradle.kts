@@ -25,7 +25,6 @@ android {
         }
     }
     buildFeatures {
-        dataBinding = true
         compose = true
     }
     compileOptions {
@@ -58,14 +57,6 @@ dependencies {
 
     implementation(Depends.Android.ktx)
     implementation(Depends.Android.appCompat)
-    implementation(Depends.Material.material)
-    implementation(Depends.Android.navigationUi)
-
-    implementation(Depends.Android.archLifeCycleViewModel)
-    implementation(Depends.Android.lifecycleCommon)
-
-    implementation(Depends.Kotlin.coroutinesCore)
-    implementation(Depends.Kotlin.coroutinesAndroid)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)

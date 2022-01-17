@@ -22,6 +22,9 @@ android {
             )
         }
     }
+    buildFeatures {
+        compose = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -29,6 +32,9 @@ android {
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
     }
 }
 

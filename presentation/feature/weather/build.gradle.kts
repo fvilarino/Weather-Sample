@@ -25,7 +25,6 @@ android {
         }
     }
     buildFeatures {
-        dataBinding = true
         compose = true
     }
     compileOptions {
@@ -44,7 +43,6 @@ android {
 dependencies {
 
     implementation(project(":business:interactor:weather:api"))
-    implementation(project(":core:dispatcher"))
     implementation(project(":core:lookup:api"))
     implementation(project(":core:type"))
     implementation(project(":core:time:api"))
@@ -59,16 +57,10 @@ dependencies {
     implementation(Depends.Compose.composeMaterial)
     implementation(Depends.Compose.composeUiTooling)
     implementation(Depends.Compose.navigationCompose)
-    implementation(Depends.Android.navigationUi)
 
     implementation(Depends.Android.ktx)
-    implementation(Depends.Material.material)
 
-    implementation(Depends.Android.archLifeCycleViewModel)
     implementation(Depends.Android.lifecycleCommon)
-
-    implementation(Depends.Kotlin.coroutinesCore)
-    implementation(Depends.Kotlin.coroutinesAndroid)
 
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)

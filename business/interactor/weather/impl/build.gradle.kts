@@ -44,10 +44,8 @@ dependencies {
 
     implementation(Depends.Android.ktx)
     implementation(Depends.Kotlin.coroutinesCore)
-
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-
     implementation(Depends.Logging.timber)
 
     testImplementation(project(":testing"))

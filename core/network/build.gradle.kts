@@ -39,14 +39,12 @@ dependencies {
     implementation(project(":core:type"))
 
     implementation(Depends.Android.ktx)
-
     implementation(Depends.Hilt.daggerHiltAndroid)
     kapt(Depends.Hilt.daggerHiltAndroidCompiler)
     implementation(Depends.Network.okHttp)
     implementation(Depends.Network.okHttpInterceptor)
     implementation(Depends.Network.okIO)
     implementation(Depends.Network.retrofit)
-
     implementation(Depends.Logging.timber)
 
     testImplementation(Depends.TestLibraries.jUnit)
