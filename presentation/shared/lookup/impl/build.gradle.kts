@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:lookup:api"))
+    implementation(project(":presentation:shared:lookup:api"))
 
     implementation(Depends.Android.androidXAnnotation)
     implementation(Depends.Hilt.daggerHiltAndroid)
