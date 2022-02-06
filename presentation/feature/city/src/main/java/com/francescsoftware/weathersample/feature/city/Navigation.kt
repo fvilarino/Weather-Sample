@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.feature.city
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -10,6 +12,9 @@ fun NavGraphBuilder.addSearchDestination() {
         route = NavigationDestination.CitySearch.getRoute()
     ) {
         val cityViewModel: CityViewModel = hiltViewModel()
-        CityScreen(cityViewModel)
+        CityScreen(
+            viewModel = cityViewModel,
+            modifier = Modifier.fillMaxSize(),
+        )
     }
 }

@@ -115,7 +115,7 @@ class CityViewModel @Inject constructor(
             R.string.coordinates_lat_lon,
             coordinates.latitude.toFloat(),
             coordinates.longitude.toFloat(),
-        )
+        ),
     )
 
     private fun CityResultModel.toSelectedCity() = SelectedCity(

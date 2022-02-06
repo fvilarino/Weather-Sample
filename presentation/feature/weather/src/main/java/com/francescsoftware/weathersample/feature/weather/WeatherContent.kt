@@ -30,9 +30,14 @@ private val WeatherCardWidth = 420.dp
 internal fun WeatherContent(
     state: TodayState,
     todayRefreshCallback: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     when (state.option) {
-        SelectedWeatherScreen.Today -> TodayWeather(state, todayRefreshCallback)
+        SelectedWeatherScreen.Today -> TodayWeather(
+            state = state,
+            todayRefreshCallback = todayRefreshCallback,
+            modifier = modifier,
+        )
         SelectedWeatherScreen.Forecast -> WeatherForecast(state)
     }
 }
@@ -41,11 +46,10 @@ internal fun WeatherContent(
 private fun TodayWeather(
     state: TodayState,
     todayRefreshCallback: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = MarginDouble),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TodayWeatherCard(

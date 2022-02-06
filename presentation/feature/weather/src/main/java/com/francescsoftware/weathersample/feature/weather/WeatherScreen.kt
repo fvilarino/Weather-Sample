@@ -31,9 +31,9 @@ internal fun WeatherScreen(
     modifier: Modifier = Modifier,
 ) {
     WeatherScreen(
-        viewModel.state.value,
-        viewModel,
-        modifier
+        state = viewModel.state.value,
+        weatherCallbacks = viewModel,
+        modifier = modifier,
     )
 }
 
@@ -44,7 +44,7 @@ private fun WeatherScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -92,11 +92,16 @@ private fun WeatherScreen(
             when (loadState) {
                 WeatherLoadState.IDLE -> {
                 }
-                WeatherLoadState.LOADING -> LoadingSpinner()
+                WeatherLoadState.LOADING -> LoadingSpinner(
+                    modifier = Modifier.fillMaxSize(),
+                )
                 WeatherLoadState.LOADED,
                 WeatherLoadState.REFRESHING -> WeatherContent(
-                    state,
-                    weatherCallbacks::refreshTodayWeather
+                    state = state,
+                    todayRefreshCallback = weatherCallbacks::refreshTodayWeather,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = MarginDouble),
                 )
                 WeatherLoadState.ERROR -> WeatherError(
                     modifier = Modifier.fillMaxSize(),

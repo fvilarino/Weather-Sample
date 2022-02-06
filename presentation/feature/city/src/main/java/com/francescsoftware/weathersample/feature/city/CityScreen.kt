@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.feature.city
 import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -65,7 +66,7 @@ private fun CityScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CitiesSearchBox(state, callbacks)
@@ -76,10 +77,20 @@ private fun CityScreen(
             when (loadState) {
                 LoadState.IDLE -> {
                 }
-                LoadState.LOADING -> CitiesLoading()
-                LoadState.LOADED -> CitiesList(state, callbacks)
-                LoadState.NO_RESULTS -> CitiesNoResults()
-                LoadState.ERROR -> CitiesLoadError()
+                LoadState.LOADING -> CitiesLoading(
+                    modifier = Modifier.fillMaxSize(),
+                )
+                LoadState.LOADED -> CitiesList(
+                    state = state,
+                    callbacks = callbacks,
+                    modifier = Modifier.fillMaxSize(),
+                )
+                LoadState.NO_RESULTS -> CitiesNoResults(
+                    modifier = Modifier.fillMaxSize(),
+                )
+                LoadState.ERROR -> CitiesLoadError(
+                    modifier = Modifier.fillMaxSize(),
+                )
             }
         }
     }
@@ -116,9 +127,11 @@ private fun CitiesSearchBox(
 }
 
 @Composable
-private fun CitiesLoading() {
+private fun CitiesLoading(
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
@@ -129,38 +142,42 @@ private fun CitiesLoading() {
 private fun CitiesList(
     state: CityState,
     callbacks: CityCallbacks,
+    modifier: Modifier = Modifier,
 ) {
-    val width = LocalContext.current.resources.displayMetrics.widthPixels
-    val minColumnWidth = with(LocalDensity.current) { MinColumnWidth.toPx() }
-    val numColumns = ((width / minColumnWidth).toInt()).coerceAtLeast(1)
-    val gridWidth = with(LocalDensity.current) { (numColumns * minColumnWidth).toDp() }
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(
-            count = numColumns
-        ),
-        modifier = Modifier
-            .width(gridWidth)
-            .fillMaxHeight(),
-        contentPadding = PaddingValues(bottom = MarginSingle),
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.TopCenter,
     ) {
-        items(state.cities) { city ->
-            CityCard(
-                city = city,
-                onClick = { model -> callbacks.onCityClick(model) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginSingle),
-                contentPadding = PaddingValues(all = MarginSingle),
-            )
+        LazyVerticalGrid(
+            cells = GridCells.Adaptive(
+                minSize = MinColumnWidth,
+            ),
+            modifier = Modifier
+                .width(MinColumnWidth)
+                .fillMaxHeight(),
+            contentPadding = PaddingValues(bottom = MarginSingle),
+        ) {
+            items(state.cities) { city ->
+                CityCard(
+                    city = city,
+                    onClick = { model -> callbacks.onCityClick(model) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = MarginSingle),
+                    contentPadding = PaddingValues(all = MarginSingle),
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun CitiesNoResults() {
+private fun CitiesNoResults(
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = stringResource(id = R.string.no_results_found_label),
@@ -170,9 +187,11 @@ private fun CitiesNoResults() {
 }
 
 @Composable
-private fun CitiesLoadError() {
+private fun CitiesLoadError(
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         Text(

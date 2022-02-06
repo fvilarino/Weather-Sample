@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.feature.weather
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -10,6 +12,9 @@ fun NavGraphBuilder.addWeatherDetailsDestination() {
         route = NavigationDestination.Weather.weatherRoute,
     ) {
         val weatherViewModel: WeatherViewModel = hiltViewModel()
-        WeatherScreen(weatherViewModel)
+        WeatherScreen(
+            viewModel = weatherViewModel,
+            modifier = Modifier.fillMaxSize(),
+        )
     }
 }
