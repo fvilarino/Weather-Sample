@@ -21,7 +21,7 @@ import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
-fun ForecastHeader(
+internal fun ForecastHeader(
     state: ForecastItem.ForecastHeader,
     modifier: Modifier = Modifier,
 ) {

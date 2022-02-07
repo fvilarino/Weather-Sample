@@ -39,13 +39,13 @@ import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 private val MinColumnWidth = 360.dp
 
-interface CityCallbacks {
+internal interface CityCallbacks {
     fun onQueryChange(query: String)
     fun onCityClick(city: CityResultModel)
 }
 
 @Composable
-fun CityScreen(
+internal fun CityScreen(
     viewModel: CityViewModel,
     modifier: Modifier = Modifier,
 ) {

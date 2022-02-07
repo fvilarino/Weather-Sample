@@ -24,14 +24,14 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-interface WeatherCallbacks {
+internal interface WeatherCallbacks {
     fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen)
     fun refreshTodayWeather()
     fun retry()
 }
 
 @HiltViewModel
-class WeatherViewModel @Inject constructor(
+internal class WeatherViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
     private val getForecastInteractor: GetForecastInteractor,

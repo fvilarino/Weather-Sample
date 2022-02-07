@@ -2,7 +2,7 @@ package com.francescsoftware.weathersample.feature.weather
 
 import androidx.annotation.DrawableRes
 
-enum class WeatherIcon(
+internal enum class WeatherIcon(
     val dayId: String,
     val nightId: String,
     @DrawableRes val iconId: Int

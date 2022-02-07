@@ -25,7 +25,7 @@ private const val TAG = "CityViewModel"
 private val DebounceMillis = 400L.toDuration(DurationUnit.MILLISECONDS)
 
 @HiltViewModel
-class CityViewModel @Inject constructor(
+internal class CityViewModel @Inject constructor(
     private val getCitiesInteractor: GetCitiesInteractor,
     private val navigator: Navigator,
     private val stringLookup: StringLookup,

@@ -2,7 +2,7 @@ package com.francescsoftware.weathersample.feature.weather
 
 import androidx.annotation.DrawableRes
 
-data class TodayWeatherCardState(
+internal data class TodayWeatherCardState(
     val temperature: String = "",
     val minTemperature: String = "",
     val maxTemperature: String = "",

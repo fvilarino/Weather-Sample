@@ -17,7 +17,7 @@ import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
-fun CityCard(
+internal fun CityCard(
     city: CityResultModel,
     onClick: (CityResultModel) -> Unit,
     modifier: Modifier = Modifier,

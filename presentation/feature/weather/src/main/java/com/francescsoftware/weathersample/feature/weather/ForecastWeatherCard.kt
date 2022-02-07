@@ -32,7 +32,7 @@ import com.francescsoftware.weathersample.styles.MarginTreble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
-fun ForecastWeatherCard(
+internal fun ForecastWeatherCard(
     state: ForecastItem.ForecastCard,
     modifier: Modifier = Modifier,
     elevation: Dp = CardElevation,

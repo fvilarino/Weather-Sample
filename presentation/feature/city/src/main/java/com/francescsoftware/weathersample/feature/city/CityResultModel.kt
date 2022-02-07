@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.feature.city
 
-data class CityResultModel(
+internal data class CityResultModel(
     val id: Long,
     val name: CharSequence,
     val country: CharSequence,

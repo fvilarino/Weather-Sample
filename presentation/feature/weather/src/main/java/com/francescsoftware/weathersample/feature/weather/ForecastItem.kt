@@ -2,7 +2,7 @@ package com.francescsoftware.weathersample.feature.weather
 
 import androidx.annotation.DrawableRes
 
-sealed interface ForecastItem {
+internal sealed interface ForecastItem {
     data class ForecastHeader(
         val id: Long,
         val date: String,

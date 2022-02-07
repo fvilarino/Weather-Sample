@@ -5,7 +5,7 @@ import com.francescsoftware.weathersample.mvi.MviIntent
 import com.francescsoftware.weathersample.mvi.ReduceAction
 import com.francescsoftware.weathersample.mvi.State
 
-enum class WeatherLoadState {
+internal enum class WeatherLoadState {
     IDLE,
     LOADING,
     REFRESHING,
@@ -13,12 +13,12 @@ enum class WeatherLoadState {
     ERROR
 }
 
-enum class SelectedWeatherScreen {
+internal enum class SelectedWeatherScreen {
     Today,
     Forecast,
 }
 
-data class TodayState(
+internal data class TodayState(
     val loadState: WeatherLoadState,
     val option: SelectedWeatherScreen,
     val cityName: String,
@@ -41,15 +41,15 @@ data class TodayState(
     }
 }
 
-sealed interface TodayEvent : Event
+internal sealed interface TodayEvent : Event
 
-sealed interface TodayMviIntent : MviIntent {
+internal sealed interface TodayMviIntent : MviIntent {
     object RefreshTodayWeather : TodayMviIntent
     object Retry : TodayMviIntent
     data class OnOptionSelected(val option: SelectedWeatherScreen) : TodayMviIntent
 }
 
-sealed interface TodayReduceAction : ReduceAction {
+internal sealed interface TodayReduceAction : ReduceAction {
     data class CityUpdated(val name: String, val countryCode: String) : TodayReduceAction
     object Loading : TodayReduceAction
     object Refreshing : TodayReduceAction

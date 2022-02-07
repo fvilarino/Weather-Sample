@@ -6,7 +6,7 @@ import com.francescsoftware.weathersample.mvi.MviIntent
 import com.francescsoftware.weathersample.mvi.ReduceAction
 import com.francescsoftware.weathersample.mvi.State
 
-enum class LoadState {
+internal enum class LoadState {
     IDLE,
     LOADING,
     LOADED,
@@ -14,7 +14,7 @@ enum class LoadState {
     ERROR
 }
 
-data class CityState(
+internal data class CityState(
     val loadState: LoadState,
     val query: String,
     val cities: List<CityResultModel>,
@@ -32,16 +32,16 @@ data class CityState(
     }
 }
 
-sealed interface CityEvent : Event
+internal sealed interface CityEvent : Event
 
-sealed interface CityMviIntent : MviIntent {
+internal sealed interface CityMviIntent : MviIntent {
     data class PrefixUpdated(val prefix: String) : CityMviIntent
     data class CitiesLoaded(val cities: List<City>) : CityMviIntent
     object NoResults : CityMviIntent
     object LoadError : CityMviIntent
 }
 
-sealed interface CityReduceAction : ReduceAction {
+internal sealed interface CityReduceAction : ReduceAction {
     object Loading : CityReduceAction
     data class PrefixUpdated(val prefix: String) : CityReduceAction
     data class Loaded(val cities: List<CityResultModel>) : CityReduceAction
