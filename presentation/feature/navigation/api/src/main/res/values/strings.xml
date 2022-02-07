@@ -2,4 +2,5 @@
 <resources>
     <string name="city_label">Weather Sample</string>
     <string name="weather_label">Weather</string>
+    <string name="content_description_back">Back</string>
 </resources>

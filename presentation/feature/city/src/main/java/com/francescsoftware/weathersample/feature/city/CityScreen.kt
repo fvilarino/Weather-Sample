@@ -3,7 +3,6 @@ package com.francescsoftware.weathersample.feature.city
 import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -28,8 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -119,7 +116,7 @@ private fun CitiesSearchBox(
             IconButton(onClick = { callbacks.onQueryChange("") }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_clear_24),
-                    contentDescription = null,
+                    contentDescription = stringResource(id = R.string.content_description_clear),
                 )
             }
         }

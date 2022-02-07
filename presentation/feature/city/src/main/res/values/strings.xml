@@ -7,4 +7,5 @@
     <string name="coordinates_lat_lon">Lat: %1$.2f, Lon: %2$.2f</string>
     <string name="city_error_loading">Could not load cities</string>
     <string name="no_results_found_label">No results found</string>
+    <string name="content_description_clear">Clear</string>
 </resources>

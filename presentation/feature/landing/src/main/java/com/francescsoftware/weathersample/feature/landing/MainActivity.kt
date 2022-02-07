@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -39,8 +40,13 @@ class MainActivity : AppCompatActivity() {
                 Scaffold(
                     topBar = {
                         AppBar(
-                            titleId = currentDestination.titleId,
+                            title = stringResource(id = currentDestination.titleId),
                             iconId = currentDestination.iconId,
+                            iconContentDescription = if (currentDestination.iconContentDescriptionId != 0) {
+                                stringResource(id = currentDestination.iconContentDescriptionId)
+                            } else {
+                                null
+                            },
                             onIconClick = { navigator.onBackClick() },
                         )
                     },
