@@ -9,7 +9,7 @@ object Versions {
     }
 
     object Plugin {
-        const val androidGradlePluginVersion = "7.3.0-alpha01"
+        const val androidGradlePluginVersion = "7.3.0-alpha03"
         const val navigationGradlePluginVersion = "2.5.0-alpha01"
         const val hiltGradlePluginVersion = "2.40.5"
         const val protobufPluginVersion = "0.8.12"
@@ -17,8 +17,8 @@ object Versions {
     }
 
     object Compose {
-        const val composeCompilerVersion = "1.1.0-rc02"
-        const val composeVersion = "1.1.0-rc01"
+        const val composeCompilerVersion = "1.2.0-alpha03"
+        const val composeVersion = "1.2.0-alpha03"
         const val activityCompose = "1.3.0-alpha06"
         const val navigationCompose = Plugin.navigationGradlePluginVersion
     }

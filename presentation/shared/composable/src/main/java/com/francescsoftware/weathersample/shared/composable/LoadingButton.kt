@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -23,10 +24,12 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +45,8 @@ import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.styles.MarginHalf
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 enum class AnimationType {
     Bounce,
@@ -129,18 +134,21 @@ private val AnimationType.targetValue: Float
         AnimationType.Fade -> .2f
     }
 
-@Composable
-private fun LoadingIndicator(
-    animating: Boolean,
-    modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colors.primary,
-    indicatorSpacing: Dp = MarginHalf,
-    animationType: AnimationType,
-) {
-    val animatedValues = List(NumIndicators) { index ->
-        var animatedValue by remember(key1 = animating, key2 = animationType) { mutableStateOf(0f) }
-        LaunchedEffect(key1 = animating, key2 = animationType) {
-            if (animating) {
+@Stable
+interface LoadingIndicatorState {
+    operator fun get(index: Int): Float
+
+    fun start(animationType: AnimationType, scope: CoroutineScope)
+}
+
+class LoadingIndicatorStateImpl : LoadingIndicatorState {
+    private val animatedValues = List(NumIndicators) { mutableStateOf(0f) }
+
+    override fun get(index: Int): Float = animatedValues[index].value
+
+    override fun start(animationType: AnimationType, scope: CoroutineScope) {
+        repeat(NumIndicators) { index ->
+            scope.launch {
                 animate(
                     initialValue = animationType.initialValue,
                     targetValue = animationType.targetValue,
@@ -150,13 +158,48 @@ private fun LoadingIndicator(
                         repeatMode = RepeatMode.Reverse,
                         initialStartOffset = StartOffset(animationType.animationDelay * index)
                     ),
-                ) { value, _ -> animatedValue = value }
+                ) { value, _ -> animatedValues[index].value = value }
             }
         }
-        animatedValue
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as LoadingIndicatorStateImpl
+
+        if (animatedValues != other.animatedValues) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return animatedValues.hashCode()
+    }
+}
+
+@Composable
+fun rememberLoadingIndicatorState(): LoadingIndicatorState = remember {
+    LoadingIndicatorStateImpl()
+}
+
+@Composable
+private fun LoadingIndicator(
+    animating: Boolean,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colors.primary,
+    indicatorSpacing: Dp = MarginHalf,
+    animationType: AnimationType,
+) {
+    val state = rememberLoadingIndicatorState()
+    LaunchedEffect(key1 = animating, key2 = animationType) {
+        if (animating) {
+            state.start(animationType, this)
+        }
     }
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        animatedValues.forEach { animatedValue ->
+        repeat(NumIndicators) { index ->
             LoadingDot(
                 modifier = Modifier
                     .padding(horizontal = indicatorSpacing)
@@ -165,9 +208,12 @@ private fun LoadingIndicator(
                     .then(
                         when (animationType) {
                             AnimationType.Bounce,
-                            AnimationType.LazyBounce -> Modifier.offset(y = animatedValue.coerceAtMost(
-                                IndicatorSize / 2f).dp)
-                            AnimationType.Fade -> Modifier.graphicsLayer { alpha = animatedValue }
+                            AnimationType.LazyBounce -> Modifier.offset(
+                                y = state[index].coerceAtMost(
+                                    IndicatorSize / 2f
+                                ).dp
+                            )
+                            AnimationType.Fade -> Modifier.graphicsLayer { alpha = state[index] }
                         }
                     ),
                 color = color,
@@ -187,7 +233,6 @@ private fun LoadingDot(
             .background(color = color)
     )
 }
-/*
 
 @Preview(widthDp = 360, heightDp = 360)
 @Composable
@@ -212,27 +257,9 @@ private fun PreviewLoadingButton() {
     }
 }
 
-@Preview(widthDp = 360, heightDp = 360)
-@Composable
-private fun PreviewLoadingIndicator() {
-    WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            LoadingIndicator(
-                animating = true,
-                modifier = Modifier
-                    .height(64.dp)
-                    .fillMaxWidth()
-                    .padding(all = 16.dp),
-                animationType = AnimationType.Bounce,
-            )
-        }
-    }
-}
-*/
-
 @Preview(widthDp = 200, heightDp = 200)
 @Composable
-fun IcconPreview() {
+fun IconPreview() {
     WeatherSampleTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Box(
@@ -241,7 +268,9 @@ fun IcconPreview() {
             ) {
                 Icon(
                     Icons.Default.Add,
-                    modifier = Modifier.width(100.dp).aspectRatio(1f),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .aspectRatio(1f),
                     contentDescription = null,
                 )
             }
