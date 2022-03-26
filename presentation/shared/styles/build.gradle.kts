@@ -1,15 +1,15 @@
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
+    id("com.android.library")
+    id("kotlin-android")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -34,15 +34,15 @@ android {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.version.get()
     }
 }
 
 dependencies {
     implementation(project(":presentation:shared:assets"))
 
-    implementation(Depends.Compose.composeUi)
-    implementation(Depends.Compose.composeMaterial)
-    implementation(Depends.Compose.composeUiTooling)
-    implementation(Depends.Material.material)
+    implementation(libs.androidx.compose.ui.ui)
+    implementation(libs.androidx.compose.material.material)
+    implementation(libs.androidx.compose.ui.ui.tooling)
+    implementation(libs.com.google.android.material)
 }

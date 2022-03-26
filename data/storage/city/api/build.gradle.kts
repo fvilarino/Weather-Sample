@@ -1,15 +1,15 @@
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
+    id("com.android.library")
+    id("kotlin-android")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -33,5 +33,5 @@ android {
 }
 
 dependencies {
-    implementation(Depends.Kotlin.coroutinesCore)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }

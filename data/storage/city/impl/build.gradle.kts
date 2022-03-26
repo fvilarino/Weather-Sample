@@ -1,20 +1,20 @@
 import com.google.protobuf.gradle.*
 
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
-    id(Depends.ModulePlugins.daggerHiltPlugin)
-    id(Depends.ModulePlugins.protoBuf) version Versions.Plugin.protobufPluginVersion
-    kotlin(Depends.ModulePlugins.kotlinKapt)
+    id("com.android.library")
+    id("kotlin-android")
+    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.com.google.protobuf)
+    kotlin("kapt")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -40,21 +40,21 @@ android {
 dependencies {
     implementation(project(":data:storage:city:api"))
 
-    implementation(Depends.Android.dataStore)
-    implementation(Depends.Google.protoBufJavaLite)
-    implementation(Depends.Kotlin.coroutinesCore)
+    implementation(libs.androidx.datastore.datastore)
+    implementation(libs.com.google.protobuf.protobuf.javalite)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 
-    implementation(Depends.Hilt.daggerHiltAndroid)
-    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 
-    testImplementation(Depends.TestLibraries.jUnit)
-    androidTestImplementation(Depends.TestLibraries.androidJUnit)
-    androidTestImplementation(Depends.TestLibraries.espressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }
 
 protobuf {
     protoc {
-        artifact = Depends.Google.protoBufProtoc
+        artifact = "com.google.protobuf:protoc:4.0.0-rc-2"
     }
     generateProtoTasks {
         all().forEach { task ->

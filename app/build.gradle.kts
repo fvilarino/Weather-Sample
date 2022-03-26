@@ -1,21 +1,20 @@
 plugins {
-    id(Depends.ModulePlugins.applicationPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
-    id(Depends.ModulePlugins.daggerHiltPlugin)
-    id(Depends.ModulePlugins.versionsPlugin) version Versions.Plugin.versionsPluginVersion
-    kotlin(Depends.ModulePlugins.kotlinKapt)
+    id("com.android.application")
+    id("kotlin-android")
+    id("dagger.hilt.android.plugin")
+    kotlin("kapt")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
         applicationId = Config.Application.applicationId
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        versionCode = Versions.BuildConfig.appVersionCode
-        versionName = Versions.BuildConfig.appVersionName
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        versionCode = Versions.appVersionCode
+        versionName = Versions.appVersionName
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -75,40 +74,40 @@ dependencies {
     implementation(project(":utils"))
 
     // android
-    implementation(Depends.Android.ktx)
-    implementation(Depends.Android.appCompat)
-    implementation(Depends.Android.navigationFragment)
-    implementation(Depends.Android.navigationUi)
-    implementation(Depends.Android.archLifeCycleViewModel)
-    implementation(Depends.Android.lifecycleCommon)
-    implementation(Depends.Material.material)
+    implementation(libs.androidx.core.core.ktx)
+    implementation(libs.androidx.app.compat)
+    implementation(libs.androidx.navigation.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.navigation.ui.ktx)
+    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.lifecycle.common.java8)
+    implementation(libs.com.google.android.material)
 
     // store
-    implementation(Depends.Android.dataStore)
-    implementation(Depends.Google.protoBufJavaLite)
+    implementation(libs.androidx.datastore.datastore)
+    implementation(libs.com.google.protobuf.protobuf.javalite)
 
     // dagger
-    implementation(Depends.Hilt.daggerHiltAndroid)
-    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 
     // kotlin
-    implementation(Depends.Kotlin.coroutinesCore)
-    implementation(Depends.Kotlin.coroutinesAndroid)
-    implementation(Depends.Kotlin.kotlinSerialization)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.android)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
 
     // network
-    implementation(Depends.Network.okHttp)
-    implementation(Depends.Network.okHttpInterceptor)
-    implementation(Depends.Network.okIO)
-    implementation(Depends.Network.retrofit)
-    implementation(Depends.Network.retrofitAdapter)
-    implementation(Depends.Network.retrofitSerializationConverter)
+    implementation(libs.com.squareup.okhttp3.okhttp)
+    implementation(libs.com.squareup.okhttp3.logging.interceptor)
+    implementation(libs.com.squareup.okio)
+    implementation(libs.com.squareup.retrofit2.retrofit)
+    implementation(libs.com.jakewharton.retrofit.retrofit2.kotlin.coroutines.adapter)
+    implementation(libs.com.jakewharton.retrofit.retrofit2.kotlinx.serialization.converter)
 
     // logging
-    implementation(Depends.Logging.timber)
+    implementation(libs.com.jakewharton.timber)
 
     // test
-    testImplementation(Depends.TestLibraries.jUnit)
-    androidTestImplementation(Depends.TestLibraries.androidJUnit)
-    androidTestImplementation(Depends.TestLibraries.espressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }

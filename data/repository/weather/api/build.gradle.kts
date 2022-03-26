@@ -1,16 +1,16 @@
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
-    id(Depends.ModulePlugins.kotlinSerializationPlugin)
+    id("com.android.library")
+    id("kotlin-android")
+    id("kotlinx-serialization")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -35,5 +35,5 @@ android {
 
 dependencies {
     implementation(project(":core:type"))
-    implementation(Depends.Kotlin.kotlinSerialization)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
 }

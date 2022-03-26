@@ -1,17 +1,17 @@
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
-    id(Depends.ModulePlugins.daggerHiltPlugin)
-    kotlin(Depends.ModulePlugins.kotlinKapt)
+    id("com.android.library")
+    id("kotlin-android")
+    id("dagger.hilt.android.plugin")
+    kotlin("kapt")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -35,8 +35,8 @@ android {
 }
 
 dependencies {
-    implementation(Depends.Kotlin.coroutinesCore)
-    implementation(Depends.Kotlin.coroutinesAndroid)
-    implementation(Depends.Hilt.daggerHiltAndroid)
-    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.android)
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 }

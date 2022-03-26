@@ -6,13 +6,17 @@ buildscript {
     }
 
     dependencies {
-        classpath(Depends.BuildPlugins.androidPlugin)
-        classpath(Depends.BuildPlugins.kotlinPlugin)
-        classpath(Depends.BuildPlugins.kotlinSerializationPlugin)
-        classpath(Depends.BuildPlugins.navigationPlugin)
-        classpath(Depends.BuildPlugins.hiltPlugin)
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+        classpath(libs.com.android.tools.build.gradle)
+        classpath(libs.org.jetbrains.kotlin.kotlin.gradle.plugin)
+        classpath(libs.org.jetbrains.kotlin.kotlin.serialization)
+        classpath(libs.androidx.navigation.navigation.safe.args.gradle.plugin)
+        classpath(libs.com.google.dagger.hilt.android.gradle.plugin)
     }
+}
+
+plugins {
+    alias(libs.plugins.com.github.ben.manes.versions)
+    alias(libs.plugins.nl.littlerobots.version.catalog.update)
 }
 
 tasks.register("clean", Delete::class) {

@@ -1,17 +1,17 @@
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
-    id(Depends.ModulePlugins.daggerHiltPlugin)
-    kotlin(Depends.ModulePlugins.kotlinKapt)
+    id("com.android.library")
+    id("kotlin-android")
+    id("dagger.hilt.android.plugin")
+    kotlin("kapt")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -36,7 +36,7 @@ android {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.version.get()
     }
 }
 
@@ -49,22 +49,22 @@ dependencies {
     implementation(project(":presentation:shared:styles"))
 
     // compose
-    implementation(Depends.Compose.composeUi)
-    implementation(Depends.Compose.composeMaterial)
-    implementation(Depends.Compose.composeUiTooling)
-    implementation(Depends.Compose.activityCompose)
-    implementation(Depends.Compose.navigationCompose)
+    implementation(libs.androidx.compose.ui.ui)
+    implementation(libs.androidx.compose.material.material)
+    implementation(libs.androidx.compose.ui.ui.tooling)
+    implementation(libs.androidx.activity.activity.compose)
+    implementation(libs.androidx.navigation.navigation.compose)
 
-    implementation(Depends.Android.ktx)
-    implementation(Depends.Android.appCompat)
+    implementation(libs.androidx.core.core.ktx)
+    implementation(libs.androidx.app.compat)
 
-    implementation(Depends.Hilt.daggerHiltAndroid)
-    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-    implementation(Depends.Hilt.androidxHiltNavigation)
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
+    implementation(libs.androidx.hilt.hilt.navigation.compose)
 
-    implementation(Depends.Logging.timber)
+    implementation(libs.com.jakewharton.timber)
 
-    testImplementation(Depends.TestLibraries.jUnit)
-    androidTestImplementation(Depends.TestLibraries.androidJUnit)
-    androidTestImplementation(Depends.TestLibraries.espressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }

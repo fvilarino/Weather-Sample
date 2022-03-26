@@ -1,16 +1,16 @@
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
-    kotlin(Depends.ModulePlugins.kotlinKapt)
+    id("com.android.library")
+    id("kotlin-android")
+    kotlin("kapt")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -35,7 +35,7 @@ android {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.freeCompilerArgs
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Compose.composeCompilerVersion
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.version.get()
     }
 }
 
@@ -43,14 +43,14 @@ dependencies {
     implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:styles"))
 
-    implementation(Depends.Compose.composeUi)
-    implementation(Depends.Compose.composeMaterial)
-    implementation(Depends.Compose.composeUiTooling)
-    implementation(Depends.Android.ktx)
+    implementation(libs.androidx.compose.ui.ui)
+    implementation(libs.androidx.compose.material.material)
+    implementation(libs.androidx.compose.ui.ui.tooling)
+    implementation(libs.androidx.core.core.ktx)
 
-    implementation(Depends.Logging.timber)
+    implementation(libs.com.jakewharton.timber)
 
-    testImplementation(Depends.TestLibraries.jUnit)
-    androidTestImplementation(Depends.TestLibraries.androidJUnit)
-    androidTestImplementation(Depends.TestLibraries.espressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }

@@ -1,18 +1,18 @@
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
-    id(Depends.ModulePlugins.daggerHiltPlugin)
-    id(Depends.ModulePlugins.kotlinSerializationPlugin)
-    kotlin(Depends.ModulePlugins.kotlinKapt)
+    id("com.android.library")
+    id("kotlin-android")
+    id("dagger.hilt.android.plugin")
+    id("kotlinx-serialization")
+    kotlin("kapt")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -38,16 +38,16 @@ android {
 dependencies {
     implementation(project(":core:type"))
 
-    implementation(Depends.Android.ktx)
-    implementation(Depends.Hilt.daggerHiltAndroid)
-    kapt(Depends.Hilt.daggerHiltAndroidCompiler)
-    implementation(Depends.Network.okHttp)
-    implementation(Depends.Network.okHttpInterceptor)
-    implementation(Depends.Network.okIO)
-    implementation(Depends.Network.retrofit)
-    implementation(Depends.Logging.timber)
+    implementation(libs.androidx.core.core.ktx)
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
+    implementation(libs.com.squareup.okhttp3.okhttp)
+    implementation(libs.com.squareup.okhttp3.logging.interceptor)
+    implementation(libs.com.squareup.okio)
+    implementation(libs.com.squareup.retrofit2.retrofit)
+    implementation(libs.com.jakewharton.timber)
 
-    testImplementation(Depends.TestLibraries.jUnit)
-    androidTestImplementation(Depends.TestLibraries.androidJUnit)
-    androidTestImplementation(Depends.TestLibraries.espressoCore)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }

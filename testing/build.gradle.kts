@@ -1,16 +1,16 @@
 plugins {
-    id(Depends.ModulePlugins.libraryPlugin)
-    id(Depends.ModulePlugins.kotlinPlugin)
-    kotlin(Depends.ModulePlugins.kotlinKapt)
+    id("com.android.library")
+    id("kotlin-android")
+    kotlin("kapt")
 }
 
 android {
-    compileSdk = Versions.BuildConfig.compileSdkVersion
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
-        minSdk = Versions.BuildConfig.minSdkVersion
-        targetSdk = Versions.BuildConfig.targetSdkVersion
-        testInstrumentationRunner = Depends.TestLibraries.testRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -37,9 +37,9 @@ dependencies {
     implementation(project(":core:dispatcher"))
     implementation(project(":utils"))
 
-    implementation(Depends.Kotlin.coroutinesCore)
-    implementation(Depends.TestLibraries.coroutinesTest)
-    implementation(Depends.TestLibraries.jUnit)
-    implementation(Depends.TestLibraries.coreTesting)
-    implementation(Depends.TestLibraries.mockk)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
+    testImplementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
+    implementation(libs.junit)
+    implementation(libs.androidx.test.ext.junit)
+    implementation(libs.androidx.test.espresso.espresso.core)
 }
