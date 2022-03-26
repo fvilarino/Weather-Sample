@@ -7,11 +7,11 @@ import com.francescsoftware.weathersample.mvi.ReduceAction
 import com.francescsoftware.weathersample.mvi.State
 
 internal enum class LoadState {
-    IDLE,
-    LOADING,
-    LOADED,
-    NO_RESULTS,
-    ERROR
+    Idle,
+    Loading,
+    Loaded,
+    NoResults,
+    Error,
 }
 
 internal data class CityState(
@@ -19,13 +19,13 @@ internal data class CityState(
     val query: String,
     val cities: List<CityResultModel>,
 ) : State {
-    val loading = loadState == LoadState.LOADING
-    val loaded = loadState == LoadState.LOADED
-    val noResults = loadState == LoadState.NO_RESULTS
+    val loading = loadState == LoadState.Loading
+    val loaded = loadState == LoadState.Loaded
+    val noResults = loadState == LoadState.NoResults
 
     companion object {
         val initial = CityState(
-            loadState = LoadState.IDLE,
+            loadState = LoadState.Idle,
             query = "",
             cities = emptyList(),
         )

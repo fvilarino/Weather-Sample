@@ -76,22 +76,22 @@ internal class WeatherViewModel @Inject constructor(
                 cityCountryCode = reduceAction.countryCode,
             )
             TodayReduceAction.Loading -> state.copy(
-                loadState = WeatherLoadState.LOADING,
+                loadState = WeatherLoadState.Loading,
             )
             TodayReduceAction.Refreshing -> state.copy(
-                loadState = WeatherLoadState.REFRESHING,
+                loadState = WeatherLoadState.Refreshing,
             )
             is TodayReduceAction.Loaded -> state.copy(
-                loadState = WeatherLoadState.LOADED,
+                loadState = WeatherLoadState.Loaded,
                 todayState = reduceAction.currentWeather,
                 forecastItems = reduceAction.forecastItems,
             )
             is TodayReduceAction.TodayLoaded -> state.copy(
-                loadState = WeatherLoadState.LOADED,
+                loadState = WeatherLoadState.Loaded,
                 todayState = reduceAction.currentWeather,
             )
             is TodayReduceAction.LoadError -> state.copy(
-                loadState = WeatherLoadState.ERROR,
+                loadState = WeatherLoadState.Error,
                 errorMessage = reduceAction.message,
             )
             is TodayReduceAction.OnOptionSelected -> state.copy(

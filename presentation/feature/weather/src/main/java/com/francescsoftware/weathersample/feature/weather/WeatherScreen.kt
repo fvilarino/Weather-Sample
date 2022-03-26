@@ -90,20 +90,20 @@ private fun WeatherScreen(
                 .padding(top = MarginQuad),
         ) { loadState ->
             when (loadState) {
-                WeatherLoadState.IDLE -> {
+                WeatherLoadState.Idle -> {
                 }
-                WeatherLoadState.LOADING -> LoadingSpinner(
+                WeatherLoadState.Loading -> LoadingSpinner(
                     modifier = Modifier.fillMaxSize(),
                 )
-                WeatherLoadState.LOADED,
-                WeatherLoadState.REFRESHING -> WeatherContent(
+                WeatherLoadState.Loaded,
+                WeatherLoadState.Refreshing -> WeatherContent(
                     state = state,
                     todayRefreshCallback = weatherCallbacks::refreshTodayWeather,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = MarginDouble),
                 )
-                WeatherLoadState.ERROR -> WeatherError(
+                WeatherLoadState.Error -> WeatherError(
                     modifier = Modifier.fillMaxSize(),
                     weatherCallbacks::retry
                 )
@@ -128,7 +128,7 @@ private fun ForecastWeatherScreenPreview() {
     WeatherSampleTheme {
         Surface(modifier = Modifier.fillMaxWidth()) {
             val state = TodayState(
-                loadState = WeatherLoadState.LOADED,
+                loadState = WeatherLoadState.Loaded,
                 cityName = "Coquitlam, British Columbia",
                 cityCountryCode = "CA",
                 todayState = TodayWeatherCardState(

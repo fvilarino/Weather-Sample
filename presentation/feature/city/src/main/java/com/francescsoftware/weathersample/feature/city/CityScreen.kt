@@ -72,20 +72,20 @@ private fun CityScreen(
             modifier = modifier.padding(top = MarginTreble),
         ) { loadState ->
             when (loadState) {
-                LoadState.IDLE -> {
+                LoadState.Idle -> {
                 }
-                LoadState.LOADING -> CitiesLoading(
+                LoadState.Loading -> CitiesLoading(
                     modifier = Modifier.fillMaxSize(),
                 )
-                LoadState.LOADED -> CitiesList(
+                LoadState.Loaded -> CitiesList(
                     state = state,
                     callbacks = callbacks,
                     modifier = Modifier.fillMaxSize(),
                 )
-                LoadState.NO_RESULTS -> CitiesNoResults(
+                LoadState.NoResults -> CitiesNoResults(
                     modifier = Modifier.fillMaxSize(),
                 )
-                LoadState.ERROR -> CitiesLoadError(
+                LoadState.Error -> CitiesLoadError(
                     modifier = Modifier.fillMaxSize(),
                 )
             }
@@ -213,7 +213,7 @@ private fun CityScreenPreviewDarkMode() {
         var state by remember {
             mutableStateOf(
                 CityState(
-                    loadState = LoadState.LOADED,
+                    loadState = LoadState.Loaded,
                     query = "",
                     cities = listOf(
                         vancouverCityModel,

@@ -45,13 +45,13 @@ abstract class MviViewModel<S : State, E : Event, I : MviIntent, R : ReduceActio
 
     private val preMiddleware: List<Middleware<I, R>> by lazy(LazyThreadSafetyMode.NONE) {
         middleware.filter { middleware ->
-            middleware.ordering == MiddlewareOrdering.BEFORE_VIEWMODEL
+            middleware.ordering == MiddlewareOrdering.BeforeViewModel
         }
     }
 
     private val postMiddleware: List<Middleware<I, R>> by lazy(LazyThreadSafetyMode.NONE) {
         middleware.filter { middleware ->
-            middleware.ordering == MiddlewareOrdering.AFTER_VIEWMODEL
+            middleware.ordering == MiddlewareOrdering.AfterViewModel
         }
     }
 

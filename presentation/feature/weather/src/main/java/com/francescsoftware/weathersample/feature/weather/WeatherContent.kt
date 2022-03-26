@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.shared.composable.LoadingButton
-import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.MarginSingle
 
@@ -59,7 +58,7 @@ private fun TodayWeather(
         LoadingButton(
             onClick = todayRefreshCallback,
             modifier = Modifier.padding(top = MarginQuad),
-            loading = state.loadState == WeatherLoadState.REFRESHING,
+            loading = state.loadState == WeatherLoadState.Refreshing,
         ) {
             Text(text = stringResource(id = R.string.refresh))
         }

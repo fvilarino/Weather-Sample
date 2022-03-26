@@ -59,14 +59,14 @@ internal class CityViewModel @Inject constructor(
 
     override fun reduce(state: CityState, reduceAction: CityReduceAction): CityState =
         when (reduceAction) {
-            CityReduceAction.Loading -> state.copy(loadState = LoadState.LOADING)
+            CityReduceAction.Loading -> state.copy(loadState = LoadState.Loading)
             is CityReduceAction.PrefixUpdated -> state.copy(query = reduceAction.prefix)
             is CityReduceAction.Loaded -> state.copy(
-                loadState = LoadState.LOADED,
+                loadState = LoadState.Loaded,
                 cities = reduceAction.cities,
             )
-            CityReduceAction.LoadError -> state.copy(loadState = LoadState.ERROR)
-            CityReduceAction.NoResults -> state.copy(loadState = LoadState.NO_RESULTS)
+            CityReduceAction.LoadError -> state.copy(loadState = LoadState.Error)
+            CityReduceAction.NoResults -> state.copy(loadState = LoadState.NoResults)
         }
 
     private fun onStart() {

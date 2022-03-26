@@ -6,11 +6,11 @@ import com.francescsoftware.weathersample.mvi.ReduceAction
 import com.francescsoftware.weathersample.mvi.State
 
 internal enum class WeatherLoadState {
-    IDLE,
-    LOADING,
-    REFRESHING,
-    LOADED,
-    ERROR
+    Idle,
+    Loading,
+    Refreshing,
+    Loaded,
+    Error,
 }
 
 internal enum class SelectedWeatherScreen {
@@ -30,7 +30,7 @@ internal data class TodayState(
 
     companion object {
         val initial = TodayState(
-            loadState = WeatherLoadState.IDLE,
+            loadState = WeatherLoadState.Idle,
             option = SelectedWeatherScreen.Today,
             cityName = "",
             cityCountryCode = "",
