@@ -7,6 +7,7 @@ plugins {
 
 android {
     compileSdk = Versions.compileSdkVersion
+    compileSdkPreview = "Tiramisu"
 
     defaultConfig {
         applicationId = Config.Application.applicationId
