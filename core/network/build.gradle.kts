@@ -42,10 +42,8 @@ dependencies {
     implementation(libs.androidx.core.core.ktx)
     implementation(libs.com.google.dagger.hilt.android)
     kapt(libs.com.google.dagger.hilt.android.compiler)
-    implementation(libs.com.squareup.okhttp3.okhttp)
-    implementation(libs.com.squareup.okhttp3.logging.interceptor)
-    implementation(libs.com.squareup.okio)
-    implementation(libs.com.squareup.retrofit2.retrofit)
+    implementation(libs.bundles.okhttp)
+    implementation(libs.bundles.retrofit)
     implementation(libs.com.jakewharton.timber)
 
     testImplementation(libs.junit)

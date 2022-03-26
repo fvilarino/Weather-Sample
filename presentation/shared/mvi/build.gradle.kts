@@ -44,8 +44,8 @@ android {
 dependencies {
     implementation(project(":core:dispatcher"))
 
-    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.compose.ui.ui.tooling)
+    implementation(libs.bundles.lifecycle)
+    debugImplementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.com.google.dagger.hilt.android)
     kapt(libs.com.google.dagger.hilt.android.compiler)
 

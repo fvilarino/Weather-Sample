@@ -46,7 +46,7 @@ dependencies {
 
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.compose.material.material)
-    implementation(libs.androidx.compose.ui.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.androidx.core.core.ktx)
 
     implementation(libs.com.jakewharton.timber)

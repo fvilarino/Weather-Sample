@@ -74,6 +74,13 @@ org-jetbrains-kotlinx-kotlinx-coroutines-core = { module = "org.jetbrains.kotlin
 org-jetbrains-kotlinx-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines-test-version" }
 org-jetbrains-kotlinx-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "org-jetbrains-kotlinx-kotlinx-serialization-json-version" }
 
+[bundles]
+coroutines = ["org-jetbrains-kotlinx-kotlinx-coroutines-core", "org-jetbrains-kotlinx-kotlinx-coroutines-android"]
+lifecycle = [ "androidx-lifecycle-lifecycle-common-java8", "androidx-lifecycle-lifecycle-viewmodel-ktx"]
+
+okhttp = ["com-squareup-okhttp3-okhttp", "com-squareup-okhttp3-logging-interceptor", "com-squareup-okio"]
+retrofit = ["com-squareup-retrofit2-retrofit", "com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter", "com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter" ]
+
 [plugins]
 com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version.ref = "versions-plugin-version" }
 com-google-protobuf = "com.google.protobuf:0.8.18"

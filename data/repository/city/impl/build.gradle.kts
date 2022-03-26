@@ -51,11 +51,8 @@ dependencies {
     kapt(libs.com.google.dagger.hilt.android.compiler)
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
-    implementation(libs.com.squareup.okhttp3.okhttp)
-    implementation(libs.com.squareup.okhttp3.logging.interceptor)
-    implementation(libs.com.squareup.retrofit2.retrofit)
-    implementation(libs.com.jakewharton.retrofit.retrofit2.kotlin.coroutines.adapter)
-    implementation(libs.com.jakewharton.retrofit.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.bundles.okhttp)
+    implementation(libs.bundles.retrofit)
 
     implementation(libs.com.jakewharton.timber)
 

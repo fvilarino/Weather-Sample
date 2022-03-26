@@ -79,8 +79,7 @@ dependencies {
     implementation(libs.androidx.app.compat)
     implementation(libs.androidx.navigation.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.navigation.ui.ktx)
-    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.lifecycle.common.java8)
+    implementation(libs.bundles.lifecycle)
     implementation(libs.com.google.android.material)
 
     // store
@@ -92,17 +91,12 @@ dependencies {
     kapt(libs.com.google.dagger.hilt.android.compiler)
 
     // kotlin
-    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
-    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.android)
+    implementation(libs.bundles.coroutines)
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
 
     // network
-    implementation(libs.com.squareup.okhttp3.okhttp)
-    implementation(libs.com.squareup.okhttp3.logging.interceptor)
-    implementation(libs.com.squareup.okio)
-    implementation(libs.com.squareup.retrofit2.retrofit)
-    implementation(libs.com.jakewharton.retrofit.retrofit2.kotlin.coroutines.adapter)
-    implementation(libs.com.jakewharton.retrofit.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.bundles.okhttp)
+    implementation(libs.bundles.retrofit)
 
     // logging
     implementation(libs.com.jakewharton.timber)
