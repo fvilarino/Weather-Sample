@@ -39,7 +39,7 @@ dependencies {
     implementation(project(":utils"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
-    testImplementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
     implementation(libs.junit)
     implementation(libs.androidx.test.ext.junit)
     implementation(libs.androidx.test.espresso.espresso.core)

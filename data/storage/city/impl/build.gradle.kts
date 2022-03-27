@@ -55,7 +55,7 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.0.0-rc-2"
+        artifact = libs.com.google.protobuf.protoc.get().toString()
     }
     generateProtoTasks {
         all().forEach { task ->
