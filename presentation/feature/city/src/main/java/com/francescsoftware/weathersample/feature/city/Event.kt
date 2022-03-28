@@ -1,10 +1,10 @@
 package com.francescsoftware.weathersample.feature.city
 
 import com.francescsoftware.weathersample.interactor.city.api.City
-import com.francescsoftware.weathersample.mvi.Event
-import com.francescsoftware.weathersample.mvi.MviIntent
-import com.francescsoftware.weathersample.mvi.ReduceAction
-import com.francescsoftware.weathersample.mvi.State
+import com.francescsoftware.weathersample.shared.mvi.Event
+import com.francescsoftware.weathersample.shared.mvi.MviIntent
+import com.francescsoftware.weathersample.shared.mvi.ReduceAction
+import com.francescsoftware.weathersample.shared.mvi.State
 
 internal enum class LoadState {
     Idle,

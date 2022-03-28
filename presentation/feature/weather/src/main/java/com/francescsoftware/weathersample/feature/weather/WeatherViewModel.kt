@@ -12,7 +12,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup
-import com.francescsoftware.weathersample.mvi.MviViewModel
+import com.francescsoftware.weathersample.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.type.getOrNull

@@ -37,6 +37,7 @@ androidx-activity-activity-compose = { module = "androidx.activity:activity-comp
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation-version" }
 androidx-app-compat = { module = "androidx.appcompat:appcompat", version.ref = "app-compat-version" }
 androidx-arch-core-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch-core-core-testing-version" }
+androidx-compose-runtime-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "androidx-compose-version" }
 androidx-compose-material-material = { module = "androidx.compose.material:material", version.ref = "androidx-compose-version" }
 androidx-compose-ui-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-version" }
 androidx-compose-ui-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-compose-version" }

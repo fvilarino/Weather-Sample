@@ -1,8 +1,5 @@
 package com.francescsoftware.weathersample.shared.mvi
 
-import com.francescsoftware.weathersample.mvi.MviIntent
-import com.francescsoftware.weathersample.mvi.ReduceAction
-
 abstract class Middleware<I : MviIntent, R : ReduceAction> {
     abstract val ordering: MiddlewareOrdering
     private lateinit var processor: Processor<R>

@@ -1,12 +1,9 @@
-package com.francescsoftware.weathersample.mvi
+package com.francescsoftware.weathersample.shared.mvi
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.dispather.DispatcherProviderInstance
-import com.francescsoftware.weathersample.shared.mvi.Middleware
-import com.francescsoftware.weathersample.shared.mvi.MiddlewareOrdering
-import com.francescsoftware.weathersample.shared.mvi.Processor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

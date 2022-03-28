@@ -6,7 +6,7 @@ import com.francescsoftware.weathersample.feature.navigation.api.SelectedCity
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
 import com.francescsoftware.weathersample.lookup.api.StringLookup
-import com.francescsoftware.weathersample.mvi.MviViewModel
+import com.francescsoftware.weathersample.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
