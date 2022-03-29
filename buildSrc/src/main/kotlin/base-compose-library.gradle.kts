@@ -2,11 +2,18 @@ plugins {
     id("base-android-library")
 }
 
+val catalogs = extensions.getByType<VersionCatalogsExtension>()
+val composeVersion = catalogs
+    .named("libs")
+    .findVersion("androidx-compose-version")
+    .get()
+    .requiredVersion
+
 android {
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-alpha06"
+        kotlinCompilerExtensionVersion = composeVersion
     }
 }
