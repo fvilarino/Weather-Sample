@@ -11,6 +11,10 @@ android {
             buildConfigField("String", "RAPID_SERVICE_CITY_HOST", "\"${Keys.rapidServiceCityHost}\"")
         }
     }
+
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + Config.Compiler.serializationFreeCompileArgs
+    }
 }
 
 dependencies {

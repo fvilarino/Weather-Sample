@@ -7,9 +7,17 @@ object Config {
     object Compiler {
         const val jvmTarget = "11"
         val freeCompilerArgs = listOf(
-            "-Xopt-in=kotlin.time.ExperimentalTime",
-            "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
-            "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=kotlin.time.ExperimentalTime",
+        )
+        val serializationFreeCompileArgs = listOf(
+            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+        )
+        val composeFreeCompileArgs = listOf(
+            "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+        )
+        val flowFreeCompilerArgs = listOf(
+            "-opt-in=kotlinx.coroutines.FlowPreview",
         )
     }
 }

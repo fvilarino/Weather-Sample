@@ -37,6 +37,7 @@ androidx-activity-activity-compose = { module = "androidx.activity:activity-comp
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation-version" }
 androidx-app-compat = { module = "androidx.appcompat:appcompat", version.ref = "app-compat-version" }
 androidx-arch-core-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch-core-core-testing-version" }
+androidx-compose-foundation-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "androidx-compose-version" }
 androidx-compose-runtime-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "androidx-compose-version" }
 androidx-compose-material-material = { module = "androidx.compose.material:material", version.ref = "androidx-compose-version" }
 androidx-compose-ui-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-version" }
@@ -76,6 +77,7 @@ org-jetbrains-kotlinx-kotlinx-coroutines-test = { module = "org.jetbrains.kotlin
 org-jetbrains-kotlinx-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "org-jetbrains-kotlinx-kotlinx-serialization-json-version" }
 
 [bundles]
+compose = ["androidx.compose.foundation.foundation", "androidx-compose-ui-ui", "androidx-compose-material-material", "androidx-compose-runtime-runtime"]
 coroutines = ["org-jetbrains-kotlinx-kotlinx-coroutines-core", "org-jetbrains-kotlinx-kotlinx-coroutines-android"]
 lifecycle = [ "androidx-lifecycle-lifecycle-common-java8", "androidx-lifecycle-lifecycle-viewmodel-ktx"]
 

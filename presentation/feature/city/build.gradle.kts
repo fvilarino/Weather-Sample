@@ -2,6 +2,12 @@ plugins {
     id("base-hilt-compose-library")
 }
 
+android{
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + Config.Compiler.flowFreeCompilerArgs
+    }
+}
+
 dependencies {
 
     implementation(project(":business:interactor:city:api"))
@@ -13,8 +19,7 @@ dependencies {
     implementation(project(":presentation:shared:styles"))
 
     // compose
-    implementation(libs.androidx.compose.ui.ui)
-    implementation(libs.androidx.compose.material.material)
+    implementation(libs.bundles.compose)
     debugImplementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.androidx.navigation.navigation.compose)
     implementation(libs.androidx.core.core.ktx)

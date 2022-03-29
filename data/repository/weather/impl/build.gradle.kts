@@ -11,6 +11,10 @@ android {
             buildConfigField("String", "RAPID_SERVICE_WEATHER_HOST", "\"${Keys.rapidServiceWeatherHost}\"")
         }
     }
+
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + Config.Compiler.serializationFreeCompileArgs
+    }
 }
 
 dependencies {

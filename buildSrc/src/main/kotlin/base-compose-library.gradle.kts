@@ -13,6 +13,9 @@ android {
     buildFeatures {
         compose = true
     }
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + Config.Compiler.composeFreeCompileArgs
+    }
     composeOptions {
         kotlinCompilerExtensionVersion = composeVersion
     }

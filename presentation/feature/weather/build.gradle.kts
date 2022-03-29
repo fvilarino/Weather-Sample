@@ -15,8 +15,7 @@ dependencies {
     implementation(project(":utils"))
 
     // compose
-    implementation(libs.androidx.compose.ui.ui)
-    implementation(libs.androidx.compose.material.material)
+    implementation(libs.bundles.compose)
     debugImplementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.androidx.navigation.navigation.compose)
 
