@@ -31,6 +31,7 @@ internal data class CityState(
 internal sealed interface CityAction : Action {
     data class PrefixUpdated(val prefix: String) : CityAction
     data class CitiesLoaded(val cities: List<CityResultModel>) : CityAction
+    object Start : CityAction
     object Loading : CityAction
     object NoResults : CityAction
     object LoadError : CityAction

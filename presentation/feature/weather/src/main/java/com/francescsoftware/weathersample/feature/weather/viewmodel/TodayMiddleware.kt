@@ -4,32 +4,18 @@ import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.feature.weather.WeatherAction
 import com.francescsoftware.weathersample.feature.weather.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.WeatherState
-import com.francescsoftware.weathersample.feature.weather.toWeatherCardState
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup
-import com.francescsoftware.weathersample.shared.mvi.ActionHandler
 import com.francescsoftware.weathersample.shared.mvi.Middleware
 import com.francescsoftware.weathersample.type.fold
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class TodayMiddleware @Inject constructor(
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
     private val stringLookup: StringLookup,
-) : Middleware<WeatherState, WeatherAction> {
-
-    private lateinit var actionHandler: ActionHandler<WeatherAction>
-    private lateinit var scope: CoroutineScope
-
-    override fun setup(
-        scope: CoroutineScope,
-        actionHandler: ActionHandler<WeatherAction>,
-    ) {
-        this.actionHandler = actionHandler
-        this.scope = scope
-    }
+) : Middleware<WeatherState, WeatherAction>() {
 
     override fun reduce(
         state: WeatherState,

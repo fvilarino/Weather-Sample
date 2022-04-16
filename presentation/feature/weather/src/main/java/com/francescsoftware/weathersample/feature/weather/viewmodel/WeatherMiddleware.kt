@@ -10,7 +10,6 @@ import com.francescsoftware.weathersample.feature.weather.formatHumidity
 import com.francescsoftware.weathersample.feature.weather.formatTemperature
 import com.francescsoftware.weathersample.feature.weather.formatVisibility
 import com.francescsoftware.weathersample.feature.weather.formatWind
-import com.francescsoftware.weathersample.feature.weather.toWeatherCardState
 import com.francescsoftware.weathersample.interactor.weather.api.Forecast
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
@@ -18,7 +17,6 @@ import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInte
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup
-import com.francescsoftware.weathersample.shared.mvi.ActionHandler
 import com.francescsoftware.weathersample.shared.mvi.Middleware
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.getOrNull
@@ -36,15 +34,7 @@ internal class WeatherMiddleware @Inject constructor(
     private val getForecastInteractor: GetForecastInteractor,
     private val timeFormatter: TimeFormatter,
     private val stringLookup: StringLookup,
-) : Middleware<WeatherState, WeatherAction> {
-
-    private lateinit var actionHandler: ActionHandler<WeatherAction>
-    private lateinit var scope: CoroutineScope
-
-    override fun setup(scope: CoroutineScope, actionHandler: ActionHandler<WeatherAction>) {
-        this.actionHandler = actionHandler
-        this.scope = scope
-    }
+) : Middleware<WeatherState, WeatherAction>() {
 
     override fun reduce(
         state: WeatherState,
