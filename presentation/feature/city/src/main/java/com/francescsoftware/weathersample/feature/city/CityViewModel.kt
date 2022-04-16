@@ -1,7 +1,5 @@
 package com.francescsoftware.weathersample.feature.city
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.feature.navigation.api.Navigator
 import com.francescsoftware.weathersample.feature.navigation.api.SelectedCity
 import com.francescsoftware.weathersample.interactor.city.api.City
@@ -9,9 +7,8 @@ import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteracto
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.shared.mvi.ActionHandler
 import com.francescsoftware.weathersample.shared.mvi.Middleware
+import com.francescsoftware.weathersample.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.shared.mvi.Reducer
-import com.francescsoftware.weathersample.shared.mvi.StateReducerFlow
-import com.francescsoftware.weathersample.shared.mvi.stateReducerFlow
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.fold
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +16,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -142,22 +138,11 @@ internal class CityViewModel @Inject constructor(
     reducer: CityReducer,
     middleware: CityMiddleware,
     private val navigator: Navigator,
-) : ViewModel(), CityCallbacks {
-
-    private val stateReducer: StateReducerFlow<CityState, CityAction> = stateReducerFlow(
-        initialState = CityState.initial,
-        reducer = reducer,
-        middleware = listOf(middleware),
-    )
-
-    val state: StateFlow<CityState> = stateReducer
-
-    init {
-        middleware.setup(
-            scope = viewModelScope,
-            actionHandler = stateReducer,
-        )
-    }
+) : MviViewModel<CityState, CityAction>(
+    reducer = reducer,
+    middlewares = listOf(middleware),
+    initialState = CityState.initial,
+), CityCallbacks {
 
     override fun onCityClick(city: CityResultModel) {
         Timber.tag(TAG).d("Clicked on city [$city]")
@@ -165,7 +150,7 @@ internal class CityViewModel @Inject constructor(
     }
 
     override fun onQueryChange(query: String) {
-        stateReducer.handleAction(CityAction.PrefixUpdated(query))
+        handleAction(CityAction.PrefixUpdated(query))
     }
 
     private fun CityResultModel.toSelectedCity() = SelectedCity(

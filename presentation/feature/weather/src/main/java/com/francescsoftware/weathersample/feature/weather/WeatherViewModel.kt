@@ -1,8 +1,6 @@
 package com.francescsoftware.weathersample.feature.weather
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.feature.navigation.api.NavigationDestination
 import com.francescsoftware.weathersample.feature.navigation.api.SelectedCity
 import com.francescsoftware.weathersample.interactor.weather.api.Forecast
@@ -15,9 +13,8 @@ import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.shared.mvi.ActionHandler
 import com.francescsoftware.weathersample.shared.mvi.Middleware
+import com.francescsoftware.weathersample.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.shared.mvi.Reducer
-import com.francescsoftware.weathersample.shared.mvi.StateReducerFlow
-import com.francescsoftware.weathersample.shared.mvi.stateReducerFlow
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.type.getOrNull
@@ -27,7 +24,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -232,30 +228,21 @@ internal class WeatherViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     reducer: WeatherReducer,
     middleware: WeatherMiddleware,
-) : ViewModel(), WeatherCallbacks {
-
-    private val stateReducer: StateReducerFlow<WeatherState, WeatherAction> = stateReducerFlow(
-        initialState = WeatherState.initial,
-        reducer = reducer,
-        middleware = listOf(middleware),
-    )
-
-    val state: StateFlow<WeatherState> = stateReducer
-
-    private val selectedCity: SelectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
+) : MviViewModel<WeatherState, WeatherAction>(
+    reducer = reducer,
+    middlewares = listOf(middleware),
+    initialState = WeatherState.initial,
+), WeatherCallbacks {
 
     init {
-        middleware.setup(
-            scope = viewModelScope,
-            actionHandler = stateReducer,
-        )
-        stateReducer.handleAction(
+        val selectedCity: SelectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
+        handleAction(
             WeatherAction.CityUpdated(
                 name = selectedCity.name,
                 countryCode = selectedCity.countryCode
             )
         )
-        stateReducer.handleAction(
+        handleAction(
             WeatherAction.Load(
                 city = selectedCity.name,
                 countryCode = selectedCity.countryCode,
@@ -264,14 +251,14 @@ internal class WeatherViewModel @Inject constructor(
     }
 
     override fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) {
-        stateReducer.handleAction(WeatherAction.OnOptionSelected(selectedWeatherScreen))
+        handleAction(WeatherAction.OnOptionSelected(selectedWeatherScreen))
     }
 
     override fun refreshTodayWeather() {
-        stateReducer.handleAction(WeatherAction.RefreshTodayWeather)
+        handleAction(WeatherAction.RefreshTodayWeather)
     }
 
     override fun retry() {
-        stateReducer.handleAction(WeatherAction.Retry)
+        handleAction(WeatherAction.Retry)
     }
 }
