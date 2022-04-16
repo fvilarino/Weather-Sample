@@ -147,44 +147,19 @@ private fun ForecastWeatherScreenPreview() {
                     windSpeed = "4.3kph",
                     humidity = "54%",
                     pressure = "1024mb",
-                    visibility = "10000 m"
+                    visibility = "10000 m",
                 ),
                 forecastItems = listOf(
-                    ForecastItem.ForecastHeader(
-                        id = 1L,
-                        date = "Sun April 18",
-                        sunrise = "06:23",
-                        sunset = "20:01",
-                    ),
-                    ForecastItem.ForecastCard(
-                        id = 1L,
-                        header = "02:00 - Scattered Clouds",
-                        iconId = R.drawable.ic_partly_cloudy,
-                        minTemperature = "16.4°C",
-                        maxTemperature = "23.7°C",
-                        feelsLikeTemperature = "15.5°C",
-                        windSpeed = "5.4 kph",
-                        humidity = "48 %",
-                        visibility = "10000 m",
-                    ),
-                    ForecastItem.ForecastCard(
-                        id = 1L,
-                        header = "02:00 - Scattered Clouds",
-                        iconId = R.drawable.ic_partly_cloudy,
-                        minTemperature = "16.4°C",
-                        maxTemperature = "23.7°C",
-                        feelsLikeTemperature = "15.5°C",
-                        windSpeed = "5.4 kph",
-                        humidity = "48 %",
-                        visibility = "10000 m",
-                    ),
+                    PartlyCloudyForecast,
+                    SunnyForecast,
+                    HeavyRainForecast,
                 ),
                 option = SelectedWeatherScreen.Today,
-                errorMessage = ""
+                errorMessage = "",
             )
             WeatherScreen(
                 state = state,
-                weatherCallbacks = WeatherCallbacksPreview()
+                weatherCallbacks = WeatherCallbacksPreview(),
             )
         }
     }

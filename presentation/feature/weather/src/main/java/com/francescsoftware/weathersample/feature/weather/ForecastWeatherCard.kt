@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.shared.composable.InfoLabels
@@ -38,9 +39,11 @@ internal fun ForecastWeatherCard(
     elevation: Dp = CardElevation,
 ) {
     Card(modifier = modifier, elevation = elevation) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(MarginSingle)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(MarginSingle)
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     painter = painterResource(id = state.iconId),
@@ -61,9 +64,11 @@ internal fun ForecastWeatherCard(
                     .fillMaxWidth()
                     .padding(horizontal = MarginTreble)
             ) {
-                InfoLabels(modifier = Modifier
-                    .weight(1f)
-                    .padding(start = MarginDouble)) {
+                InfoLabels(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = MarginDouble)
+                ) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             text = stringResource(id = R.string.min_temperature_label),
@@ -98,9 +103,11 @@ internal fun ForecastWeatherCard(
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
-                InfoLabels(modifier = Modifier
-                    .weight(1f)
-                    .padding(end = MarginDouble)) {
+                InfoLabels(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = MarginDouble)
+                ) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
                             text = stringResource(id = R.string.wind_speed_label),
@@ -140,26 +147,19 @@ internal fun ForecastWeatherCard(
     }
 }
 
-@Preview(showBackground = true, widthDp = 360)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
+@Preview(widthDp = 360)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
 @Composable
-private fun ForecastWeatherCardPreview() {
+private fun ForecastWeatherCardPreview(
+    @PreviewParameter(ForecastStateProvider::class) forecastState: ForecastItem.ForecastCard,
+) {
     WeatherSampleTheme {
         Surface(modifier = Modifier.fillMaxWidth()) {
             ForecastWeatherCard(
-                state = ForecastItem.ForecastCard(
-                    id = 1L,
-                    header = "02:00 - Scattered Clouds",
-                    iconId = R.drawable.ic_partly_cloudy,
-                    minTemperature = "16.4°C",
-                    maxTemperature = "23.7°C",
-                    feelsLikeTemperature = "15.5°C",
-                    windSpeed = "5.4 kph",
-                    humidity = "48 %",
-                    visibility = "10000 m",
-                ),
-                modifier = Modifier.padding(vertical = MarginSingle),
+                state = forecastState,
+                modifier = Modifier.padding(all = MarginSingle),
             )
         }
     }
 }
+

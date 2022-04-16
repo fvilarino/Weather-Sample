@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.shared.composable.InfoLabels
+import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
@@ -64,21 +65,16 @@ internal fun CityCard(
 @Preview(showBackground = true, widthDp = 360)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
 @Composable
-private fun PreviewCityCard() {
-    val card = CityResultModel(
-        id = 1L,
-        name = "Vancouver",
-        country = "Canada",
-        countryCode = "CA",
-        coordinates = "Lat: 49.26, Lon: -123.11"
-    )
+private fun PreviewCityCard(
+    @PreviewParameter(CityStateProvider::class, 2) model: CityResultModel,
+) {
     WeatherSampleTheme {
         Surface {
             CityCard(
-                city = card,
+                city = model,
                 onClick = { },
-                modifier = Modifier.padding(all = 8.dp),
-                contentPadding = PaddingValues(all = 16.dp),
+                modifier = Modifier.padding(all = MarginSingle),
+                contentPadding = PaddingValues(all = MarginDouble),
             )
         }
     }

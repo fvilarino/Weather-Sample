@@ -201,17 +201,16 @@ private fun CitiesLoadError(
     }
 }
 
-@Preview(group = "city", showBackground = true, widthDp = 420, heightDp = 720)
+@Preview(group = "city", widthDp = 420, heightDp = 720)
 @Preview(
     group = "city",
-    showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     widthDp = 420,
     heightDp = 720
 )
 @Preview(group = "city", device = Devices.PIXEL_C)
 @Composable
-private fun CityScreenPreviewDarkMode() {
+private fun CityScreenPreview() {
     WeatherSampleTheme {
         var state by remember {
             mutableStateOf(
@@ -219,9 +218,9 @@ private fun CityScreenPreviewDarkMode() {
                     loadState = LoadState.Loaded,
                     query = "",
                     cities = listOf(
-                        vancouverCityModel,
-                        barcelonaCityModel,
-                        londonCityModel,
+                        Vancouver,
+                        Barcelona,
+                        London,
                     )
                 )
             )
@@ -242,27 +241,3 @@ private fun CityScreenPreviewDarkMode() {
         }
     }
 }
-
-private val vancouverCityModel = CityResultModel(
-    id = 1L,
-    name = "Vancouver",
-    country = "Canada",
-    countryCode = "CA",
-    coordinates = "Lat: 49.26, Lon: -123.11"
-)
-
-private val barcelonaCityModel = CityResultModel(
-    id = 2L,
-    name = "Barcelona",
-    country = "Spain",
-    countryCode = "ES",
-    coordinates = "Lat: 41.39, Lon: 2.17"
-)
-
-private val londonCityModel = CityResultModel(
-    id = 3L,
-    name = "London",
-    country = "England",
-    countryCode = "UK",
-    coordinates = "Lat: 123.45, Lon: 1.23"
-)
