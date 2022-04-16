@@ -11,6 +11,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,8 +32,10 @@ internal fun WeatherScreen(
     viewModel: WeatherViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsState()
+
     WeatherScreen(
-        state = viewModel.state.value,
+        state = state,
         weatherCallbacks = viewModel,
         modifier = modifier,
     )
@@ -39,7 +43,7 @@ internal fun WeatherScreen(
 
 @Composable
 private fun WeatherScreen(
-    state: TodayState,
+    state: WeatherState,
     weatherCallbacks: WeatherCallbacks,
     modifier: Modifier = Modifier,
 ) {
@@ -127,7 +131,7 @@ private class WeatherCallbacksPreview : WeatherCallbacks {
 private fun ForecastWeatherScreenPreview() {
     WeatherSampleTheme {
         Surface(modifier = Modifier.fillMaxWidth()) {
-            val state = TodayState(
+            val state = WeatherState(
                 loadState = WeatherLoadState.Loaded,
                 cityName = "Coquitlam, British Columbia",
                 cityCountryCode = "CA",

@@ -13,31 +13,31 @@ import kotlinx.coroutines.launch
 
 private const val BufferSize = 64
 
-interface StateReducerFlow<S : State, A : Action> : StateFlow<S> {
-    fun asStateFlow(): StateFlow<S>
-
-    fun handleAction(action: A)
-}
+interface StateReducerFlow<S : State, A : Action> : StateFlow<S>, ActionHandler<A>
 
 fun <S : State, A : Action> ViewModel.stateReducerFlow(
     initialState: S,
-    reducer: (S, A) -> S,
+    reducer: Reducer<S, A>,
+    middleware: List<Middleware<S, A>> = emptyList(),
 ): StateReducerFlow<S, A> = StateReducerFlowImpl(
     initialState,
     reducer,
+    middleware,
     viewModelScope,
 )
 
 private class StateReducerFlowImpl<S : State, A : Action>(
     initialState: S,
-    reducer: (S, A) -> S,
+    reducer: Reducer<S, A>,
+    middleware: List<Middleware<S, A>> = emptyList(),
     private val scope: CoroutineScope,
 ) : StateReducerFlow<S, A> {
 
     private val actions = MutableSharedFlow<A>(extraBufferCapacity = BufferSize)
+    private val reducers = middleware + reducer
 
-    private val stateFlow = actions
-        .runningFold(initialState, reducer)
+    private val stateFlow: StateFlow<S> = actions
+        .runningFold(initialState, ::reduce)
         .stateIn(
             scope = scope,
             started = Eagerly,
@@ -54,9 +54,12 @@ private class StateReducerFlowImpl<S : State, A : Action>(
         stateFlow.collect(collector)
     }
 
-    override fun asStateFlow(): StateFlow<S> = this
-
     override fun handleAction(action: A) {
         scope.launch { actions.emit(action) }
     }
+
+    private fun reduce(state: S, action: A): S = reducers.fold(
+        initial = state,
+        operation = { acc, reducer -> reducer.reduce(acc, action) }
+    )
 }

@@ -1,8 +1,6 @@
 package com.francescsoftware.weathersample.feature.weather
 
-import com.francescsoftware.weathersample.shared.mvi.Event
-import com.francescsoftware.weathersample.shared.mvi.MviIntent
-import com.francescsoftware.weathersample.shared.mvi.ReduceAction
+import com.francescsoftware.weathersample.shared.mvi.Action
 import com.francescsoftware.weathersample.shared.mvi.State
 
 internal enum class WeatherLoadState {
@@ -18,7 +16,7 @@ internal enum class SelectedWeatherScreen {
     Forecast,
 }
 
-internal data class TodayState(
+internal data class WeatherState(
     val loadState: WeatherLoadState,
     val option: SelectedWeatherScreen,
     val cityName: String,
@@ -29,7 +27,7 @@ internal data class TodayState(
 ) : State {
 
     companion object {
-        val initial = TodayState(
+        val initial = WeatherState(
             loadState = WeatherLoadState.Idle,
             option = SelectedWeatherScreen.Today,
             cityName = "",
@@ -41,28 +39,24 @@ internal data class TodayState(
     }
 }
 
-internal sealed interface TodayEvent : Event
+internal sealed interface WeatherAction : Action {
+    data class Load(
+        val city: String,
+        val countryCode: String,
+    ) : WeatherAction
 
-internal sealed interface TodayMviIntent : MviIntent {
-    object RefreshTodayWeather : TodayMviIntent
-    object Retry : TodayMviIntent
-    data class OnOptionSelected(val option: SelectedWeatherScreen) : TodayMviIntent
-}
-
-internal sealed interface TodayReduceAction : ReduceAction {
-    data class CityUpdated(val name: String, val countryCode: String) : TodayReduceAction
-    object Loading : TodayReduceAction
-    object Refreshing : TodayReduceAction
+    object RefreshTodayWeather : WeatherAction
+    object Retry : WeatherAction
+    data class CityUpdated(val name: String, val countryCode: String) : WeatherAction
     data class Loaded(
         val currentWeather: TodayWeatherCardState,
         val forecastItems: List<ForecastItem>
-    ) : TodayReduceAction
+    ) : WeatherAction
 
     data class TodayLoaded(
         val currentWeather: TodayWeatherCardState,
-    ) : TodayReduceAction
+    ) : WeatherAction
 
-    data class LoadError(val message: String) : TodayReduceAction
-
-    data class OnOptionSelected(val option: SelectedWeatherScreen) : TodayReduceAction
+    data class LoadError(val message: String) : WeatherAction
+    data class OnOptionSelected(val option: SelectedWeatherScreen) : WeatherAction
 }

@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.feature.weather
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.francescsoftware.weathersample.feature.navigation.api.NavigationDestination
 import com.francescsoftware.weathersample.feature.navigation.api.SelectedCity
@@ -12,14 +13,21 @@ import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup
-import com.francescsoftware.weathersample.shared.mvi.MviViewModel
+import com.francescsoftware.weathersample.shared.mvi.ActionHandler
+import com.francescsoftware.weathersample.shared.mvi.Middleware
+import com.francescsoftware.weathersample.shared.mvi.Reducer
+import com.francescsoftware.weathersample.shared.mvi.StateReducerFlow
+import com.francescsoftware.weathersample.shared.mvi.stateReducerFlow
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.type.getOrNull
 import com.francescsoftware.weathersample.utils.time.isToday
 import com.francescsoftware.weathersample.utils.time.isTomorrow
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -30,133 +38,107 @@ internal interface WeatherCallbacks {
     fun retry()
 }
 
-@HiltViewModel
-internal class WeatherViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+internal class WeatherMiddleware @Inject constructor(
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
     private val getForecastInteractor: GetForecastInteractor,
     private val timeFormatter: TimeFormatter,
     private val stringLookup: StringLookup,
-) : MviViewModel<TodayState, TodayEvent, TodayMviIntent, TodayReduceAction>(
-    TodayState.initial,
-), WeatherCallbacks {
+) : Middleware<WeatherState, WeatherAction> {
 
-    private val selectedCity: SelectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
+    private data class CityInfo(
+        val name: String,
+        val countryCode: String,
+    )
 
-    init {
-        viewModelScope.launch { load() }
+    private lateinit var actionHandler: ActionHandler<WeatherAction>
+    private lateinit var scope: CoroutineScope
+    private var cityInfo: CityInfo? = null
+
+    override fun setup(scope: CoroutineScope, actionHandler: ActionHandler<WeatherAction>) {
+        this.actionHandler = actionHandler
+        this.scope = scope
     }
 
-    override fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) {
-        onIntent(TodayMviIntent.OnOptionSelected(selectedWeatherScreen))
-    }
-
-    override fun refreshTodayWeather() {
-        onIntent(TodayMviIntent.RefreshTodayWeather)
-    }
-
-    override fun retry() {
-        onIntent(TodayMviIntent.Retry)
-    }
-
-    override suspend fun executeIntent(intent: TodayMviIntent) {
-        when (intent) {
-            TodayMviIntent.RefreshTodayWeather -> loadTodayWeather()
-            TodayMviIntent.Retry -> load()
-            is TodayMviIntent.OnOptionSelected -> handle(
-                TodayReduceAction.OnOptionSelected(intent.option)
-            )
-        }
-    }
-
-    override fun reduce(state: TodayState, reduceAction: TodayReduceAction): TodayState =
-        when (reduceAction) {
-            is TodayReduceAction.CityUpdated -> state.copy(
-                cityName = reduceAction.name,
-                cityCountryCode = reduceAction.countryCode,
-            )
-            TodayReduceAction.Loading -> state.copy(
+    override fun reduce(
+        state: WeatherState,
+        action: WeatherAction,
+    ): WeatherState = when (action) {
+        WeatherAction.Retry -> {
+            cityInfo?.let { info ->
+                scope.launch { load(info) }
+            } ?: throw IllegalStateException("Retry called out of sequence")
+            state.copy(
                 loadState = WeatherLoadState.Loading,
             )
-            TodayReduceAction.Refreshing -> state.copy(
-                loadState = WeatherLoadState.Refreshing,
-            )
-            is TodayReduceAction.Loaded -> state.copy(
-                loadState = WeatherLoadState.Loaded,
-                todayState = reduceAction.currentWeather,
-                forecastItems = reduceAction.forecastItems,
-            )
-            is TodayReduceAction.TodayLoaded -> state.copy(
-                loadState = WeatherLoadState.Loaded,
-                todayState = reduceAction.currentWeather,
-            )
-            is TodayReduceAction.LoadError -> state.copy(
-                loadState = WeatherLoadState.Error,
-                errorMessage = reduceAction.message,
-            )
-            is TodayReduceAction.OnOptionSelected -> state.copy(
-                option = reduceAction.option
+        }
+        is WeatherAction.Load -> {
+            cityInfo = CityInfo(
+                name = action.city,
+                countryCode = action.countryCode,
+            ).also { info ->
+                scope.launch { load(info) }
+            }
+            state.copy(
+                loadState = WeatherLoadState.Loading,
             )
         }
-
-    private fun loadTodayWeather() {
-        handle(TodayReduceAction.Refreshing)
-        onBackground {
-            val location = WeatherLocation.City(
-                name = selectedCity.name,
-                countryCode = selectedCity.countryCode,
+        WeatherAction.RefreshTodayWeather -> {
+            cityInfo?.let { info ->
+                scope.launch { loadTodayWeather(info) }
+            } ?: throw IllegalStateException("Retry called out of sequence")
+            state.copy(
+                loadState = WeatherLoadState.Loading,
             )
-            getTodayWeatherInteractor.execute(location).fold(
-                onSuccess = { todayWeather ->
-                    handle(
-                        TodayReduceAction.TodayLoaded(
-                            currentWeather = todayWeather.toWeatherCardState(),
-                        )
-                    )
-                },
-                onFailure = {
-                    handle(
-                        TodayReduceAction.LoadError(
-                            message = stringLookup.getString(R.string.failed_to_load_weather_data)
-                        )
-                    )
-                }
+        }
+        else -> state
+    }
+
+    private suspend fun load(cityInfo: CityInfo) = coroutineScope {
+        val location = WeatherLocation.City(
+            name = cityInfo.name,
+            countryCode = cityInfo.countryCode,
+        )
+        val currentAsync = async { getTodayWeatherInteractor.execute(location) }
+        val forecastAsync = async { getForecastInteractor.execute(location) }
+        val current = currentAsync.await().getOrNull()
+        val forecast = forecastAsync.await().getOrNull()
+        if (current != null && forecast != null) {
+            actionHandler.handleAction(
+                WeatherAction.Loaded(
+                    currentWeather = current.toWeatherCardState(),
+                    forecastItems = forecast.toForecastItems()
+                )
+            )
+        } else {
+            actionHandler.handleAction(
+                WeatherAction.LoadError(
+                    message = stringLookup.getString(R.string.failed_to_load_weather_data)
+                )
             )
         }
     }
 
-    private fun load() {
-        handle(
-            TodayReduceAction.CityUpdated(
-                name = selectedCity.name,
-                countryCode = selectedCity.countryCode
-            )
+    private suspend fun loadTodayWeather(cityInfo: CityInfo) {
+        val location = WeatherLocation.City(
+            name = cityInfo.name,
+            countryCode = cityInfo.countryCode,
         )
-        handle(TodayReduceAction.Loading)
-        onBackground {
-            val location = WeatherLocation.City(
-                name = selectedCity.name,
-                countryCode = selectedCity.countryCode,
-            )
-            val currentAsync = async { getTodayWeatherInteractor.execute(location) }
-            val forecastAsync = async { getForecastInteractor.execute(location) }
-            val current = currentAsync.await().getOrNull()
-            val forecast = forecastAsync.await().getOrNull()
-            if (current != null && forecast != null) {
-                handle(
-                    TodayReduceAction.Loaded(
-                        currentWeather = current.toWeatherCardState(),
-                        forecastItems = forecast.toForecastItems()
+        getTodayWeatherInteractor.execute(location).fold(
+            onSuccess = { todayWeather ->
+                actionHandler.handleAction(
+                    WeatherAction.TodayLoaded(
+                        currentWeather = todayWeather.toWeatherCardState(),
                     )
                 )
-            } else {
-                handle(
-                    TodayReduceAction.LoadError(
+            },
+            onFailure = {
+                actionHandler.handleAction(
+                    WeatherAction.LoadError(
                         message = stringLookup.getString(R.string.failed_to_load_weather_data)
                     )
                 )
             }
-        }
+        )
     }
 
     private fun Forecast.toForecastItems(): List<ForecastItem> = items.map { forecastDay ->
@@ -214,4 +196,82 @@ internal class WeatherViewModel @Inject constructor(
 
     private val TodayWeather.icon: Int
         get() = WeatherIcon.fromIconId(weather.icon).iconId
+}
+
+internal class WeatherReducer @Inject constructor() : Reducer<WeatherState, WeatherAction> {
+    override fun reduce(
+        state: WeatherState,
+        action: WeatherAction,
+    ): WeatherState = when (action) {
+        is WeatherAction.CityUpdated -> state.copy(
+            cityName = action.name,
+            cityCountryCode = action.countryCode,
+        )
+        is WeatherAction.Loaded -> state.copy(
+            loadState = WeatherLoadState.Loaded,
+            todayState = action.currentWeather,
+            forecastItems = action.forecastItems,
+        )
+        is WeatherAction.TodayLoaded -> state.copy(
+            loadState = WeatherLoadState.Loaded,
+            todayState = action.currentWeather,
+        )
+        is WeatherAction.LoadError -> state.copy(
+            loadState = WeatherLoadState.Error,
+            errorMessage = action.message,
+        )
+        is WeatherAction.OnOptionSelected -> state.copy(
+            option = action.option,
+        )
+        else -> state
+    }
+}
+
+@HiltViewModel
+internal class WeatherViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    reducer: WeatherReducer,
+    middleware: WeatherMiddleware,
+) : ViewModel(), WeatherCallbacks {
+
+    private val stateReducer: StateReducerFlow<WeatherState, WeatherAction> = stateReducerFlow(
+        initialState = WeatherState.initial,
+        reducer = reducer,
+        middleware = listOf(middleware),
+    )
+
+    val state: StateFlow<WeatherState> = stateReducer
+
+    private val selectedCity: SelectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
+
+    init {
+        middleware.setup(
+            scope = viewModelScope,
+            actionHandler = stateReducer,
+        )
+        stateReducer.handleAction(
+            WeatherAction.CityUpdated(
+                name = selectedCity.name,
+                countryCode = selectedCity.countryCode
+            )
+        )
+        stateReducer.handleAction(
+            WeatherAction.Load(
+                city = selectedCity.name,
+                countryCode = selectedCity.countryCode,
+            )
+        )
+    }
+
+    override fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) {
+        stateReducer.handleAction(WeatherAction.OnOptionSelected(selectedWeatherScreen))
+    }
+
+    override fun refreshTodayWeather() {
+        stateReducer.handleAction(WeatherAction.RefreshTodayWeather)
+    }
+
+    override fun retry() {
+        stateReducer.handleAction(WeatherAction.Retry)
+    }
 }

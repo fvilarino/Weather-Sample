@@ -21,6 +21,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,8 +50,9 @@ internal fun CityScreen(
     viewModel: CityViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val state by viewModel.state.collectAsState()
     CityScreen(
-        state = viewModel.state.value,
+        state = state,
         callbacks = viewModel,
         modifier = modifier,
     )

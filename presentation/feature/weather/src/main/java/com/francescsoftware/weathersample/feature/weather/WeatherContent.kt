@@ -27,7 +27,7 @@ private val WeatherCardWidth = 420.dp
 
 @Composable
 internal fun WeatherContent(
-    state: TodayState,
+    state: WeatherState,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -43,7 +43,7 @@ internal fun WeatherContent(
 
 @Composable
 private fun TodayWeather(
-    state: TodayState,
+    state: WeatherState,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -66,7 +66,7 @@ private fun TodayWeather(
 }
 
 @Composable
-private fun WeatherForecast(state: TodayState) {
+private fun WeatherForecast(state: WeatherState) {
     val width = LocalContext.current.resources.displayMetrics.widthPixels
     val minColumnWidth = with(LocalDensity.current) { WeatherCardWidth.toPx() }
     val numColumns = ((width / minColumnWidth).toInt()).coerceAtLeast(1)
