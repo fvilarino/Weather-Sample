@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.francescsoftware.weathersample.feature.navigation.api.NavigationDestination
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
 
 fun NavGraphBuilder.addWeatherDetailsDestination() {
     composable(

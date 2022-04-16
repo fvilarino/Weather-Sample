@@ -41,22 +41,39 @@ internal data class WeatherState(
 
 internal sealed interface WeatherAction : Action {
     data class Load(
-        val city: String,
+        val cityName: String,
         val countryCode: String,
     ) : WeatherAction
 
-    object RefreshTodayWeather : WeatherAction
-    object Retry : WeatherAction
-    data class CityUpdated(val name: String, val countryCode: String) : WeatherAction
+    data class RefreshTodayWeather(
+        val cityName: String,
+        val countryCode: String,
+    ) : WeatherAction
+
+    data class CityUpdated(
+        val cityName: String,
+        val countryCode: String,
+    ) : WeatherAction
+
     data class Loaded(
         val currentWeather: TodayWeatherCardState,
-        val forecastItems: List<ForecastItem>
+        val forecastItems: List<ForecastItem>,
     ) : WeatherAction
 
     data class TodayLoaded(
         val currentWeather: TodayWeatherCardState,
     ) : WeatherAction
 
-    data class LoadError(val message: String) : WeatherAction
-    data class OnOptionSelected(val option: SelectedWeatherScreen) : WeatherAction
+    data class LoadError(
+        val message: String,
+    ) : WeatherAction
+
+    data class OnOptionSelected(
+        val option: SelectedWeatherScreen,
+    ) : WeatherAction
+
+    data class Retry(
+        val cityName: String,
+        val countryCode: String,
+    ) : WeatherAction
 }

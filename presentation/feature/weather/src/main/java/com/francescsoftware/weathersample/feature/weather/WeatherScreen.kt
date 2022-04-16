@@ -20,6 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherCallbacks
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
 import com.francescsoftware.weathersample.shared.composable.LoadingSpinner
 import com.francescsoftware.weathersample.shared.composable.TwoOptionsSelector
 import com.francescsoftware.weathersample.shared.composable.TwoOptionsSelectorOptions
