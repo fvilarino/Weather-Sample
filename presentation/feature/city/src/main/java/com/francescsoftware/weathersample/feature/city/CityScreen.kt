@@ -2,10 +2,10 @@ package com.francescsoftware.weathersample.feature.city
 
 import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityViewModel
+import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.MarginTreble
@@ -144,29 +145,22 @@ private fun CitiesList(
     callbacks: CityCallbacks,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(
+            minSize = MinColumnWidth,
+        ),
         modifier = modifier,
-        contentAlignment = Alignment.TopCenter,
+        horizontalArrangement = Arrangement.spacedBy(MarginDouble),
+        verticalArrangement = Arrangement.spacedBy(MarginDouble),
+        contentPadding = PaddingValues(all = MarginDouble),
     ) {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(
-                minSize = MinColumnWidth,
-            ),
-            modifier = Modifier
-                .width(MinColumnWidth)
-                .fillMaxHeight(),
-            contentPadding = PaddingValues(bottom = MarginSingle),
-        ) {
-            items(state.cities) { city ->
-                CityCard(
-                    city = city,
-                    onClick = { model -> callbacks.onCityClick(model) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(all = MarginSingle),
-                    contentPadding = PaddingValues(all = MarginSingle),
-                )
-            }
+        items(state.cities) { city ->
+            CityCard(
+                city = city,
+                onClick = { model -> callbacks.onCityClick(model) },
+                modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(all = MarginSingle),
+            )
         }
     }
 }
