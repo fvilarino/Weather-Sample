@@ -44,6 +44,7 @@ internal class CityMiddleware @Inject constructor(
     ): CityState = when (action) {
         CityAction.Start -> onStart(state)
         is CityAction.PrefixUpdated -> onPrefixUpdated(state, action.prefix)
+        CityAction.ClearQuery -> onPrefixUpdated(state, "")
         else -> state
     }
 

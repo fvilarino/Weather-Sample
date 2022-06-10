@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityViewModel
+import com.francescsoftware.weathersample.feature.navigation.api.SelectedCity
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.MarginSingle
@@ -42,20 +43,18 @@ import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 private val MinColumnWidth = 360.dp
 
-internal interface CityCallbacks {
-    fun onQueryChange(query: String)
-    fun onCityClick(city: CityResultModel)
-}
-
 @Composable
 internal fun CityScreen(
     viewModel: CityViewModel,
+    onCityClick: (SelectedCity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsState()
     CityScreen(
         state = state,
-        callbacks = viewModel,
+        onCityClick = onCityClick,
+        onQueryChange = viewModel::onQueryChange,
+        onClearQuery = viewModel::onClearQuery,
         modifier = modifier,
     )
 }
@@ -63,14 +62,20 @@ internal fun CityScreen(
 @Composable
 private fun CityScreen(
     state: CityState,
-    callbacks: CityCallbacks,
+    onCityClick: (SelectedCity) -> Unit,
+    onQueryChange: (String) -> Unit,
+    onClearQuery: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        CitiesSearchBox(state, callbacks)
+        CitiesSearchBox(
+            state = state,
+            onQueryChange = onQueryChange,
+            onClearQuery = onClearQuery,
+        )
         Crossfade(
             targetState = state.loadState,
             modifier = modifier.padding(top = MarginTreble),
@@ -83,7 +88,7 @@ private fun CityScreen(
                 )
                 LoadState.Loaded -> CitiesList(
                     state = state,
-                    callbacks = callbacks,
+                    onCityClick = onCityClick,
                     modifier = Modifier.fillMaxSize(),
                 )
                 LoadState.NoResults -> CitiesNoResults(
@@ -100,11 +105,12 @@ private fun CityScreen(
 @Composable
 private fun CitiesSearchBox(
     state: CityState,
-    callbacks: CityCallbacks,
+    onQueryChange: (String) -> Unit,
+    onClearQuery: () -> Unit,
 ) {
     OutlinedTextField(
         value = state.query,
-        onValueChange = { value -> callbacks.onQueryChange(value) },
+        onValueChange = onQueryChange,
         modifier = Modifier
             .width(MinColumnWidth)
             .padding(top = MarginQuad),
@@ -117,7 +123,7 @@ private fun CitiesSearchBox(
             )
         },
         trailingIcon = {
-            IconButton(onClick = { callbacks.onQueryChange("") }) {
+            IconButton(onClick = onClearQuery) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_clear_24),
                     contentDescription = stringResource(id = R.string.content_description_clear),
@@ -142,7 +148,7 @@ private fun CitiesLoading(
 @Composable
 private fun CitiesList(
     state: CityState,
-    callbacks: CityCallbacks,
+    onCityClick: (SelectedCity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -157,7 +163,7 @@ private fun CitiesList(
         items(state.cities) { city ->
             CityCard(
                 city = city,
-                onClick = { model -> callbacks.onCityClick(model) },
+                onClick = { model -> onCityClick(model.toSelectedCity()) },
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(all = MarginSingle),
             )
@@ -195,6 +201,12 @@ private fun CitiesLoadError(
     }
 }
 
+private fun CityResultModel.toSelectedCity() = SelectedCity(
+    name = name.toString(),
+    country = country.toString(),
+    countryCode = countryCode,
+)
+
 @Preview(group = "city", widthDp = 420, heightDp = 720)
 @Preview(
     group = "city",
@@ -215,7 +227,8 @@ private fun CityScreenPreview() {
                         Vancouver,
                         Barcelona,
                         London,
-                    )
+                    ),
+                    events = emptyList(),
                 )
             )
         }
@@ -224,13 +237,15 @@ private fun CityScreenPreview() {
         ) {
             CityScreen(
                 state = state,
-                callbacks = object : CityCallbacks {
-                    override fun onQueryChange(query: String) {
-                        state = state.copy(query = query)
-                    }
-
-                    override fun onCityClick(city: CityResultModel) = Unit
+                onQueryChange = { query ->
+                    state = state.copy(query = query)
                 },
+                onClearQuery = {
+                    state = state.copy(
+                        query = ""
+                    )
+                },
+                onCityClick = {},
             )
         }
     }

@@ -3,9 +3,11 @@ package com.francescsoftware.weathersample.feature.landing
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -50,12 +52,17 @@ class MainActivity : AppCompatActivity() {
                             onIconClick = { navigator.onBackClick() },
                         )
                     },
-                ) {
+                ) { paddingValues ->
                     NavHost(
                         navController,
                         startDestination = NavigationDestination.CitySearch.cityRoute,
+                        modifier = Modifier.padding(paddingValues),
                     ) {
-                        addSearchDestination()
+                        addSearchDestination(
+                            onCityClick = { selectedCity ->
+                                navController.navigate(NavigationDestination.Weather.getRoute(selectedCity))
+                            }
+                        )
                         addWeatherDetailsDestination()
                     }
                 }
