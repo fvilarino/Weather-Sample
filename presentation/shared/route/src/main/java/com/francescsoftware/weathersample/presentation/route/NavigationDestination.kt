@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.feature.navigation.api
+package com.francescsoftware.weathersample.presentation.route
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -50,3 +50,4 @@ sealed interface NavigationDestination {
         override fun isRoute(route: String?): Boolean = route?.startsWith(routeRoot) == true
     }
 }
+

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Weather Sample</string>
+    <string name="city_label">City</string>
+    <string name="weather_label">Weather</string>
+    <string name="content_description_back">Back</string>
 </resources>

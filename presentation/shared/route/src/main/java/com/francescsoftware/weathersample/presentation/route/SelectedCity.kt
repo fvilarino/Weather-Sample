@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.feature.navigation.api
+package com.francescsoftware.weathersample.presentation.route
 
 data class SelectedCity(
     val name: String,

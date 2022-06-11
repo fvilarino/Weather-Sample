@@ -5,8 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.francescsoftware.weathersample.feature.navigation.api.NavigationDestination
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
+import com.francescsoftware.weathersample.presentation.route.NavigationDestination
 
 fun NavGraphBuilder.addWeatherDetailsDestination() {
     composable(

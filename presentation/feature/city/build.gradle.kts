@@ -12,10 +12,10 @@ dependencies {
 
     implementation(project(":business:interactor:city:api"))
     implementation(project(":core:type"))
-    implementation(project(":presentation:feature:navigation:api"))
     implementation(project(":presentation:shared:composable"))
     implementation(project(":presentation:shared:lookup:api"))
     implementation(project(":presentation:shared:mvi"))
+    implementation(project(":presentation:shared:route"))
     implementation(project(":presentation:shared:styles"))
 
     // compose

@@ -5,9 +5,9 @@ plugins {
 dependencies {
 
     implementation(project(":presentation:feature:city"))
-    implementation(project(":presentation:feature:navigation:api"))
     implementation(project(":presentation:feature:weather"))
     implementation(project(":presentation:shared:composable"))
+    implementation(project(":presentation:shared:route"))
     implementation(project(":presentation:shared:styles"))
 
     // compose

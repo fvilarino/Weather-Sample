@@ -8,6 +8,7 @@ androidx-datastore-version = "1.0.0"
 androidx-hilt-hilt-navigation-compose-version = "1.0.0"
 androidx-lifecycle-lifecycle-common-java8-version = "2.5.0-rc01"
 androidx-lifecycle-lifecycle-viewmodel-ktx-version = "2.5.0-rc01"
+androidx-lifecycle-lifecycle-viewmodel-savedstate-version = "2.5.0-rc01"
 androidx-navigation-version = "2.5.0-rc01"
 androidx-test-espresso-espresso-core-version = "3.5.0-alpha07"
 androidx-test-ext-junit-version = "1.1.4-alpha07"
@@ -46,6 +47,7 @@ androidx-datastore-datastore = { module = "androidx.datastore:datastore", versio
 androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt-hilt-navigation-compose-version" }
 androidx-lifecycle-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "androidx-lifecycle-lifecycle-common-java8-version" }
 androidx-lifecycle-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-lifecycle-viewmodel-ktx-version" }
+androidx-lifecycle-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle-lifecycle-viewmodel-savedstate-version"}
 androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation-version" }
 androidx-navigation-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation-version" }
 androidx-navigation-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation-version" }

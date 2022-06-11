@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherCallbacks
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
 import com.francescsoftware.weathersample.shared.composable.LoadingSpinner
 import com.francescsoftware.weathersample.shared.composable.TwoOptionsSelector
@@ -38,7 +37,9 @@ internal fun WeatherScreen(
 
     WeatherScreen(
         state = state,
-        weatherCallbacks = viewModel,
+        onOptionSelect = viewModel::onOptionSelect,
+        onRefreshTodayWeather = viewModel::refreshTodayWeather,
+        onRetry = viewModel::retry,
         modifier = modifier,
     )
 }
@@ -46,7 +47,9 @@ internal fun WeatherScreen(
 @Composable
 private fun WeatherScreen(
     state: WeatherState,
-    weatherCallbacks: WeatherCallbacks,
+    onOptionSelect: (SelectedWeatherScreen) -> Unit,
+    onRefreshTodayWeather: () -> Unit,
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -78,7 +81,7 @@ private fun WeatherScreen(
             selectedColor = MaterialTheme.colors.secondary,
             deselectedColor = MaterialTheme.colors.surface,
             onOptionSelect = { option ->
-                weatherCallbacks.onOptionSelect(
+                onOptionSelect(
                     when (option) {
                         TwoOptionsSelectorOptions.Left -> SelectedWeatherScreen.Today
                         TwoOptionsSelectorOptions.Right -> SelectedWeatherScreen.Forecast
@@ -104,26 +107,18 @@ private fun WeatherScreen(
                 WeatherLoadState.Loaded,
                 WeatherLoadState.Refreshing -> WeatherContent(
                     state = state,
-                    todayRefreshCallback = weatherCallbacks::refreshTodayWeather,
+                    todayRefreshCallback = onRefreshTodayWeather,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = MarginDouble),
                 )
                 WeatherLoadState.Error -> WeatherError(
                     modifier = Modifier.fillMaxSize(),
-                    weatherCallbacks::retry
+                    retry = onRetry,
                 )
             }
         }
     }
-}
-
-private class WeatherCallbacksPreview : WeatherCallbacks {
-    override fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) = Unit
-
-    override fun refreshTodayWeather() = Unit
-
-    override fun retry() = Unit
 }
 
 @Preview(showBackground = true)
@@ -159,7 +154,10 @@ private fun ForecastWeatherScreenPreview() {
             )
             WeatherScreen(
                 state = state,
-                weatherCallbacks = WeatherCallbacksPreview(),
+                onOptionSelect = {},
+                onRefreshTodayWeather = {},
+                onRetry = {},
+                modifier = Modifier.fillMaxSize(),
             )
         }
     }

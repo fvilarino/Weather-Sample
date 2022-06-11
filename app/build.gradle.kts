@@ -61,14 +61,13 @@ dependencies {
 
     implementation(project(":presentation:feature:city"))
     implementation(project(":presentation:feature:landing"))
-    implementation(project(":presentation:feature:navigation:api"))
-    implementation(project(":presentation:feature:navigation:impl"))
     implementation(project(":presentation:feature:weather"))
     implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:composable"))
     implementation(project(":presentation:shared:lookup:api"))
     implementation(project(":presentation:shared:lookup:impl"))
     implementation(project(":presentation:shared:mvi"))
+    implementation(project(":presentation:shared:route"))
     implementation(project(":presentation:shared:styles"))
 
     implementation(project(":utils"))

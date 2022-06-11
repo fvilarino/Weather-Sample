@@ -5,7 +5,6 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -13,19 +12,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.francescsoftware.weathersample.feature.city.addSearchDestination
-import com.francescsoftware.weathersample.feature.navigation.api.NavigationDestination
-import com.francescsoftware.weathersample.feature.navigation.api.Navigator
 import com.francescsoftware.weathersample.feature.weather.addWeatherDetailsDestination
+import com.francescsoftware.weathersample.presentation.route.NavigationDestination
 import com.francescsoftware.weathersample.shared.composable.AppBar
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                             } else {
                                 null
                             },
-                            onIconClick = { navigator.onBackClick() },
+                            onIconClick = navController::popBackStack,
                         )
                     },
                 ) { paddingValues ->
@@ -66,10 +60,8 @@ class MainActivity : AppCompatActivity() {
                         addWeatherDetailsDestination()
                     }
                 }
-                LaunchedEffect(key1 = navController) {
-                    navigator.setNavController(navController)
-                }
             }
         }
     }
 }
+

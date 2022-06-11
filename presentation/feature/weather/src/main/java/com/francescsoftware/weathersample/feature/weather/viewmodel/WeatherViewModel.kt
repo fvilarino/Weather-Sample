@@ -1,11 +1,11 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
-import com.francescsoftware.weathersample.feature.navigation.api.NavigationDestination
-import com.francescsoftware.weathersample.feature.navigation.api.SelectedCity
 import com.francescsoftware.weathersample.feature.weather.SelectedWeatherScreen
 import com.francescsoftware.weathersample.feature.weather.WeatherAction
 import com.francescsoftware.weathersample.feature.weather.WeatherState
+import com.francescsoftware.weathersample.presentation.route.NavigationDestination
+import com.francescsoftware.weathersample.presentation.route.SelectedCity
 import com.francescsoftware.weathersample.shared.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,7 +20,7 @@ internal class WeatherViewModel @Inject constructor(
     reducer = reducer,
     middlewares = listOf(weatherMiddleware, todayMiddleware),
     initialState = WeatherState.initial,
-), WeatherCallbacks {
+) {
 
     private val selectedCity: SelectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
 
@@ -39,11 +39,11 @@ internal class WeatherViewModel @Inject constructor(
         )
     }
 
-    override fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) {
+    fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) {
         handleAction(WeatherAction.OnOptionSelected(selectedWeatherScreen))
     }
 
-    override fun refreshTodayWeather() {
+    fun refreshTodayWeather() {
         handleAction(
             WeatherAction.RefreshTodayWeather(
                 cityName = selectedCity.name,
@@ -52,7 +52,7 @@ internal class WeatherViewModel @Inject constructor(
         )
     }
 
-    override fun retry() {
+    fun retry() {
         handleAction(
             WeatherAction.Retry(
                 cityName = selectedCity.name,
