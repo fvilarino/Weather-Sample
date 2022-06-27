@@ -1,20 +1,20 @@
 [versions]
-androidx-activity-activity-compose-version = "1.5.0-rc01"
-androidx-annotation-version = "1.4.0-rc01"
+androidx-activity-activity-compose-version = "1.6.0-alpha05"
+androidx-annotation-version = "1.4.0"
 androidx-arch-core-core-testing-version = "2.1.0"
-androidx-compose-version = "1.2.0-beta03"
-androidx-core-core-ktx-version = "1.8.0"
+androidx-compose-version = "1.2.0-rc02"
+androidx-core-core-ktx-version = "1.9.0-alpha05"
 androidx-datastore-version = "1.0.0"
 androidx-hilt-hilt-navigation-compose-version = "1.0.0"
-androidx-lifecycle-lifecycle-common-java8-version = "2.5.0-rc01"
-androidx-lifecycle-lifecycle-viewmodel-ktx-version = "2.5.0-rc01"
-androidx-lifecycle-lifecycle-viewmodel-savedstate-version = "2.5.0-rc01"
-androidx-navigation-version = "2.5.0-rc01"
+androidx-lifecycle-lifecycle-common-java8-version = "2.5.0-rc02"
+androidx-lifecycle-lifecycle-viewmodel-ktx-version = "2.5.0-rc02"
+androidx-lifecycle-lifecycle-viewmodel-savedstate-version = "2.5.0-rc02"
+androidx-navigation-version = "2.5.0-rc02"
 androidx-test-espresso-espresso-core-version = "3.5.0-alpha07"
 androidx-test-ext-junit-version = "1.1.4-alpha07"
-app-compat-version = "1.4.2"
-catalog-plugin-version = "0.4.0"
-com-android-tools-build-gradle-version = "7.4.0-alpha03"
+app-compat-version = "1.6.0-alpha05"
+catalog-plugin-version = "0.5.1"
+com-android-tools-build-gradle-version = "7.4.0-alpha05"
 com-google-android-material-version = "1.7.0-alpha02"
 com-google-dagger-version = "2.42"
 com-google-protobuf-java-lite-version = "4.0.0-rc-2"
@@ -22,15 +22,15 @@ com-google-protobuf-version = "21.0-rc-1"
 com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter-version = "0.9.2"
 com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter-version = "0.8.0"
 com-jakewharton-timber-version = "5.0.1"
-com-squareup-okhttp3-version = "5.0.0-alpha.8"
+com-squareup-okhttp3-version = "5.0.0-alpha.9"
 com-squareup-okio-version = "3.1.0"
 com-squareup-retrofit2-retrofit-version = "2.9.0"
 io-mockk-version = "1.12.4"
 junit-version = "4.13.2"
 org-jetbrains-kotlin-kotlin-gradle-plugin-version = "1.6.21"
-org-jetbrains-kotlinx-kotlinx-coroutines-test-version = "1.6.2"
+org-jetbrains-kotlinx-kotlinx-coroutines-test-version = "1.6.3"
 org-jetbrains-kotlinx-kotlinx-serialization-json-version = "1.3.3"
-org-jetbrains-kotlinx-version = "1.6.2"
+org-jetbrains-kotlinx-version = "1.6.3"
 versions-plugin-version = "0.42.0"
 
 [libraries]
@@ -47,7 +47,7 @@ androidx-datastore-datastore = { module = "androidx.datastore:datastore", versio
 androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt-hilt-navigation-compose-version" }
 androidx-lifecycle-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "androidx-lifecycle-lifecycle-common-java8-version" }
 androidx-lifecycle-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-lifecycle-viewmodel-ktx-version" }
-androidx-lifecycle-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle-lifecycle-viewmodel-savedstate-version"}
+androidx-lifecycle-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle-lifecycle-viewmodel-savedstate-version" }
 androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation-version" }
 androidx-navigation-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation-version" }
 androidx-navigation-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation-version" }
@@ -71,7 +71,7 @@ com-squareup-retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", 
 io-mockk = { module = "io.mockk:mockk", version.ref = "io-mockk-version" }
 junit = { module = "junit:junit", version.ref = "junit-version" }
 org-jetbrains-kotlin-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin-kotlin-gradle-plugin-version" }
-org-jetbrains-kotlin-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "org-jetbrains-kotlin-kotlin-gradle-plugin-version" }
+org-jetbrains-kotlin-kotlin-serialization = "org.jetbrains.kotlin:kotlin-serialization:1.6.21"
 org-jetbrains-kotlinx-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx-version" }
 org-jetbrains-kotlinx-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "org-jetbrains-kotlinx-version" }
 org-jetbrains-kotlinx-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines-test-version" }
