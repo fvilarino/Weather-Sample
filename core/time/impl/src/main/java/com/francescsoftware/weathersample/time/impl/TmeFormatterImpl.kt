@@ -41,4 +41,3 @@ internal class TimeFormatterImpl @Inject constructor() : TimeFormatter {
         return formatter.format(date)
     }
 }
-

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 data class SelectedCity(
     val name: String,
     val country: String,
-    val countryCode :String,
+    val countryCode: String,
 )
 
 interface SelectedCityStore {

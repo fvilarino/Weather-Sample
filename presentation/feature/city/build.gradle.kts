@@ -2,7 +2,7 @@ plugins {
     id("base-hilt-compose-library")
 }
 
-android{
+android {
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.flowFreeCompilerArgs
     }

@@ -1,9 +1,9 @@
 package com.francescsoftware.weathersample.cityrepository.impl
 
+import com.francescsoftware.weathersample.cityrepository.api.CityRepository
+import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
 import com.francescsoftware.weathersample.network.safeApiCall
 import com.francescsoftware.weathersample.type.Result
-import com.francescsoftware.weathersample.cityrepository.api.CityRepository
- import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
 import javax.inject.Inject
 
 internal class CityRepositoryImpl @Inject constructor(

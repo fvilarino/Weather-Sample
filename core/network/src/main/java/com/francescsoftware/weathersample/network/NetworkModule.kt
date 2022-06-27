@@ -32,7 +32,6 @@ object NetworkModule {
             Timber.tag(OK_HTTP_TAG).d(message)
         }.apply { level = HttpLoggingInterceptor.Level.HEADERS }
 
-
     @Provides
     @Singleton
     fun provideHttpCache(@ApplicationContext context: Context): Cache =

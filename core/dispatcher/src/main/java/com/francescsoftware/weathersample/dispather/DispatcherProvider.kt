@@ -11,4 +11,3 @@ interface DispatcherProvider {
 
     fun setDispatcher(dispatcher: CoroutineDispatcher?)
 }
-

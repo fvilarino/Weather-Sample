@@ -3,7 +3,7 @@ plugins {
     id("kotlinx-serialization")
 }
 
-android{
+android {
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.serializationFreeCompileArgs
     }

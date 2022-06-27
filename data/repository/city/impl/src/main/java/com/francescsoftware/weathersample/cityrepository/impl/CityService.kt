@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.cityrepository.impl
 
- import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
+import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

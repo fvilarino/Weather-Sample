@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.utils.time
 
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 val Date.isToday: Boolean
     get() {
@@ -21,4 +22,4 @@ val Date.isTomorrow: Boolean
     }
 
 fun Millis.toDate(): Date = Date(value)
-fun Seconds.toDate():Date = Date(milliseconds())
+fun Seconds.toDate(): Date = Date(milliseconds())

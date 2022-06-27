@@ -1,7 +1,7 @@
 package com.francescsoftware.weathersample.interactor.weather.api
 
 import com.francescsoftware.weathersample.type.Result
-import java.util.*
+import java.util.Date
 
 data class Forecast(
     val items: List<ForecastDay>,

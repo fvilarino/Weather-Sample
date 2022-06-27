@@ -1,12 +1,12 @@
 package com.francescsoftware.weathersample.interactor.city.impl
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.francescsoftware.weathersample.cityrepository.api.CityRepository
+import com.francescsoftware.weathersample.cityrepository.api.model.CityItem
+import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
 import com.francescsoftware.weathersample.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.Coordinates
-import com.francescsoftware.weathersample.cityrepository.api.CityRepository
- import com.francescsoftware.weathersample.cityrepository.api.model.CityItem
- import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
 import com.francescsoftware.weathersample.testing.runBlockingTest
 import com.francescsoftware.weathersample.type.Result

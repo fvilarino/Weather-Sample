@@ -2,7 +2,7 @@ package com.francescsoftware.weathersample.feature.weather
 
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.lookup.api.StringLookup
-import java.util.*
+import java.util.Locale
 
 internal fun Double.formatTemperature(
     stringLookup: StringLookup,

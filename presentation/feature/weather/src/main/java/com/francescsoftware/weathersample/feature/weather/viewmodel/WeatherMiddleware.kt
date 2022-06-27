@@ -26,7 +26,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 internal class WeatherMiddleware @Inject constructor(

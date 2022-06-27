@@ -27,4 +27,3 @@ internal fun TodayWeather.toWeatherCardState(stringLookup: StringLookup) =
 
 private val TodayWeather.icon: Int
     get() = WeatherIcon.fromIconId(weather.icon).iconId
-

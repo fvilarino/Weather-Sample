@@ -34,7 +34,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
 
 private const val cityName = "Vancouver"

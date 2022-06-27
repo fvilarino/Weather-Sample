@@ -16,7 +16,7 @@ import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepositor
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.City
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastItem
 import kotlinx.coroutines.withContext
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 internal class GetForecastInteractorImpl @Inject constructor(

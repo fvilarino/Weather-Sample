@@ -50,4 +50,3 @@ sealed interface NavigationDestination {
         override fun isRoute(route: String?): Boolean = route?.startsWith(routeRoot) == true
     }
 }
-

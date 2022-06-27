@@ -153,7 +153,6 @@ class LoadingIndicatorStateImpl : LoadingIndicatorState {
                     initialValue = animationType.initialValue,
                     targetValue = animationType.targetValue,
                     animationSpec = infiniteRepeatable(
-                        //animation = tween(durationMillis = animationType.animationDuration),
                         animation = animationType.animationSpec,
                         repeatMode = RepeatMode.Reverse,
                         initialStartOffset = StartOffset(animationType.animationDelay * index)

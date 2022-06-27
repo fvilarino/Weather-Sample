@@ -21,4 +21,3 @@ data class ForecastResponse(
     @SerialName("list")
     val forecast: List<ForecastItem>? = null
 )
-

@@ -51,9 +51,11 @@ internal fun WeatherError(
 @Composable
 private fun WeatherErrorPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = MarginDouble)) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = MarginDouble)
+        ) {
             WeatherError(modifier = Modifier.fillMaxWidth())
         }
     }

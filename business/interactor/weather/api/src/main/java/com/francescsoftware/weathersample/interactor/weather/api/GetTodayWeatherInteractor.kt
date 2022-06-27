@@ -38,4 +38,3 @@ data class TodayClouds(
 interface GetTodayWeatherInteractor {
     suspend fun execute(location: WeatherLocation): Result<TodayWeather>
 }
-
