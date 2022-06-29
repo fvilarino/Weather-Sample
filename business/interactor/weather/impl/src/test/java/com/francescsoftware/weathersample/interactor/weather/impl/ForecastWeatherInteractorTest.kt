@@ -7,7 +7,6 @@ import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
-import com.francescsoftware.weathersample.testing.runBlockingTest
 import com.francescsoftware.weathersample.testing.testDispatcherProvider
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.Result
@@ -28,6 +27,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -197,91 +197,83 @@ class ForecastWeatherInteractorTest {
     }
 
     @Test
-    fun `interactor calls repository with incoming city arguments`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetForecastInteractorImpl(
-                weatherRepository,
-                testDispatcherProvider,
-                timeFormatter
+    fun `interactor calls repository with incoming city arguments`() = runTest {
+        // pre
+        val interactor = GetForecastInteractorImpl(
+            weatherRepository,
+            testDispatcherProvider,
+            timeFormatter
+        )
+
+        // when we execute the interactor query
+        interactor.execute(incomingCity)
+
+        // we call the repository once with the same argument
+        coVerify(exactly = 1) {
+            weatherRepository.getForecast(
+                withArg { arg ->
+                    assertEquals(arg, queryCity)
+                }
             )
-
-            // when we execute the interactor query
-            interactor.execute(incomingCity)
-
-            // we call the repository once with the same argument
-            coVerify(exactly = 1) {
-                weatherRepository.getForecast(
-                    withArg { arg ->
-                        assertEquals(arg, queryCity)
-                    }
-                )
-            }
         }
     }
 
     @Test
-    fun `interactor calls repository with incoming coordinate arguments`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetForecastInteractorImpl(
-                weatherRepository,
-                testDispatcherProvider,
-                timeFormatter
+    fun `interactor calls repository with incoming coordinate arguments`() = runTest {
+        // pre
+        val interactor = GetForecastInteractorImpl(
+            weatherRepository,
+            testDispatcherProvider,
+            timeFormatter
+        )
+
+        // when we execute the interactor query
+        interactor.execute(incomingCoordinates)
+
+        // we call the repository once with the same argument
+        coVerify(exactly = 1) {
+            weatherRepository.getForecast(
+                withArg { arg ->
+                    assertEquals(arg, queryCoordinates)
+                }
             )
-
-            // when we execute the interactor query
-            interactor.execute(incomingCoordinates)
-
-            // we call the repository once with the same argument
-            coVerify(exactly = 1) {
-                weatherRepository.getForecast(
-                    withArg { arg ->
-                        assertEquals(arg, queryCoordinates)
-                    }
-                )
-            }
         }
     }
 
     @Test
-    fun `interactor maps network data to interactor today weather`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetForecastInteractorImpl(
-                weatherRepository,
-                testDispatcherProvider,
-                timeFormatter
-            )
+    fun `interactor maps network data to interactor today weather`() = runTest {
+        // pre
+        val interactor = GetForecastInteractorImpl(
+            weatherRepository,
+            testDispatcherProvider,
+            timeFormatter
+        )
 
-            // when we execute the interactor query
-            val response = interactor.execute(incomingCity)
+        // when we execute the interactor query
+        val response = interactor.execute(incomingCity)
 
-            // the response has been converted to the interactor type
-            Assert.assertTrue(response.isSuccess)
-            assertEquals(response.getOrNull(), forecastSuccessfulResponse)
-        }
+        // the response has been converted to the interactor type
+        Assert.assertTrue(response.isSuccess)
+        assertEquals(response.getOrNull(), forecastSuccessfulResponse)
     }
 
     @Test
-    fun `interactor maps network error to interactor error`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetForecastInteractorImpl(
-                weatherRepository,
-                testDispatcherProvider,
-                timeFormatter
-            )
-            coEvery {
-                weatherRepository.getForecast(any())
-            } returns Result.Failure(IOException("Failed to load weather"))
+    fun `interactor maps network error to interactor error`() = runTest {
+        // pre
+        val interactor = GetForecastInteractorImpl(
+            weatherRepository,
+            testDispatcherProvider,
+            timeFormatter
+        )
+        coEvery {
+            weatherRepository.getForecast(any())
+        } returns Result.Failure(IOException("Failed to load weather"))
 
-            // when we execute the interactor query
-            val response = interactor.execute(incomingCity)
+        // when we execute the interactor query
+        val response = interactor.execute(incomingCity)
 
-            // the response has been converted to the interactor type
-            Assert.assertTrue(response.isFailure)
-            Assert.assertTrue(response.throwableOrNull() is WeatherException)
-        }
+        // the response has been converted to the interactor type
+        Assert.assertTrue(response.isFailure)
+        Assert.assertTrue(response.throwableOrNull() is WeatherException)
     }
 }

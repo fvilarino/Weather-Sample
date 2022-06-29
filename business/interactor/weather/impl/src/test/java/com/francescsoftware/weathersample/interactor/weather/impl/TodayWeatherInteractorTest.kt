@@ -9,7 +9,6 @@ import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
-import com.francescsoftware.weathersample.testing.runBlockingTest
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.getOrNull
 import com.francescsoftware.weathersample.type.isFailure
@@ -26,6 +25,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -145,90 +145,80 @@ class TodayWeatherInteractorTest {
     }
 
     @Test
-    fun `interactor calls repository with incoming city arguments`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
+    fun `interactor calls repository with incoming city arguments`() = runTest {
+        // pre
+        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
 
-            // when we execute the interactor query
-            interactor.execute(incomingCity)
+        // when we execute the interactor query
+        interactor.execute(incomingCity)
 
-            // we call the repository once with the same argument
-            coVerify(exactly = 1) {
-                weatherRepository.getTodayWeather(
-                    withArg { arg ->
-                        assertEquals(arg, queryCity)
-                    }
-                )
-            }
+        // we call the repository once with the same argument
+        coVerify(exactly = 1) {
+            weatherRepository.getTodayWeather(
+                withArg { arg ->
+                    assertEquals(arg, queryCity)
+                }
+            )
         }
     }
 
     @Test
-    fun `interactor calls repository with incoming coordinate arguments`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
+    fun `interactor calls repository with incoming coordinate arguments`() = runTest {
+        // pre
+        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
 
-            // when we execute the interactor query
-            interactor.execute(incomingCoordinates)
+        // when we execute the interactor query
+        interactor.execute(incomingCoordinates)
 
-            // we call the repository once with the same argument
-            coVerify(exactly = 1) {
-                weatherRepository.getTodayWeather(
-                    withArg { arg ->
-                        assertEquals(arg, queryCoordinates)
-                    }
-                )
-            }
+        // we call the repository once with the same argument
+        coVerify(exactly = 1) {
+            weatherRepository.getTodayWeather(
+                withArg { arg ->
+                    assertEquals(arg, queryCoordinates)
+                }
+            )
         }
     }
 
     @Test
-    fun `interactor maps network data to interactor today weather`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
+    fun `interactor maps network data to interactor today weather`() = runTest {
+        // pre
+        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
 
-            // when we execute the interactor query
-            val response = interactor.execute(incomingCity)
+        // when we execute the interactor query
+        val response = interactor.execute(incomingCity)
 
-            // the response has been converted to the interactor type
-            Assert.assertTrue(response.isSuccess)
-            assertEquals(response.getOrNull(), successfulTodayWeather)
-        }
+        // the response has been converted to the interactor type
+        Assert.assertTrue(response.isSuccess)
+        assertEquals(response.getOrNull(), successfulTodayWeather)
     }
 
     @Test
-    fun `interactor maps network data to interactor forecast weather`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
+    fun `interactor maps network data to interactor forecast weather`() = runTest {
+        // pre
+        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
 
-            // when we execute the interactor query
-            val response = interactor.execute(incomingCity)
+        // when we execute the interactor query
+        val response = interactor.execute(incomingCity)
 
-            // the response has been converted to the interactor type
-            Assert.assertTrue(response.isSuccess)
-            assertEquals(response.getOrNull(), successfulTodayWeather)
-        }
+        // the response has been converted to the interactor type
+        Assert.assertTrue(response.isSuccess)
+        assertEquals(response.getOrNull(), successfulTodayWeather)
     }
 
     @Test
-    fun `interactor maps network error to interactor error`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
-            coEvery {
-                weatherRepository.getTodayWeather(any())
-            } returns Result.Failure(IOException("Failed to load today weather"))
+    fun `interactor maps network error to interactor error`() = runTest {
+        // pre
+        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
+        coEvery {
+            weatherRepository.getTodayWeather(any())
+        } returns Result.Failure(IOException("Failed to load today weather"))
 
-            // when we execute the interactor query
-            val response = interactor.execute(incomingCity)
+        // when we execute the interactor query
+        val response = interactor.execute(incomingCity)
 
-            // the response has been converted to the interactor type
-            Assert.assertTrue(response.isFailure)
-            Assert.assertTrue(response.throwableOrNull() is WeatherException)
-        }
+        // the response has been converted to the interactor type
+        Assert.assertTrue(response.isFailure)
+        Assert.assertTrue(response.throwableOrNull() is WeatherException)
     }
 }

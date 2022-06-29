@@ -8,7 +8,6 @@ import com.francescsoftware.weathersample.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.Coordinates
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
-import com.francescsoftware.weathersample.testing.runBlockingTest
 import com.francescsoftware.weathersample.type.Result
 import com.francescsoftware.weathersample.type.getOrNull
 import com.francescsoftware.weathersample.type.isFailure
@@ -19,6 +18,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -81,61 +81,55 @@ class CityInteractorTest {
     }
 
     @Test
-    fun `interactor calls repository with incoming arguments`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetCitiesInteractorImpl(cityRepository)
+    fun `interactor calls repository with incoming arguments`() = runTest {
+        // pre
+        val interactor = GetCitiesInteractorImpl(cityRepository)
 
-            // when we execute the interactor query
-            val query = CityName
-            interactor.execute(query)
+        // when we execute the interactor query
+        val query = CityName
+        interactor.execute(query)
 
-            // we call the repository once with the same argument
-            coVerify(exactly = 1) {
-                cityRepository.getCities(
-                    withArg { arg ->
-                        assertEquals(arg, query)
-                    }
-                )
-            }
+        // we call the repository once with the same argument
+        coVerify(exactly = 1) {
+            cityRepository.getCities(
+                withArg { arg ->
+                    assertEquals(arg, query)
+                }
+            )
         }
     }
 
     @Test
-    fun `interactor maps network data to interactor city data`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetCitiesInteractorImpl(cityRepository)
+    fun `interactor maps network data to interactor city data`() = runTest {
+        // pre
+        val interactor = GetCitiesInteractorImpl(cityRepository)
 
-            // when we execute the interactor query
-            val query = CityName
-            val response = interactor.execute(query)
+        // when we execute the interactor query
+        val query = CityName
+        val response = interactor.execute(query)
 
-            // the response has been converted to the interactor type
-            assertTrue(response.isSuccess)
-            assertEquals(response.getOrNull(), listOf(successCity))
-        }
+        // the response has been converted to the interactor type
+        assertTrue(response.isSuccess)
+        assertEquals(response.getOrNull(), listOf(successCity))
     }
 
     @Test
-    fun `interactor maps network error to interactor error`() {
-        mainCoroutineRule.runBlockingTest {
-            // pre
-            val interactor = GetCitiesInteractorImpl(cityRepository)
-            coEvery {
-                cityRepository.getCities(
-                    any(),
-                    any()
-                )
-            } returns Result.Failure(IOException("Failed to load cities"))
+    fun `interactor maps network error to interactor error`() = runTest {
+        // pre
+        val interactor = GetCitiesInteractorImpl(cityRepository)
+        coEvery {
+            cityRepository.getCities(
+                any(),
+                any()
+            )
+        } returns Result.Failure(IOException("Failed to load cities"))
 
-            // when we execute the interactor query
-            val query = CityName
-            val response = interactor.execute(query)
+        // when we execute the interactor query
+        val query = CityName
+        val response = interactor.execute(query)
 
-            // the response has been converted to the interactor type
-            assertTrue(response.isFailure)
-            assertTrue(response.throwableOrNull() is CitiesException)
-        }
+        // the response has been converted to the interactor type
+        assertTrue(response.isFailure)
+        assertTrue(response.throwableOrNull() is CitiesException)
     }
 }
