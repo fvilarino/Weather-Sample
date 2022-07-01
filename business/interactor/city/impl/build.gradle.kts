@@ -2,6 +2,10 @@ plugins {
     id("base-hilt-library")
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.interactor.city.impl"
+}
+
 dependencies {
     implementation(project(":business:interactor:city:api"))
     implementation(project(":core:dispatcher"))

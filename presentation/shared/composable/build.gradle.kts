@@ -2,6 +2,10 @@ plugins {
     id("base-compose-library")
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.shared.composable"
+}
+
 dependencies {
     implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:styles"))

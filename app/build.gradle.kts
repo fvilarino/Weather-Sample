@@ -7,6 +7,7 @@ plugins {
 
 android {
     compileSdk = Versions.compileSdkVersion
+    namespace = "com.francescsoftware.weathersample"
 
     defaultConfig {
         applicationId = Config.Application.applicationId

@@ -2,6 +2,10 @@ plugins {
     id("base-hilt-library")
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.time.impl"
+}
+
 dependencies {
     implementation(project(":core:time:api"))
     implementation(libs.androidx.core.core.ktx)

@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace = "com.francescsoftware.weathersample.feature.city"
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.flowFreeCompilerArgs
     }

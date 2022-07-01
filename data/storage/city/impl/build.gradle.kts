@@ -8,6 +8,10 @@ plugins {
     alias(libs.plugins.com.google.protobuf)
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.storage.city.impl"
+}
+
 dependencies {
     implementation(project(":data:storage:city:api"))
 

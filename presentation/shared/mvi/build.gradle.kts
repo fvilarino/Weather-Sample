@@ -2,6 +2,10 @@ plugins {
     id("base-compose-library")
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.shared.mvi"
+}
+
 dependencies {
     implementation(project(":core:dispatcher"))
 

@@ -2,6 +2,10 @@ plugins {
     id("base-android-library")
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.testing"
+}
+
 dependencies {
     implementation(project(":core:dispatcher"))
     implementation(project(":utils"))

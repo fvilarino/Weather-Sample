@@ -3,6 +3,10 @@ plugins {
     id("kotlinx-serialization")
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.network"
+}
+
 dependencies {
     implementation(project(":core:type"))
 

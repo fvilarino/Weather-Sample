@@ -2,6 +2,10 @@ plugins {
     id("base-hilt-compose-library")
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.feature.landing"
+}
+
 dependencies {
 
     implementation(project(":presentation:feature:city"))

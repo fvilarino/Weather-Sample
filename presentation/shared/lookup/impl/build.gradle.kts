@@ -2,6 +2,10 @@ plugins {
     id("base-hilt-library")
 }
 
+android {
+    namespace = "com.francescsoftware.weathersample.lookup.impl"
+}
+
 dependencies {
     implementation(project(":presentation:shared:lookup:api"))
 

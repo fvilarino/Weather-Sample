@@ -2,8 +2,11 @@ plugins {
     id("base-hilt-compose-library")
 }
 
-dependencies {
+android {
+    namespace = "com.francescsoftware.weathersample.feature.weather"
+}
 
+dependencies {
     implementation(project(":business:interactor:weather:api"))
     implementation(project(":core:type"))
     implementation(project(":core:time:api"))

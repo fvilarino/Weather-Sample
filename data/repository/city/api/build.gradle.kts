@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "com.francescsoftware.weathersample.cityrepository.api"
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.serializationFreeCompileArgs
     }

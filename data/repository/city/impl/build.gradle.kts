@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "com.francescsoftware.weathersample.cityrepository.impl"
     buildTypes {
         all {
             buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"${Keys.cityServiceBaseUrl}\"")
