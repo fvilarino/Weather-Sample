@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.feature.city
 
 import com.francescsoftware.weathersample.shared.mvi.Action
 import com.francescsoftware.weathersample.shared.mvi.State
+import javax.annotation.concurrent.Immutable
 
 internal enum class LoadState {
     Idle,
@@ -11,6 +12,7 @@ internal enum class LoadState {
     Error,
 }
 
+@Immutable
 internal data class CityState(
     val loadState: LoadState,
     val query: String,

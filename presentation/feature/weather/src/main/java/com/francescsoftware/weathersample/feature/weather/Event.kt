@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.feature.weather
 
 import com.francescsoftware.weathersample.shared.mvi.Action
 import com.francescsoftware.weathersample.shared.mvi.State
+import javax.annotation.concurrent.Immutable
 
 internal enum class WeatherLoadState {
     Idle,
@@ -16,6 +17,7 @@ internal enum class SelectedWeatherScreen {
     Forecast,
 }
 
+@Immutable
 internal data class WeatherState(
     val loadState: WeatherLoadState,
     val option: SelectedWeatherScreen,
