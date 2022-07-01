@@ -17,8 +17,11 @@ fun AppBar(
     @DrawableRes iconId: Int,
     iconContentDescription: String?,
     onIconClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    TopAppBar {
+    TopAppBar(
+        modifier = modifier,
+    ) {
         if (iconId != 0) {
             IconButton(onClick = onIconClick) {
                 Icon(
