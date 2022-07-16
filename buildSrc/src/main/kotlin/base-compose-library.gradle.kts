@@ -5,7 +5,7 @@ plugins {
 val catalogs = extensions.getByType<VersionCatalogsExtension>()
 val composeVersion = catalogs
     .named("libs")
-    .findVersion("androidx-compose-version")
+    .findVersion("androidx-compose-compiler-version")
     .get()
     .requiredVersion
 

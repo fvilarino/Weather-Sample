@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath(libs.com.android.tools.build.gradle)
         classpath(libs.org.jetbrains.kotlin.kotlin.gradle.plugin)
-        classpath(libs.org.jetbrains.kotlin.kotlin.serialization)
+        classpath(libs.org.jetbrains.kotlin.kotlin.serialization.gradle.plugin)
         classpath(libs.androidx.navigation.navigation.safe.args.gradle.plugin)
         classpath(libs.com.google.dagger.hilt.android.gradle.plugin)
     }

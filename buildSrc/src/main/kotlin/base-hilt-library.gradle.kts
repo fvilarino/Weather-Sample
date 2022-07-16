@@ -3,3 +3,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
 }
+
+kapt {
+    correctErrorTypes = true
+}
