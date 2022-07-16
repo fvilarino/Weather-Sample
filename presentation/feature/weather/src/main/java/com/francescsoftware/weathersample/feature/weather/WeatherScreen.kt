@@ -22,8 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
 import com.francescsoftware.weathersample.shared.composable.LoadingSpinner
-import com.francescsoftware.weathersample.shared.composable.TwoOptionsSelector
-import com.francescsoftware.weathersample.shared.composable.TwoOptionsSelectorOptions
+import com.francescsoftware.weathersample.shared.composable.MultiSelector
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
@@ -52,6 +51,8 @@ private fun WeatherScreen(
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val todayLabel = stringResource(id = R.string.today_weather_button_label)
+    val forecastLabel = stringResource(id = R.string.forecast_weather_button_label)
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -71,22 +72,23 @@ private fun WeatherScreen(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.h4,
         )
-        TwoOptionsSelector(
-            leftLabel = stringResource(id = R.string.today_weather_button_label),
-            rightLabel = stringResource(id = R.string.forecast_weather_button_label),
+        MultiSelector(
+            options = listOf(
+                todayLabel,
+                forecastLabel,
+            ),
             selectedOption = when (state.option) {
-                SelectedWeatherScreen.Today -> TwoOptionsSelectorOptions.Left
-                SelectedWeatherScreen.Forecast -> TwoOptionsSelectorOptions.Right
+                SelectedWeatherScreen.Today -> todayLabel
+                SelectedWeatherScreen.Forecast -> forecastLabel
             },
-            selectedColor = MaterialTheme.colors.secondary,
-            deselectedColor = MaterialTheme.colors.surface,
+            selectedColor = MaterialTheme.colors.onSecondary,
+            selectedBackgroundColor = MaterialTheme.colors.secondary,
             onOptionSelect = { option ->
-                onOptionSelect(
-                    when (option) {
-                        TwoOptionsSelectorOptions.Left -> SelectedWeatherScreen.Today
-                        TwoOptionsSelectorOptions.Right -> SelectedWeatherScreen.Forecast
-                    }
-                )
+                if (option == todayLabel) {
+                    onOptionSelect(SelectedWeatherScreen.Today)
+                } else {
+                    onOptionSelect(SelectedWeatherScreen.Forecast)
+                }
             },
             modifier = Modifier
                 .padding(top = MarginQuad)
