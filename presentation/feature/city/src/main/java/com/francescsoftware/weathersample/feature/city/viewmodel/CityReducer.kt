@@ -12,6 +12,14 @@ internal class CityReducer @Inject constructor() : Reducer<CityState, CityAction
         state: CityState,
         action: CityAction,
     ): CityState = when (action) {
+        is CityAction.PrefixUpdated -> state.copy(
+            query = action.prefix,
+            loadState = if (action.prefix.isEmpty()) LoadState.Idle else state.loadState,
+        )
+        CityAction.ClearQuery -> state.copy(
+            query = "",
+            loadState = LoadState.Idle,
+        )
         is CityAction.CitiesLoaded -> state.copy(
             loadState = LoadState.Loaded,
             cities = action.cities,

@@ -3,7 +3,6 @@ package com.francescsoftware.weathersample.feature.city.viewmodel
 import com.francescsoftware.weathersample.feature.city.CityAction
 import com.francescsoftware.weathersample.feature.city.CityResultModel
 import com.francescsoftware.weathersample.feature.city.CityState
-import com.francescsoftware.weathersample.feature.city.LoadState
 import com.francescsoftware.weathersample.feature.city.R
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
@@ -38,46 +37,40 @@ internal class CityMiddleware @Inject constructor(
     )
     private var job: Job? = null
 
-    override fun reduce(
+    override fun process(
         state: CityState,
         action: CityAction,
-    ): CityState = when (action) {
-        CityAction.Start -> onStart(state)
-        is CityAction.PrefixUpdated -> onPrefixUpdated(state, action.prefix)
-        CityAction.ClearQuery -> onPrefixUpdated(state, "")
-        else -> state
+    ) {
+        when (action) {
+            CityAction.Start -> onStart()
+            is CityAction.PrefixUpdated -> onPrefixUpdated(action.prefix)
+            else -> {}
+        }
     }
 
-    private fun onStart(state: CityState): CityState {
+    private fun onStart() {
         job?.cancel()
         job = searchFlow
             .distinctUntilChanged()
             .debounce(DebounceMillis)
             .map { prefix ->
-                actionHandler.handleAction(CityAction.Loading)
+                dispatcher.dispatch(CityAction.Loading)
                 getCitiesInteractor.execute(
                     prefix = prefix,
                 )
             }.onEach { cities ->
                 onCitiesLoaded(cities)
             }.launchIn(scope)
-
-        return state
     }
 
     private fun onPrefixUpdated(
-        state: CityState,
         prefix: String,
-    ): CityState {
+    ) {
         if (prefix.length >= MIN_CITY_LENGTH_FOR_SEARCH) {
             scope.launch {
                 searchFlow.emit(prefix)
             }
         }
-        return state.copy(
-            query = prefix,
-            loadState = if (prefix.isEmpty()) LoadState.Idle else state.loadState,
-        )
     }
 
     private fun onCitiesLoaded(
@@ -86,9 +79,9 @@ internal class CityMiddleware @Inject constructor(
         cities.fold(
             onSuccess = { list ->
                 if (list.isEmpty()) {
-                    actionHandler.handleAction(CityAction.NoResults)
+                    dispatcher.dispatch(CityAction.NoResults)
                 } else {
-                    actionHandler.handleAction(
+                    dispatcher.dispatch(
                         CityAction.CitiesLoaded(
                             list.map { city -> city.toCityResultModel() }
                         )
@@ -96,7 +89,7 @@ internal class CityMiddleware @Inject constructor(
                 }
             },
             onFailure = {
-                actionHandler.handleAction(CityAction.LoadError)
+                dispatcher.dispatch(CityAction.LoadError)
             }
         )
     }

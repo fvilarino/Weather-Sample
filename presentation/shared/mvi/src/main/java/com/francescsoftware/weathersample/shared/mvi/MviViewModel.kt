@@ -22,5 +22,5 @@ abstract class MviViewModel<S : State, A : Action>(
         middlewares.forEach { middleware -> middleware.setup(viewModelScope, stateReducer) }
     }
 
-    protected fun handleAction(action: A) = stateReducer.handleAction(action)
+    protected fun handleAction(action: A) = stateReducer.dispatch(action)
 }

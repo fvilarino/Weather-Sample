@@ -4,7 +4,6 @@ import com.francescsoftware.weathersample.feature.weather.ForecastItem
 import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.feature.weather.WeatherAction
 import com.francescsoftware.weathersample.feature.weather.WeatherIcon
-import com.francescsoftware.weathersample.feature.weather.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.WeatherState
 import com.francescsoftware.weathersample.feature.weather.formatHumidity
 import com.francescsoftware.weathersample.feature.weather.formatTemperature
@@ -37,29 +36,28 @@ internal class WeatherMiddleware @Inject constructor(
     private val stringLookup: StringLookup,
 ) : Middleware<WeatherState, WeatherAction>() {
 
-    override fun reduce(
+    override fun process(
         state: WeatherState,
         action: WeatherAction,
-    ): WeatherState = when (action) {
-        is WeatherAction.Retry -> scope.onLoad(state, action.cityName, action.countryCode)
-        is WeatherAction.Load -> scope.onLoad(state, action.cityName, action.countryCode)
-        else -> state
+    ) {
+        when (action) {
+            is WeatherAction.Retry -> scope.onLoad(action.cityName, action.countryCode)
+            is WeatherAction.Load -> scope.onLoad(action.cityName, action.countryCode)
+            else -> {}
+        }
     }
 
     private fun CoroutineScope.onLoad(
-        state: WeatherState,
         cityName: String,
         countryCode: String,
-    ): WeatherState {
+    ) {
         launch {
             load(
                 name = cityName,
                 countryCode = countryCode,
             )
         }
-        return state.copy(
-            loadState = WeatherLoadState.Loading,
-        )
+        dispatcher.dispatch(WeatherAction.Loading)
     }
 
     private suspend fun load(
@@ -76,14 +74,14 @@ internal class WeatherMiddleware @Inject constructor(
             val current = currentAsync.await().getOrNull()
             val forecast = forecastAsync.await().getOrNull()
             if (current != null && forecast != null) {
-                actionHandler.handleAction(
+                dispatcher.dispatch(
                     WeatherAction.Loaded(
                         currentWeather = current.toWeatherCardState(stringLookup),
                         forecastItems = forecast.toForecastItems()
                     )
                 )
             } else {
-                actionHandler.handleAction(
+                dispatcher.dispatch(
                     WeatherAction.LoadError(
                         message = stringLookup.getString(R.string.failed_to_load_weather_data)
                     )

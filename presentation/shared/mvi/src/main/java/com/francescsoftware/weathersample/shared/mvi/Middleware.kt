@@ -5,15 +5,17 @@ import kotlinx.coroutines.CoroutineScope
 /**
  * Used for asynchronous work
  */
-abstract class Middleware<S : State, A : Action> : Reducer<S, A> {
-    protected lateinit var actionHandler: ActionHandler<A>
+abstract class Middleware<S : State, A : Action> {
+    protected lateinit var dispatcher: Dispatcher<A>
     protected lateinit var scope: CoroutineScope
 
-    fun setup(
+    abstract fun process(state: S, action: A)
+
+    internal fun setup(
         scope: CoroutineScope,
-        actionHandler: ActionHandler<A>,
+        dispatcher: Dispatcher<A>,
     ) {
-        this.actionHandler = actionHandler
+        this.dispatcher = dispatcher
         this.scope = scope
     }
 }

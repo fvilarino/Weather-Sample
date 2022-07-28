@@ -2,7 +2,6 @@ package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.feature.weather.WeatherAction
-import com.francescsoftware.weathersample.feature.weather.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.WeatherState
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
@@ -17,22 +16,22 @@ internal class TodayMiddleware @Inject constructor(
     private val stringLookup: StringLookup,
 ) : Middleware<WeatherState, WeatherAction>() {
 
-    override fun reduce(
+    override fun process(
         state: WeatherState,
         action: WeatherAction,
-    ): WeatherState = when (action) {
-        is WeatherAction.RefreshTodayWeather -> {
-            scope.launch {
-                loadTodayWeather(
-                    action.cityName,
-                    action.countryCode,
-                )
+    ) {
+        when (action) {
+            is WeatherAction.RefreshTodayWeather -> {
+                dispatcher.dispatch(WeatherAction.Loading)
+                scope.launch {
+                    loadTodayWeather(
+                        action.cityName,
+                        action.countryCode,
+                    )
+                }
             }
-            state.copy(
-                loadState = WeatherLoadState.Loading,
-            )
+            else -> {}
         }
-        else -> state
     }
 
     private suspend fun loadTodayWeather(
@@ -45,14 +44,14 @@ internal class TodayMiddleware @Inject constructor(
         )
         getTodayWeatherInteractor.execute(location).fold(
             onSuccess = { todayWeather ->
-                actionHandler.handleAction(
+                dispatcher.dispatch(
                     WeatherAction.TodayLoaded(
                         currentWeather = todayWeather.toWeatherCardState(stringLookup),
                     )
                 )
             },
             onFailure = {
-                actionHandler.handleAction(
+                dispatcher.dispatch(
                     WeatherAction.LoadError(
                         message = stringLookup.getString(R.string.failed_to_load_weather_data)
                     )

@@ -31,7 +31,7 @@ val testDispatcherProvider = object : DispatcherProvider {
 
 @ExperimentalCoroutinesApi
 class MainCoroutineRule(
-    val testDispatcher: TestDispatcher = StandardTestDispatcher()
+    private val testDispatcher: TestDispatcher = StandardTestDispatcher()
 ) : TestWatcher() {
 
     override fun starting(description: Description) {
