@@ -13,11 +13,14 @@ import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.utils.time.Seconds
 import com.francescsoftware.weathersample.utils.time.toDate
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
-import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.City
-import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastItem
+import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Astro
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastDayItem
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.HourItem
 import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 internal class GetForecastInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
@@ -29,10 +32,9 @@ internal class GetForecastInteractorImpl @Inject constructor(
         val response = weatherRepository.getForecast(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { data ->
-                val forecast = data.forecast
-                val city = data.city
-                if (forecast?.isNotEmpty() == true && city?.isValid == true) {
-                    Result.Success(parseForecast(forecast, city))
+                val forecast = data.forecast?.forecastDay
+                if (forecast?.isNotEmpty() == true) {
+                    Result.Success(parseForecast(forecast))
                 } else {
                     Result.Failure(WeatherException("Invalid forecast data received"))
                 }
@@ -41,7 +43,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
                 Result.Failure(
                     WeatherException(
                         throwable.message ?: "Error fetching forecast",
-                        throwable
+                        throwable,
                     )
                 )
             }
@@ -49,29 +51,27 @@ internal class GetForecastInteractorImpl @Inject constructor(
     }
 
     private suspend fun parseForecast(
-        forecast: List<ForecastItem>,
-        city: City
+        forecast: List<ForecastDayItem>,
     ): Forecast = withContext(dispatcherProvider.default) {
-        val sunrise = Seconds((city.sunrise ?: 0).toLong()).toDate()
-        val sunset = Seconds((city.sunset ?: 0).toLong()).toDate()
+
         // aggregate the forecast by days
-        val days: Map<Date, List<ForecastItem>> = forecast
+        val days: Map<Date, ForecastDayItem> = forecast
             .filter { item -> item.isValid }
-            .groupBy { item ->
+            .associateBy { item ->
                 timeFormatter.setToMidnight(
-                    Seconds((item.epoch ?: 0).toLong()).toDate()
+                    Seconds((item.dateEpoch ?: 0).toLong()).toDate()
                 )
             }
+            .filterValues { item -> item.isValid }
 
         // convert to forecast days
         val forecastDays: List<ForecastDay> = days
-            .filterValues { items -> items.isNotEmpty() }
             .mapValues { entry ->
                 ForecastDay(
                     date = entry.key,
-                    sunrise = sunrise,
-                    sunset = sunset,
-                    entries = entry.value.map { value -> value.toForecastEntry() }
+                    sunrise = entry.value.astro?.sunrise.orEmpty(),
+                    sunset = entry.value.astro?.sunset.orEmpty(),
+                    entries = entry.value.hour?.map { hour -> hour.toForecastEntry() }.orEmpty()
                 )
             }
             .map { entry ->
@@ -84,26 +84,37 @@ internal class GetForecastInteractorImpl @Inject constructor(
         )
     }
 
-    private fun ForecastItem.toForecastEntry() = ForecastEntry(
-        date = Seconds((this.epoch ?: 0).toLong()).toDate(),
-        description = weather?.firstOrNull()?.description.orEmpty(),
-        icon = weather?.firstOrNull()?.icon.orEmpty(),
-        minTemperature = main?.tempMin ?: 0.0,
-        maxTemperature = main?.tempMax ?: 0.0,
-        feelsLikeTemperature = main?.feelsLike ?: 0.0,
-        windSpeed = wind?.speed ?: 0.0,
-        humidityPercent = main?.humidity ?: 0,
-        visibility = visibility ?: 0,
+    private fun HourItem.toForecastEntry() = ForecastEntry(
+        date = Seconds((timeEpoch ?: 0).toLong()).toDate(),
+        description = condition?.text.orEmpty(),
+        iconCode = condition?.code ?: 0,
+        temperature = tempC ?: 0.0,
+        feelsLikeTemperature = feelslikeC ?: 0.0,
+        precipitation = precipMm?.roundToInt() ?: 0,
+        windSpeed = windKph ?: 0.0,
+        uvIndex = uv?.roundToInt() ?: 0,
+        humidityPercent = humidity ?: 0,
+        visibility = visKm?.roundToInt() ?: 0,
     )
 
-    private val City.isValid: Boolean
-        get() = sunrise != null && sunset != null
+    private val ForecastDayItem.isValid: Boolean
+        get() = astro.isValid && hour.isValid
 
-    private val ForecastItem.isValid: Boolean
-        get() = epoch != null &&
-            main != null &&
-            main?.tempMin != null &&
-            main?.tempMax != null &&
-            main?.feelsLike != null &&
-            weather?.firstOrNull()?.icon != null
+    private val Astro?.isValid: Boolean
+        get() = this != null && sunrise?.isNotEmpty() == true && sunset?.isNotEmpty() == true
+
+    private val List<HourItem>?.isValid: Boolean
+        get() = this?.isNotEmpty() == true && all { item -> item.isValid }
+
+    private val HourItem.isValid: Boolean
+        get() = timeEpoch != null &&
+            tempC != null &&
+            feelslikeC != null &&
+            windKph != null &&
+            humidity != null &&
+            visKm != null &&
+            condition.isValid
+
+    private val Condition?.isValid: Boolean
+        get() = this != null && code != null && icon != null && text != null
 }

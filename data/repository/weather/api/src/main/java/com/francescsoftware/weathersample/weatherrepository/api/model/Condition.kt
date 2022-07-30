@@ -4,17 +4,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WeatherItem(
+data class Condition(
+
+    @SerialName("code")
+    val code: Int? = null,
 
     @SerialName("icon")
     val icon: String? = null,
 
-    @SerialName("description")
-    val description: String? = null,
-
-    @SerialName("main")
-    val main: String? = null,
-
-    @SerialName("id")
-    val id: Int? = null
+    @SerialName("text")
+    val text: String? = null,
 )

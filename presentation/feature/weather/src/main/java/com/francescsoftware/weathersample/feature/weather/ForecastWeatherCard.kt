@@ -20,11 +20,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.francescsoftware.weathersample.shared.composable.InfoLabels
 import com.francescsoftware.weathersample.styles.CardElevation
 import com.francescsoftware.weathersample.styles.MarginDouble
@@ -71,23 +75,12 @@ internal fun ForecastWeatherCard(
                 ) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Text(
-                            text = stringResource(id = R.string.min_temperature_label),
+                            text = stringResource(id = R.string.temperature_label),
                             style = MaterialTheme.typography.overline,
                         )
                     }
                     Text(
-                        text = state.minTemperature,
-                        style = MaterialTheme.typography.caption,
-                        modifier = Modifier.padding(start = MarginSingle),
-                    )
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(
-                            text = stringResource(id = R.string.max_temperature_label),
-                            style = MaterialTheme.typography.overline,
-                        )
-                    }
-                    Text(
-                        text = state.maxTemperature,
+                        text = state.temperature,
                         style = MaterialTheme.typography.caption,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
@@ -99,6 +92,22 @@ internal fun ForecastWeatherCard(
                     }
                     Text(
                         text = state.feelsLikeTemperature,
+                        style = MaterialTheme.typography.caption,
+                        modifier = Modifier.padding(start = MarginSingle),
+                    )
+                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                        Text(
+                            text = stringResource(id = R.string.precipitation_label),
+                            style = MaterialTheme.typography.overline,
+                        )
+                    }
+                    Text(
+                        text = buildAnnotatedString {
+                            append(state.precipitation)
+                            withStyle(style = SpanStyle(fontSize = 8.sp)) {
+                                append(stringResource(id = R.string.precipitation_mm))
+                            }
+                        },
                         style = MaterialTheme.typography.caption,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
@@ -147,8 +156,8 @@ internal fun ForecastWeatherCard(
     }
 }
 
-@Preview(widthDp = 360)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
+@Preview(widthDp = 420)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
 @Composable
 private fun ForecastWeatherCardPreview(
     @PreviewParameter(ForecastStateProvider::class) forecastState: ForecastItem.ForecastCard,

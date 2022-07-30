@@ -9,19 +9,20 @@ data class Forecast(
 
 data class ForecastDay(
     val date: Date,
-    val sunrise: Date,
-    val sunset: Date,
+    val sunrise: String,
+    val sunset: String,
     val entries: List<ForecastEntry>,
 )
 
 data class ForecastEntry(
     val date: Date,
     val description: String,
-    val icon: String,
-    val minTemperature: Double,
-    val maxTemperature: Double,
+    val iconCode: Int,
+    val temperature: Double,
     val feelsLikeTemperature: Double,
+    val precipitation: Int,
     val windSpeed: Double,
+    val uvIndex: Int,
     val humidityPercent: Int,
     val visibility: Int,
 )

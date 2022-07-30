@@ -18,5 +18,5 @@ sealed interface WeatherLocation {
 
 interface WeatherRepository {
     suspend fun getTodayWeather(location: WeatherLocation): Result<TodayWeatherResponse>
-    suspend fun getForecast(location: WeatherLocation): Result<ForecastResponse>
+    suspend fun getForecast(location: WeatherLocation, days: Int = 7): Result<ForecastResponse>
 }

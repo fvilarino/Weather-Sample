@@ -17,28 +17,34 @@ internal class WeatherRepositoryImpl @Inject constructor(
     ): Result<TodayWeatherResponse> = safeApiCall {
         when (location) {
             is WeatherLocation.City -> weatherService.getTodayWeather(
-                cityAndCountry = formatCityQuery(location)
+                query = formatCityQuery(location),
             )
             is WeatherLocation.Coordinates -> weatherService.getTodayWeather(
-                latitude = location.latitude,
-                longitude = location.longitude,
+                query = formatCoordinates(location),
             )
         }
     }
 
-    override suspend fun getForecast(location: WeatherLocation): Result<ForecastResponse> =
+    override suspend fun getForecast(
+        location: WeatherLocation,
+        days: Int,
+    ): Result<ForecastResponse> =
         safeApiCall {
             when (location) {
                 is WeatherLocation.City -> weatherService.getForecast(
-                    cityAndCountry = formatCityQuery(location)
+                    query = formatCityQuery(location),
+                    days = days,
                 )
                 is WeatherLocation.Coordinates -> weatherService.getForecast(
-                    latitude = location.latitude,
-                    longitude = location.longitude,
+                    query = formatCoordinates(location),
+                    days = days,
                 )
             }
         }
 
     private fun formatCityQuery(location: WeatherLocation.City) =
         "${location.name},${location.countryCode}"
+
+    private fun formatCoordinates(location: WeatherLocation.Coordinates) =
+        "${location.latitude},${location.longitude}"
 }

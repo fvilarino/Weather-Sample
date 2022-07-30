@@ -2,24 +2,89 @@ package com.francescsoftware.weathersample.feature.weather
 
 import androidx.annotation.DrawableRes
 
-internal enum class WeatherIcon(
-    val dayId: String,
-    val nightId: String,
-    @DrawableRes val iconId: Int
-) {
-    ClearSky("01d", "01n", R.drawable.ic_sunny),
-    FewClouds("02d", "02n", R.drawable.ic_partly_cloudy),
-    ScatteredClouds("03d", "03n", R.drawable.ic_overcast),
-    BrokenClouds("04d", "04n", R.drawable.ic_partly_cloudy),
-    ShowerRain("09d", "09n", R.drawable.ic_light_rain),
-    Rain("10d", "10n", R.drawable.ic_moderate_rain),
-    Thunderstorm("11d", "11n", R.drawable.ic_thunder),
-    Snow("13d", "13n", R.drawable.ic_snow),
-    Mist("50d", "50n", R.drawable.ic_foggy);
-
-    companion object {
-        fun fromIconId(id: String) = values().firstOrNull { weatherIcon ->
-            weatherIcon.dayId == id || weatherIcon.nightId == id
-        } ?: ClearSky
-    }
+internal enum class WeatherIcon {
+    ClearSky,
+    FewClouds,
+    ScatteredClouds,
+    BrokenClouds,
+    Overcast,
+    ShowerRain,
+    LightRain,
+    ModerateRain,
+    HeavyRain,
+    Thunderstorm,
+    Snow,
+    Mist,
+    Foggy,
+    Windy,
 }
+
+internal fun weatherIconFromCode(code: Int): WeatherIcon = when (code) {
+    1000 -> WeatherIcon.ClearSky
+    1003 -> WeatherIcon.FewClouds
+    1006 -> WeatherIcon.ScatteredClouds
+    1009 -> WeatherIcon.Overcast
+    1030 -> WeatherIcon.Mist
+    1063,
+    1150,
+    1153,
+    1168,
+    1180,
+    1183,
+    1198,
+    1204,
+    1240,
+    1249,
+    1261,
+    1273 -> WeatherIcon.LightRain
+    1171,
+    1192,
+    1195,
+    1246 -> WeatherIcon.HeavyRain
+    1186,
+    1189,
+    1201,
+    1207,
+    1243,
+    1252,
+    1264,
+    1276 -> WeatherIcon.ModerateRain
+    1066,
+    1069,
+    1072,
+    1114,
+    1210,
+    1213,
+    1216,
+    1219,
+    1222,
+    1225,
+    1237,
+    1255,
+    1258,
+    1279,
+    1282 -> WeatherIcon.Snow
+    1087 -> WeatherIcon.Thunderstorm
+    1117 -> WeatherIcon.Windy
+    1147 -> WeatherIcon.Foggy
+    else -> WeatherIcon.ClearSky
+}
+
+internal val WeatherIcon.drawableId: Int
+    @DrawableRes
+    get() = when (this) {
+        WeatherIcon.ClearSky -> R.drawable.ic_sunny
+        WeatherIcon.FewClouds,
+        WeatherIcon.ScatteredClouds,
+        WeatherIcon.BrokenClouds -> R.drawable.ic_partly_cloudy
+        WeatherIcon.Overcast -> R.drawable.ic_overcast
+        WeatherIcon.ShowerRain,
+        WeatherIcon.LightRain -> R.drawable.ic_light_rain
+        WeatherIcon.ModerateRain -> R.drawable.ic_moderate_rain
+        WeatherIcon.HeavyRain -> R.drawable.ic_heavy_rain
+        WeatherIcon.Thunderstorm -> R.drawable.ic_thunder
+        WeatherIcon.Snow -> R.drawable.ic_snow
+        WeatherIcon.Mist,
+        WeatherIcon.Foggy -> R.drawable.ic_foggy
+        WeatherIcon.Windy -> R.drawable.ic_windy
+    }

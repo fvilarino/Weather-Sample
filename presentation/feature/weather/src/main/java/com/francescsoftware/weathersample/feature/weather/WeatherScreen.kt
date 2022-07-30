@@ -136,15 +136,15 @@ private fun ForecastWeatherScreenPreview() {
                 cityCountryCode = "CA",
                 todayState = TodayWeatherCardState(
                     temperature = "16.4°C",
-                    minTemperature = "11.3°C",
-                    maxTemperature = "22.7°C",
                     feelsLikeTemperature = "14.3°C",
+                    precipitation = "10",
+                    uvIndex = "5",
                     description = "Partly cloudy",
                     iconId = R.drawable.ic_partly_cloudy,
                     windSpeed = "4.3kph",
                     humidity = "54%",
                     pressure = "1024mb",
-                    visibility = "10000 m",
+                    visibility = "10 km",
                 ),
                 forecastItems = listOf(
                     PartlyCloudyForecast,

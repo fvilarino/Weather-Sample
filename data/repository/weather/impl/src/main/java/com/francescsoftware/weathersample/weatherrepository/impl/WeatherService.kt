@@ -7,19 +7,14 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 internal interface WeatherService {
-    @GET("weather")
+    @GET("current.json")
     suspend fun getTodayWeather(
-        @Query("q") cityAndCountry: String? = null,
-        @Query("lat") latitude: Double? = null,
-        @Query("lon") longitude: Double? = null,
-        @Query("units") units: String = "metric",
+        @Query("q") query: String? = null,
     ): Response<TodayWeatherResponse>
 
-    @GET("forecast")
+    @GET("forecast.json")
     suspend fun getForecast(
-        @Query("q") cityAndCountry: String? = null,
-        @Query("lat") latitude: Double? = null,
-        @Query("lon") longitude: Double? = null,
-        @Query("units") units: String = "metric",
+        @Query("q") query: String? = null,
+        @Query("days") days: Int = 7,
     ): Response<ForecastResponse>
 }

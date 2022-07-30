@@ -3,30 +3,25 @@ package com.francescsoftware.weathersample.interactor.weather.api
 import com.francescsoftware.weathersample.type.Result
 
 data class TodayWeather(
-    val weather: TodayWeatherItem,
     val main: TodayMain,
     val wind: TodayWind,
     val visibility: Int,
     val clouds: TodayClouds,
 )
 
-data class TodayWeatherItem(
-    val icon: String,
-    val description: String,
-    val main: String,
-)
-
 data class TodayMain(
+    val description: String,
+    val code: Int,
     val temp: Double,
-    val tempMin: Double,
-    val tempMax: Double,
     val feelsLike: Double,
     val humidity: Int,
     val pressure: Int,
+    val precipitation: Int,
+    val uvIndex: Int,
 )
 
 data class TodayWind(
-    val deg: Int,
+    val direction: String,
     val speed: Double,
     val gust: Double,
 )

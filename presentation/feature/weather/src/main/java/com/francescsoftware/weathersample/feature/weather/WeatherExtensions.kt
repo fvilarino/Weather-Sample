@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.feature.weather
 
-import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
+import com.francescsoftware.weathersample.interactor.weather.api.TodayMain
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import java.util.Locale
 
@@ -11,8 +11,8 @@ internal fun Double.formatTemperature(
     this,
 )
 
-internal fun TodayWeather.formatDescription(): String =
-    weather.description.replaceFirstChar {
+internal fun TodayMain.formatDescription(): String =
+    description.replaceFirstChar {
         if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
     }
 

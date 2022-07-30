@@ -3,12 +3,13 @@ package com.francescsoftware.weathersample.feature.weather.viewmodel
 import com.francescsoftware.weathersample.feature.weather.ForecastItem
 import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.feature.weather.WeatherAction
-import com.francescsoftware.weathersample.feature.weather.WeatherIcon
 import com.francescsoftware.weathersample.feature.weather.WeatherState
+import com.francescsoftware.weathersample.feature.weather.drawableId
 import com.francescsoftware.weathersample.feature.weather.formatHumidity
 import com.francescsoftware.weathersample.feature.weather.formatTemperature
 import com.francescsoftware.weathersample.feature.weather.formatVisibility
 import com.francescsoftware.weathersample.feature.weather.formatWind
+import com.francescsoftware.weathersample.feature.weather.weatherIconFromCode
 import com.francescsoftware.weathersample.interactor.weather.api.Forecast
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
@@ -100,8 +101,8 @@ internal class WeatherMiddleware @Inject constructor(
         ForecastItem.ForecastHeader(
             id = date.time,
             date = date.toHeaderLabel(),
-            sunrise = timeFormatter.formatHour(sunrise),
-            sunset = timeFormatter.formatHour(sunset),
+            sunrise = sunrise,
+            sunset = sunset,
         )
 
     private fun Date.toHeaderLabel(): String = when {
@@ -120,10 +121,11 @@ internal class WeatherMiddleware @Inject constructor(
                     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
                 }
             ),
-            iconId = WeatherIcon.fromIconId(icon).iconId,
-            minTemperature = minTemperature.formatTemperature(stringLookup),
-            maxTemperature = maxTemperature.formatTemperature(stringLookup),
+            iconId = weatherIconFromCode(iconCode).drawableId,
+            temperature = temperature.formatTemperature(stringLookup),
             feelsLikeTemperature = feelsLikeTemperature.formatTemperature(stringLookup),
+            precipitation = precipitation.toString(),
+            uvIndex = uvIndex.toString(),
             windSpeed = windSpeed.formatWind(stringLookup),
             humidity = humidityPercent.formatHumidity(stringLookup),
             visibility = visibility.formatVisibility(stringLookup),
