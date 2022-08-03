@@ -179,8 +179,19 @@ class LoadingIndicatorStateImpl : LoadingIndicatorState {
 }
 
 @Composable
-fun rememberLoadingIndicatorState(): LoadingIndicatorState = remember {
-    LoadingIndicatorStateImpl()
+fun rememberLoadingIndicatorState(
+    animating: Boolean,
+    animationType: AnimationType,
+): LoadingIndicatorState {
+    val state = remember {
+        LoadingIndicatorStateImpl()
+    }
+    LaunchedEffect(key1 = Unit) {
+        if (animating) {
+            state.start(animationType, this)
+        }
+    }
+    return state
 }
 
 @Composable
@@ -191,12 +202,7 @@ private fun LoadingIndicator(
     indicatorSpacing: Dp = MarginHalf,
     animationType: AnimationType,
 ) {
-    val state = rememberLoadingIndicatorState()
-    LaunchedEffect(key1 = animating, key2 = animationType) {
-        if (animating) {
-            state.start(animationType, this)
-        }
-    }
+    val state = rememberLoadingIndicatorState(animating, animationType)
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         repeat(NumIndicators) { index ->
             LoadingDot(
