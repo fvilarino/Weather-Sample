@@ -198,6 +198,9 @@ fun MultiSelector(
 ) {
     require(options.size >= 2) { "This composable requires at least 2 options" }
     require(options.contains(selectedOption)) { "Invalid selected option [$selectedOption]" }
+    LaunchedEffect(key1 = options, key2 = selectedOption) {
+        state.selectOption(this, options.indexOf(selectedOption))
+    }
     Layout(
         modifier = modifier
             .clip(

@@ -1,7 +1,9 @@
 package com.francescsoftware.weathersample.feature.weather
 
 import androidx.annotation.DrawableRes
+import javax.annotation.concurrent.Immutable
 
+@Immutable
 internal data class TodayWeatherCardState(
     val temperature: String = "",
     val feelsLikeTemperature: String = "",
