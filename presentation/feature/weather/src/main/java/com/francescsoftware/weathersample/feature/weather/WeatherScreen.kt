@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
 import com.francescsoftware.weathersample.shared.composable.LoadingSpinner
@@ -127,39 +128,19 @@ private fun WeatherScreen(
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
 @Preview(device = Devices.PIXEL_C)
 @Composable
-private fun ForecastWeatherScreenPreview() {
+private fun ForecastWeatherScreenPreview(
+    @PreviewParameter(WeatherStateProvider::class) state: WeatherState,
+) {
     WeatherSampleTheme {
         Surface(modifier = Modifier.fillMaxWidth()) {
-            val state = WeatherState(
-                loadState = WeatherLoadState.Loaded,
-                cityName = "Coquitlam, British Columbia",
-                cityCountryCode = "CA",
-                todayState = TodayWeatherCardState(
-                    temperature = "16.4°C",
-                    feelsLikeTemperature = "14.3°C",
-                    precipitation = "10",
-                    uvIndex = "5",
-                    description = "Partly cloudy",
-                    iconId = R.drawable.ic_partly_cloudy,
-                    windSpeed = "4.3kph",
-                    humidity = "54%",
-                    pressure = "1024mb",
-                    visibility = "10 km",
-                ),
-                forecastItems = listOf(
-                    PartlyCloudyForecast,
-                    SunnyForecast,
-                    HeavyRainForecast,
-                ),
-                option = SelectedWeatherScreen.Today,
-                errorMessage = "",
-            )
             WeatherScreen(
                 state = state,
                 onOptionSelect = {},
                 onRefreshTodayWeather = {},
                 onRetry = {},
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = MarginDouble),
             )
         }
     }

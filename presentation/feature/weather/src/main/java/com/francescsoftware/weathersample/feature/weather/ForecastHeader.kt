@@ -22,7 +22,7 @@ import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
 internal fun ForecastHeader(
-    state: ForecastItem.ForecastHeader,
+    state: ForecastHeaderState,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -68,8 +68,8 @@ private fun ForecastHeaderPreview() {
     WeatherSampleTheme {
         Surface(modifier = Modifier.fillMaxWidth()) {
             ForecastHeader(
-                state = ForecastItem.ForecastHeader(
-                    id = 1L,
+                state = ForecastHeaderState(
+                    id = "header",
                     date = "Sun April 18",
                     sunrise = "06:23",
                     sunset = "20:01",

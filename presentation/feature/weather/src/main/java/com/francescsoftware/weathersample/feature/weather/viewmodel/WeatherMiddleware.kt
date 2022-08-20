@@ -1,6 +1,8 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
-import com.francescsoftware.weathersample.feature.weather.ForecastItem
+import com.francescsoftware.weathersample.feature.weather.ForecastDayState
+import com.francescsoftware.weathersample.feature.weather.ForecastHeaderState
+import com.francescsoftware.weathersample.feature.weather.ForecastHourState
 import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.feature.weather.WeatherAction
 import com.francescsoftware.weathersample.feature.weather.WeatherState
@@ -91,15 +93,16 @@ internal class WeatherMiddleware @Inject constructor(
         }
     }
 
-    private fun Forecast.toForecastItems(): List<ForecastItem> = items.map { forecastDay ->
-        val header = forecastDay.toForecastHeaderState()
-        val content = forecastDay.entries.map { entry -> entry.toForecastCardState() }
-        listOf(header) + content
-    }.flatten()
+    private fun Forecast.toForecastItems(): List<ForecastDayState> = items.map { forecastDay ->
+        ForecastDayState(
+            header = forecastDay.toForecastHeaderState(),
+            forecast = forecastDay.entries.map { entry -> entry.toForecastCardState() }
+        )
+    }
 
-    private fun ForecastDay.toForecastHeaderState(): ForecastItem.ForecastHeader =
-        ForecastItem.ForecastHeader(
-            id = date.time,
+    private fun ForecastDay.toForecastHeaderState(): ForecastHeaderState =
+        ForecastHeaderState(
+            id = "header_${date.time}",
             date = date.toHeaderLabel(),
             sunrise = sunrise,
             sunset = sunset,
@@ -111,8 +114,8 @@ internal class WeatherMiddleware @Inject constructor(
         else -> timeFormatter.formatDayWithDayOfWeek(this)
     }
 
-    private fun ForecastEntry.toForecastCardState(): ForecastItem.ForecastCard =
-        ForecastItem.ForecastCard(
+    private fun ForecastEntry.toForecastCardState(): ForecastHourState =
+        ForecastHourState(
             id = date.time,
             header = stringLookup.getString(
                 R.string.forecast_card_header,

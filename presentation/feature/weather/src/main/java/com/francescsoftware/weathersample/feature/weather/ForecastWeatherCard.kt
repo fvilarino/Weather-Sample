@@ -38,7 +38,7 @@ import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
 internal fun ForecastWeatherCard(
-    state: ForecastItem.ForecastCard,
+    state: ForecastHourState,
     modifier: Modifier = Modifier,
     elevation: Dp = CardElevation,
 ) {
@@ -156,11 +156,11 @@ internal fun ForecastWeatherCard(
     }
 }
 
-@Preview(widthDp = 420)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
+@Preview(widthDp = 360)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
 @Composable
 private fun ForecastWeatherCardPreview(
-    @PreviewParameter(ForecastStateProvider::class) forecastState: ForecastItem.ForecastCard,
+    @PreviewParameter(ForecastStateProvider::class) forecastState: ForecastHourState,
 ) {
     WeatherSampleTheme {
         Surface(modifier = Modifier.fillMaxWidth()) {

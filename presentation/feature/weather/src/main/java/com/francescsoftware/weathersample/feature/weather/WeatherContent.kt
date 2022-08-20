@@ -1,29 +1,31 @@
 package com.francescsoftware.weathersample.feature.weather
 
-import androidx.compose.foundation.layout.Box
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.shared.composable.LoadingButton
+import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
-import com.francescsoftware.weathersample.styles.MarginSingle
+import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
-private val WeatherCardWidth = 420.dp
+private val WeatherCardWidth = 360.dp
 
 @Composable
 internal fun WeatherContent(
@@ -37,7 +39,10 @@ internal fun WeatherContent(
             todayRefreshCallback = todayRefreshCallback,
             modifier = modifier,
         )
-        SelectedWeatherScreen.Forecast -> WeatherForecast(state)
+        SelectedWeatherScreen.Forecast -> WeatherForecast(
+            state = state,
+            modifier = modifier,
+        )
     }
 }
 
@@ -66,92 +71,61 @@ private fun TodayWeather(
 }
 
 @Composable
-private fun WeatherForecast(state: WeatherState) {
-    val width = LocalContext.current.resources.displayMetrics.widthPixels
-    val minColumnWidth = with(LocalDensity.current) { WeatherCardWidth.toPx() }
-    val numColumns = ((width / minColumnWidth).toInt()).coerceAtLeast(1)
-    val gridWidth = with(LocalDensity.current) { (numColumns * minColumnWidth).toDp() }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = MarginSingle)
+private fun WeatherForecast(
+    state: WeatherState,
+    modifier: Modifier = Modifier,
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(
+            minSize = WeatherCardWidth,
+        ),
+        modifier = modifier,
+        contentPadding = PaddingValues(all = MarginDouble),
+        horizontalArrangement = Arrangement.spacedBy(MarginDouble),
+        verticalArrangement = Arrangement.spacedBy(MarginDouble),
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .width(gridWidth)
-                .padding(bottom = MarginSingle)
-                .align(Alignment.TopCenter),
-            contentPadding = PaddingValues(bottom = MarginSingle),
-        ) {
-            var index = 0
-            while (index < state.forecastItems.size) {
-                when (val item = state.forecastItems[index++]) {
-                    is ForecastItem.ForecastHeader -> headerCard(item)
-                    is ForecastItem.ForecastCard -> {
-                        val forecastItems = mutableListOf(item)
-                        while (index < state.forecastItems.size) {
-                            val next = state.forecastItems[index]
-                            if (next is ForecastItem.ForecastCard) {
-                                forecastItems.add(next)
-                                ++index
-                            } else {
-                                break
-                            }
-                        }
-                        forecastCards(
-                            forecastItems = forecastItems,
-                            numColumns = numColumns,
-                        )
-                    }
-                }
+        state.forecastItems.forEach { dayForecast ->
+            item(
+                key = dayForecast.header.id,
+                span = { GridItemSpan(maxLineSpan) }
+            ) {
+                ForecastHeader(
+                    state = dayForecast.header,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = MarginDouble),
+                )
+            }
+            items(
+                items = dayForecast.forecast,
+                key = { hourForecast -> hourForecast.id }
+            ) { hourForecast ->
+                ForecastWeatherCard(
+                    state = hourForecast,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
         }
     }
 }
 
-private fun LazyListScope.headerCard(item: ForecastItem.ForecastHeader) {
-    item {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = MarginSingle)
-        ) {
-            ForecastHeader(
-                state = item,
-                modifier = Modifier
-                    .width(WeatherCardWidth)
-                    .align(Alignment.TopCenter),
-            )
-        }
-    }
-}
-
-private fun LazyListScope.forecastCards(
-    forecastItems: List<ForecastItem.ForecastCard>,
-    numColumns: Int,
+@Preview(showBackground = true, widthDp = 360, group = "Phone")
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360, group = "Phone")
+@Preview(showBackground = true, widthDp = 720, group = "Tablet")
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 720, group = "Tablet")
+@Composable
+private fun PreviewWeatherContent(
+    @PreviewParameter(WeatherStateProvider::class, limit = 2) state: WeatherState,
 ) {
-    val rows = forecastItems.chunked(numColumns)
-    rows.forEach { row ->
-        item {
-            Row(
+    WeatherSampleTheme {
+        Surface {
+            WeatherContent(
+                state = state,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = MarginSingle)
-            ) {
-                row.forEach { state ->
-                    ForecastWeatherCard(
-                        state = state,
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = MarginSingle),
-                    )
-                }
-                if (row.size < numColumns) {
-                    repeat(numColumns - row.size) {
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
-                }
-            }
+                    .padding(all = MarginDouble),
+                todayRefreshCallback = {}
+            )
         }
     }
 }

@@ -2,7 +2,7 @@ package com.francescsoftware.weathersample.feature.weather
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 
-internal val PartlyCloudyForecast = ForecastItem.ForecastCard(
+internal val PartlyCloudyHourForecast = ForecastHourState(
     id = 1L,
     header = "02:00 - Scattered Clouds",
     iconId = R.drawable.ic_partly_cloudy,
@@ -15,7 +15,7 @@ internal val PartlyCloudyForecast = ForecastItem.ForecastCard(
     visibility = "3 km",
 )
 
-internal val SunnyForecast = ForecastItem.ForecastCard(
+internal val SunnyHourForecast = ForecastHourState(
     id = 2L,
     header = "14:00 - Sunny",
     iconId = R.drawable.ic_sunny,
@@ -28,7 +28,7 @@ internal val SunnyForecast = ForecastItem.ForecastCard(
     visibility = "10 km",
 )
 
-internal val HeavyRainForecast = ForecastItem.ForecastCard(
+internal val HeavyRainHourForecast = ForecastHourState(
     id = 1L,
     header = "06:00 - Heavy Rain",
     iconId = R.drawable.ic_heavy_rain,
@@ -41,10 +41,10 @@ internal val HeavyRainForecast = ForecastItem.ForecastCard(
     visibility = "1 km",
 )
 
-internal class ForecastStateProvider : PreviewParameterProvider<ForecastItem.ForecastCard> {
-    override val values: Sequence<ForecastItem.ForecastCard> = sequenceOf(
-        PartlyCloudyForecast,
-        SunnyForecast,
-        HeavyRainForecast,
+internal class ForecastStateProvider : PreviewParameterProvider<ForecastHourState> {
+    override val values: Sequence<ForecastHourState> = sequenceOf(
+        PartlyCloudyHourForecast,
+        SunnyHourForecast,
+        HeavyRainHourForecast,
     )
 }

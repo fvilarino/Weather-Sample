@@ -24,7 +24,7 @@ internal data class WeatherState(
     val cityName: String,
     val cityCountryCode: String,
     val todayState: TodayWeatherCardState,
-    val forecastItems: List<ForecastItem>,
+    val forecastItems: List<ForecastDayState>,
     val errorMessage: String,
 ) : State {
 
@@ -61,7 +61,7 @@ internal sealed interface WeatherAction : Action {
 
     data class Loaded(
         val currentWeather: TodayWeatherCardState,
-        val forecastItems: List<ForecastItem>,
+        val forecastItems: List<ForecastDayState>,
     ) : WeatherAction
 
     data class TodayLoaded(
