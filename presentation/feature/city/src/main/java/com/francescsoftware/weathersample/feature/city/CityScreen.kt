@@ -21,7 +21,6 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityViewModel
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
 import com.francescsoftware.weathersample.styles.MarginDouble
@@ -49,7 +49,7 @@ internal fun CityScreen(
     onCityClick: (SelectedCity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     CityScreen(
         state = state,
         onCityClick = onCityClick,

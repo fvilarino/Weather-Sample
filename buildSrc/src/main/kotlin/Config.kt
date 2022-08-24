@@ -15,6 +15,7 @@ object Config {
         val composeFreeCompileArgs = listOf(
             "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
             "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
         )
         val flowFreeCompilerArgs = listOf(
             "-opt-in=kotlinx.coroutines.FlowPreview",
