@@ -118,14 +118,18 @@ private fun CitiesSearchBox(
         singleLine = true,
         leadingIcon = {
             Icon(
-                painter = painterResource(id = R.drawable.ic_baseline_location_city_24),
+                painter = painterResource(
+                    id = com.francescsoftware.weathersample.shared.assets.R.drawable.ic_baseline_location_city_24
+                ),
                 contentDescription = null,
             )
         },
         trailingIcon = {
             IconButton(onClick = onClearQuery) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_baseline_clear_24),
+                    painter = painterResource(
+                        id = com.francescsoftware.weathersample.shared.assets.R.drawable.ic_baseline_clear_24
+                    ),
                     contentDescription = stringResource(id = R.string.content_description_clear),
                 )
             }

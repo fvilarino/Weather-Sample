@@ -182,7 +182,7 @@ private fun TodayWeatherCardPreview() {
                 precipitation = "10",
                 uvIndex = "3",
                 description = "Partly cloudy",
-                iconId = R.drawable.ic_partly_cloudy,
+                iconId = com.francescsoftware.weathersample.shared.assets.R.drawable.ic_partly_cloudy,
                 windSpeed = "4.3kph",
                 humidity = "54%",
                 pressure = "1024mb",

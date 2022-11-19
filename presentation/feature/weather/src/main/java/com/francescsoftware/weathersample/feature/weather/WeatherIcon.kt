@@ -73,18 +73,18 @@ internal fun weatherIconFromCode(code: Int): WeatherIcon = when (code) {
 internal val WeatherIcon.drawableId: Int
     @DrawableRes
     get() = when (this) {
-        WeatherIcon.ClearSky -> R.drawable.ic_sunny
+        WeatherIcon.ClearSky -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_sunny
         WeatherIcon.FewClouds,
         WeatherIcon.ScatteredClouds,
-        WeatherIcon.BrokenClouds -> R.drawable.ic_partly_cloudy
-        WeatherIcon.Overcast -> R.drawable.ic_overcast
+        WeatherIcon.BrokenClouds -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_partly_cloudy
+        WeatherIcon.Overcast -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_overcast
         WeatherIcon.ShowerRain,
-        WeatherIcon.LightRain -> R.drawable.ic_light_rain
-        WeatherIcon.ModerateRain -> R.drawable.ic_moderate_rain
-        WeatherIcon.HeavyRain -> R.drawable.ic_heavy_rain
-        WeatherIcon.Thunderstorm -> R.drawable.ic_thunder
-        WeatherIcon.Snow -> R.drawable.ic_snow
+        WeatherIcon.LightRain -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_light_rain
+        WeatherIcon.ModerateRain -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_moderate_rain
+        WeatherIcon.HeavyRain -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_heavy_rain
+        WeatherIcon.Thunderstorm -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_thunder
+        WeatherIcon.Snow -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_snow
         WeatherIcon.Mist,
-        WeatherIcon.Foggy -> R.drawable.ic_foggy
-        WeatherIcon.Windy -> R.drawable.ic_windy
+        WeatherIcon.Foggy -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_foggy
+        WeatherIcon.Windy -> com.francescsoftware.weathersample.shared.assets.R.drawable.ic_windy
     }

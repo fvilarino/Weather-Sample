@@ -13,6 +13,7 @@ dependencies {
 
     implementation(project(":business:interactor:city:api"))
     implementation(project(":core:type"))
+    implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:composable"))
     implementation(project(":presentation:shared:lookup:api"))
     implementation(project(":presentation:shared:mvi"))

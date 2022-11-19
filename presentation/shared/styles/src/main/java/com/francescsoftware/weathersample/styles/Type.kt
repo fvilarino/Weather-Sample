@@ -6,12 +6,11 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.francescsoftware.weathersample.shared.styles.R
 
 private val Montserrat = FontFamily(
-    Font(R.font.montserrat_regular, FontWeight.Normal),
-    Font(R.font.montserrat_medium, FontWeight.Medium),
-    Font(R.font.montserrat_bold, FontWeight.Bold),
+    Font(com.francescsoftware.weathersample.shared.assets.R.font.montserrat_regular, FontWeight.Normal),
+    Font(com.francescsoftware.weathersample.shared.assets.R.font.montserrat_medium, FontWeight.Medium),
+    Font(com.francescsoftware.weathersample.shared.assets.R.font.montserrat_bold, FontWeight.Bold),
 )
 
 val Typography = Typography(
