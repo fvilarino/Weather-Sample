@@ -12,6 +12,7 @@ android {
 dependencies {
 
     implementation(project(":business:interactor:city:api"))
+    implementation(project(":core:coroutines"))
     implementation(project(":core:type"))
     implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:composable"))

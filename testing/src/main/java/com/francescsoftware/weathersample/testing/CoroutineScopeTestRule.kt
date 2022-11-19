@@ -16,13 +16,15 @@ val testDispatcherProvider = object : DispatcherProvider {
     private var dispatcher: CoroutineDispatcher? = null
 
     override val main: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Main
+        get() = dispatcher ?: Dispatchers.Unconfined
+    override val mainImmediate: CoroutineDispatcher
+        get() = dispatcher ?: Dispatchers.Unconfined
     override val io: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Main
+        get() = dispatcher ?: Dispatchers.Unconfined
     override val default: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Main
+        get() = dispatcher ?: Dispatchers.Unconfined
     override val unconfined: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Main
+        get() = dispatcher ?: Dispatchers.Unconfined
 
     override fun setDispatcher(dispatcher: CoroutineDispatcher?) {
         this.dispatcher = dispatcher

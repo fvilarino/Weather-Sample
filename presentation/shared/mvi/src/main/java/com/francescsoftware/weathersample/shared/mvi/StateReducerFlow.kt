@@ -1,7 +1,5 @@
 package com.francescsoftware.weathersample.shared.mvi
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,15 +13,16 @@ private const val BufferSize = 64
 
 interface StateReducerFlow<S : State, A : Action> : StateFlow<S>, Dispatcher<A>
 
-internal fun <S : State, A : Action> ViewModel.stateReducerFlow(
+internal fun <S : State, A : Action> stateReducerFlow(
     initialState: S,
+    scope: CoroutineScope,
     reducer: Reducer<S, A>,
     middleware: List<Middleware<S, A>> = emptyList(),
 ): StateReducerFlow<S, A> = StateReducerFlowImpl(
     initialState,
     reducer,
     middleware,
-    viewModelScope,
+    scope,
 )
 
 private class StateReducerFlowImpl<S : State, A : Action>(

@@ -7,6 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:coroutines"))
     implementation(project(":core:dispatcher"))
 
     implementation(libs.bundles.lifecycle)

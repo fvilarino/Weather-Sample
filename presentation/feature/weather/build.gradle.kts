@@ -8,8 +8,9 @@ android {
 
 dependencies {
     implementation(project(":business:interactor:weather:api"))
-    implementation(project(":core:type"))
+    implementation(project(":core:coroutines"))
     implementation(project(":core:time:api"))
+    implementation(project(":core:type"))
     implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:composable"))
     implementation(project(":presentation:shared:lookup:api"))
@@ -24,8 +25,6 @@ dependencies {
     implementation(libs.androidx.navigation.navigation.compose)
 
     implementation(libs.androidx.core.core.ktx)
-
-    implementation(libs.androidx.lifecycle.lifecycle.common.java8)
 
     implementation(libs.com.google.dagger.hilt.android)
     kapt(libs.com.google.dagger.hilt.android.compiler)

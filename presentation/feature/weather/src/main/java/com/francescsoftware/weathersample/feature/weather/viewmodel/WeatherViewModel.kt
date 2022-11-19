@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import com.francescsoftware.weathersample.coroutines.CloseableCoroutineScope
 import com.francescsoftware.weathersample.feature.weather.SelectedWeatherScreen
 import com.francescsoftware.weathersample.feature.weather.WeatherAction
 import com.francescsoftware.weathersample.feature.weather.WeatherState
@@ -13,10 +14,12 @@ import javax.inject.Inject
 @HiltViewModel
 internal class WeatherViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    closeableScope: CloseableCoroutineScope,
     reducer: WeatherReducer,
     weatherMiddleware: WeatherMiddleware,
     todayMiddleware: TodayMiddleware,
 ) : MviViewModel<WeatherState, WeatherAction>(
+    closeableScope = closeableScope,
     reducer = reducer,
     middlewares = listOf(weatherMiddleware, todayMiddleware),
     initialState = WeatherState.initial,

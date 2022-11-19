@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.feature.city.viewmodel
 
+import com.francescsoftware.weathersample.coroutines.CloseableCoroutineScope
 import com.francescsoftware.weathersample.feature.city.CityAction
 import com.francescsoftware.weathersample.feature.city.CityState
 import com.francescsoftware.weathersample.shared.mvi.MviViewModel
@@ -10,9 +11,11 @@ private const val TAG = "CityViewModel"
 
 @HiltViewModel
 internal class CityViewModel @Inject constructor(
+    closeableScope: CloseableCoroutineScope,
     reducer: CityReducer,
     middleware: CityMiddleware,
 ) : MviViewModel<CityState, CityAction>(
+    closeableScope = closeableScope,
     reducer = reducer,
     middlewares = listOf(middleware),
     initialState = CityState.initial,

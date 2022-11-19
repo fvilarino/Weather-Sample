@@ -16,6 +16,9 @@ object DispatcherProviderInstance : DispatcherProvider {
     override val main: CoroutineDispatcher
         get() = dispatcher ?: Dispatchers.Main
 
+    override val mainImmediate: CoroutineDispatcher
+        get() = dispatcher ?: Dispatchers.Main.immediate
+
     override val unconfined: CoroutineDispatcher
         get() = dispatcher ?: Dispatchers.Unconfined
 
