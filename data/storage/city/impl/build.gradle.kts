@@ -1,8 +1,3 @@
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.plugins
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
-
 plugins {
     id("base-hilt-library")
     alias(libs.plugins.com.google.protobuf)
@@ -33,7 +28,7 @@ protobuf {
     }
     generateProtoTasks {
         all().forEach { task ->
-            task.plugins {
+            task.builtins {
                 create("java") {
                     option("lite")
                 }
