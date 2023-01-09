@@ -54,7 +54,7 @@ internal class CityMiddleware @Inject constructor(
             .distinctUntilChanged()
             .debounce(DebounceMillis)
             .map { prefix ->
-                dispatcher.dispatch(CityAction.Loading)
+                dispatch(CityAction.Loading)
                 getCitiesInteractor.execute(
                     prefix = prefix,
                 )
@@ -79,9 +79,9 @@ internal class CityMiddleware @Inject constructor(
         cities.fold(
             onSuccess = { list ->
                 if (list.isEmpty()) {
-                    dispatcher.dispatch(CityAction.NoResults)
+                    dispatch(CityAction.NoResults)
                 } else {
-                    dispatcher.dispatch(
+                    dispatch(
                         CityAction.CitiesLoaded(
                             list.map { city -> city.toCityResultModel() }
                         )
@@ -89,7 +89,7 @@ internal class CityMiddleware @Inject constructor(
                 }
             },
             onFailure = {
-                dispatcher.dispatch(CityAction.LoadError)
+                dispatch(CityAction.LoadError)
             }
         )
     }

@@ -11,6 +11,8 @@ abstract class Middleware<S : State, A : Action> {
 
     abstract fun process(state: S, action: A)
 
+    protected fun dispatch(action: A) = dispatcher.dispatch(action)
+
     internal fun setup(
         scope: CoroutineScope,
         dispatcher: Dispatcher<A>,

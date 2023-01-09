@@ -60,7 +60,7 @@ internal class WeatherMiddleware @Inject constructor(
                 countryCode = countryCode,
             )
         }
-        dispatcher.dispatch(WeatherAction.Loading)
+        dispatch(WeatherAction.Loading)
     }
 
     private suspend fun load(
@@ -77,14 +77,14 @@ internal class WeatherMiddleware @Inject constructor(
             val current = currentAsync.await().getOrNull()
             val forecast = forecastAsync.await().getOrNull()
             if (current != null && forecast != null) {
-                dispatcher.dispatch(
+                dispatch(
                     WeatherAction.Loaded(
                         currentWeather = current.toWeatherCardState(stringLookup),
                         forecastItems = forecast.toForecastItems()
                     )
                 )
             } else {
-                dispatcher.dispatch(
+                dispatch(
                     WeatherAction.LoadError(
                         message = stringLookup.getString(R.string.failed_to_load_weather_data)
                     )

@@ -22,7 +22,7 @@ internal class TodayMiddleware @Inject constructor(
     ) {
         when (action) {
             is WeatherAction.RefreshTodayWeather -> {
-                dispatcher.dispatch(WeatherAction.Loading)
+                dispatch(WeatherAction.Loading)
                 scope.launch {
                     loadTodayWeather(
                         action.cityName,
@@ -44,14 +44,14 @@ internal class TodayMiddleware @Inject constructor(
         )
         getTodayWeatherInteractor.execute(location).fold(
             onSuccess = { todayWeather ->
-                dispatcher.dispatch(
+                dispatch(
                     WeatherAction.TodayLoaded(
                         currentWeather = todayWeather.toWeatherCardState(stringLookup),
                     )
                 )
             },
             onFailure = {
-                dispatcher.dispatch(
+                dispatch(
                     WeatherAction.LoadError(
                         message = stringLookup.getString(R.string.failed_to_load_weather_data)
                     )
