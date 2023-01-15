@@ -65,3 +65,4 @@ internal class GetCitiesInteractorImpl @Inject constructor(
         )
     )
 }
+

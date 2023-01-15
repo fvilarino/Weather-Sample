@@ -12,6 +12,7 @@ dependencies {
     implementation(project(":core:time:api"))
     implementation(project(":core:type"))
     implementation(project(":data:repository:city:api"))
+    implementation(project(":data:repository:recents:api"))
     implementation(project(":utils"))
 
     implementation(libs.androidx.core.core.ktx)

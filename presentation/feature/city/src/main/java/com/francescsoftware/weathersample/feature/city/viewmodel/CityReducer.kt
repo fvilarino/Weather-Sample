@@ -1,8 +1,6 @@
 package com.francescsoftware.weathersample.feature.city.viewmodel
 
-import com.francescsoftware.weathersample.feature.city.CityAction
-import com.francescsoftware.weathersample.feature.city.CityState
-import com.francescsoftware.weathersample.feature.city.LoadState
+import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.shared.mvi.Reducer
 import javax.inject.Inject
 
@@ -12,18 +10,27 @@ internal class CityReducer @Inject constructor() : Reducer<CityState, CityAction
         state: CityState,
         action: CityAction,
     ): CityState = when (action) {
-        is CityAction.PrefixUpdated -> state.copy(
-            query = action.prefix,
-            loadState = if (action.prefix.isEmpty()) LoadState.Idle else state.loadState,
+        is CityAction.QueryUpdated -> state.copy(
+            query = action.query,
+            loadState = if (action.query.text.isEmpty()) LoadState.Idle else state.loadState,
         )
+
         CityAction.ClearQuery -> state.copy(
-            query = "",
+            query = TextFieldValue(),
             loadState = LoadState.Idle,
         )
+
         is CityAction.CitiesLoaded -> state.copy(
             loadState = LoadState.Loaded,
             cities = action.cities,
         )
+
+        is CityAction.RecentCitiesLoaded -> state.copy(
+            recentCities = action.recentCities,
+            showRecentCities = true,
+        )
+
+        CityAction.HideRecentCities -> state.copy(showRecentCities = false)
         CityAction.LoadError -> state.copy(loadState = LoadState.Error)
         CityAction.NoResults -> state.copy(loadState = LoadState.NoResults)
         CityAction.Loading -> state.copy(loadState = LoadState.Loading)

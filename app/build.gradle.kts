@@ -57,6 +57,8 @@ dependencies {
     implementation(project(":data:storage:city:impl"))
     implementation(project(":data:repository:city:api"))
     implementation(project(":data:repository:city:impl"))
+    implementation(project(":data:repository:recents:api"))
+    implementation(project(":data:repository:recents:impl"))
     implementation(project(":data:repository:weather:api"))
     implementation(project(":data:repository:weather:impl"))
 

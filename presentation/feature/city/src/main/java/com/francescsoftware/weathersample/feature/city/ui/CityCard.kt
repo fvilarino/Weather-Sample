@@ -1,21 +1,21 @@
-package com.francescsoftware.weathersample.feature.city
+package com.francescsoftware.weathersample.feature.city.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.francescsoftware.weathersample.feature.city.R
+import com.francescsoftware.weathersample.feature.city.model.CityResultModel
 import com.francescsoftware.weathersample.shared.composable.InfoLabels
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.styles.WidgetPreviews
 
 @Composable
 internal fun CityCard(
@@ -62,20 +62,16 @@ internal fun CityCard(
     }
 }
 
-@Preview(showBackground = true, widthDp = 360)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
+@WidgetPreviews
 @Composable
 private fun PreviewCityCard(
     @PreviewParameter(CityStateProvider::class, 2) model: CityResultModel,
 ) {
     WeatherSampleTheme {
-        Surface {
-            CityCard(
-                city = model,
-                onClick = { },
-                modifier = Modifier.padding(all = MarginSingle),
-                contentPadding = PaddingValues(all = MarginDouble),
-            )
-        }
+        CityCard(
+            city = model,
+            onClick = { },
+            contentPadding = PaddingValues(all = MarginDouble),
+        )
     }
 }

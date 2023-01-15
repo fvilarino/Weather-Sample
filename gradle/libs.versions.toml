@@ -10,6 +10,7 @@ androidx-hilt-hilt-navigation-compose-version = "1.1.0-alpha01"
 androidx-lifecycle-lifecycle-version = "2.6.0-alpha03"
 androidx-navigation-navigation-safe-args-gradle-plugin-version = "2.6.0-alpha04"
 androidx-navigation-version = "2.6.0-alpha04"
+androidx-room-version = "2.5.0"
 androidx-test-espresso-espresso-core-version = "3.5.1"
 androidx-test-ext-junit-version = "1.1.5"
 app-compat-version = "1.7.0-alpha01"
@@ -56,6 +57,9 @@ androidx-navigation-navigation-compose = { module = "androidx.navigation:navigat
 androidx-navigation-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation-version" }
 androidx-navigation-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation-navigation-safe-args-gradle-plugin-version" }
 androidx-navigation-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation-version" }
+androidx-room-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room-version" }
+androidx-room-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room-version" }
+androidx-room-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room-version" }
 androidx-test-espresso-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso-espresso-core-version" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext-junit-version" }
 com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "com-android-tools-build-gradle-version" }

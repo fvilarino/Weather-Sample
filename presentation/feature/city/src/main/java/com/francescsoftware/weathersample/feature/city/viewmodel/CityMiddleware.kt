@@ -1,9 +1,8 @@
 package com.francescsoftware.weathersample.feature.city.viewmodel
 
-import com.francescsoftware.weathersample.feature.city.CityAction
-import com.francescsoftware.weathersample.feature.city.CityResultModel
-import com.francescsoftware.weathersample.feature.city.CityState
+import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.feature.city.R
+import com.francescsoftware.weathersample.feature.city.model.CityResultModel
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
 import com.francescsoftware.weathersample.lookup.api.StringLookup
@@ -23,7 +22,6 @@ import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-private const val MIN_CITY_LENGTH_FOR_SEARCH = 3
 private val DebounceMillis = 400L.toDuration(DurationUnit.MILLISECONDS)
 
 internal class CityMiddleware @Inject constructor(
@@ -43,7 +41,7 @@ internal class CityMiddleware @Inject constructor(
     ) {
         when (action) {
             CityAction.Start -> onStart()
-            is CityAction.PrefixUpdated -> onPrefixUpdated(action.prefix)
+            is CityAction.QueryUpdated -> onQueryUpdated(action.query)
             else -> {}
         }
     }
@@ -63,12 +61,12 @@ internal class CityMiddleware @Inject constructor(
             }.launchIn(scope)
     }
 
-    private fun onPrefixUpdated(
-        prefix: String,
+    private fun onQueryUpdated(
+        query: TextFieldValue,
     ) {
-        if (prefix.length >= MIN_CITY_LENGTH_FOR_SEARCH) {
+        if (query.text.length >= MinCityLengthForSerch) {
             scope.launch {
-                searchFlow.emit(prefix)
+                searchFlow.emit(query.text)
             }
         }
     }

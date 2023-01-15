@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.feature.city
+package com.francescsoftware.weathersample.feature.city.model
 
 internal data class CityResultModel(
     val id: Long,
