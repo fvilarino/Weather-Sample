@@ -3,7 +3,7 @@ package com.francescsoftware.weathersample.interactor.city.impl
 import com.francescsoftware.weathersample.interactor.city.api.InsertRecentCityInteractor
 import com.francescsoftware.weathersample.interactor.city.api.RecentCity
 import com.francescsoftware.weathersample.repository.recents.api.RecentsRepository
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 import com.francescsoftware.weathersample.repository.recents.api.RecentCity as RepoCity
 
