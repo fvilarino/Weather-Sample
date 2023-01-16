@@ -23,41 +23,48 @@ fun InfoLabels(
         content = content,
         modifier = modifier,
     ) { measurables, constraints ->
+        check(measurables.size % 2 == 0) { "This composable expects pairs of children" }
+        val numPairs = measurables.size / 2
         val looseConstraints = constraints.copy(
             minWidth = 0,
             minHeight = 0,
         )
-        val placeables = measurables.map { measurable ->
-            measurable.measure(looseConstraints)
+        val labelMeasurables = measurables.slice(measurables.indices step 2)
+        val descriptionMeasurables = measurables.slice(1..measurables.lastIndex step 2)
+        val labelPlaceables = labelMeasurables.map { measurable -> measurable.measure(looseConstraints) }
+        val labelWidth = labelPlaceables.maxBy { placeable -> placeable.width }.width
+        val descriptionConstraints = looseConstraints.copy(
+            minWidth = constraints.maxWidth - labelWidth,
+            maxWidth = constraints.maxWidth - labelWidth,
+        )
+        val descriptionPlaceables = descriptionMeasurables.map { measurable ->
+            measurable.measure(descriptionConstraints)
         }
-        val labels = List(placeables.size / 2) { index ->
-            placeables[2 * index]
+        val requiredHeight = (0 until numPairs).sumOf { index ->
+            max(
+                labelPlaceables[index].height,
+                descriptionPlaceables[index].height,
+            )
         }
-        val descriptions = List(placeables.size / 2) { index ->
-            placeables[2 * index + 1]
-        }
-        val maxLabelWidth = labels.maxByOrNull { it.width }?.width ?: 0
-        val height = List(labels.size) { index ->
-            max(labels[index].height, descriptions[index].height)
-        }.sum()
         layout(
             constraints.maxWidth,
-            height.coerceAtMost(constraints.maxHeight)
+            requiredHeight.coerceAtMost(constraints.maxHeight),
         ) {
             var yPosition = 0
 
-            for (i in labels.indices) {
-                val label = labels[i]
-                val description = descriptions[i]
+            for (i in 0 until numPairs) {
+                val label = labelPlaceables[i]
+                val description = descriptionPlaceables[i]
+                val height = max(label.height, description.height)
                 label.placeRelative(
                     x = 0,
-                    y = yPosition
+                    y = yPosition,
                 )
                 description.placeRelative(
-                    x = maxLabelWidth,
-                    y = yPosition
+                    x = labelWidth,
+                    y = yPosition,
                 )
-                yPosition += label.height.coerceAtLeast(description.height)
+                yPosition += max(label.height, description.height)
             }
         }
     }
