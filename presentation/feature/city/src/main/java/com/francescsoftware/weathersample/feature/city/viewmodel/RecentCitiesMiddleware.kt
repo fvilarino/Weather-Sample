@@ -40,7 +40,7 @@ internal class RecentCitiesMiddleware @Inject constructor(
 
     private fun loadRecentCities() {
         if (recentsJob == null) {
-            getRecentCitiesInteractor.execute(limit = MaxRecentCities)
+            recentsJob = getRecentCitiesInteractor.execute(limit = MaxRecentCities)
                 .map { cities -> cities.map { city -> RecentCityModel(name = city.name) } }
                 .onEach { recentCities ->
                     if (recentCities.isEmpty()) {
