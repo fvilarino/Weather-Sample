@@ -18,7 +18,7 @@ dependencies {
     kapt(libs.com.google.dagger.hilt.android.compiler)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }
 
