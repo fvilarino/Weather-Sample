@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import com.francescsoftware.weathersample.shared.mvi.Action
 import com.francescsoftware.weathersample.shared.mvi.State

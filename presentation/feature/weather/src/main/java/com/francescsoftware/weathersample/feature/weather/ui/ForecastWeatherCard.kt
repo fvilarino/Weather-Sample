@@ -1,6 +1,5 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,17 +23,19 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.francescsoftware.weathersample.feature.weather.R
+import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastHourState
 import com.francescsoftware.weathersample.shared.composable.InfoLabels
 import com.francescsoftware.weathersample.styles.CardElevation
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.MarginTreble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.styles.WidgetPreviews
 
 @Composable
 internal fun ForecastWeatherCard(
@@ -156,14 +157,15 @@ internal fun ForecastWeatherCard(
     }
 }
 
-@Preview(widthDp = 360)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
+@WidgetPreviews
 @Composable
 private fun ForecastWeatherCardPreview(
     @PreviewParameter(ForecastStateProvider::class) forecastState: ForecastHourState,
 ) {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
+        Surface(
+            color = MaterialTheme.colors.background,
+        ) {
             ForecastWeatherCard(
                 state = forecastState,
                 modifier = Modifier.padding(all = MarginSingle),

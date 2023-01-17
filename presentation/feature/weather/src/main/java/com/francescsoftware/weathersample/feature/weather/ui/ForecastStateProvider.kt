@@ -1,11 +1,13 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastHourState
+import com.francescsoftware.weathersample.shared.assets.R
 
 internal val PartlyCloudyHourForecast = ForecastHourState(
     id = 1L,
     header = "02:00 - Scattered Clouds",
-    iconId = com.francescsoftware.weathersample.shared.assets.R.drawable.ic_partly_cloudy,
+    iconId = R.drawable.ic_partly_cloudy,
     temperature = "16.4°C",
     feelsLikeTemperature = "15.5°C",
     precipitation = "0",
@@ -18,7 +20,7 @@ internal val PartlyCloudyHourForecast = ForecastHourState(
 internal val SunnyHourForecast = ForecastHourState(
     id = 2L,
     header = "14:00 - Sunny",
-    iconId = com.francescsoftware.weathersample.shared.assets.R.drawable.ic_sunny,
+    iconId = R.drawable.ic_sunny,
     temperature = "18.7°C",
     feelsLikeTemperature = "21.5°C",
     precipitation = "10",
@@ -31,7 +33,7 @@ internal val SunnyHourForecast = ForecastHourState(
 internal val HeavyRainHourForecast = ForecastHourState(
     id = 1L,
     header = "06:00 - Heavy Rain",
-    iconId = com.francescsoftware.weathersample.shared.assets.R.drawable.ic_heavy_rain,
+    iconId = R.drawable.ic_heavy_rain,
     temperature = "6.2°C",
     feelsLikeTemperature = "5.0°C",
     precipitation = "120",

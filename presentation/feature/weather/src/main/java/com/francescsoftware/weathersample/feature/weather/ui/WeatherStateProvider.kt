@@ -1,6 +1,13 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastDayState
+import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastHeaderState
+import com.francescsoftware.weathersample.feature.weather.viewmodel.SelectedWeatherScreen
+import com.francescsoftware.weathersample.feature.weather.viewmodel.TodayWeatherCardState
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
+import com.francescsoftware.weathersample.shared.assets.R
 
 internal class WeatherStateProvider : PreviewParameterProvider<WeatherState> {
     override val values: Sequence<WeatherState> = sequenceOf(
@@ -23,7 +30,7 @@ private val todayState = WeatherState(
         precipitation = "10",
         uvIndex = "5",
         description = "Partly cloudy",
-        iconId = com.francescsoftware.weathersample.shared.assets.R.drawable.ic_partly_cloudy,
+        iconId = R.drawable.ic_partly_cloudy,
         windSpeed = "4.3kph",
         humidity = "54%",
         pressure = "1024mb",

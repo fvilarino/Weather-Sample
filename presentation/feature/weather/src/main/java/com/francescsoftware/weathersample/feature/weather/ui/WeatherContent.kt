@@ -1,6 +1,5 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,18 +10,24 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.francescsoftware.weathersample.feature.weather.R
+import com.francescsoftware.weathersample.feature.weather.viewmodel.SelectedWeatherScreen
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.shared.composable.LoadingButton
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
+import com.francescsoftware.weathersample.styles.PhonePreviews
+import com.francescsoftware.weathersample.styles.TabletPreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 private val WeatherCardWidth = 360.dp
@@ -39,6 +44,7 @@ internal fun WeatherContent(
             todayRefreshCallback = todayRefreshCallback,
             modifier = modifier,
         )
+
         SelectedWeatherScreen.Forecast -> WeatherForecast(
             state = state,
             modifier = modifier,
@@ -109,16 +115,16 @@ private fun WeatherForecast(
     }
 }
 
-@Preview(showBackground = true, widthDp = 360, group = "Phone")
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360, group = "Phone")
-@Preview(showBackground = true, widthDp = 720, group = "Tablet")
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 720, group = "Tablet")
+@PhonePreviews
+@TabletPreviews
 @Composable
 private fun PreviewWeatherContent(
     @PreviewParameter(WeatherStateProvider::class, limit = 2) state: WeatherState,
 ) {
     WeatherSampleTheme {
-        Surface {
+        Surface(
+            color = MaterialTheme.colors.background,
+        ) {
             WeatherContent(
                 state = state,
                 modifier = Modifier

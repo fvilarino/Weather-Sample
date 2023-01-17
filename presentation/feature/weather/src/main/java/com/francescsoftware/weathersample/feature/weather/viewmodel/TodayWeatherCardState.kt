@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import androidx.annotation.DrawableRes
 import javax.annotation.concurrent.Immutable

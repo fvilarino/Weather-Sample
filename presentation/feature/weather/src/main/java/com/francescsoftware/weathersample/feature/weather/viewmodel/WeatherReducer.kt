@@ -1,8 +1,5 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
-import com.francescsoftware.weathersample.feature.weather.WeatherAction
-import com.francescsoftware.weathersample.feature.weather.WeatherLoadState
-import com.francescsoftware.weathersample.feature.weather.WeatherState
 import com.francescsoftware.weathersample.shared.mvi.Reducer
 import javax.inject.Inject
 

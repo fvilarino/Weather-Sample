@@ -1,11 +1,9 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
@@ -15,10 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import com.francescsoftware.weathersample.feature.weather.R
+import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastHeaderState
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.styles.WidgetPreviews
 
 @Composable
 internal fun ForecastHeader(
@@ -61,12 +61,13 @@ internal fun ForecastHeader(
     }
 }
 
-@Preview(showBackground = true, widthDp = 360)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
+@WidgetPreviews
 @Composable
 private fun ForecastHeaderPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
+        Surface(
+            color = MaterialTheme.colors.background,
+        ) {
             ForecastHeader(
                 state = ForecastHeaderState(
                     id = "header",

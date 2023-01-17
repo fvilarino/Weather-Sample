@@ -1,17 +1,6 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
-import com.francescsoftware.weathersample.feature.weather.ForecastDayState
-import com.francescsoftware.weathersample.feature.weather.ForecastHeaderState
-import com.francescsoftware.weathersample.feature.weather.ForecastHourState
 import com.francescsoftware.weathersample.feature.weather.R
-import com.francescsoftware.weathersample.feature.weather.WeatherAction
-import com.francescsoftware.weathersample.feature.weather.WeatherState
-import com.francescsoftware.weathersample.feature.weather.drawableId
-import com.francescsoftware.weathersample.feature.weather.formatHumidity
-import com.francescsoftware.weathersample.feature.weather.formatTemperature
-import com.francescsoftware.weathersample.feature.weather.formatVisibility
-import com.francescsoftware.weathersample.feature.weather.formatWind
-import com.francescsoftware.weathersample.feature.weather.weatherIconFromCode
 import com.francescsoftware.weathersample.interactor.weather.api.Forecast
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry

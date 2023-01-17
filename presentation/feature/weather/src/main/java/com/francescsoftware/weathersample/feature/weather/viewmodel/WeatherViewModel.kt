@@ -2,9 +2,6 @@ package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import com.francescsoftware.weathersample.coroutines.CloseableCoroutineScope
-import com.francescsoftware.weathersample.feature.weather.SelectedWeatherScreen
-import com.francescsoftware.weathersample.feature.weather.WeatherAction
-import com.francescsoftware.weathersample.feature.weather.WeatherState
 import com.francescsoftware.weathersample.presentation.route.NavigationDestination
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
 import com.francescsoftware.weathersample.shared.mvi.MviViewModel

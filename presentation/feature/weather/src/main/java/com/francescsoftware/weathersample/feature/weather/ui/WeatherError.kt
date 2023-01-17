@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
+import com.francescsoftware.weathersample.styles.PhonePreviews
+import com.francescsoftware.weathersample.styles.TabletPreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
@@ -47,16 +49,19 @@ internal fun WeatherError(
     }
 }
 
-@Preview(widthDp = 420)
+@PhonePreviews
+@TabletPreviews
 @Composable
 private fun WeatherErrorPreview() {
     WeatherSampleTheme {
         Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = MarginDouble)
+            color = MaterialTheme.colors.background,
         ) {
-            WeatherError(modifier = Modifier.fillMaxWidth())
+            WeatherError(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = MarginDouble)
+            )
         }
     }
 }

@@ -1,8 +1,6 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import com.francescsoftware.weathersample.feature.weather.R
-import com.francescsoftware.weathersample.feature.weather.WeatherAction
-import com.francescsoftware.weathersample.feature.weather.WeatherState
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup

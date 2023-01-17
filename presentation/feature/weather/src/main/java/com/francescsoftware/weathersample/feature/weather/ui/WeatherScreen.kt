@@ -1,6 +1,5 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.ui
 
-import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,16 +15,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.francescsoftware.weathersample.feature.weather.R
+import com.francescsoftware.weathersample.feature.weather.viewmodel.SelectedWeatherScreen
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
+import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
 import com.francescsoftware.weathersample.shared.composable.LoadingSpinner
 import com.francescsoftware.weathersample.shared.composable.MultiSelector
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
+import com.francescsoftware.weathersample.styles.PhonePreviews
+import com.francescsoftware.weathersample.styles.TabletPreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable
@@ -104,9 +107,11 @@ private fun WeatherScreen(
             when (loadState) {
                 WeatherLoadState.Idle -> {
                 }
+
                 WeatherLoadState.Loading -> LoadingSpinner(
                     modifier = Modifier.fillMaxSize(),
                 )
+
                 WeatherLoadState.Loaded,
                 WeatherLoadState.Refreshing -> WeatherContent(
                     state = state,
@@ -115,6 +120,7 @@ private fun WeatherScreen(
                         .fillMaxSize()
                         .padding(horizontal = MarginDouble),
                 )
+
                 WeatherLoadState.Error -> WeatherError(
                     modifier = Modifier.fillMaxSize(),
                     retry = onRetry,
@@ -124,15 +130,16 @@ private fun WeatherScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 420)
-@Preview(device = Devices.PIXEL_C)
+@PhonePreviews
+@TabletPreviews
 @Composable
 private fun ForecastWeatherScreenPreview(
     @PreviewParameter(WeatherStateProvider::class) state: WeatherState,
 ) {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
+        Surface(
+            color = MaterialTheme.colors.background,
+        ) {
             WeatherScreen(
                 state = state,
                 onOptionSelect = {},

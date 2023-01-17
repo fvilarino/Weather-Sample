@@ -1,6 +1,5 @@
-package com.francescsoftware.weathersample.feature.weather
+package com.francescsoftware.weathersample.feature.weather.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -23,15 +22,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.francescsoftware.weathersample.feature.weather.R
+import com.francescsoftware.weathersample.feature.weather.viewmodel.TodayWeatherCardState
 import com.francescsoftware.weathersample.shared.composable.InfoLabels
 import com.francescsoftware.weathersample.styles.CardElevation
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.MarginTreble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.styles.WidgetPreviews
 
 @Composable
 internal fun TodayWeatherCard(
@@ -170,12 +171,13 @@ internal fun TodayWeatherCard(
     }
 }
 
-@Preview(showBackground = true, widthDp = 360)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360)
+@WidgetPreviews
 @Composable
 private fun TodayWeatherCardPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
+        Surface(
+            color = MaterialTheme.colors.background,
+        ) {
             val state = TodayWeatherCardState(
                 temperature = "16.4°C",
                 feelsLikeTemperature = "14.3°C",
@@ -186,7 +188,7 @@ private fun TodayWeatherCardPreview() {
                 windSpeed = "4.3kph",
                 humidity = "54%",
                 pressure = "1024mb",
-                visibility = "10000 m"
+                visibility = "10000 m",
             )
             TodayWeatherCard(state = state)
         }
