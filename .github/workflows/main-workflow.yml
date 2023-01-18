@@ -40,7 +40,7 @@ jobs:
       - name: Run tests
         run: ./gradlew testDebugUnitTest --stacktrace
 
-  ktlint:
+  analysis:
     name: Static Analysis
     runs-on: ubuntu-latest
     steps:
@@ -54,6 +54,8 @@ jobs:
           java-version: 17
           cache: 'gradle'
 
-      - name: Run static analysis
+      - name: Run ktlint static analysis
         run: ./gradlew ktlintcheck
 
+      - name: Run lint static analysis
+        run: ./gradlew lintDebug --stacktrace
