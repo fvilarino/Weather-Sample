@@ -1,3 +1,5 @@
+import org.gradle.api.JavaVersion
+
 object Config {
 
     object Application {
@@ -5,7 +7,8 @@ object Config {
     }
 
     object Compiler {
-        const val jvmTarget = "11"
+        const val jvmTarget = "17"
+        val javaVersion = JavaVersion.VERSION_17
         val freeCompilerArgs = listOf(
             "-opt-in=kotlin.time.ExperimentalTime",
         )
