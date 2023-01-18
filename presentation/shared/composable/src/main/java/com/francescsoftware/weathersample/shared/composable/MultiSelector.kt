@@ -12,9 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -185,10 +185,10 @@ fun MultiSelector(
     selectedOption: String,
     onOptionSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
-    selectedColor: Color = MaterialTheme.colors.onPrimary,
-    unselectedcolor: Color = MaterialTheme.colors.onSurface,
-    selectedBackgroundColor: Color = MaterialTheme.colors.primary,
-    unselectedBackgroundColor: Color = MaterialTheme.colors.surface,
+    selectedColor: Color = MaterialTheme.colorScheme.onPrimary,
+    unselectedcolor: Color = MaterialTheme.colorScheme.onSurface,
+    selectedBackgroundColor: Color = MaterialTheme.colorScheme.primary,
+    unselectedBackgroundColor: Color = MaterialTheme.colorScheme.surface,
     state: MultiSelectorState = rememberMultiSelectorState(
         options = options,
         selectedOption = selectedOption,
@@ -218,7 +218,7 @@ fun MultiSelector(
                 ) {
                     Text(
                         text = option,
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyLarge,
                         color = colors[index],
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -277,7 +277,7 @@ fun MultiSelector(
 fun PreviewMultiSelector() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colorScheme.background,
         ) {
             val options1 = listOf("Lorem", "Ipsum", "Dolor")
             var selectedOption1 by remember {

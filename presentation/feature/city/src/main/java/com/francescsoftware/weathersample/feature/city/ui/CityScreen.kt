@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -126,7 +126,7 @@ private fun CityScreen(
 private fun CityScreenPreview() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colors.background
+            color = MaterialTheme.colorScheme.background
         ) {
             var state by remember {
                 mutableStateOf(

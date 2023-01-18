@@ -1,20 +1,18 @@
 package com.francescsoftware.weathersample.feature.city.ui
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Chip
-import androidx.compose.material.ChipDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.primarySurface
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.styles.WidgetPreviews
@@ -25,56 +23,51 @@ fun CityChip(
     onClick: () -> Unit,
     onClear: () -> Unit,
     modifier: Modifier = Modifier,
-    contentColor: Color = MaterialTheme.colors.onPrimary,
-    backgroundColor: Color = MaterialTheme.colors.primarySurface,
 ) {
-    Chip(
+    AssistChip(
         onClick = onClick,
-        colors = ChipDefaults.chipColors(
-            backgroundColor = backgroundColor,
-            contentColor = contentColor,
-        ),
-        modifier = modifier,
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.body2,
-            modifier = Modifier.padding(horizontal = MarginDouble),
-            color = contentColor,
-        )
-        IconButton(
-            onClick = onClear,
-        ) {
-            Icon(
-                imageVector = Icons.Default.Close,
-                tint = contentColor,
-                contentDescription = null,
+        label = {
+            Text(
+                text = label,
             )
-        }
-    }
+        },
+        trailingIcon = {
+            IconButton(
+                onClick = onClear,
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = null,
+                )
+            }
+        },
+        modifier = modifier,
+    )
 }
 
 @WidgetPreviews
 @Composable
 private fun ChipPreview() {
     WeatherSampleTheme {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Surface(
+            color = MaterialTheme.colorScheme.background,
         ) {
-            CityChip(
-                label = "One",
-                onClick = {},
-                onClear = {},
-                modifier = Modifier.padding(vertical = MarginDouble),
-            )
-            CityChip(
-                label = "Two",
-                onClick = {},
-                onClear = {},
-                modifier = Modifier.padding(vertical = MarginDouble),
-                contentColor = Color.White,
-                backgroundColor = Color.Red,
-            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+            ) {
+                CityChip(
+                    label = "Vancouver",
+                    onClick = {},
+                    onClear = {},
+                    modifier = Modifier.padding(vertical = MarginDouble),
+                )
+                CityChip(
+                    label = "Barcelona",
+                    onClick = {},
+                    onClear = {},
+                    modifier = Modifier.padding(vertical = MarginDouble),
+                )
+            }
         }
     }
 }

@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,30 +31,30 @@ internal fun ForecastHeader(
     ) {
         Text(
             text = state.date,
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.titleLarge,
         )
         Row(horizontalArrangement = Arrangement.SpaceEvenly) {
             Text(
                 text = stringResource(id = R.string.sunrise_label),
-                style = MaterialTheme.typography.overline,
+                style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier.alignByBaseline(),
             )
             Spacer(modifier = Modifier.width(MarginSingle))
             Text(
                 text = state.sunrise,
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.alignByBaseline(),
             )
             Spacer(modifier = Modifier.width(MarginDouble))
             Text(
                 text = stringResource(id = R.string.sunset_label),
-                style = MaterialTheme.typography.overline,
+                style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier.alignByBaseline(),
             )
             Spacer(modifier = Modifier.width(MarginSingle))
             Text(
                 text = state.sunset,
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.alignByBaseline(),
             )
         }
@@ -66,7 +66,7 @@ internal fun ForecastHeader(
 private fun ForecastHeaderPreview() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colorScheme.background,
         ) {
             ForecastHeader(
                 state = ForecastHeaderState(

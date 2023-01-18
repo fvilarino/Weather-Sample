@@ -15,10 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -52,8 +52,8 @@ fun TwoOptionsSelector(
     selectedOption: TwoOptionsSelectorOptions,
     onOptionSelect: (TwoOptionsSelectorOptions) -> Unit,
     modifier: Modifier = Modifier,
-    selectedColor: Color = MaterialTheme.colors.primary,
-    deselectedColor: Color = MaterialTheme.colors.surface,
+    selectedColor: Color = MaterialTheme.colorScheme.primary,
+    deselectedColor: Color = MaterialTheme.colorScheme.surface,
 ) {
     val transitionData = twoOptionsSelectorTransitionData(
         selectedOption = selectedOption,
@@ -96,7 +96,7 @@ fun TwoOptionsSelector(
         ) {
             Text(
                 text = leftLabel,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = transitionData.leftTextColor,
             )
@@ -115,7 +115,7 @@ fun TwoOptionsSelector(
         ) {
             Text(
                 text = rightLabel,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 color = transitionData.rightTextColor,
             )
@@ -199,7 +199,7 @@ private fun PreviewTwoOptionsSelector() {
         Surface(
             modifier = Modifier
                 .fillMaxSize(),
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colorScheme.background,
         ) {
             Spacer(modifier = Modifier.height(MarginDouble))
             TwoOptionsSelector(

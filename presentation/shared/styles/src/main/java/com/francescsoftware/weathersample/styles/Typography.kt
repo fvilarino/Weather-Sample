@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.styles
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -14,91 +14,103 @@ private val Montserrat = FontFamily(
 )
 
 val Typography = Typography(
-    h1 = TextStyle(
+    displayLarge = TextStyle(
         fontFamily = Montserrat,
         fontSize = 96.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 117.sp,
         letterSpacing = (-1.5).sp
     ),
-    h2 = TextStyle(
+    displayMedium = TextStyle(
+        fontFamily = Montserrat,
+        fontSize = 46.sp,
+        fontWeight = FontWeight.Medium,
+        lineHeight = 56.sp,
+    ),
+    displaySmall = TextStyle(
+        fontFamily = Montserrat,
+        fontSize = 36.sp,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 44.sp,
+    ),
+    headlineLarge = TextStyle(
         fontFamily = Montserrat,
         fontSize = 60.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 73.sp,
         letterSpacing = (-0.5).sp
     ),
-    h3 = TextStyle(
+    headlineMedium = TextStyle(
         fontFamily = Montserrat,
         fontSize = 48.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 59.sp
     ),
-    h4 = TextStyle(
+    headlineSmall = TextStyle(
         fontFamily = Montserrat,
         fontSize = 30.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 36.sp
     ),
-    h5 = TextStyle(
+    titleLarge = TextStyle(
         fontFamily = Montserrat,
         fontSize = 24.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 29.sp
     ),
-    h6 = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Normal,
-        lineHeight = 24.sp
-    ),
-    subtitle1 = TextStyle(
+    titleMedium = TextStyle(
         fontFamily = Montserrat,
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 20.sp,
         letterSpacing = 0.5.sp
     ),
-    subtitle2 = TextStyle(
+    titleSmall = TextStyle(
         fontFamily = Montserrat,
         fontSize = 14.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 17.sp,
         letterSpacing = 0.1.sp
     ),
-    body1 = TextStyle(
+    bodyLarge = TextStyle(
         fontFamily = Montserrat,
-        fontSize = 16.sp,
+        fontSize = 15.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 20.sp,
         letterSpacing = 0.15.sp
     ),
-    body2 = TextStyle(
+    bodyMedium = TextStyle(
         fontFamily = Montserrat,
-        fontSize = 14.sp,
+        fontSize = 13.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 20.sp,
-        letterSpacing = 0.25.sp
     ),
-    button = TextStyle(
-        fontFamily = Montserrat,
-        fontSize = 14.sp,
-        fontWeight = FontWeight.Medium,
-        lineHeight = 16.sp,
-        letterSpacing = 1.25.sp
-    ),
-    caption = TextStyle(
+    bodySmall = TextStyle(
         fontFamily = Montserrat,
         fontSize = 12.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 16.sp,
         letterSpacing = 0.sp
     ),
-    overline = TextStyle(
+    labelLarge = TextStyle(
+        fontFamily = Montserrat,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium,
+        lineHeight = 16.sp,
+        letterSpacing = 1.25.sp
+    ),
+    labelMedium = TextStyle(
         fontFamily = Montserrat,
         fontSize = 11.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 16.sp,
+        letterSpacing = 1.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = Montserrat,
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Normal,
+        lineHeight = 14.sp,
         letterSpacing = 1.sp
     ),
 )

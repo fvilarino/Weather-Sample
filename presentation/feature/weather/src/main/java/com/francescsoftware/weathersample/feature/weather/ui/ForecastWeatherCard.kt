@@ -3,18 +3,15 @@ package com.francescsoftware.weathersample.feature.weather.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Card
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -33,7 +30,6 @@ import com.francescsoftware.weathersample.shared.composable.InfoLabels
 import com.francescsoftware.weathersample.styles.CardElevation
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
-import com.francescsoftware.weathersample.styles.MarginTreble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.styles.WidgetPreviews
 
@@ -43,7 +39,12 @@ internal fun ForecastWeatherCard(
     modifier: Modifier = Modifier,
     elevation: Dp = CardElevation,
 ) {
-    Card(modifier = modifier, elevation = elevation) {
+    Card(
+        modifier = modifier,
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = elevation,
+        ),
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -53,13 +54,11 @@ internal fun ForecastWeatherCard(
                 Icon(
                     painter = painterResource(id = state.iconId),
                     contentDescription = null,
-                    modifier = Modifier
-                        .width(64.dp)
-                        .height(64.dp),
+                    modifier = Modifier.padding(start = MarginDouble).size(64.dp)
                 )
                 Text(
                     text = state.header,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                 )
@@ -67,88 +66,64 @@ internal fun ForecastWeatherCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = MarginTreble)
+                    .padding(horizontal = MarginDouble)
             ) {
                 InfoLabels(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = MarginDouble)
+                        .padding(start = MarginSingle)
                 ) {
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(
-                            text = stringResource(id = R.string.temperature_label),
-                            style = MaterialTheme.typography.overline,
-                        )
-                    }
-                    Text(
-                        text = state.temperature,
-                        style = MaterialTheme.typography.caption,
+                    WeatherItemLabel(
+                        label = stringResource(id = R.string.temperature_label),
+                    )
+                    WeatherItemContent(
+                        label = state.temperature,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(
-                            text = stringResource(id = R.string.feels_like_label),
-                            style = MaterialTheme.typography.overline,
-                        )
-                    }
-                    Text(
-                        text = state.feelsLikeTemperature,
-                        style = MaterialTheme.typography.caption,
+                    WeatherItemLabel(
+                        label = stringResource(id = R.string.feels_like_label),
+                    )
+                    WeatherItemContent(
+                        label = state.feelsLikeTemperature,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(
-                            text = stringResource(id = R.string.precipitation_label),
-                            style = MaterialTheme.typography.overline,
-                        )
-                    }
-                    Text(
-                        text = buildAnnotatedString {
+                    WeatherItemLabel(
+                        label = stringResource(id = R.string.precipitation_label),
+                    )
+                    WeatherItemContent(
+                        label = buildAnnotatedString {
                             append(state.precipitation)
                             withStyle(style = SpanStyle(fontSize = 8.sp)) {
                                 append(stringResource(id = R.string.precipitation_mm))
                             }
                         },
-                        style = MaterialTheme.typography.caption,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
                 InfoLabels(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = MarginDouble)
+                        .padding(end = MarginSingle)
                 ) {
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(
-                            text = stringResource(id = R.string.wind_speed_label),
-                            style = MaterialTheme.typography.overline,
-                        )
-                    }
-                    Text(
-                        text = state.windSpeed,
-                        style = MaterialTheme.typography.caption,
+                    WeatherItemLabel(
+                        label = stringResource(id = R.string.wind_speed_label),
+                    )
+                    WeatherItemContent(
+                        label = state.windSpeed,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(
-                            text = stringResource(id = R.string.humidity_label),
-                            style = MaterialTheme.typography.overline,
-                        )
-                    }
-                    Text(
-                        text = state.humidity,
-                        style = MaterialTheme.typography.caption,
+                    WeatherItemLabel(
+                        label = stringResource(id = R.string.humidity_label),
+                    )
+                    WeatherItemContent(
+                        label = state.humidity,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(
-                            text = stringResource(id = R.string.visibility_label),
-                            style = MaterialTheme.typography.overline,
-                        )
-                    }
-                    Text(
-                        text = state.visibility,
-                        style = MaterialTheme.typography.caption,
+                    WeatherItemLabel(
+                        label = stringResource(id = R.string.visibility_label),
+                    )
+                    WeatherItemContent(
+                        label = state.visibility,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
@@ -164,7 +139,7 @@ private fun ForecastWeatherCardPreview(
 ) {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colorScheme.background,
         ) {
             ForecastWeatherCard(
                 state = forecastState,

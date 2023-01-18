@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -63,7 +63,7 @@ private fun WeatherScreen(
     ) {
         Text(
             text = stringResource(id = R.string.weather_city_label),
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(top = MarginQuad),
         )
         Text(
@@ -74,7 +74,7 @@ private fun WeatherScreen(
             ),
             modifier = Modifier.padding(horizontal = MarginDouble),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.headlineSmall,
         )
         MultiSelector(
             options = listOf(
@@ -85,8 +85,8 @@ private fun WeatherScreen(
                 SelectedWeatherScreen.Today -> todayLabel
                 SelectedWeatherScreen.Forecast -> forecastLabel
             },
-            selectedColor = MaterialTheme.colors.onSecondary,
-            selectedBackgroundColor = MaterialTheme.colors.secondary,
+            selectedColor = MaterialTheme.colorScheme.onSecondary,
+            selectedBackgroundColor = MaterialTheme.colorScheme.secondary,
             onOptionSelect = { option ->
                 if (option == todayLabel) {
                     onOptionSelect(SelectedWeatherScreen.Today)
@@ -138,7 +138,7 @@ private fun ForecastWeatherScreenPreview(
 ) {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colorScheme.background,
         ) {
             WeatherScreen(
                 state = state,

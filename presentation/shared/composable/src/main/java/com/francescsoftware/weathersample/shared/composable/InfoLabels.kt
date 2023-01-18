@@ -1,17 +1,15 @@
 package com.francescsoftware.weathersample.shared.composable
 
-import android.content.res.Configuration
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.styles.WidgetPreviews
 import kotlin.math.max
 
 @Composable
@@ -70,29 +68,30 @@ fun InfoLabels(
     }
 }
 
-@Preview(showBackground = true, widthDp = 320)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 320)
+@WidgetPreviews
 @Composable
 private fun InfoLabelsPreview() {
     WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
+        Surface(
+            color = MaterialTheme.colorScheme.background,
+        ) {
             InfoLabels {
                 Text(
                     text = "Short:",
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
                     text = "Short description",
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 8.dp),
                 )
                 Text(
                     text = "Long label:",
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
                     text = "Long description lorem ipsum dolor sit amet",
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 8.dp),
                 )
             }

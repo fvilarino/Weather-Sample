@@ -1,9 +1,9 @@
 package com.francescsoftware.weathersample.feature.city.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,7 +23,7 @@ internal fun CitiesLoadError(
     ) {
         Text(
             text = stringResource(id = R.string.city_error_loading),
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }
@@ -34,7 +34,7 @@ internal fun CitiesLoadError(
 private fun CitiesLoadErrorPreview() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colors.background,
+            color = MaterialTheme.colorScheme.background,
         ) {
             CitiesLoadError()
         }

@@ -46,7 +46,7 @@ androidx-annotation = { module = "androidx.annotation:annotation", version.ref =
 androidx-app-compat = { module = "androidx.appcompat:appcompat", version.ref = "app-compat-version" }
 androidx-arch-core-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch-core-core-testing-version" }
 androidx-compose-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom-version" }
-androidx-compose-material-material = { module = "androidx.compose.material:material" }
+androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-runtime-runtime = { module = "androidx.compose.runtime:runtime" }
 androidx-compose-ui-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
@@ -95,7 +95,7 @@ org-robolectric-robolectric = { module = "org.robolectric:robolectric", version.
 
 [bundles]
 compose = [
-    "androidx-compose-material-material",
+    "androidx-compose-material3-material3",
     "androidx-compose-runtime-runtime",
     "androidx-compose-ui-ui",
     "androidx-lifecycle-lifecycle-runtime-compose",

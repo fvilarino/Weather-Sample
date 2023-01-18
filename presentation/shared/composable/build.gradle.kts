@@ -12,7 +12,7 @@ dependencies {
 
     implementation(platform(libs.androidx.compose.compose.bom))
     implementation(libs.androidx.compose.ui.ui)
-    implementation(libs.androidx.compose.material.material)
+    implementation(libs.androidx.compose.material3.material3)
     debugImplementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.androidx.core.core.ktx)
 

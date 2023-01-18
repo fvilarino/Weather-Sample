@@ -1,26 +1,26 @@
 package com.francescsoftware.weathersample.styles
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = darkColors(
+private val DarkColorScheme = darkColorScheme(
     primary = DeepPurple500,
-    primaryVariant = DeepPurple700,
-    secondary = Teal700,
+    secondary = DeepPurple700,
+    tertiary = Teal700,
     onPrimary = Color.White,
     onSecondary = Color.White,
     surface = Grey900,
     background = Grey950,
 )
 
-private val LightColorPalette = lightColors(
+private val LightColorScheme = lightColorScheme(
     primary = Purple700,
-    primaryVariant = Purple900,
-    secondary = Teal700,
+    secondary = Purple900,
+    tertiary = Teal700,
     onPrimary = Color.White,
     onSecondary = Color.White,
     surface = Color.White,
@@ -33,13 +33,13 @@ fun WeatherSampleTheme(
     content: @Composable () -> Unit,
 ) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        DarkColorScheme
     } else {
-        LightColorPalette
+        LightColorScheme
     }
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = colors,
         typography = Typography,
         shapes = Shapes,
         content = content,
