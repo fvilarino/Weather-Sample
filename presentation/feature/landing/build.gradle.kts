@@ -15,6 +15,7 @@ dependencies {
     implementation(project(":presentation:shared:styles"))
 
     // compose
+    implementation(platform(libs.androidx.compose.compose.bom))
     implementation(libs.bundles.compose)
     debugImplementation(libs.androidx.compose.ui.ui.tooling)
     implementation(libs.androidx.activity.activity.compose)

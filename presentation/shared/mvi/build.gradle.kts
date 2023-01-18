@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":core:dispatcher"))
 
     implementation(libs.bundles.lifecycle)
+    implementation(platform(libs.androidx.compose.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.com.jakewharton.timber)
 

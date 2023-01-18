@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:styles"))
 
+    implementation(platform(libs.androidx.compose.compose.bom))
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.compose.material.material)
     debugImplementation(libs.androidx.compose.ui.ui.tooling)

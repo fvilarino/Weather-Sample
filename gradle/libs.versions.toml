@@ -2,8 +2,8 @@
 androidx-activity-activity-compose-version = "1.7.0-alpha03"
 androidx-annotation-version = "1.6.0-alpha01"
 androidx-arch-core-core-testing-version = "2.2.0-alpha01"
+androidx-compose-bom-version = "2023.01.00"
 androidx-compose-compiler-version = "1.4.0"
-androidx-compose-version = "1.4.0-alpha04"
 androidx-core-core-ktx-version = "1.9.0-beta01"
 androidx-datastore-version = "1.1.0-dev01"
 androidx-hilt-hilt-navigation-compose-version = "1.1.0-alpha01"
@@ -45,10 +45,11 @@ androidx-activity-activity-compose = { module = "androidx.activity:activity-comp
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation-version" }
 androidx-app-compat = { module = "androidx.appcompat:appcompat", version.ref = "app-compat-version" }
 androidx-arch-core-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch-core-core-testing-version" }
-androidx-compose-material-material = { module = "androidx.compose.material:material", version.ref = "androidx-compose-version" }
-androidx-compose-runtime-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "androidx-compose-version" }
-androidx-compose-ui-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-version" }
-androidx-compose-ui-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-compose-version" }
+androidx-compose-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom-version" }
+androidx-compose-material-material = { module = "androidx.compose.material:material" }
+androidx-compose-runtime-runtime = { module = "androidx.compose.runtime:runtime" }
+androidx-compose-ui-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-core-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-core-ktx-version" }
 androidx-datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "androidx-datastore-version" }
 androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt-hilt-navigation-compose-version" }
