@@ -18,21 +18,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.feature.city.R
-import com.francescsoftware.weathersample.feature.city.viewmodel.CityState
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.styles.WidgetPreviews
 
 @Composable
 internal fun CitiesSearchBox(
-    state: CityState,
+    query: TextFieldValue,
     onQueryChange: (TextFieldValue) -> Unit,
     onClearQuery: () -> Unit,
     onQueryFocused: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
-        value = state.query,
+        value = query,
         onValueChange = onQueryChange,
         modifier = modifier.onFocusChanged { focusState ->
             if (focusState.isFocused) onQueryFocused()
@@ -67,11 +66,13 @@ fun CitiesSearchBoxPreview() {
         Surface(
             color = MaterialTheme.colorScheme.background,
         ) {
-            var state by remember { mutableStateOf(CityState.initial) }
+            var query by remember {
+                mutableStateOf(TextFieldValue())
+            }
             CitiesSearchBox(
-                state = state,
-                onQueryChange = { state = state.copy(query = it) },
-                onClearQuery = { state = state.copy(query = TextFieldValue()) },
+                query = query,
+                onQueryChange = { query = it },
+                onClearQuery = { query = TextFieldValue() },
                 onQueryFocused = {},
                 modifier = Modifier.padding(all = MarginDouble)
             )

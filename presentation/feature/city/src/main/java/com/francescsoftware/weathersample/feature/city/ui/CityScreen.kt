@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
@@ -29,6 +31,8 @@ import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.PhonePreviews
 import com.francescsoftware.weathersample.styles.TabletPreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 internal val MinColumnWidth = 360.dp
 
@@ -46,7 +50,6 @@ internal fun CityScreen(
             onCityClick(selectedCity)
         },
         onQueryChange = viewModel::onQueryChange,
-        onClearQuery = viewModel::onClearQuery,
         onQueryFocused = viewModel::onQueryFocused,
         onChipClick = viewModel::onChipClick,
         onDeleteChip = viewModel::onDeleteChip,
@@ -59,20 +62,26 @@ private fun CityScreen(
     state: CityState,
     onCityClick: (SelectedCity) -> Unit,
     onQueryChange: (TextFieldValue) -> Unit,
-    onClearQuery: () -> Unit,
     onQueryFocused: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
     modifier: Modifier = Modifier,
+    stateHolder: CityScreenStateHolder = rememberCityScreenStateHolder(),
 ) {
+    LaunchedEffect(key1 = Unit) {
+        snapshotFlow { stateHolder.query }
+            .onEach(onQueryChange)
+            .launchIn(this)
+    }
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CitiesSearchBox(
-            state = state,
-            onQueryChange = onQueryChange,
-            onClearQuery = onClearQuery,
+            query = stateHolder.query,
+            onQueryChange = stateHolder::onQueryUpdated,
+            onClearQuery = stateHolder::onClearQuery,
             onQueryFocused = onQueryFocused,
             modifier = Modifier
                 .width(MinColumnWidth)
@@ -153,11 +162,6 @@ private fun CityScreenPreview() {
                 state = state,
                 onQueryChange = { query ->
                     state = state.copy(query = query)
-                },
-                onClearQuery = {
-                    state = state.copy(
-                        query = TextFieldValue(),
-                    )
                 },
                 onQueryFocused = {},
                 onCityClick = {},

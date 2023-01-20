@@ -1,0 +1,61 @@
+package com.francescsoftware.weathersample.feature.city.ui
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
+
+@Stable
+internal interface CityScreenStateHolder {
+    val query: TextFieldValue
+    fun onQueryUpdated(query: TextFieldValue)
+    fun onClearQuery()
+}
+
+@Composable
+internal fun rememberCityScreenStateHolder(
+    query: String = "",
+): CityScreenStateHolder = rememberSaveable(saver = CityScreenStateHolderImpl.Saver) {
+    CityScreenStateHolderImpl(query)
+}
+
+@Stable
+private class CityScreenStateHolderImpl(
+    query: String,
+) : CityScreenStateHolder {
+    override var query by mutableStateOf(
+        TextFieldValue(
+            text = query,
+            selection = TextRange(query.length)
+        )
+    )
+        private set
+
+    override fun onQueryUpdated(query: TextFieldValue) {
+        this.query = query
+    }
+
+    override fun onClearQuery() {
+        query = TextFieldValue()
+    }
+
+    companion object {
+        val Saver = Saver<CityScreenStateHolderImpl, List<Any>>(
+            save = { stateHolder ->
+                listOf(
+                    stateHolder.query.annotatedString.text
+                )
+            },
+            restore = { args ->
+                CityScreenStateHolderImpl(
+                    query = args[0] as String
+                )
+            }
+        )
+    }
+}

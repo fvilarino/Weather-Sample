@@ -23,6 +23,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 private val DebounceMillis = 400L.toDuration(DurationUnit.MILLISECONDS)
+private const val MinCityLengthForSearch = 3
 
 internal class CityMiddleware @Inject constructor(
     private val getCitiesInteractor: GetCitiesInteractor,
@@ -64,7 +65,7 @@ internal class CityMiddleware @Inject constructor(
     private fun onQueryUpdated(
         query: TextFieldValue,
     ) {
-        if (query.text.length >= MinCityLengthForSerch) {
+        if (query.text.length >= MinCityLengthForSearch) {
             scope.launch {
                 searchFlow.emit(query.text)
             }

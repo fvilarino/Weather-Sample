@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.feature.city.viewmodel
 
-import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.shared.mvi.Reducer
 import javax.inject.Inject
 
@@ -13,11 +12,6 @@ internal class CityReducer @Inject constructor() : Reducer<CityState, CityAction
         is CityAction.QueryUpdated -> state.copy(
             query = action.query,
             loadState = if (action.query.text.isEmpty()) LoadState.Idle else state.loadState,
-        )
-
-        CityAction.ClearQuery -> state.copy(
-            query = TextFieldValue(),
-            loadState = LoadState.Idle,
         )
 
         is CityAction.CitiesLoaded -> state.copy(

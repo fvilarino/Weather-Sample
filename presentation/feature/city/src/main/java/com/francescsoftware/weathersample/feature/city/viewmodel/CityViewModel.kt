@@ -8,9 +8,6 @@ import com.francescsoftware.weathersample.shared.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-internal const val MinCityLengthForSerch = 3
-private const val TAG = "CityViewModel"
-
 @HiltViewModel
 internal class CityViewModel @Inject constructor(
     closeableScope: CloseableCoroutineScope,
@@ -30,10 +27,6 @@ internal class CityViewModel @Inject constructor(
 
     fun onQueryChange(query: TextFieldValue) {
         handleAction(CityAction.QueryUpdated(query))
-    }
-
-    fun onClearQuery() {
-        handleAction(CityAction.ClearQuery)
     }
 
     fun onQueryFocused() {

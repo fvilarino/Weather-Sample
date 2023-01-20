@@ -45,7 +45,6 @@ internal sealed interface CityAction : Action {
 
     data class OnChipClick(val recentCityModel: RecentCityModel) : CityAction
     data class OnDeleteChipClick(val recentCityModel: RecentCityModel) : CityAction
-    object ClearQuery : CityAction
     object Start : CityAction
     object Loading : CityAction
     object NoResults : CityAction
