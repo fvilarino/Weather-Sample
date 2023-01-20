@@ -39,10 +39,6 @@ internal class WeatherViewModel @Inject constructor(
         )
     }
 
-    fun onOptionSelect(selectedWeatherScreen: SelectedWeatherScreen) {
-        handleAction(WeatherAction.OnOptionSelected(selectedWeatherScreen))
-    }
-
     fun refreshTodayWeather() {
         handleAction(
             WeatherAction.RefreshTodayWeather(

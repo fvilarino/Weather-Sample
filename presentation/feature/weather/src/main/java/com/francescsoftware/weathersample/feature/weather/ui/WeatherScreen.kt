@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.feature.weather.R
-import com.francescsoftware.weathersample.feature.weather.viewmodel.SelectedWeatherScreen
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
@@ -40,7 +39,6 @@ internal fun WeatherScreen(
 
     WeatherScreen(
         state = state,
-        onOptionSelect = viewModel::onOptionSelect,
         onRefreshTodayWeather = viewModel::refreshTodayWeather,
         onRetry = viewModel::retry,
         modifier = modifier,
@@ -50,10 +48,10 @@ internal fun WeatherScreen(
 @Composable
 private fun WeatherScreen(
     state: WeatherState,
-    onOptionSelect: (SelectedWeatherScreen) -> Unit,
     onRefreshTodayWeather: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
+    stateHolder: WeatherStateHolder = rememberWeatherStateHolder(),
 ) {
     val todayLabel = stringResource(id = R.string.today_weather_button_label)
     val forecastLabel = stringResource(id = R.string.forecast_weather_button_label)
@@ -81,17 +79,17 @@ private fun WeatherScreen(
                 todayLabel,
                 forecastLabel,
             ),
-            selectedOption = when (state.option) {
-                SelectedWeatherScreen.Today -> todayLabel
-                SelectedWeatherScreen.Forecast -> forecastLabel
+            selectedOption = when (stateHolder.option) {
+                SelectedWeatherOption.Today -> todayLabel
+                SelectedWeatherOption.Forecast -> forecastLabel
             },
             selectedColor = MaterialTheme.colorScheme.onSecondary,
             selectedBackgroundColor = MaterialTheme.colorScheme.secondary,
             onOptionSelect = { option ->
                 if (option == todayLabel) {
-                    onOptionSelect(SelectedWeatherScreen.Today)
+                    stateHolder.onOptionSelect(SelectedWeatherOption.Today)
                 } else {
-                    onOptionSelect(SelectedWeatherScreen.Forecast)
+                    stateHolder.onOptionSelect(SelectedWeatherOption.Forecast)
                 }
             },
             modifier = Modifier
@@ -115,6 +113,7 @@ private fun WeatherScreen(
                 WeatherLoadState.Loaded,
                 WeatherLoadState.Refreshing -> WeatherContent(
                     state = state,
+                    option = stateHolder.option,
                     todayRefreshCallback = onRefreshTodayWeather,
                     modifier = Modifier
                         .fillMaxSize()
@@ -134,15 +133,17 @@ private fun WeatherScreen(
 @TabletPreviews
 @Composable
 private fun ForecastWeatherScreenPreview(
-    @PreviewParameter(WeatherStateProvider::class) state: WeatherState,
+    @PreviewParameter(WeatherStateWrapperProvider::class) weatherStateWrapper: WeatherStateWrapper,
 ) {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
         ) {
+            val holder = rememberWeatherStateHolder()
+            holder.onOptionSelect(weatherStateWrapper.option)
             WeatherScreen(
-                state = state,
-                onOptionSelect = {},
+                state = weatherStateWrapper.state,
+                stateHolder = holder,
                 onRefreshTodayWeather = {},
                 onRetry = {},
                 modifier = Modifier

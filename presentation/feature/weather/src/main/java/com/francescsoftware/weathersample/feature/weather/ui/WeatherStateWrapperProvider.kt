@@ -3,19 +3,26 @@ package com.francescsoftware.weathersample.feature.weather.ui
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastDayState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastHeaderState
-import com.francescsoftware.weathersample.feature.weather.viewmodel.SelectedWeatherScreen
 import com.francescsoftware.weathersample.feature.weather.viewmodel.TodayWeatherCardState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.shared.assets.R
 
-internal class WeatherStateProvider : PreviewParameterProvider<WeatherState> {
-    override val values: Sequence<WeatherState> = sequenceOf(
-        todayState,
-        forecastState,
-        todayState.copy(
-            loadState = WeatherLoadState.Error,
-            errorMessage = "Failed to load weather data",
+internal data class WeatherStateWrapper(
+    val state: WeatherState,
+    val option: SelectedWeatherOption,
+)
+
+internal class WeatherStateWrapperProvider : PreviewParameterProvider<WeatherStateWrapper> {
+    override val values: Sequence<WeatherStateWrapper> = sequenceOf(
+        WeatherStateWrapper(state = todayState, option = SelectedWeatherOption.Today),
+        WeatherStateWrapper(state = todayState, option = SelectedWeatherOption.Forecast),
+        WeatherStateWrapper(
+            state = todayState.copy(
+                loadState = WeatherLoadState.Error,
+                errorMessage = "Failed to load weather data",
+            ),
+            option = SelectedWeatherOption.Today
         ),
     )
 }
@@ -51,10 +58,5 @@ private val todayState = WeatherState(
             ),
         )
     ),
-    option = SelectedWeatherScreen.Today,
     errorMessage = "",
-)
-
-private val forecastState = todayState.copy(
-    option = SelectedWeatherScreen.Forecast,
 )

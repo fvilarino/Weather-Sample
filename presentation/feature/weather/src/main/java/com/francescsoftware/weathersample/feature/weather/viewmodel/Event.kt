@@ -12,15 +12,9 @@ internal enum class WeatherLoadState {
     Error,
 }
 
-internal enum class SelectedWeatherScreen {
-    Today,
-    Forecast,
-}
-
 @Immutable
 internal data class WeatherState(
     val loadState: WeatherLoadState,
-    val option: SelectedWeatherScreen,
     val cityName: String,
     val cityCountryCode: String,
     val todayState: TodayWeatherCardState,
@@ -31,7 +25,6 @@ internal data class WeatherState(
     companion object {
         val initial = WeatherState(
             loadState = WeatherLoadState.Idle,
-            option = SelectedWeatherScreen.Today,
             cityName = "",
             cityCountryCode = "",
             todayState = TodayWeatherCardState(),
@@ -70,10 +63,6 @@ internal sealed interface WeatherAction : Action {
 
     data class LoadError(
         val message: String,
-    ) : WeatherAction
-
-    data class OnOptionSelected(
-        val option: SelectedWeatherScreen,
     ) : WeatherAction
 
     data class Retry(

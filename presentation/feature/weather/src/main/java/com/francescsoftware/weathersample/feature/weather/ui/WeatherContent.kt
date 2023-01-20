@@ -20,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.feature.weather.R
-import com.francescsoftware.weathersample.feature.weather.viewmodel.SelectedWeatherScreen
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.shared.composable.LoadingButton
@@ -35,17 +34,18 @@ private val WeatherCardWidth = 360.dp
 @Composable
 internal fun WeatherContent(
     state: WeatherState,
+    option: SelectedWeatherOption,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    when (state.option) {
-        SelectedWeatherScreen.Today -> TodayWeather(
+    when (option) {
+        SelectedWeatherOption.Today -> TodayWeather(
             state = state,
             todayRefreshCallback = todayRefreshCallback,
             modifier = modifier,
         )
 
-        SelectedWeatherScreen.Forecast -> WeatherForecast(
+        SelectedWeatherOption.Forecast -> WeatherForecast(
             state = state,
             modifier = modifier,
         )
@@ -119,17 +119,18 @@ private fun WeatherForecast(
 @TabletPreviews
 @Composable
 private fun PreviewWeatherContent(
-    @PreviewParameter(WeatherStateProvider::class, limit = 2) state: WeatherState,
+    @PreviewParameter(WeatherStateWrapperProvider::class) stateWrapper: WeatherStateWrapper,
 ) {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
         ) {
             WeatherContent(
-                state = state,
+                state = stateWrapper.state,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(all = MarginDouble),
+                option = stateWrapper.option,
                 todayRefreshCallback = {}
             )
         }

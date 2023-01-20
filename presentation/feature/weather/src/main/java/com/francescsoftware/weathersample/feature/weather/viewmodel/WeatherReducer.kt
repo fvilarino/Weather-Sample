@@ -11,26 +11,28 @@ internal class WeatherReducer @Inject constructor() : Reducer<WeatherState, Weat
         WeatherAction.Loading -> state.copy(
             loadState = WeatherLoadState.Loading,
         )
+
         is WeatherAction.CityUpdated -> state.copy(
             cityName = action.cityName,
             cityCountryCode = action.countryCode,
         )
+
         is WeatherAction.Loaded -> state.copy(
             loadState = WeatherLoadState.Loaded,
             todayState = action.currentWeather,
             forecastItems = action.forecastItems,
         )
+
         is WeatherAction.TodayLoaded -> state.copy(
             loadState = WeatherLoadState.Loaded,
             todayState = action.currentWeather,
         )
+
         is WeatherAction.LoadError -> state.copy(
             loadState = WeatherLoadState.Error,
             errorMessage = action.message,
         )
-        is WeatherAction.OnOptionSelected -> state.copy(
-            option = action.option,
-        )
+
         else -> state
     }
 }
