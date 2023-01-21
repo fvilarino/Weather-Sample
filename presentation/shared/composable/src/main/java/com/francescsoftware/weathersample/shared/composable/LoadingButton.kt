@@ -12,18 +12,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,12 +35,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginHalf
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.styles.WidgetPreviews
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -142,7 +139,7 @@ interface LoadingIndicatorState {
     fun start(animationType: AnimationType, scope: CoroutineScope)
 }
 
-class LoadingIndicatorStateImpl : LoadingIndicatorState {
+internal class LoadingIndicatorStateImpl : LoadingIndicatorState {
     private val animatedValues = List(NumIndicators) { mutableStateOf(0f) }
 
     override fun get(index: Int): Float = animatedValues[index].value
@@ -199,12 +196,15 @@ fun rememberLoadingIndicatorState(
 private fun LoadingIndicator(
     animating: Boolean,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.primary,
+    color: Color = MaterialTheme.colorScheme.onPrimary,
     indicatorSpacing: Dp = MarginHalf,
     animationType: AnimationType,
 ) {
     val state = rememberLoadingIndicatorState(animating, animationType)
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         repeat(NumIndicators) { index ->
             LoadingDot(
                 modifier = Modifier
@@ -241,44 +241,25 @@ private fun LoadingDot(
     )
 }
 
-@Preview(widthDp = 360, heightDp = 360)
+@WidgetPreviews
 @Composable
 private fun PreviewLoadingButton() {
     WeatherSampleTheme {
         var loading by remember {
             mutableStateOf(false)
         }
-        Surface(modifier = Modifier.fillMaxSize()) {
+        Surface(
+            color = MaterialTheme.colorScheme.background
+        ) {
             LoadingButton(
                 onClick = { loading = !loading },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 16.dp),
+                    .padding(all = MarginDouble),
                 loading = loading,
             ) {
                 Text(
                     text = "Refresh"
-                )
-            }
-        }
-    }
-}
-
-@Preview(widthDp = 200, heightDp = 200)
-@Composable
-fun IconPreview() {
-    WeatherSampleTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    Icons.Default.Add,
-                    modifier = Modifier
-                        .width(100.dp)
-                        .aspectRatio(1f),
-                    contentDescription = null,
                 )
             }
         }

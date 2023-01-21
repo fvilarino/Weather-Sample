@@ -36,6 +36,7 @@ internal data class WeatherState(
 
 internal sealed interface WeatherAction : Action {
     object Loading : WeatherAction
+    object Refreshing : WeatherAction
 
     data class Load(
         val cityName: String,

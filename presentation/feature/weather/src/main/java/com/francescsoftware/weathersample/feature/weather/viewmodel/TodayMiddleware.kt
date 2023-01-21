@@ -20,7 +20,7 @@ internal class TodayMiddleware @Inject constructor(
     ) {
         when (action) {
             is WeatherAction.RefreshTodayWeather -> {
-                dispatch(WeatherAction.Loading)
+                dispatch(WeatherAction.Refreshing)
                 scope.launch {
                     loadTodayWeather(
                         action.cityName,
@@ -28,6 +28,7 @@ internal class TodayMiddleware @Inject constructor(
                     )
                 }
             }
+
             else -> {}
         }
     }
