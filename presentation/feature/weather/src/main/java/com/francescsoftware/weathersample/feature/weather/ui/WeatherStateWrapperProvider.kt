@@ -55,6 +55,8 @@ private val todayState = WeatherState(
                 PartlyCloudyHourForecast,
                 SunnyHourForecast,
                 HeavyRainHourForecast,
+                SnowHourForecast,
+                LightRainHourForecast,
             ),
         )
     ),
