@@ -53,7 +53,6 @@ fun InfoLabels(
             for (i in 0 until numPairs) {
                 val label = labelPlaceables[i]
                 val description = descriptionPlaceables[i]
-                val height = max(label.height, description.height)
                 label.placeRelative(
                     x = 0,
                     y = yPosition,

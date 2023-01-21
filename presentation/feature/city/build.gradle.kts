@@ -5,7 +5,9 @@ plugins {
 android {
     namespace = "com.francescsoftware.weathersample.feature.city"
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + Config.Compiler.flowFreeCompilerArgs
+        freeCompilerArgs = freeCompilerArgs +
+            Config.Compiler.flowFreeCompilerArgs +
+            Config.Compiler.composeExperimentalMaterial3
     }
 }
 
@@ -16,6 +18,7 @@ dependencies {
     implementation(project(":core:type"))
     implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:composable"))
+    implementation(project(":presentation:shared:deviceclass"))
     implementation(project(":presentation:shared:lookup:api"))
     implementation(project(":presentation:shared:mvi"))
     implementation(project(":presentation:shared:route"))

@@ -20,18 +20,29 @@ internal interface CityScreenStateHolder {
 @Composable
 internal fun rememberCityScreenStateHolder(
     query: String = "",
+    selectionStart: Int = 0,
+    selectionEnd: Int = 0,
 ): CityScreenStateHolder = rememberSaveable(saver = CityScreenStateHolderImpl.Saver) {
-    CityScreenStateHolderImpl(query)
+    CityScreenStateHolderImpl(
+        query = query,
+        selectionStart = selectionStart,
+        selectionEnd = selectionEnd,
+    )
 }
 
 @Stable
 private class CityScreenStateHolderImpl(
     query: String,
+    selectionStart: Int,
+    selectionEnd: Int,
 ) : CityScreenStateHolder {
     override var query by mutableStateOf(
         TextFieldValue(
             text = query,
-            selection = TextRange(query.length)
+            selection = TextRange(
+                start = selectionStart,
+                end = selectionEnd,
+            )
         )
     )
         private set
@@ -48,12 +59,16 @@ private class CityScreenStateHolderImpl(
         val Saver = Saver<CityScreenStateHolderImpl, List<Any>>(
             save = { stateHolder ->
                 listOf(
-                    stateHolder.query.annotatedString.text
+                    stateHolder.query.annotatedString.text,
+                    stateHolder.query.selection.start,
+                    stateHolder.query.selection.end,
                 )
             },
             restore = { args ->
                 CityScreenStateHolderImpl(
-                    query = args[0] as String
+                    query = args[0] as String,
+                    selectionStart = args[1] as Int,
+                    selectionEnd = args[2] as Int,
                 )
             }
         )

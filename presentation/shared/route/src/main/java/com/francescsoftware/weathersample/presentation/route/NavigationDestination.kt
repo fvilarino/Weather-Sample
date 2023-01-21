@@ -17,7 +17,7 @@ sealed interface NavigationDestination {
     fun isRoute(route: String?): Boolean
 
     object CitySearch : NavigationDestination {
-        override val titleId: Int = com.francescsoftware.weathersample.shared.assets.R.string.city_label
+        override val titleId: Int = com.francescsoftware.weathersample.shared.assets.R.string.app_name
         override val iconId: Int = 0
         override val iconContentDescriptionId: Int = 0
 
