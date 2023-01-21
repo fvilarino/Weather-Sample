@@ -1,11 +1,17 @@
 # Weather-Sample
 A simple weather app showcasing some of the material principles.
 
-The app consists of 2 screens, a city search screen and a weather screen. The weather screen is itself split into 2 sections, current weather and forecast.
+The app is multimodule, written in Kotlin using Jetpack Compose for the UI. The app consists of 2 screens, a city search screen and a weather screen. The weather screen is itself split into 2 sections, current weather and forecast.
 
-There are 2 branches in this project:
-* main: uses Android's View system
-* feature/compose: uses Jetpack compose
+Tech stack:
+
+* Kotlin
+* Coroutines
+* Hilt
+* Retrofit
+* Room
+* AAC Viewmodels
+* AAC Navigation
 
 To run the app please obtain a key from RapidApi (https://rapidapi.com/) for both the geo cities (https://rapidapi.com/wirefreethought/api/geodb-cities) and the open weather map (https://rapidapi.com/community/api/open-weather-map) and then update the app's `Keys.kt` file.
 
