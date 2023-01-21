@@ -7,7 +7,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
@@ -20,7 +20,7 @@ internal class GetTodayWeatherInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
 ) : GetTodayWeatherInteractor {
 
-    override suspend fun execute(location: WeatherLocation): Result<TodayWeather> {
+    override suspend fun execute(location: WeatherLocation): Either<TodayWeather> {
         val response = weatherRepository.getTodayWeather(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { weatherResponse ->
@@ -31,13 +31,13 @@ internal class GetTodayWeatherInteractorImpl @Inject constructor(
                         visibility = weatherResponse.current?.visKm?.roundToInt() ?: 0,
                         clouds = weatherResponse.toTodayClouds(),
                     )
-                    Result.Success(weather)
+                    Either.Success(weather)
                 } else {
-                    Result.Failure(WeatherException("Invalid data received"))
+                    Either.Failure(WeatherException("Invalid data received"))
                 }
             },
             onFailure = { throwable ->
-                Result.Failure(
+                Either.Failure(
                     WeatherException(
                         throwable.message ?: "Error fetching today weather",
                         throwable

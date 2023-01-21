@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.interactor.weather.api
 
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import java.util.Date
 
 data class Forecast(
@@ -28,5 +28,5 @@ data class ForecastEntry(
 )
 
 interface GetForecastInteractor {
-    suspend fun execute(location: WeatherLocation): Result<Forecast>
+    suspend fun execute(location: WeatherLocation): Either<Forecast>
 }

@@ -1,7 +1,7 @@
 package com.francescsoftware.weathersample.weatherrepository.impl
 
 import com.francescsoftware.weathersample.network.safeApiCall
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastResponse
@@ -14,7 +14,7 @@ internal class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun getTodayWeather(
         location: WeatherLocation
-    ): Result<TodayWeatherResponse> = safeApiCall {
+    ): Either<TodayWeatherResponse> = safeApiCall {
         when (location) {
             is WeatherLocation.City -> weatherService.getTodayWeather(
                 query = formatCityQuery(location),
@@ -28,7 +28,7 @@ internal class WeatherRepositoryImpl @Inject constructor(
     override suspend fun getForecast(
         location: WeatherLocation,
         days: Int,
-    ): Result<ForecastResponse> =
+    ): Either<ForecastResponse> =
         safeApiCall {
             when (location) {
                 is WeatherLocation.City -> weatherService.getForecast(

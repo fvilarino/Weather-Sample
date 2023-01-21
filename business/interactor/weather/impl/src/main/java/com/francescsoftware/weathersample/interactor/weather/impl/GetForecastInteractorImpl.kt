@@ -8,7 +8,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInte
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.time.api.TimeFormatter
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.utils.time.Seconds
 import com.francescsoftware.weathersample.utils.time.toDate
@@ -28,19 +28,19 @@ internal class GetForecastInteractorImpl @Inject constructor(
     private val timeFormatter: TimeFormatter,
 ) : GetForecastInteractor {
 
-    override suspend fun execute(location: WeatherLocation): Result<Forecast> {
+    override suspend fun execute(location: WeatherLocation): Either<Forecast> {
         val response = weatherRepository.getForecast(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { data ->
                 val forecast = data.forecast?.forecastDay
                 if (forecast?.isNotEmpty() == true) {
-                    Result.Success(parseForecast(forecast))
+                    Either.Success(parseForecast(forecast))
                 } else {
-                    Result.Failure(WeatherException("Invalid forecast data received"))
+                    Either.Failure(WeatherException("Invalid forecast data received"))
                 }
             },
             onFailure = { throwable ->
-                Result.Failure(
+                Either.Failure(
                     WeatherException(
                         throwable.message ?: "Error fetching forecast",
                         throwable,

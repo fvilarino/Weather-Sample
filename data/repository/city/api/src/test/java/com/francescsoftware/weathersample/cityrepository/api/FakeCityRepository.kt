@@ -3,7 +3,7 @@ package com.francescsoftware.weathersample.cityrepository.api
 import com.francescsoftware.weathersample.cityrepository.api.model.CityItem
 import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
 import com.francescsoftware.weathersample.cityrepository.api.model.Metadata
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import java.io.IOException
 
 private val metroVancouver = CityItem(
@@ -94,9 +94,9 @@ class FakeCityRepository : CityRepository {
     override suspend fun getCities(
         prefix: String,
         limit: Int,
-    ): Result<CitySearchResponse> = if (success) {
-        Result.Success(successResponse)
+    ): Either<CitySearchResponse> = if (success) {
+        Either.Success(successResponse)
     } else {
-        Result.Failure(IOException("Failed to parse data"))
+        Either.Failure(IOException("Failed to parse data"))
     }
 }

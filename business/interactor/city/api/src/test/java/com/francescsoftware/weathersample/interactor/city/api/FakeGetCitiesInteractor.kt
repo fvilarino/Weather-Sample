@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.interactor.city.api
 
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 
 private val metroVancouver = City(
     country = "Canada",
@@ -70,8 +70,8 @@ private val northVancouver = City(
 class FakeGetCitiesInteractor : GetCitiesInteractor {
     var success = true
 
-    override suspend fun execute(prefix: String, limit: Int): Result<List<City>> = if (success) {
-        Result.Success(
+    override suspend fun execute(prefix: String, limit: Int): Either<List<City>> = if (success) {
+        Either.Success(
             listOf(
                 metroVancouver,
                 northVancouver,
@@ -81,7 +81,7 @@ class FakeGetCitiesInteractor : GetCitiesInteractor {
             )
         )
     } else {
-        Result.Failure(
+        Either.Failure(
             CitiesException("Failed to parse data")
         )
     }

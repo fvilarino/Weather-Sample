@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.weatherrepository.api
 
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastResponse
 import com.francescsoftware.weathersample.weatherrepository.api.model.today.TodayWeatherResponse
 
@@ -17,6 +17,6 @@ sealed interface WeatherLocation {
 }
 
 interface WeatherRepository {
-    suspend fun getTodayWeather(location: WeatherLocation): Result<TodayWeatherResponse>
-    suspend fun getForecast(location: WeatherLocation, days: Int = 7): Result<ForecastResponse>
+    suspend fun getTodayWeather(location: WeatherLocation): Either<TodayWeatherResponse>
+    suspend fun getForecast(location: WeatherLocation, days: Int = 7): Either<ForecastResponse>
 }

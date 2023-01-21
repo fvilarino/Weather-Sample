@@ -7,7 +7,7 @@ import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.shared.mvi.Middleware
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
@@ -73,7 +73,7 @@ internal class CityMiddleware @Inject constructor(
     }
 
     private fun onCitiesLoaded(
-        cities: Result<List<City>>,
+        cities: Either<List<City>>,
     ) {
         cities.fold(
             onSuccess = { list ->

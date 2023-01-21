@@ -8,11 +8,11 @@ import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
-import com.francescsoftware.weathersample.type.Result
-import com.francescsoftware.weathersample.type.getOrNull
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
 import com.francescsoftware.weathersample.type.throwableOrNull
+import com.francescsoftware.weathersample.type.valueOrNull
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
 import com.francescsoftware.weathersample.weatherrepository.api.model.Current
@@ -131,7 +131,7 @@ class TodayWeatherInteractorTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        coEvery { weatherRepository.getTodayWeather(any()) } returns Result.Success(
+        coEvery { weatherRepository.getTodayWeather(any()) } returns Either.Success(
             todayWeatherResponse
         )
     }
@@ -182,7 +182,7 @@ class TodayWeatherInteractorTest {
 
         // the response has been converted to the interactor type
         Assert.assertTrue(response.isSuccess)
-        assertEquals(response.getOrNull(), successfulTodayWeather)
+        assertEquals(response.valueOrNull(), successfulTodayWeather)
     }
 
     @Test
@@ -195,7 +195,7 @@ class TodayWeatherInteractorTest {
 
         // the response has been converted to the interactor type
         Assert.assertTrue(response.isSuccess)
-        assertEquals(response.getOrNull(), successfulTodayWeather)
+        assertEquals(response.valueOrNull(), successfulTodayWeather)
     }
 
     @Test
@@ -204,7 +204,7 @@ class TodayWeatherInteractorTest {
         val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
         coEvery {
             weatherRepository.getTodayWeather(any())
-        } returns Result.Failure(IOException("Failed to load today weather"))
+        } returns Either.Failure(IOException("Failed to load today weather"))
 
         // when we execute the interactor query
         val response = interactor.execute(incomingCity)

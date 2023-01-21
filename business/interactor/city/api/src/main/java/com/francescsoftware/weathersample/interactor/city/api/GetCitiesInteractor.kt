@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.interactor.city.api
 
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import java.io.IOException
 
 data class Coordinates(
@@ -19,7 +19,7 @@ data class City(
 )
 
 interface GetCitiesInteractor {
-    suspend fun execute(prefix: String = "", limit: Int = 10): Result<List<City>>
+    suspend fun execute(prefix: String = "", limit: Int = 10): Either<List<City>>
 }
 
 class CitiesException : IOException {

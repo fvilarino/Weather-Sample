@@ -9,11 +9,11 @@ import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
 import com.francescsoftware.weathersample.testing.testDispatcherProvider
 import com.francescsoftware.weathersample.time.api.TimeFormatter
-import com.francescsoftware.weathersample.type.Result
-import com.francescsoftware.weathersample.type.getOrNull
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
 import com.francescsoftware.weathersample.type.throwableOrNull
+import com.francescsoftware.weathersample.type.valueOrNull
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Astro
@@ -37,29 +37,29 @@ import java.util.Date
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Forecast as RepositoryForecast
 
-private const val cityName = "Vancouver"
-private const val countryCode = "CA"
+private const val CityName = "Vancouver"
+private const val CountryCode = "CA"
 private const val CityLatitude = 49.24
 private const val CityLongitude = -123.11
 
-private const val date = "2022-07-30"
-private const val dateEpoch = 1659132000
-private const val timeEpoch = 1659135600
-private const val sunrise = "06:44 AM"
-private const val sunset = "09:11 PM"
+private const val Date = "2022-07-30"
+private const val DateEpoch = 1659132000
+private const val TimeEpoch = 1659135600
+private const val Sunrise = "06:44 AM"
+private const val Sunset = "09:11 PM"
 
-private val temperature = listOf(11.5, 13.7)
-private val feelsLikeTemperature = listOf(9.5, 11.5)
-private val iconCode = listOf(1000, 1240)
-private val precipitation = listOf(14, 23)
-private val uvIndex = listOf(3, 5)
-private val humidityPercent = listOf(54, 71)
-private val visibilityKilometers = listOf(3, 4)
-private val weatherDescription = listOf("sunny", "partly cloudy")
-private val windSpeed = listOf(4.5, 3.8)
+private val Temperature = listOf(11.5, 13.7)
+private val FeelsLikeTemperature = listOf(9.5, 11.5)
+private val IconCode = listOf(1000, 1240)
+private val Precipitation = listOf(14, 23)
+private val UvIndex = listOf(3, 5)
+private val HumidityPercent = listOf(54, 71)
+private val VisibilityKilometers = listOf(3, 4)
+private val WeatherDescription = listOf("sunny", "partly cloudy")
+private val WindSpeed = listOf(4.5, 3.8)
 
-private const val oneDayInSeconds = 24 * 60 * 60
-private const val oneHourSeconds = 60 * 60
+private const val OneDayInSeconds = 24 * 60 * 60
+private const val OneHourSeconds = 60 * 60
 
 @ExperimentalCoroutinesApi
 class ForecastWeatherInteractorTest {
@@ -92,43 +92,43 @@ class ForecastWeatherInteractorTest {
     }
 
     private val forecastHour1 = HourItem(
-        timeEpoch = timeEpoch,
-        tempC = temperature[0],
-        feelslikeC = feelsLikeTemperature[0],
-        precipMm = precipitation[0].toDouble(),
-        windKph = windSpeed[0],
-        humidity = humidityPercent[0],
-        visKm = visibilityKilometers[0].toDouble(),
-        uv = uvIndex[0].toDouble(),
+        timeEpoch = TimeEpoch,
+        tempC = Temperature[0],
+        feelslikeC = FeelsLikeTemperature[0],
+        precipMm = Precipitation[0].toDouble(),
+        windKph = WindSpeed[0],
+        humidity = HumidityPercent[0],
+        visKm = VisibilityKilometers[0].toDouble(),
+        uv = UvIndex[0].toDouble(),
         condition = Condition(
-            code = iconCode[0],
+            code = IconCode[0],
             icon = "",
-            text = weatherDescription[0],
+            text = WeatherDescription[0],
         )
     )
 
     private val forecastHour2 = HourItem(
-        timeEpoch = timeEpoch + oneHourSeconds,
-        tempC = temperature[1],
-        feelslikeC = feelsLikeTemperature[1],
-        precipMm = precipitation[1].toDouble(),
-        windKph = windSpeed[1],
-        humidity = humidityPercent[1],
-        visKm = visibilityKilometers[1].toDouble(),
-        uv = uvIndex[1].toDouble(),
+        timeEpoch = TimeEpoch + OneHourSeconds,
+        tempC = Temperature[1],
+        feelslikeC = FeelsLikeTemperature[1],
+        precipMm = Precipitation[1].toDouble(),
+        windKph = WindSpeed[1],
+        humidity = HumidityPercent[1],
+        visKm = VisibilityKilometers[1].toDouble(),
+        uv = UvIndex[1].toDouble(),
         condition = Condition(
-            code = iconCode[1],
+            code = IconCode[1],
             icon = "",
-            text = weatherDescription[1],
+            text = WeatherDescription[1],
         )
     )
 
     private val todayForecast1 = ForecastDayItem(
-        date = date,
-        dateEpoch = dateEpoch,
+        date = Date,
+        dateEpoch = DateEpoch,
         astro = Astro(
-            sunrise = sunrise,
-            sunset = sunset,
+            sunrise = Sunrise,
+            sunset = Sunset,
         ),
         hour = listOf(
             forecastHour1,
@@ -137,10 +137,10 @@ class ForecastWeatherInteractorTest {
     )
 
     private val todayForecast2 = todayForecast1.copy(
-        dateEpoch = dateEpoch + oneDayInSeconds,
+        dateEpoch = DateEpoch + OneDayInSeconds,
         hour = listOf(
             todayForecast1.hour!!.first().copy(
-                timeEpoch = timeEpoch + oneHourSeconds
+                timeEpoch = TimeEpoch + OneHourSeconds
             )
         )
     )
@@ -154,35 +154,35 @@ class ForecastWeatherInteractorTest {
     )
 
     private val successfulForecast1Entry1 = ForecastEntry(
-        date = Date(timeEpoch * 1000L),
-        description = weatherDescription[0],
-        iconCode = iconCode[0],
-        temperature = temperature[0],
-        feelsLikeTemperature = feelsLikeTemperature[0],
-        precipitation = precipitation[0],
-        uvIndex = uvIndex[0],
-        windSpeed = windSpeed[0],
-        humidityPercent = humidityPercent[0],
-        visibility = visibilityKilometers[0],
+        date = Date(TimeEpoch * 1000L),
+        description = WeatherDescription[0],
+        iconCode = IconCode[0],
+        temperature = Temperature[0],
+        feelsLikeTemperature = FeelsLikeTemperature[0],
+        precipitation = Precipitation[0],
+        uvIndex = UvIndex[0],
+        windSpeed = WindSpeed[0],
+        humidityPercent = HumidityPercent[0],
+        visibility = VisibilityKilometers[0],
     )
 
     private val successfulForecast1Entry2 = ForecastEntry(
-        date = Date((timeEpoch + oneHourSeconds) * 1000L),
-        description = weatherDescription[1],
-        iconCode = iconCode[1],
-        temperature = temperature[1],
-        feelsLikeTemperature = feelsLikeTemperature[1],
-        precipitation = precipitation[1],
-        uvIndex = uvIndex[1],
-        windSpeed = windSpeed[1],
-        humidityPercent = humidityPercent[1],
-        visibility = visibilityKilometers[1],
+        date = Date((TimeEpoch + OneHourSeconds) * 1000L),
+        description = WeatherDescription[1],
+        iconCode = IconCode[1],
+        temperature = Temperature[1],
+        feelsLikeTemperature = FeelsLikeTemperature[1],
+        precipitation = Precipitation[1],
+        uvIndex = UvIndex[1],
+        windSpeed = WindSpeed[1],
+        humidityPercent = HumidityPercent[1],
+        visibility = VisibilityKilometers[1],
     )
 
     private val successfulForecastDay1 = ForecastDay(
-        date = timeFormatter.setToMidnight(Date(dateEpoch * 1000L)),
-        sunrise = sunrise,
-        sunset = sunset,
+        date = timeFormatter.setToMidnight(Date(DateEpoch * 1000L)),
+        sunrise = Sunrise,
+        sunset = Sunset,
         entries = listOf(
             successfulForecast1Entry1,
             successfulForecast1Entry2,
@@ -196,8 +196,8 @@ class ForecastWeatherInteractorTest {
     )
 
     private val incomingCity = WeatherLocation.City(
-        name = cityName,
-        countryCode = countryCode,
+        name = CityName,
+        countryCode = CountryCode,
     )
 
     private val incomingCoordinates = WeatherLocation.Coordinates(
@@ -206,8 +206,8 @@ class ForecastWeatherInteractorTest {
     )
 
     private val queryCity = RepositoryLocation.City(
-        name = cityName,
-        countryCode = countryCode,
+        name = CityName,
+        countryCode = CountryCode,
     )
 
     private val queryCoordinates = RepositoryLocation.Coordinates(
@@ -218,7 +218,7 @@ class ForecastWeatherInteractorTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        coEvery { weatherRepository.getForecast(any()) } returns Result.Success(
+        coEvery { weatherRepository.getForecast(any()) } returns Either.Success(
             forecastRepositoryResponse
         )
     }
@@ -281,7 +281,7 @@ class ForecastWeatherInteractorTest {
 
         // the response has been converted to the interactor type
         Assert.assertTrue(response.isSuccess)
-        assertEquals(forecastSuccessfulResponse, response.getOrNull())
+        assertEquals(forecastSuccessfulResponse, response.valueOrNull())
     }
 
     @Test
@@ -294,7 +294,7 @@ class ForecastWeatherInteractorTest {
         )
         coEvery {
             weatherRepository.getForecast(any())
-        } returns Result.Failure(IOException("Failed to load weather"))
+        } returns Either.Failure(IOException("Failed to load weather"))
 
         // when we execute the interactor query
         val response = interactor.execute(incomingCity)

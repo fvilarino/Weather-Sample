@@ -10,7 +10,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.shared.mvi.Middleware
 import com.francescsoftware.weathersample.time.api.TimeFormatter
-import com.francescsoftware.weathersample.type.getOrNull
+import com.francescsoftware.weathersample.type.valueOrNull
 import com.francescsoftware.weathersample.utils.time.isToday
 import com.francescsoftware.weathersample.utils.time.isTomorrow
 import kotlinx.coroutines.CoroutineScope
@@ -63,8 +63,8 @@ internal class WeatherMiddleware @Inject constructor(
             )
             val currentAsync = async { getTodayWeatherInteractor.execute(location) }
             val forecastAsync = async { getForecastInteractor.execute(location) }
-            val current = currentAsync.await().getOrNull()
-            val forecast = forecastAsync.await().getOrNull()
+            val current = currentAsync.await().valueOrNull()
+            val forecast = forecastAsync.await().valueOrNull()
             if (current != null && forecast != null) {
                 dispatch(
                     WeatherAction.Loaded(

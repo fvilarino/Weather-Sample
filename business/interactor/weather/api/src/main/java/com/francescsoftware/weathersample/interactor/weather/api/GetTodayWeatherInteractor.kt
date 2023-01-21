@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.interactor.weather.api
 
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 
 data class TodayWeather(
     val main: TodayMain,
@@ -31,5 +31,5 @@ data class TodayClouds(
 )
 
 interface GetTodayWeatherInteractor {
-    suspend fun execute(location: WeatherLocation): Result<TodayWeather>
+    suspend fun execute(location: WeatherLocation): Either<TodayWeather>
 }

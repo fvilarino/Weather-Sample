@@ -7,7 +7,7 @@ import com.francescsoftware.weathersample.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.Coordinates
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
-import com.francescsoftware.weathersample.type.Result
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
 import javax.inject.Inject
 
@@ -15,8 +15,8 @@ internal class GetCitiesInteractorImpl @Inject constructor(
     private val cityRepository: CityRepository,
 ) : GetCitiesInteractor {
 
-    override suspend fun execute(prefix: String, limit: Int): Result<List<City>> {
-        val citiesResponse: Result<CitySearchResponse> = cityRepository.getCities(prefix, limit)
+    override suspend fun execute(prefix: String, limit: Int): Either<List<City>> {
+        val citiesResponse: Either<CitySearchResponse> = cityRepository.getCities(prefix, limit)
         return citiesResponse.fold(
             onSuccess = { response ->
                 val data = response.data
@@ -24,14 +24,14 @@ internal class GetCitiesInteractorImpl @Inject constructor(
                     val cities = data
                         .filter { city -> city.isValid }
                         .map { city -> city.toCity() }
-                    Result.Success(cities)
+                    Either.Success(cities)
                 } else {
-                    Result.Success(emptyList())
+                    Either.Success(emptyList())
                 }
             },
             onFailure = { response ->
                 val cause = response.cause
-                Result.Failure(
+                Either.Failure(
                     if (cause != null) {
                         CitiesException("Error fetching cities", cause)
                     } else {

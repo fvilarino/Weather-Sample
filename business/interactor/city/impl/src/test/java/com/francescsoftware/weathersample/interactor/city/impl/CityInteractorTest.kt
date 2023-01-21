@@ -8,11 +8,11 @@ import com.francescsoftware.weathersample.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.Coordinates
 import com.francescsoftware.weathersample.testing.MainCoroutineRule
-import com.francescsoftware.weathersample.type.Result
-import com.francescsoftware.weathersample.type.getOrNull
+import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
 import com.francescsoftware.weathersample.type.throwableOrNull
+import com.francescsoftware.weathersample.type.valueOrNull
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -75,7 +75,7 @@ class CityInteractorTest {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
-        coEvery { cityRepository.getCities(any(), any()) } returns Result.Success(
+        coEvery { cityRepository.getCities(any(), any()) } returns Either.Success(
             citiesResponse
         )
     }
@@ -110,7 +110,7 @@ class CityInteractorTest {
 
         // the response has been converted to the interactor type
         assertTrue(response.isSuccess)
-        assertEquals(response.getOrNull(), listOf(successCity))
+        assertEquals(response.valueOrNull(), listOf(successCity))
     }
 
     @Test
@@ -122,7 +122,7 @@ class CityInteractorTest {
                 any(),
                 any()
             )
-        } returns Result.Failure(IOException("Failed to load cities"))
+        } returns Either.Failure(IOException("Failed to load cities"))
 
         // when we execute the interactor query
         val query = CityName
