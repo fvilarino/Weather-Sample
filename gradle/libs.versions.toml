@@ -37,6 +37,7 @@ org-jetbrains-kotlinx-kotlinx-coroutines-test-version = "1.6.4"
 org-jetbrains-kotlinx-kotlinx-coroutines-version = "1.6.4"
 org-jetbrains-kotlinx-kotlinx-serialization-json-version = "1.4.1"
 org-jlleitschuh-gradle-ktlint-version = "11.0.0"
+org-junit-jupiter-junit-jupiter-version = "5.9.1"
 org-robolectric-robolectric-version = "4.9.2"
 versions-plugin-version = "0.44.0"
 
@@ -92,6 +93,7 @@ org-jetbrains-kotlinx-kotlinx-coroutines-android = { module = "org.jetbrains.kot
 org-jetbrains-kotlinx-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines-version" }
 org-jetbrains-kotlinx-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines-test-version" }
 org-jetbrains-kotlinx-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "org-jetbrains-kotlinx-kotlinx-serialization-json-version" }
+org-junit-jupiter-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "org-junit-jupiter-junit-jupiter-version" }
 org-robolectric-robolectric = { module = "org.robolectric:robolectric", version.ref = "org-robolectric-robolectric-version" }
 
 [bundles]
