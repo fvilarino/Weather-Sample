@@ -12,7 +12,6 @@ dependencies {
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
-    implementation(libs.junit)
-    implementation(libs.androidx.test.ext.junit.ktx)
-    implementation(libs.androidx.test.espresso.espresso.core)
+    testImplementation(libs.bundles.junit)
+    androidTestImplementation(libs.bundles.android.test)
 }

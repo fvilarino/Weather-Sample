@@ -1,12 +1,10 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.francescsoftware.weathersample.interactor.weather.api.Forecast
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.testing.MainCoroutineRule
 import com.francescsoftware.weathersample.testing.testDispatcherProvider
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.Either
@@ -26,11 +24,10 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.io.IOException
 import java.util.Calendar
 import java.util.Date
@@ -63,12 +60,6 @@ private const val OneHourSeconds = 60 * 60
 
 @ExperimentalCoroutinesApi
 class ForecastWeatherInteractorTest {
-
-    @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK
     lateinit var weatherRepository: WeatherRepository
@@ -215,7 +206,7 @@ class ForecastWeatherInteractorTest {
         longitude = CityLongitude,
     )
 
-    @Before
+    @BeforeEach
     fun setup() {
         MockKAnnotations.init(this)
         coEvery { weatherRepository.getForecast(any()) } returns Either.Success(
@@ -280,7 +271,7 @@ class ForecastWeatherInteractorTest {
         val response = interactor.execute(incomingCity)
 
         // the response has been converted to the interactor type
-        Assert.assertTrue(response.isSuccess)
+        assertTrue(response.isSuccess)
         assertEquals(forecastSuccessfulResponse, response.valueOrNull())
     }
 
@@ -300,7 +291,7 @@ class ForecastWeatherInteractorTest {
         val response = interactor.execute(incomingCity)
 
         // the response has been converted to the interactor type
-        Assert.assertTrue(response.isFailure)
-        Assert.assertTrue(response.throwableOrNull() is WeatherException)
+        assertTrue(response.isFailure)
+        assertTrue(response.throwableOrNull() is WeatherException)
     }
 }

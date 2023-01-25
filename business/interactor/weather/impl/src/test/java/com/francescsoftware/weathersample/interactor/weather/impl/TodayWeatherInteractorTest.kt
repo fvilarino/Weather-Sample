@@ -1,13 +1,11 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.francescsoftware.weathersample.interactor.weather.api.TodayClouds
 import com.francescsoftware.weathersample.interactor.weather.api.TodayMain
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.testing.MainCoroutineRule
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
@@ -23,11 +21,10 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.io.IOException
 import kotlin.math.roundToInt
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
@@ -53,12 +50,6 @@ private const val uvIndex = 7
 
 @ExperimentalCoroutinesApi
 class TodayWeatherInteractorTest {
-
-    @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK
     lateinit var weatherRepository: WeatherRepository
@@ -128,7 +119,7 @@ class TodayWeatherInteractorTest {
         longitude = CityLongitude,
     )
 
-    @Before
+    @BeforeEach
     fun setup() {
         MockKAnnotations.init(this)
         coEvery { weatherRepository.getTodayWeather(any()) } returns Either.Success(
@@ -181,7 +172,7 @@ class TodayWeatherInteractorTest {
         val response = interactor.execute(incomingCity)
 
         // the response has been converted to the interactor type
-        Assert.assertTrue(response.isSuccess)
+        assertTrue(response.isSuccess)
         assertEquals(response.valueOrNull(), successfulTodayWeather)
     }
 
@@ -194,7 +185,7 @@ class TodayWeatherInteractorTest {
         val response = interactor.execute(incomingCity)
 
         // the response has been converted to the interactor type
-        Assert.assertTrue(response.isSuccess)
+        assertTrue(response.isSuccess)
         assertEquals(response.valueOrNull(), successfulTodayWeather)
     }
 
@@ -210,7 +201,7 @@ class TodayWeatherInteractorTest {
         val response = interactor.execute(incomingCity)
 
         // the response has been converted to the interactor type
-        Assert.assertTrue(response.isFailure)
-        Assert.assertTrue(response.throwableOrNull() is WeatherException)
+        assertTrue(response.isFailure)
+        assertTrue(response.throwableOrNull() is WeatherException)
     }
 }

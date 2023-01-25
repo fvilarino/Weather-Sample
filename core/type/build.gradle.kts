@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
-    testCompileOnly(libs.junit)
+    testCompileOnly(libs.junit.junit)
     testImplementation(libs.org.junit.jupiter.junit.jupiter)
+    testImplementation(libs.io.mockk)
 }

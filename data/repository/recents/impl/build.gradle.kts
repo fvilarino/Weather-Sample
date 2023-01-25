@@ -21,11 +21,11 @@ dependencies {
     implementation(libs.androidx.room.room.runtime)
     kapt(libs.androidx.room.room.compiler)
 
+    testImplementation(libs.bundles.junit)
+    testImplementation(libs.bundles.android.test)
     testImplementation(libs.androidx.room.room.testing)
-    testImplementation(libs.junit)
     testImplementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
-    testImplementation(libs.org.robolectric.robolectric)
-    testImplementation(libs.androidx.test.ext.junit.ktx)
-    testImplementation(libs.androidx.test.core.ktx)
     testImplementation(libs.app.cash.turbine.turbine)
+    testImplementation(libs.org.robolectric.robolectric)
+    testImplementation(libs.io.mockk)
 }

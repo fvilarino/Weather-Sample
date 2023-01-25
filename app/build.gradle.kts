@@ -103,7 +103,7 @@ dependencies {
     implementation(libs.com.jakewharton.timber)
 
     // test
-    testImplementation(libs.junit)
+    testImplementation(libs.bundles.junit)
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }

@@ -17,9 +17,8 @@ dependencies {
     implementation(libs.com.google.dagger.hilt.android)
     kapt(libs.com.google.dagger.hilt.android.compiler)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit.ktx)
-    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
+    testImplementation(libs.bundles.junit)
+    androidTestImplementation(libs.bundles.android.test)
 }
 
 protobuf {

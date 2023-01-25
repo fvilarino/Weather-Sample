@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
@@ -12,6 +14,10 @@ tasks.test {
     useJUnitPlatform()
 
     testLogging {
-        events("passed")
+        events("passed", "skipped", "failed")
+        showStandardStreams = true
+        showStackTraces = true
+        showCauses = true
+        exceptionFormat = TestExceptionFormat.FULL
     }
 }

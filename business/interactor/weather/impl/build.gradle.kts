@@ -21,8 +21,8 @@ dependencies {
     implementation(libs.com.jakewharton.timber)
 
     testImplementation(project(":testing"))
-    testImplementation(libs.junit)
-    testImplementation(libs.androidx.arch.core.core.testing)
+    testImplementation(libs.bundles.junit)
+    androidTestImplementation(libs.bundles.android.test)
     testImplementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
     testImplementation(libs.io.mockk)
 }

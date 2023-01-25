@@ -86,7 +86,7 @@ com-squareup-okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.
 com-squareup-okio = { module = "com.squareup.okio:okio", version.ref = "com-squareup-okio-version" }
 com-squareup-retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "com-squareup-retrofit2-retrofit-version" }
 io-mockk = { module = "io.mockk:mockk", version.ref = "io-mockk-version" }
-junit = { module = "junit:junit", version.ref = "junit-version" }
+junit-junit = { module = "junit:junit", version.ref = "junit-version" }
 org-jetbrains-kotlin-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin-kotlin-gradle-plugin-version" }
 org-jetbrains-kotlin-kotlin-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "org-jetbrains-kotlin-kotlin-serialization-gradle-plugin-version" }
 org-jetbrains-kotlinx-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines-version" }
@@ -94,9 +94,17 @@ org-jetbrains-kotlinx-kotlinx-coroutines-core = { module = "org.jetbrains.kotlin
 org-jetbrains-kotlinx-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines-test-version" }
 org-jetbrains-kotlinx-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "org-jetbrains-kotlinx-kotlinx-serialization-json-version" }
 org-junit-jupiter-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "org-junit-jupiter-junit-jupiter-version" }
+org-junit-jupiter-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "org-junit-jupiter-junit-jupiter-version" }
+org-junit-vintage-junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "org-junit-jupiter-junit-jupiter-version" }
 org-robolectric-robolectric = { module = "org.robolectric:robolectric", version.ref = "org-robolectric-robolectric-version" }
 
 [bundles]
+android-test = [
+    "androidx-arch-core-core-testing",
+    "androidx-test-core-ktx",
+    "androidx-test-ext-junit-ktx",
+    "androidx-test-espresso-espresso-core",
+]
 compose = [
     "androidx-compose-material3-material3",
     "androidx-compose-runtime-runtime",
@@ -120,6 +128,12 @@ retrofit = [
     "com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter",
     "com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter",
     "com-squareup-retrofit2-retrofit",
+]
+junit = [
+    "junit-junit",
+    "org-junit-jupiter-junit-jupiter",
+    "org-junit-jupiter-junit-jupiter-api",
+    "org-junit-vintage-junit-vintage-engine",
 ]
 
 [plugins]

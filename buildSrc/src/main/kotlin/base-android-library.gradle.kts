@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -29,5 +31,19 @@ android {
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.kotlinTimeFreeCompilerArgs
+    }
+    testOptions {
+        unitTests.all { test ->
+            test.useJUnitPlatform {
+                includeEngines("junit-jupiter", "junit-vintage")
+            }
+            test.testLogging {
+                events("passed", "skipped", "failed")
+                showStandardStreams = true
+                showStackTraces = true
+                showCauses = true
+                exceptionFormat = TestExceptionFormat.FULL
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.type
 
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -35,25 +37,26 @@ class EitherTest {
 
     @Test
     fun `successful Either runs onSuccess block on fold`() {
-        val result = 0
+        val result = 42
         val either: Either<Int> = Either.Success(result)
-        var actual: Int? = null
+        val callback: (Int) -> Unit = mockk(relaxed = true)
         either.fold(
-            onSuccess = { value -> actual = value },
+            onSuccess = callback,
             onFailure = { }
         )
-        Assertions.assertEquals(result, actual)
+        verify(exactly = 1) { callback.invoke(result) }
     }
 
     @Test
     fun `failure Either runs onFailure block on fold`() {
-        val either: Either<Int> = Either.Failure(Throwable())
-        var actual: Int? = 0
+        val throwable = Throwable()
+        val either: Either<Int> = Either.Failure(throwable)
+        val callback: (Throwable) -> Unit = mockk(relaxed = true)
         either.fold(
-            onSuccess = { value -> actual = value },
-            onFailure = { actual = null }
+            onSuccess = { },
+            onFailure = callback
         )
-        Assertions.assertEquals(null, actual)
+        verify(exactly = 1) { callback.invoke(throwable) }
     }
 
     @Test

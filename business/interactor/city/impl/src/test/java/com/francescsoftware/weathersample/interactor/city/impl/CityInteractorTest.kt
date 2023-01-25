@@ -1,13 +1,11 @@
 package com.francescsoftware.weathersample.interactor.city.impl
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.francescsoftware.weathersample.cityrepository.api.CityRepository
 import com.francescsoftware.weathersample.cityrepository.api.model.CityItem
 import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
 import com.francescsoftware.weathersample.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.Coordinates
-import com.francescsoftware.weathersample.testing.MainCoroutineRule
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
@@ -19,11 +17,10 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.io.IOException
 
 private const val CityName = "Vancouver"
@@ -36,12 +33,6 @@ private const val CityLongitude = -123.11
 
 @ExperimentalCoroutinesApi
 class CityInteractorTest {
-
-    @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
 
     @MockK
     lateinit var cityRepository: CityRepository
@@ -72,7 +63,7 @@ class CityInteractorTest {
         coordinates = Coordinates(latitude = CityLatitude, longitude = CityLongitude)
     )
 
-    @Before
+    @BeforeEach
     fun setup() {
         MockKAnnotations.init(this)
         coEvery { cityRepository.getCities(any(), any()) } returns Either.Success(

@@ -15,7 +15,6 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.com.jakewharton.timber)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit.ktx)
-    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
+    testImplementation(libs.bundles.junit)
+    androidTestImplementation(libs.bundles.android.test)
 }
