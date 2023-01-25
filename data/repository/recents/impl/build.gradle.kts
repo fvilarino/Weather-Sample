@@ -4,6 +4,11 @@ plugins {
 
 android {
     namespace = "com.francescsoftware.weathersample.repository.recents.impl"
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
 }
 
 dependencies {
