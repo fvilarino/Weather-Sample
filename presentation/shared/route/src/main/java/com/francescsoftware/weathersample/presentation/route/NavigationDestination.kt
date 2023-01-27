@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.presentation.route
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.SavedStateHandle
+import java.lang.IllegalStateException
 
 sealed interface NavigationDestination {
     @get: StringRes
@@ -15,6 +16,16 @@ sealed interface NavigationDestination {
     val iconContentDescriptionId: Int
 
     fun isRoute(route: String?): Boolean
+
+    companion object {
+        fun fromRoute(route: String?): NavigationDestination = when {
+            route == null ||
+                CitySearch.isRoute(route) -> CitySearch
+
+            Weather.isRoute(route) -> Weather
+            else -> throw IllegalStateException("Unknown route [$route]")
+        }
+    }
 
     object CitySearch : NavigationDestination {
         override val titleId: Int = com.francescsoftware.weathersample.shared.assets.R.string.app_name
@@ -48,6 +59,7 @@ sealed interface NavigationDestination {
             country = savedStateHandle.get<String>(countryArg).orEmpty(),
             countryCode = savedStateHandle.get<String>(countryCodeArg).orEmpty(),
         )
+
         override fun isRoute(route: String?): Boolean = route?.startsWith(routeRoot) == true
     }
 }

@@ -28,11 +28,7 @@ internal fun WeatherApp() {
         val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
-        val currentDestination = when {
-            NavigationDestination.CitySearch.isRoute(currentRoute) -> NavigationDestination.CitySearch
-            NavigationDestination.Weather.isRoute(currentRoute) -> NavigationDestination.Weather
-            else -> NavigationDestination.CitySearch
-        }
+        val currentDestination = NavigationDestination.fromRoute(currentRoute)
 
         Scaffold(
             topBar = {
