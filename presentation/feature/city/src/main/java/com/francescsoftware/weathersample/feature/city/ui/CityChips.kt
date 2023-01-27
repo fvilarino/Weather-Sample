@@ -1,11 +1,12 @@
 package com.francescsoftware.weathersample.feature.city.ui
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,15 +27,18 @@ internal fun CityChips(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        Row(
-            modifier = Modifier.horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(MarginDouble)
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(MarginDouble),
         ) {
-            state.recentCities.forEach { recent ->
+            items(
+                items = state.recentCities,
+                key = { city -> city.name },
+            ) { recent ->
                 CityChip(
                     label = recent.name,
                     onClick = { onChipClick(recent) },
                     onClear = { onDeleteChip(recent) },
+                    modifier = Modifier.animateItemPlacement(),
                 )
             }
         }
@@ -45,19 +49,23 @@ internal fun CityChips(
 @Composable
 private fun CityChipsPreview() {
     WeatherSampleTheme {
-        CityChips(
-            state = CityState.initial.copy(
-                recentCities = listOf(
-                    RecentCityModel("Barcelona"),
-                    RecentCityModel("Vancouver"),
-                    RecentCityModel("Munich"),
-                    RecentCityModel("Prague"),
+        Surface(
+            color = MaterialTheme.colorScheme.background
+        ) {
+            CityChips(
+                state = CityState.initial.copy(
+                    recentCities = listOf(
+                        RecentCityModel("Barcelona"),
+                        RecentCityModel("Vancouver"),
+                        RecentCityModel("Munich"),
+                        RecentCityModel("Prague"),
+                    ),
+                    showRecentCities = true,
                 ),
-                showRecentCities = true,
-            ),
-            onChipClick = {},
-            onDeleteChip = {},
-            modifier = Modifier.padding(vertical = MarginDouble),
-        )
+                onChipClick = {},
+                onDeleteChip = {},
+                modifier = Modifier.padding(vertical = MarginDouble),
+            )
+        }
     }
 }
