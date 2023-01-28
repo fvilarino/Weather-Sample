@@ -7,11 +7,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.francescsoftware.weathersample.feature.weather.ui.WeatherScreen
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
-import com.francescsoftware.weathersample.presentation.route.NavigationDestination
+import com.francescsoftware.weathersample.presentation.route.WeatherDestination
 
 fun NavGraphBuilder.addWeatherDetailsDestination() {
     composable(
-        route = NavigationDestination.Weather.weatherRoute,
+        route = WeatherDestination.weatherRoute,
     ) {
         val weatherViewModel: WeatherViewModel = hiltViewModel()
         WeatherScreen(

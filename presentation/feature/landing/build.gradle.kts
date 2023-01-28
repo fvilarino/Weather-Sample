@@ -16,6 +16,7 @@ dependencies {
 
     implementation(project(":presentation:feature:city"))
     implementation(project(":presentation:feature:weather"))
+    implementation(project(":presentation:shared:assets"))
     implementation(project(":presentation:shared:composable"))
     implementation(project(":presentation:shared:deviceclass"))
     implementation(project(":presentation:shared:route"))

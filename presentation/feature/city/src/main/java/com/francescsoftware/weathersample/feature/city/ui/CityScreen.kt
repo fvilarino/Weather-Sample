@@ -27,6 +27,7 @@ import com.francescsoftware.weathersample.feature.city.model.RecentCityModel
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityState
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityViewModel
 import com.francescsoftware.weathersample.feature.city.viewmodel.LoadState
+import com.francescsoftware.weathersample.presentation.route.CitySearchDestination
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
 import com.francescsoftware.weathersample.shared.composable.DualPane
 import com.francescsoftware.weathersample.styles.MarginDouble
@@ -47,8 +48,11 @@ internal fun CityScreen(
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val actions by CitySearchDestination.actionsState.collectAsStateWithLifecycle()
+
     CityScreen(
         state = state,
+        actions = actions,
         deviceClass = deviceClass,
         onCityClick = { selectedCity ->
             viewModel.onCityClick(selectedCity)
@@ -65,6 +69,7 @@ internal fun CityScreen(
 @Composable
 private fun CityScreen(
     state: CityState,
+    actions: CitySearchDestination.ActionsState,
     deviceClass: DeviceClass,
     onCityClick: (SelectedCity) -> Unit,
     onQueryChange: (TextFieldValue) -> Unit,
@@ -105,6 +110,13 @@ private fun CityScreen(
         deviceClass = deviceClass,
         modifier = modifier,
     )
+    if (actions.about) {
+        AboutDialog(
+            onDismiss = {
+                CitySearchDestination.consume(CitySearchDestination.Actions.About)
+            }
+        )
+    }
 }
 
 @Composable
@@ -218,6 +230,7 @@ private fun CityScreenPreview() {
             }
             CityScreen(
                 state = state,
+                actions = CitySearchDestination.ActionsState(),
                 deviceClass = DeviceClass.Compact,
                 onQueryChange = { query ->
                     state = state.copy(query = query)

@@ -16,7 +16,9 @@ import androidx.navigation.compose.rememberNavController
 import com.francescsoftware.weathersample.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.feature.city.addSearchDestination
 import com.francescsoftware.weathersample.feature.weather.addWeatherDetailsDestination
+import com.francescsoftware.weathersample.presentation.route.CitySearchDestination
 import com.francescsoftware.weathersample.presentation.route.NavigationDestination
+import com.francescsoftware.weathersample.presentation.route.WeatherDestination
 import com.francescsoftware.weathersample.shared.composable.AppBar
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
@@ -41,19 +43,20 @@ internal fun WeatherApp() {
                         null
                     },
                     onIconClick = navController::popBackStack,
+                    actions = { currentDestination.TopBarActions() },
                     modifier = Modifier.systemBarsPadding(),
                 )
             },
         ) { paddingValues ->
             NavHost(
                 navController,
-                startDestination = NavigationDestination.CitySearch.cityRoute,
+                startDestination = CitySearchDestination.cityRoute,
                 modifier = Modifier.padding(paddingValues),
             ) {
                 addSearchDestination(
                     deviceClass = deviceClass,
                     onCityClick = { selectedCity ->
-                        navController.navigate(NavigationDestination.Weather.getRoute(selectedCity))
+                        navController.navigate(WeatherDestination.getRoute(selectedCity))
                     }
                 )
                 addWeatherDetailsDestination()

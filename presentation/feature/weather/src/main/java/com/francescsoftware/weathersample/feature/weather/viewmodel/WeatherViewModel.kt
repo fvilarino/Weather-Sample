@@ -2,8 +2,8 @@ package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import com.francescsoftware.weathersample.coroutines.CloseableCoroutineScope
-import com.francescsoftware.weathersample.presentation.route.NavigationDestination
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
+import com.francescsoftware.weathersample.presentation.route.WeatherDestination
 import com.francescsoftware.weathersample.shared.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -22,7 +22,7 @@ internal class WeatherViewModel @Inject constructor(
     initialState = WeatherState.initial,
 ) {
 
-    private val selectedCity: SelectedCity = NavigationDestination.Weather.getCity(savedStateHandle)
+    private val selectedCity: SelectedCity = WeatherDestination.getCity(savedStateHandle)
 
     init {
         handleAction(

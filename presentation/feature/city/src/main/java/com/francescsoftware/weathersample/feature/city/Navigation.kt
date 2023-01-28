@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.francescsoftware.weathersample.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.feature.city.ui.CityScreen
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityViewModel
-import com.francescsoftware.weathersample.presentation.route.NavigationDestination
+import com.francescsoftware.weathersample.presentation.route.CitySearchDestination
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
 
 fun NavGraphBuilder.addSearchDestination(
@@ -16,7 +16,7 @@ fun NavGraphBuilder.addSearchDestination(
     onCityClick: (SelectedCity) -> Unit,
 ) {
     composable(
-        route = NavigationDestination.CitySearch.getRoute(),
+        route = CitySearchDestination.getRoute(),
     ) {
         val cityViewModel: CityViewModel = hiltViewModel()
         CityScreen(
