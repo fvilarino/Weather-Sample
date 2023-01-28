@@ -18,29 +18,73 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+    signingConfigs {
+        getByName("debug") {
+            storeFile = rootProject.file("./certs/debug.keystore")
+        }
+
+        create("release") {
+            val releasePropertiesFile = rootProject.file("./certs/release.properties")
+            if (releasePropertiesFile.exists()) {
+                parseConfig(releasePropertiesFile)
+            } else {
+                storeFile = rootProject.file(System.getenv("store"))
+                keyAlias = System.getenv("alias")
+                storePassword = System.getenv("storePass")
+                keyPassword = System.getenv("keyPass")
+            }
         }
     }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix = ".dev"
+        }
+
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+                "retrofit2.pro",
+                "kotlin-serialization.pro"
+            )
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = Config.Compiler.javaVersion
         targetCompatibility = Config.Compiler.javaVersion
     }
+
     kotlinOptions {
         jvmTarget = Config.Compiler.jvmTarget
         freeCompilerArgs = freeCompilerArgs + Config.Compiler.kotlinTimeFreeCompilerArgs
     }
+
     kapt {
         javacOptions {
             option("-Xmaxerrs", 1000)
         }
     }
 }
+
+fun com.android.build.api.dsl.SigningConfig.parseConfig(file: File) {
+    file.useLines { lines ->
+        lines.forEach { line ->
+            when {
+                line.startsWith("store:") -> storeFile = rootProject.file(line.valueAfterColon())
+                line.startsWith("alias:") -> keyAlias = line.valueAfterColon()
+                line.startsWith("storePass:") -> storePassword = line.valueAfterColon()
+                line.startsWith("keyPass:") -> keyPassword = line.valueAfterColon()
+            }
+        }
+    }
+}
+
+fun String.valueAfterColon() = substring(indexOf(":") + 1).trim()
 
 dependencies {
     implementation(project(":business:interactor:city:api"))

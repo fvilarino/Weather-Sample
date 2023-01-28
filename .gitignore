@@ -8,4 +8,5 @@ build
 .externalNativeBuild
 .cxx
 local.properties
+certs/release.properties
 
