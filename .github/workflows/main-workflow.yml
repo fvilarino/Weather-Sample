@@ -5,6 +5,12 @@ on:
     branches: [ main, feature/compose ]
   workflow_dispatch:
 
+env:
+  alias: ${{ secrets.alias }}
+  keyPass: ${{ secrets.keyPass }}
+  store: ${{ secrets.store }}
+  storePass: ${{ secrets.storePass }}
+
 jobs:
   build:
     name: Build
@@ -21,7 +27,7 @@ jobs:
           cache: 'gradle'
 
       - name: Build the app
-        run: ./gradlew buildDebug --stacktrace
+        run: ./gradlew assembleRelease --stacktrace
 
   test:
     name: Unit Tests
