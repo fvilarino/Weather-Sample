@@ -5,7 +5,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.testing.testDispatcherProvider
+import com.francescsoftware.weathersample.testing.mock.testDispatcherProvider
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure

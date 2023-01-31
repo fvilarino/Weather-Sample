@@ -20,7 +20,7 @@ dependencies {
     kapt(libs.com.google.dagger.hilt.android.compiler)
     implementation(libs.com.jakewharton.timber)
 
-    testImplementation(project(":testing"))
+    testImplementation(project(":testing:mock"))
     testImplementation(libs.bundles.junit)
     androidTestImplementation(libs.bundles.android.test)
     testImplementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)

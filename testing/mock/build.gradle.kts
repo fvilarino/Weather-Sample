@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.testing"
+    namespace = "com.francescsoftware.weathersample.testing.mock"
 }
 
 dependencies {
