@@ -2,6 +2,7 @@
 androidx-activity-activity-compose-version = "1.7.0-alpha03"
 androidx-annotation-version = "1.6.0-alpha01"
 androidx-arch-core-core-testing-version = "2.2.0-alpha01"
+androidx-benchmark-benchmark-macro-junit4-version = "1.1.0-beta05"
 androidx-compose-bom-version = "2023.01.00"
 androidx-compose-compiler-version = "1.4.0"
 androidx-core-core-ktx-version = "1.9.0-beta01"
@@ -14,6 +15,7 @@ androidx-room-version = "2.5.0"
 androidx-test-core-ktx-version = "1.5.0"
 androidx-test-espresso-espresso-core-version = "3.5.1"
 androidx-test-ext-junit-version = "1.1.5"
+androidx-test-uiautomator-uiautomator-version = "2.2.0"
 app-cash-turbine-turbine-version = "0.12.1"
 app-compat-version = "1.7.0-alpha01"
 catalog-plugin-version = "0.7.0"
@@ -46,6 +48,7 @@ androidx-activity-activity-compose = { module = "androidx.activity:activity-comp
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation-version" }
 androidx-app-compat = { module = "androidx.appcompat:appcompat", version.ref = "app-compat-version" }
 androidx-arch-core-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch-core-core-testing-version" }
+androidx-benchmark-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark-benchmark-macro-junit4-version"}
 androidx-compose-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom-version" }
 androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-material3-window-sizeclass = { module = "androidx.compose.material3:material3-window-size-class" }
@@ -71,6 +74,7 @@ androidx-room-room-testing = { module = "androidx.room:room-testing", version.re
 androidx-test-core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidx-test-core-ktx-version" }
 androidx-test-espresso-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-test-espresso-espresso-core-version" }
 androidx-test-ext-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext-junit-version" }
+androidx-test-uiautomator-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx-test-uiautomator-uiautomator-version"}
 app-cash-turbine-turbine = { module = "app.cash.turbine:turbine", version.ref = "app-cash-turbine-turbine-version" }
 com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "com-android-tools-build-gradle-version" }
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "com-google-android-material-version" }
