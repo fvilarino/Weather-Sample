@@ -1,5 +1,6 @@
 plugins {
     id("base-android-library")
+    kotlin("kapt")
 }
 
 val catalogs = extensions.getByType<VersionCatalogsExtension>()
@@ -19,4 +20,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = composeVersion
     }
+}
+
+dependencies {
+    implementation("com.airbnb.android:showkase:1.0.0-beta17")
+    kapt("com.airbnb.android:showkase-processor:1.0.0-beta17")
 }

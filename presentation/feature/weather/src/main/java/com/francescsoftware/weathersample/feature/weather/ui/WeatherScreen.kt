@@ -132,7 +132,7 @@ private fun WeatherScreen(
 @PhonePreviews
 @TabletPreviews
 @Composable
-private fun ForecastWeatherScreenPreview(
+internal fun ForecastWeatherScreenPreview(
     @PreviewParameter(WeatherStateWrapperProvider::class) weatherStateWrapper: WeatherStateWrapper,
 ) {
     WeatherSampleTheme {

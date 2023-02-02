@@ -64,7 +64,7 @@ private fun MeasureScope.layoutTiles(
 
 @Preview(showBackground = true, widthDp = 512)
 @Composable
-private fun EqualSizeTilesPreview() {
+internal fun EqualSizeTilesPreview() {
     WeatherSampleTheme {
         Surface(
             modifier = Modifier

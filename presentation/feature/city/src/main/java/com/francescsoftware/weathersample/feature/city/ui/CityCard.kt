@@ -64,7 +64,7 @@ internal fun CityCard(
 
 @WidgetPreviews
 @Composable
-private fun PreviewCityCard(
+internal fun PreviewCityCard(
     @PreviewParameter(CityStateProvider::class, 2) model: CityResultModel,
 ) {
     WeatherSampleTheme {

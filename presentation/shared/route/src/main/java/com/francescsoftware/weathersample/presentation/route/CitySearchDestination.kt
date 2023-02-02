@@ -1,11 +1,15 @@
 package com.francescsoftware.weathersample.presentation.route
 
+import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import com.airbnb.android.showkase.models.Showkase
+import com.airbnb.android.showkase.ui.ShowkaseBrowserActivity
 import com.francescsoftware.weathersample.shared.assets.R
 import com.francescsoftware.weathersample.shared.composable.ActionMenuItem
 import com.francescsoftware.weathersample.shared.composable.ActionsMenu
@@ -37,12 +41,22 @@ object CitySearchDestination : NavigationDestination {
 
     @Composable
     override fun TopBarActions() {
+        val context = LocalContext.current
         var menuExpanded by rememberSaveable {
             mutableStateOf(false)
         }
 
         ActionsMenu(
             items = listOf(
+                ActionMenuItem.NeverShown(
+                    title = "Showcase",
+                    onClick = {
+                        (context as Activity).startActivity(
+                        ShowkaseBrowserActivity.getIntent(context, "com.francescsoftware.weathersample")
+                        )
+                        //(context as Activity).startActivity(Showkase.getBrowserIntent(context))
+                    }
+                ),
                 ActionMenuItem.NeverShown(
                     title = stringResource(
                         id = R.string.action_item_about

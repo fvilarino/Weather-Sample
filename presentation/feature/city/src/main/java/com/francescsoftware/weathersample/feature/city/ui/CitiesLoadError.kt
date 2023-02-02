@@ -31,7 +31,7 @@ internal fun CitiesLoadError(
 @PhonePreviews
 @TabletPreviews
 @Composable
-private fun CitiesLoadErrorPreview() {
+internal fun CitiesLoadErrorPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

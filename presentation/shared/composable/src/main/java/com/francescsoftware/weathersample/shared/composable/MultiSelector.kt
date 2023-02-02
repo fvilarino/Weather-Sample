@@ -274,7 +274,7 @@ fun MultiSelector(
 @Preview(widthDp = 420)
 @Preview(widthDp = 420, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewMultiSelector() {
+internal fun PreviewMultiSelector() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

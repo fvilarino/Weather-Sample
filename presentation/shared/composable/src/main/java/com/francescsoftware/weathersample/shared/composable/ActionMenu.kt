@@ -133,7 +133,7 @@ private fun splitMenuItems(
 
 @WidgetPreviews
 @Composable
-private fun ActionMenuPreview(
+internal fun ActionMenuPreview(
     @PreviewParameter(ActionMenuParameterProvider::class) items: List<ActionMenuItem>
 ) {
     WeatherSampleTheme {

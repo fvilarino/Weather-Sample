@@ -118,7 +118,7 @@ private fun WeatherForecast(
 @PhonePreviews
 @TabletPreviews
 @Composable
-private fun PreviewWeatherContent(
+internal fun PreviewWeatherContent(
     @PreviewParameter(WeatherStateWrapperProvider::class) stateWrapper: WeatherStateWrapper,
 ) {
     WeatherSampleTheme {

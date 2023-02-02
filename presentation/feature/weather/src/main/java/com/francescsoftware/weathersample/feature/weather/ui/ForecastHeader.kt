@@ -63,7 +63,7 @@ internal fun ForecastHeader(
 
 @WidgetPreviews
 @Composable
-private fun ForecastHeaderPreview() {
+internal fun ForecastHeaderPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

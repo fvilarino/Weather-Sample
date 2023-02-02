@@ -202,7 +202,7 @@ private fun Cities(
 @PhonePreviews
 @TabletPreviews
 @Composable
-private fun CityScreenPreview() {
+internal fun CityScreenPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background

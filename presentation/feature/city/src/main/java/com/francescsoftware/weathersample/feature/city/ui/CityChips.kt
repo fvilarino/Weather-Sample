@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.airbnb.android.showkase.annotation.ShowkaseComposable
 import com.francescsoftware.weathersample.feature.city.model.RecentCityModel
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityState
 import com.francescsoftware.weathersample.styles.MarginDouble
@@ -46,8 +47,9 @@ internal fun CityChips(
 }
 
 @WidgetPreviews
+@ShowkaseComposable
 @Composable
-private fun CityChipsPreview() {
+internal fun CityChipsPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background

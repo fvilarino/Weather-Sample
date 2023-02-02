@@ -48,7 +48,7 @@ internal fun AboutDialog(
 
 @WidgetPreviews
 @Composable
-private fun PreviewAboutDialog() {
+internal fun PreviewAboutDialog() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background

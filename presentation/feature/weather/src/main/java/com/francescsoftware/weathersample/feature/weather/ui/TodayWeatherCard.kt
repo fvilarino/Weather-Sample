@@ -153,7 +153,7 @@ internal fun TodayWeatherCard(
 
 @WidgetPreviews
 @Composable
-private fun TodayWeatherCardPreview() {
+internal fun TodayWeatherCardPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

@@ -243,7 +243,7 @@ private fun LoadingDot(
 
 @WidgetPreviews
 @Composable
-private fun PreviewLoadingButton() {
+internal fun PreviewLoadingButton() {
     WeatherSampleTheme {
         var loading by remember {
             mutableStateOf(false)

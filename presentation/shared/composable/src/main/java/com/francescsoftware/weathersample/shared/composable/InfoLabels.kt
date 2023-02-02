@@ -69,7 +69,7 @@ fun InfoLabels(
 
 @WidgetPreviews
 @Composable
-private fun InfoLabelsPreview() {
+internal fun InfoLabelsPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

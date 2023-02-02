@@ -52,7 +52,7 @@ internal fun WeatherError(
 @PhonePreviews
 @TabletPreviews
 @Composable
-private fun WeatherErrorPreview() {
+internal fun WeatherErrorPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

@@ -26,7 +26,7 @@ internal fun CitiesLoading(
 @PhonePreviews
 @TabletPreviews
 @Composable
-fun CitiesLoadingPreview() {
+internal fun CitiesLoadingPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

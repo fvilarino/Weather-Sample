@@ -31,7 +31,7 @@ internal fun CitiesNoResults(
 @PhonePreviews
 @TabletPreviews
 @Composable
-private fun CitiesNoResultsPreview() {
+internal fun CitiesNoResultsPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

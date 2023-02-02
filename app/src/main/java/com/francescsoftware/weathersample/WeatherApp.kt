@@ -1,6 +1,10 @@
 package com.francescsoftware.weathersample
 
 import android.app.Application
+import com.airbnb.android.showkase.annotation.ShowkaseRoot
+import com.airbnb.android.showkase.annotation.ShowkaseRootModule
+import com.airbnb.android.showkase.models.Showkase
+import com.airbnb.android.showkase.ui.ShowkaseBrowserActivity
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
@@ -11,3 +15,6 @@ class WeatherApp : Application() {
         Timber.plant(Timber.DebugTree())
     }
 }
+
+@ShowkaseRoot
+class MyRootModule: ShowkaseRootModule

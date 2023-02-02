@@ -134,7 +134,7 @@ internal fun ForecastWeatherCard(
 
 @WidgetPreviews
 @Composable
-private fun ForecastWeatherCardPreview(
+internal fun ForecastWeatherCardPreview(
     @PreviewParameter(ForecastStateProvider::class) forecastState: ForecastHourState,
 ) {
     WeatherSampleTheme {

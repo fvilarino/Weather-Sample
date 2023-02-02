@@ -61,7 +61,7 @@ internal fun CitiesSearchBox(
 
 @WidgetPreviews
 @Composable
-fun CitiesSearchBoxPreview() {
+internal fun CitiesSearchBoxPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,

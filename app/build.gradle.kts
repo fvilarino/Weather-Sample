@@ -127,6 +127,9 @@ dependencies {
     implementation(libs.bundles.lifecycle)
     implementation(libs.com.google.android.material)
 
+    implementation("com.airbnb.android:showkase:1.0.0-beta17")
+    kapt("com.airbnb.android:showkase-processor:1.0.0-beta17")
+
     // store
     implementation(libs.androidx.datastore.datastore)
     implementation(libs.com.google.protobuf.protobuf.javalite)

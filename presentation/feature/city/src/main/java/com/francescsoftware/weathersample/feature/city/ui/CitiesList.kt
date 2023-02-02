@@ -57,7 +57,7 @@ private fun CityResultModel.toSelectedCity() = SelectedCity(
 @PhonePreviews
 @TabletPreviews
 @Composable
-private fun CitiesListPreview() {
+internal fun CitiesListPreview() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
