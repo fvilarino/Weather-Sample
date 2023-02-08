@@ -1,5 +1,7 @@
 plugins {
-    id("base-hilt-library")
+    id("weathersample.android.library")
+    id("weathersample.android.library.test")
+    id("weathersample.android.hilt")
     alias(libs.plugins.com.google.protobuf)
 }
 
@@ -13,12 +15,6 @@ dependencies {
     implementation(libs.androidx.datastore.datastore)
     implementation(libs.com.google.protobuf.protobuf.javalite)
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
-
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
-
-    testImplementation(libs.bundles.junit)
-    androidTestImplementation(libs.bundles.android.test)
 }
 
 protobuf {

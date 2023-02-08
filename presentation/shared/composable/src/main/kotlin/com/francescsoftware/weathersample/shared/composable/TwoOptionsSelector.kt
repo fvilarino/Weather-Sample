@@ -7,7 +7,6 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -197,11 +196,9 @@ private fun PreviewTwoOptionsSelector() {
             mutableStateOf(TwoOptionsSelectorOptions.Left)
         }
         Surface(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background,
         ) {
-            Spacer(modifier = Modifier.height(MarginDouble))
             TwoOptionsSelector(
                 leftLabel = "Left",
                 rightLabel = "Right Label",

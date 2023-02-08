@@ -1,12 +1,12 @@
 plugins {
-    id("base-android-library")
+    id("weathersample.android.library")
     id("kotlinx-serialization")
 }
 
 android {
     namespace = "com.francescsoftware.weathersample.cityrepository.api"
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + Config.Compiler.serializationFreeCompileArgs
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
     }
 }
 

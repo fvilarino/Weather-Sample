@@ -1,5 +1,7 @@
 plugins {
-    id("base-hilt-library")
+    id("weathersample.android.library")
+    id("weathersample.android.library.test")
+    id("weathersample.android.hilt")
 }
 
 android {
@@ -14,15 +16,7 @@ dependencies {
     implementation(project(":data:repository:weather:api"))
     implementation(project(":utils"))
 
-    implementation(libs.androidx.core.core.ktx)
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
-    implementation(libs.com.jakewharton.timber)
 
     testImplementation(project(":testing:mock"))
-    testImplementation(libs.bundles.junit)
-    androidTestImplementation(libs.bundles.android.test)
-    testImplementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
-    testImplementation(libs.io.mockk)
 }

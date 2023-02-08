@@ -1,5 +1,6 @@
 plugins {
-    id("base-compose-library")
+    id("weathersample.android.library")
+    id("weathersample.android.library.compose")
 }
 
 android {
@@ -10,7 +11,6 @@ dependencies {
     implementation(project(":presentation:shared:composable"))
     implementation(project(":presentation:shared:assets"))
 
-    implementation(platform(libs.androidx.compose.compose.bom))
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.compose.runtime.runtime)
     implementation(libs.androidx.annotation)

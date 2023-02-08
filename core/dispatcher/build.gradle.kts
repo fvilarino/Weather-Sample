@@ -1,5 +1,6 @@
 plugins {
-    id("base-hilt-library")
+    id("weathersample.android.library")
+    id("weathersample.android.hilt")
 }
 
 android {
@@ -8,6 +9,4 @@ android {
 
 dependencies {
     implementation(libs.bundles.coroutines)
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
 }

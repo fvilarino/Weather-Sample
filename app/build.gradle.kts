@@ -1,21 +1,16 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("dagger.hilt.android.plugin")
-    kotlin("kapt")
+    id("weathersample.android.application")
+    id("weathersample.android.hilt")
 }
 
 android {
-    compileSdk = Versions.compileSdkVersion
     namespace = "com.francescsoftware.weathersample"
 
     defaultConfig {
-        applicationId = Config.Application.applicationId
-        minSdk = Versions.minSdkVersion
-        targetSdk = Versions.targetSdkVersion
-        versionCode = Versions.appVersionCode
-        versionName = Versions.appVersionName
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = "com.francescsoftware.weathersample"
     }
 
     signingConfigs {
@@ -26,7 +21,11 @@ android {
         create("release") {
             val releasePropertiesFile = rootProject.file("./certs/release.properties")
             if (releasePropertiesFile.exists()) {
-                parseConfig(releasePropertiesFile)
+                val properties = loadSigningProperties(releasePropertiesFile)
+                storeFile = rootProject.file(properties["store"] as String)
+                keyAlias = properties["alias"] as String
+                storePassword = properties["storePass"] as String
+                keyPassword = properties["keyPass"] as String
             } else {
                 storeFile = rootProject.file(System.getenv("store"))
                 keyAlias = System.getenv("alias")
@@ -59,37 +58,15 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = Config.Compiler.javaVersion
-        targetCompatibility = Config.Compiler.javaVersion
-    }
-
     kotlinOptions {
-        jvmTarget = Config.Compiler.jvmTarget
-        freeCompilerArgs = freeCompilerArgs + Config.Compiler.kotlinTimeFreeCompilerArgs
-    }
-
-    kapt {
-        javacOptions {
-            option("-Xmaxerrs", 1000)
-        }
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.time.ExperimentalTime"
     }
 }
 
-fun com.android.build.api.dsl.SigningConfig.parseConfig(file: File) {
-    file.useLines { lines ->
-        lines.forEach { line ->
-            when {
-                line.startsWith("store:") -> storeFile = rootProject.file(line.valueAfterColon())
-                line.startsWith("alias:") -> keyAlias = line.valueAfterColon()
-                line.startsWith("storePass:") -> storePassword = line.valueAfterColon()
-                line.startsWith("keyPass:") -> keyPassword = line.valueAfterColon()
-            }
-        }
+fun loadSigningProperties(file: File) =
+    Properties().apply {
+        load(FileInputStream(file))
     }
-}
-
-fun String.valueAfterColon() = substring(indexOf(":") + 1).trim()
 
 dependencies {
     implementation(project(":business:interactor:city:api"))
@@ -135,10 +112,6 @@ dependencies {
     // store
     implementation(libs.androidx.datastore.datastore)
     implementation(libs.com.google.protobuf.protobuf.javalite)
-
-    // dagger
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
 
     // kotlin
     implementation(libs.bundles.coroutines)

@@ -1,5 +1,5 @@
 plugins {
-    id("base-android-library")
+    id("weathersample.android.library")
 }
 
 android {

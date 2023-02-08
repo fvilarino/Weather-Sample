@@ -1,11 +1,7 @@
 plugins {
-    id("base-android-library")
+    id("weathersample.android.library")
 }
 
 android {
     namespace = "com.francescsoftware.weathersample.utils"
-}
-
-dependencies {
-    implementation(libs.androidx.core.core.ktx)
 }

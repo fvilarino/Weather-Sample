@@ -1,20 +1,24 @@
 plugins {
-    id("base-hilt-library")
+    id("weathersample.android.library")
+    id("weathersample.android.library.test")
+    id("weathersample.android.hilt")
+    id("weathersample.keys.loader")
     id("kotlinx-serialization")
 }
 
 android {
     namespace = "com.francescsoftware.weathersample.cityrepository.impl"
+    val rapidApiKey = configKeys.rapidApiKey
     buildTypes {
         all {
-            buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"${Keys.cityServiceBaseUrl}\"")
-            buildConfigField("String", "RAPID_SERVICE_KEY", "\"${Keys.rapidServiceKey}\"")
-            buildConfigField("String", "RAPID_SERVICE_CITY_HOST", "\"${Keys.rapidServiceCityHost}\"")
+            buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"https://wft-geo-db.p.rapidapi.com/\"")
+            buildConfigField("String", "RAPID_SERVICE_KEY", "\"$rapidApiKey\"")
+            buildConfigField("String", "RAPID_SERVICE_CITY_HOST", "\"wft-geo-db.p.rapidapi.com\"")
         }
     }
 
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + Config.Compiler.serializationFreeCompileArgs
+        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
     }
 }
 
@@ -23,15 +27,7 @@ dependencies {
     implementation(project(":core:type"))
     implementation(project(":data:repository:city:api"))
 
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
-
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.retrofit)
-
-    implementation(libs.com.jakewharton.timber)
-
-    testImplementation(libs.bundles.junit)
-    androidTestImplementation(libs.bundles.android.test)
 }

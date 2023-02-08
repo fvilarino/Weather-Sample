@@ -1,5 +1,6 @@
 plugins {
-    id("base-hilt-library")
+    id("weathersample.android.library")
+    id("weathersample.android.hilt")
 }
 
 android {
@@ -10,6 +11,4 @@ dependencies {
     implementation(project(":presentation:shared:lookup:api"))
 
     implementation(libs.androidx.annotation)
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
 }

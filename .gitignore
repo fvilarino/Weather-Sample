@@ -9,4 +9,5 @@ build
 .cxx
 local.properties
 certs/release.properties
+certs/keys.properties
 

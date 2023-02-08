@@ -1,5 +1,5 @@
 plugins {
-    id("base-android-library")
+    id("weathersample.android.library")
 }
 
 android {
@@ -9,6 +9,5 @@ android {
 dependencies {
     implementation(project(":core:type"))
 
-    implementation(libs.androidx.core.core.ktx)
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }
