@@ -1,4 +1,5 @@
 import com.android.build.gradle.LibraryExtension
+import com.francescsoftware.weathersample.buildconvention.configureAndroidLint
 import com.francescsoftware.weathersample.buildconvention.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -17,6 +18,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
+                configureAndroidLint(this)
             }
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
