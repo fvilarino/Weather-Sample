@@ -48,6 +48,7 @@ fun DualPane(
                 minHeight = 0,
             )
         }
+        val paneOnePlaceable = measurables[0].measure(firstPaneConstraints)
         val secondPaneConstraints = if (useHorizontalPanes) {
             Constraints.fixed(
                 width = (constraints.maxWidth * (1f - HorizontalPanesRatio)).roundToInt(),
@@ -57,9 +58,9 @@ fun DualPane(
             constraints.copy(
                 minWidth = 0,
                 minHeight = 0,
+                maxHeight = (constraints.maxHeight - paneOnePlaceable.height).coerceAtLeast(0),
             )
         }
-        val paneOnePlaceable = measurables[0].measure(firstPaneConstraints)
         val paneTwoPlaceable = measurables[1].measure(secondPaneConstraints)
         layout(
             width = constraints.maxWidth,
