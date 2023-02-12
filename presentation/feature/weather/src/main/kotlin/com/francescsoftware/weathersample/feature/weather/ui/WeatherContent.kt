@@ -3,7 +3,9 @@ package com.francescsoftware.weathersample.feature.weather.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -18,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
@@ -37,17 +40,19 @@ internal fun WeatherContent(
     option: SelectedWeatherOption,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
+    navPadding: Dp = 0.dp,
 ) {
     when (option) {
         SelectedWeatherOption.Today -> TodayWeather(
             state = state,
             todayRefreshCallback = todayRefreshCallback,
-            modifier = modifier,
+            modifier = modifier.padding(bottom = navPadding),
         )
 
         SelectedWeatherOption.Forecast -> WeatherForecast(
             state = state,
             modifier = modifier,
+            navPadding = navPadding,
         )
     }
 }
@@ -80,6 +85,7 @@ private fun TodayWeather(
 private fun WeatherForecast(
     state: WeatherState,
     modifier: Modifier = Modifier,
+    navPadding: Dp = 0.dp,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(
@@ -110,6 +116,9 @@ private fun WeatherForecast(
                     state = hourForecast,
                     modifier = Modifier.fillMaxWidth(),
                 )
+            }
+            item {
+                Spacer(modifier = Modifier.height(navPadding))
             }
         }
     }

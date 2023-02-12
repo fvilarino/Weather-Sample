@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.deviceclass.DeviceClass
@@ -46,6 +47,7 @@ internal fun CityScreen(
     deviceClass: DeviceClass,
     onCityClick: (SelectedCity) -> Unit,
     modifier: Modifier = Modifier,
+    navPadding: Dp = 0.dp,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val actions by CitySearchDestination.actionsState.collectAsStateWithLifecycle()
@@ -63,6 +65,7 @@ internal fun CityScreen(
         onChipClick = viewModel::onChipClick,
         onDeleteChip = viewModel::onDeleteChip,
         modifier = modifier,
+        navPadding = navPadding,
     )
 }
 
@@ -77,6 +80,7 @@ private fun CityScreen(
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
     modifier: Modifier = Modifier,
+    navPadding: Dp = 0.dp,
     stateHolder: CityScreenStateHolder = rememberCityScreenStateHolder(),
 ) {
     LaunchedEffect(key1 = Unit) {
@@ -104,7 +108,8 @@ private fun CityScreen(
                 onCityClick = onCityClick,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = MarginDouble)
+                    .padding(top = MarginDouble),
+                navPadding = navPadding,
             )
         },
         deviceClass = deviceClass,
@@ -169,6 +174,7 @@ private fun Cities(
     state: CityState,
     onCityClick: (SelectedCity) -> Unit,
     modifier: Modifier = Modifier,
+    navPadding: Dp = 0.dp,
 ) {
     Crossfade(
         targetState = state.loadState,
@@ -179,21 +185,22 @@ private fun Cities(
             }
 
             LoadState.Loading -> CitiesLoading(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().padding(bottom = navPadding),
             )
 
             LoadState.Loaded -> CitiesList(
                 state = state,
                 onCityClick = onCityClick,
                 modifier = Modifier.fillMaxSize(),
+                navPadding = navPadding,
             )
 
             LoadState.NoResults -> CitiesNoResults(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().padding(bottom = navPadding),
             )
 
             LoadState.Error -> CitiesLoadError(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().padding(bottom = navPadding),
             )
         }
     }

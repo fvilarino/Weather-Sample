@@ -2,8 +2,10 @@ package com.francescsoftware.weathersample.feature.city.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -12,6 +14,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.feature.city.model.CityResultModel
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityState
 import com.francescsoftware.weathersample.feature.city.viewmodel.LoadState
@@ -27,6 +31,7 @@ internal fun CitiesList(
     state: CityState,
     onCityClick: (SelectedCity) -> Unit,
     modifier: Modifier = Modifier,
+    navPadding: Dp = 0.dp,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(
@@ -35,7 +40,11 @@ internal fun CitiesList(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(MarginDouble),
         verticalArrangement = Arrangement.spacedBy(MarginDouble),
-        contentPadding = PaddingValues(all = MarginDouble),
+        contentPadding = PaddingValues(
+            start = MarginDouble,
+            end = MarginDouble,
+            top = MarginDouble,
+        )
     ) {
         items(state.cities) { city ->
             CityCard(
@@ -44,6 +53,9 @@ internal fun CitiesList(
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(all = MarginSingle),
             )
+        }
+        item {
+            Spacer(modifier = Modifier.height(navPadding))
         }
     }
 }
