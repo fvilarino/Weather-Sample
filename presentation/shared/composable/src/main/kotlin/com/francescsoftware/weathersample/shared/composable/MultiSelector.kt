@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -55,7 +57,7 @@ interface MultiSelectorState {
 
 @Stable
 class MultiSelectorStateImpl(
-    options: List<String>,
+    options: ImmutableList<String>,
     selectedOption: String,
     private val selectedColor: Color,
     private val unselectedColor: Color,
@@ -155,7 +157,7 @@ class MultiSelectorStateImpl(
 
 @Composable
 fun rememberMultiSelectorState(
-    options: List<String>,
+    options: ImmutableList<String>,
     selectedOption: String,
     selectedColor: Color,
     unSelectedColor: Color,
@@ -181,7 +183,7 @@ enum class MultiSelectorOption {
 
 @Composable
 fun MultiSelector(
-    options: List<String>,
+    options: ImmutableList<String>,
     selectedOption: String,
     onOptionSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -279,11 +281,11 @@ fun PreviewMultiSelector() {
         Surface(
             color = MaterialTheme.colorScheme.background,
         ) {
-            val options1 = listOf("Lorem", "Ipsum", "Dolor")
+            val options1 = persistentListOf("Lorem", "Ipsum", "Dolor")
             var selectedOption1 by remember {
                 mutableStateOf(options1.first())
             }
-            val options2 = listOf("Sit", "Amet", "Consectetur", "Elit", "Quis")
+            val options2 = persistentListOf("Sit", "Amet", "Consectetur", "Elit", "Quis")
             var selectedOption2 by remember {
                 mutableStateOf(options2.first())
             }

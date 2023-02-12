@@ -9,6 +9,8 @@ internal fun Project.configureAndroidLint(
     commonExtension: LibraryExtension,
 ) {
     commonExtension.apply {
+        dependencies.add("lintChecks", "com.slack.lint.compose:compose-lint-checks:1.0.0")
+
         androidOptions {
             lint {
                 quiet = false

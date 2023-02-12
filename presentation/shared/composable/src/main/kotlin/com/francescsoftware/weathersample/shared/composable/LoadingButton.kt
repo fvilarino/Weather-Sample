@@ -80,9 +80,9 @@ fun LoadingButton(
         ) {
             LoadingIndicator(
                 animating = loading,
+                animationType = animationType,
                 modifier = Modifier.graphicsLayer { alpha = loadingAlpha },
                 indicatorSpacing = indicatorSpacing,
-                animationType = animationType,
             )
             Box(
                 modifier = Modifier.graphicsLayer { alpha = contentAlpha }
@@ -195,10 +195,10 @@ fun rememberLoadingIndicatorState(
 @Composable
 private fun LoadingIndicator(
     animating: Boolean,
+    animationType: AnimationType,
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.onPrimary,
     indicatorSpacing: Dp = MarginHalf,
-    animationType: AnimationType,
 ) {
     val state = rememberLoadingIndicatorState(animating, animationType)
     Row(

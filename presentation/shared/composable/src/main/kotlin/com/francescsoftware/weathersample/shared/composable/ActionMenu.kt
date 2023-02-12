@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.shared.composable
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -24,6 +25,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.styles.WidgetPreviews
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 sealed interface ActionMenuItem {
     val title: String
@@ -56,9 +59,10 @@ sealed interface ActionMenuItem {
 
 @Composable
 fun ActionsMenu(
-    items: List<ActionMenuItem>,
+    items: ImmutableList<ActionMenuItem>,
     isOpen: Boolean,
     onToggleOverflow: () -> Unit,
+    modifier: Modifier = Modifier,
     maxVisibleItems: Int = 3,
 ) {
     val menuItems = remember(
@@ -68,33 +72,37 @@ fun ActionsMenu(
         splitMenuItems(items, maxVisibleItems)
     }
 
-    menuItems.alwaysShownItems.forEach { item ->
-        IconButton(onClick = item.onClick) {
-            Icon(
-                imageVector = item.icon,
-                contentDescription = item.contentDescription,
-            )
-        }
-    }
-
-    if (menuItems.overflowItems.isNotEmpty()) {
-        IconButton(onClick = onToggleOverflow) {
-            Icon(
-                imageVector = Icons.Default.MoreVert,
-                contentDescription = "Overflow",
-            )
-        }
-        DropdownMenu(
-            expanded = isOpen,
-            onDismissRequest = onToggleOverflow,
-        ) {
-            menuItems.overflowItems.forEach { item ->
-                DropdownMenuItem(
-                    text = {
-                        Text(item.title)
-                    },
-                    onClick = item.onClick
+    Row(
+        modifier = modifier
+    ) {
+        menuItems.alwaysShownItems.forEach { item ->
+            IconButton(onClick = item.onClick) {
+                Icon(
+                    imageVector = item.icon,
+                    contentDescription = item.contentDescription,
                 )
+            }
+        }
+
+        if (menuItems.overflowItems.isNotEmpty()) {
+            IconButton(onClick = onToggleOverflow) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "Overflow",
+                )
+            }
+            DropdownMenu(
+                expanded = isOpen,
+                onDismissRequest = onToggleOverflow,
+            ) {
+                menuItems.overflowItems.forEach { item ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(item.title)
+                        },
+                        onClick = item.onClick
+                    )
+                }
             }
         }
     }
@@ -134,7 +142,7 @@ private fun splitMenuItems(
 @WidgetPreviews
 @Composable
 private fun ActionMenuPreview(
-    @PreviewParameter(ActionMenuParameterProvider::class) items: List<ActionMenuItem>
+    @PreviewParameter(ActionMenuParameterProvider::class) items: ImmutableList<ActionMenuItem>
 ) {
     WeatherSampleTheme {
         var menuOpen by remember {
@@ -162,7 +170,7 @@ private fun ActionMenuPreview(
 private class ActionMenuParameterProvider : PreviewParameterProvider<List<ActionMenuItem>> {
     override val values: Sequence<List<ActionMenuItem>>
         get() = sequenceOf(
-            listOf(
+            persistentListOf(
                 ActionMenuItem.IconMenuItem.AlwaysShown(
                     title = "Search",
                     onClick = {},

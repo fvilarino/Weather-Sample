@@ -23,6 +23,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
                 add("implementation", libs.findLibrary("androidx.core.core.ktx").get())
+                add("implementation", libs.findLibrary("org.jetbrains.kotlinx.kotlinx.collections.immutable").get())
                 add("implementation", libs.findLibrary("com.jakewharton.timber").get())
                 add("androidTestImplementation", kotlin("test"))
                 add("testImplementation", kotlin("test"))

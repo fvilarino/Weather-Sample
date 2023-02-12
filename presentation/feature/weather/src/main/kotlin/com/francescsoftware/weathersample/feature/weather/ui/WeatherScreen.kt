@@ -29,6 +29,7 @@ import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.PhonePreviews
 import com.francescsoftware.weathersample.styles.TabletPreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun WeatherScreen(
@@ -75,7 +76,7 @@ private fun WeatherScreen(
             style = MaterialTheme.typography.headlineSmall,
         )
         MultiSelector(
-            options = listOf(
+            options = persistentListOf(
                 todayLabel,
                 forecastLabel,
             ),

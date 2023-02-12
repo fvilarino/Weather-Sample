@@ -10,6 +10,7 @@ class KotlinLibraryConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("java-library")
                 apply("org.jetbrains.kotlin.jvm")
+                apply("com.android.lint")
             }
             extensions.configure<JavaPluginExtension> {
                 configureKotlinLibrary(this)
