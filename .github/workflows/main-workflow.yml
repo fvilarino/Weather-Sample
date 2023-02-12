@@ -10,6 +10,7 @@ env:
   keyPass: ${{ secrets.keyPass }}
   store: ${{ secrets.store }}
   storePass: ${{ secrets.storePass }}
+  rapid_api_key: ${{ secrets.rapid_api_key }}
 
 jobs:
   build:
