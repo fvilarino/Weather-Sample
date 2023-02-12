@@ -3,13 +3,16 @@ package com.francescsoftware.weathersample.buildconvention
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Action
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.kotlin.dsl.getByType
 
 internal fun Project.configureAndroidLint(
     commonExtension: LibraryExtension,
 ) {
     commonExtension.apply {
-        dependencies.add("lintChecks", "com.slack.lint.compose:compose-lint-checks:1.0.0")
+        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+        dependencies.add("lintChecks", libs.findLibrary("com.slack.lint.compose.compose.lint.checks").get())
 
         androidOptions {
             lint {
@@ -18,7 +21,7 @@ internal fun Project.configureAndroidLint(
                 checkDependencies = true
                 ignoreTestSources = true
                 warningsAsErrors = true
-                lintConfig = file(rootDir.path + "/testing/lint/lint-config.xml")
+                lintConfig = file("${rootDir}/testing/lint/lint-config.xml")
                 htmlOutput = file("${project.buildDir}/reports/lint/lint.html")
             }
         }

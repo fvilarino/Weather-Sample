@@ -28,6 +28,7 @@ com-google-protobuf-version = "21.0-rc-1"
 com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter-version = "0.9.2"
 com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter-version = "0.8.0"
 com-jakewharton-timber-version = "5.0.1"
+com-slack-lint-compose-compose-lint-checks-version = "1.0.0"
 com-squareup-okhttp3-version = "5.0.0-alpha.9"
 com-squareup-okio-version = "3.3.0"
 com-squareup-retrofit2-retrofit-version = "2.9.0"
@@ -87,6 +88,7 @@ com-google-protobuf-protoc = { module = "com.google.protobuf:protoc", version.re
 com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", version.ref = "com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter-version" }
 com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter-version" }
 com-jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "com-jakewharton-timber-version" }
+com-slack-lint-compose-compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "com-slack-lint-compose-compose-lint-checks-version" }
 com-squareup-okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "com-squareup-okhttp3-version" }
 com-squareup-okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "com-squareup-okhttp3-version" }
 com-squareup-okio = { module = "com.squareup.okio:okio", version.ref = "com-squareup-okio-version" }
