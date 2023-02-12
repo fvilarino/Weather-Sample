@@ -14,10 +14,7 @@ open class ConfigKeys {
     }
 
     private fun get(propertyName: String): String {
-        var property = properties?.get(propertyName)
-        if (property == null) {
-            property = System.getenv(propertyName)
-        }
+        val property = properties?.get(propertyName) ?: System.getenv(propertyName)
         return property?.toString() ?: error("Can't locate property $propertyName")
     }
 }
