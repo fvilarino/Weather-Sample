@@ -1,7 +1,4 @@
 plugins {
-    id("weathersample.android.library")
-}
-
-android {
-    namespace = "com.francescsoftware.weathersample.utils"
+    id("weathersample.kotlin.library")
+    id("weathersample.kotlin.test.library")
 }
