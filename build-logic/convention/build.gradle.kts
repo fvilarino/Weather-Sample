@@ -12,6 +12,7 @@ java {
 dependencies {
     compileOnly(libs.com.android.tools.build.gradle)
     compileOnly(libs.org.jetbrains.kotlin.kotlin.gradle.plugin)
+    compileOnly(libs.io.gitlab.arturbosch.detekt)
 }
 
 gradlePlugin {
@@ -39,6 +40,10 @@ gradlePlugin {
         register("androidTest") {
             id = "weathersample.android.test"
             implementationClass = "AndroidTestConventionPlugin"
+        }
+        register("androidDetekt") {
+            id = "weathersample.android.library.detekt"
+            implementationClass = "AndroidLibraryDetektConventionPlugin"
         }
         register("androidBenchmarkTest") {
             id = "weathersample.android.test.macrobenchmark"

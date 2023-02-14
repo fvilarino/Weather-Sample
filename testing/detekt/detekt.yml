@@ -1,0 +1,44 @@
+build:
+  maxIssues: 0
+  excludeCorrectable: false
+
+complexity:
+  active: true
+  LongMethod:
+    active: true
+    excludes: "**/generated/**"
+    threshold: 60
+    ignoreAnnotated:
+      - 'Composable'
+  LongParameterList:
+    active: true
+    functionThreshold: 6
+    constructorThreshold: 20
+    ignoreDefaultParameters: false
+    ignoreAnnotated:
+      - 'Composable'
+
+naming:
+  active: true
+  FunctionNaming:
+    active: true
+    functionPattern: '([a-z][a-zA-Z0-9]*)|(`.*`)'
+    excludeClassPattern: '$^'
+    ignoreOverridden: true
+    ignoreAnnotated:
+      - 'Composable'
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][A-Za-z0-9]*'
+    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
+
+style:
+  active: true
+  UnusedPrivateMember:
+    active: true
+    ignoreAnnotated:
+      - 'Preview'
+      - 'PhonePreviews'
+      - 'TabletPreviews'
+      - 'WidgetPreviews'

@@ -15,6 +15,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.android")
+                apply("weathersample.android.library.detekt")
             }
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)

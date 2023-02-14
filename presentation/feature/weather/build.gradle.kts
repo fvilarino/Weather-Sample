@@ -1,8 +1,8 @@
 plugins {
     id("weathersample.android.feature")
-    id("weathersample.android.library.test")
     id("weathersample.android.library.compose")
     id("weathersample.android.hilt")
+    id("weathersample.android.library.test")
 }
 
 android {

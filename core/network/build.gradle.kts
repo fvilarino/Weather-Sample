@@ -1,7 +1,7 @@
 plugins {
     id("weathersample.android.library")
-    id("weathersample.android.library.test")
     id("weathersample.android.hilt")
+    id("weathersample.android.library.test")
     id("kotlinx-serialization")
 }
 
