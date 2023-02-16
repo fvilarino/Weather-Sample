@@ -66,3 +66,6 @@ jobs:
 
       - name: Run lint static analysis
         run: ./gradlew lintDebug --stacktrace
+
+      - name: Run detekt static analysis
+        run: ./gradlew detekt
