@@ -19,6 +19,7 @@ internal enum class WeatherIcon {
     Windy,
 }
 
+@Suppress("MagicNumber")
 internal fun weatherIconFromCode(code: Int): WeatherIcon = when (code) {
     1000 -> WeatherIcon.ClearSky
     1003 -> WeatherIcon.FewClouds

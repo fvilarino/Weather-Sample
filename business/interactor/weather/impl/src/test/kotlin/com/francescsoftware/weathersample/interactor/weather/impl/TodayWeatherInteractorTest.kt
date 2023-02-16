@@ -29,24 +29,24 @@ import java.io.IOException
 import kotlin.math.roundToInt
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
 
-private const val cityName = "Vancouver"
-private const val countryCode = "CA"
+private const val CityName = "Vancouver"
+private const val CountryCode = "CA"
 private const val CityLatitude = 49.24
 private const val CityLongitude = -123.11
 
-private const val conditionCode = 1048
-private const val currentTemperature = 23.0
-private const val precipitation = 14
-private const val feelsLikeTemperature = 21.4
-private const val humidityPercent = 54
-private const val pressureMb = 1024.0
-private const val visibilityKilometers = 10
-private const val clouds = 32
-private const val weatherDescription = "sunny"
-private const val windSpeed = 4.5
-private const val gustSpeed = 8.7
-private const val windDirection = "N"
-private const val uvIndex = 7
+private const val ConditionCode = 1048
+private const val CurrentTemperature = 23.0
+private const val Precipitation = 14
+private const val FeelsLikeTemperature = 21.4
+private const val HumidityPercent = 54
+private const val PressureMb = 1024.0
+private const val VisibilityKilometers = 10
+private const val Clouds = 32
+private const val WeatherDescription = "sunny"
+private const val WindSpeed = 4.5
+private const val GustSpeed = 8.7
+private const val WindDirection = "N"
+private const val UvIndex = 7
 
 @ExperimentalCoroutinesApi
 class TodayWeatherInteractorTest {
@@ -57,51 +57,51 @@ class TodayWeatherInteractorTest {
     private val todayWeatherResponse = TodayWeatherResponse(
         current = Current(
             condition = Condition(
-                code = conditionCode,
+                code = ConditionCode,
                 icon = "",
-                text = weatherDescription,
+                text = WeatherDescription,
             ),
-            tempC = currentTemperature,
-            tempF = currentTemperature * 1.8 + 32.0,
-            feelslikeC = feelsLikeTemperature,
-            feelslikeF = feelsLikeTemperature * 1.8 + 32.0,
-            uv = uvIndex.toDouble(),
-            precipMm = precipitation.toDouble(),
-            humidity = humidityPercent,
-            pressureMb = pressureMb,
+            tempC = CurrentTemperature,
+            tempF = CurrentTemperature * 1.8 + 32.0,
+            feelslikeC = FeelsLikeTemperature,
+            feelslikeF = FeelsLikeTemperature * 1.8 + 32.0,
+            uv = UvIndex.toDouble(),
+            precipMm = Precipitation.toDouble(),
+            humidity = HumidityPercent,
+            pressureMb = PressureMb,
             windDir = "N",
-            windKph = windSpeed,
-            gustKph = gustSpeed,
-            cloud = clouds,
-            visKm = visibilityKilometers.toDouble()
+            windKph = WindSpeed,
+            gustKph = GustSpeed,
+            cloud = Clouds,
+            visKm = VisibilityKilometers.toDouble()
         )
     )
 
     private val successfulTodayWeather = TodayWeather(
         main = TodayMain(
-            description = weatherDescription,
-            temp = currentTemperature,
-            feelsLike = feelsLikeTemperature,
-            humidity = humidityPercent,
-            pressure = pressureMb.roundToInt(),
-            precipitation = precipitation,
-            code = conditionCode,
-            uvIndex = uvIndex,
+            description = WeatherDescription,
+            temp = CurrentTemperature,
+            feelsLike = FeelsLikeTemperature,
+            humidity = HumidityPercent,
+            pressure = PressureMb.roundToInt(),
+            precipitation = Precipitation,
+            code = ConditionCode,
+            uvIndex = UvIndex,
         ),
         wind = TodayWind(
-            direction = windDirection,
-            speed = windSpeed,
-            gust = gustSpeed,
+            direction = WindDirection,
+            speed = WindSpeed,
+            gust = GustSpeed,
         ),
         clouds = TodayClouds(
-            all = clouds,
+            all = Clouds,
         ),
-        visibility = visibilityKilometers,
+        visibility = VisibilityKilometers,
     )
 
     private val incomingCity: WeatherLocation = WeatherLocation.City(
-        name = cityName,
-        countryCode = countryCode,
+        name = CityName,
+        countryCode = CountryCode,
     )
 
     private val incomingCoordinates: WeatherLocation = WeatherLocation.Coordinates(
@@ -110,8 +110,8 @@ class TodayWeatherInteractorTest {
     )
 
     private val queryCity: RepositoryLocation = RepositoryLocation.City(
-        name = cityName,
-        countryCode = countryCode,
+        name = CityName,
+        countryCode = CountryCode,
     )
 
     private val queryCoordinates: RepositoryLocation = RepositoryLocation.Coordinates(

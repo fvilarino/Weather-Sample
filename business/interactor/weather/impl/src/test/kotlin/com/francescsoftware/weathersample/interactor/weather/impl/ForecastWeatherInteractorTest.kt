@@ -55,7 +55,6 @@ private val VisibilityKilometers = listOf(3, 4)
 private val WeatherDescription = listOf("sunny", "partly cloudy")
 private val WindSpeed = listOf(4.5, 3.8)
 
-private const val OneDayInSeconds = 24 * 60 * 60
 private const val OneHourSeconds = 60 * 60
 
 @ExperimentalCoroutinesApi
@@ -125,15 +124,6 @@ class ForecastWeatherInteractorTest {
             forecastHour1,
             forecastHour2,
         ),
-    )
-
-    private val todayForecast2 = todayForecast1.copy(
-        dateEpoch = DateEpoch + OneDayInSeconds,
-        hour = listOf(
-            todayForecast1.hour!!.first().copy(
-                timeEpoch = TimeEpoch + OneHourSeconds
-            )
-        )
     )
 
     private val forecastRepositoryResponse = ForecastResponse(

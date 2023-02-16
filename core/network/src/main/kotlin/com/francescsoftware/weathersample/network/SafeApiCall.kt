@@ -18,9 +18,8 @@ suspend fun <T : Any> safeApiCall(
     } else {
         Either.Failure(IOException("Failed to read response, error code [${response.code()}]"))
     }
-} catch (ex: Exception) {
-    if (ex is CancellationException) {
-        throw ex
-    }
+} catch (ex: CancellationException) {
+    throw ex
+} catch (ex: IOException) {
     Either.Failure(ex)
 }

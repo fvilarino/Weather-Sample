@@ -53,6 +53,7 @@ enum class AnimationType {
 
 private const val NumIndicators = 3
 private const val IndicatorSize = 12
+private const val MinIndicatorAlpha = .2f
 private const val BounceAnimationDurationMillis = 300
 private const val FadeAnimationDurationMillis = 600
 
@@ -93,6 +94,7 @@ fun LoadingButton(
     }
 }
 
+@Suppress("MagicNumber")
 private val AnimationType.animationSpec: DurationBasedAnimationSpec<Float>
     get() = when (this) {
         AnimationType.Bounce,
@@ -129,7 +131,7 @@ private val AnimationType.targetValue: Float
     get() = when (this) {
         AnimationType.Bounce -> -IndicatorSize / 2f
         AnimationType.LazyBounce -> IndicatorSize / 2f
-        AnimationType.Fade -> .2f
+        AnimationType.Fade -> MinIndicatorAlpha
     }
 
 @Stable

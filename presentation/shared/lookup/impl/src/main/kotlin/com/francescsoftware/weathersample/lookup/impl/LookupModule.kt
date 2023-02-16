@@ -9,8 +9,8 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-internal abstract class LookupModule {
+internal interface LookupModule {
     @Binds
     @Reusable
-    abstract fun bindStringLookup(stringLookupImpl: StringLookupImpl): StringLookup
+    fun bindStringLookup(stringLookupImpl: StringLookupImpl): StringLookup
 }

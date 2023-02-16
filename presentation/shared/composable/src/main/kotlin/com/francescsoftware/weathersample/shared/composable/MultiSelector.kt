@@ -44,6 +44,8 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 private const val AnimationDurationMillis = 500
+private const val EdgeCornerPercent = 50f
+private const val DefaultCornerPercent = 15f
 
 @Stable
 interface MultiSelectorState {
@@ -76,16 +78,16 @@ class MultiSelectorStateImpl(
     private var _selectedIndex = Animatable(options.indexOf(selectedOption).toFloat())
     private var _startCornerPercent = Animatable(
         if (options.first() == selectedOption) {
-            50f
+            EdgeCornerPercent
         } else {
-            15f
+            DefaultCornerPercent
         }
     )
     private var _endCornerPercent = Animatable(
         if (options.last() == selectedOption) {
-            50f
+            EdgeCornerPercent
         } else {
-            15f
+            DefaultCornerPercent
         }
     )
 
@@ -114,13 +116,13 @@ class MultiSelectorStateImpl(
         }
         scope.launch {
             _startCornerPercent.animateTo(
-                targetValue = if (index == 0) 50f else 15f,
+                targetValue = if (index == 0) EdgeCornerPercent else DefaultCornerPercent,
                 animationSpec = animationSpec,
             )
         }
         scope.launch {
             _endCornerPercent.animateTo(
-                targetValue = if (index == numOptions - 1) 50f else 15f,
+                targetValue = if (index == numOptions - 1) EdgeCornerPercent else DefaultCornerPercent,
                 animationSpec = animationSpec,
             )
         }

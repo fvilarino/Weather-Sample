@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package com.francescsoftware.weathersample.shared.composable
 
 import androidx.compose.foundation.layout.Row

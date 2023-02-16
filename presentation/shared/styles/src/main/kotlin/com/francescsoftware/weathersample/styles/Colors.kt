@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.francescsoftware.weathersample.styles
 
 import androidx.compose.ui.graphics.Color

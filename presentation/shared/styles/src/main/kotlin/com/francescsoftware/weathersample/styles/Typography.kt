@@ -13,6 +13,7 @@ private val Montserrat = FontFamily(
     Font(com.francescsoftware.weathersample.shared.assets.R.font.montserrat_bold, FontWeight.Bold),
 )
 
+@Suppress("MagicNumber")
 val Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = Montserrat,

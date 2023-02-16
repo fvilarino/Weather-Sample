@@ -32,6 +32,10 @@ import com.francescsoftware.weathersample.styles.MarginTreble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.styles.WidgetPreviews
 
+private val WeatherIconHeight = 80.dp
+private const val SideColumnWeight = 1f
+private const val CentralColumnWeight = 2f * SideColumnWeight
+
 @Composable
 internal fun TodayWeatherCard(
     state: TodayWeatherCardState,
@@ -55,12 +59,12 @@ internal fun TodayWeatherCard(
                     painter = painterResource(id = state.iconId),
                     contentDescription = null,
                     modifier = Modifier
-                        .weight(2.5f)
-                        .height(80.dp)
+                        .weight(SideColumnWeight)
+                        .height(WeatherIconHeight)
                         .aspectRatio(ratio = 1f, matchHeightConstraintsFirst = true),
                 )
                 Column(
-                    modifier = Modifier.weight(5f),
+                    modifier = Modifier.weight(CentralColumnWeight),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
@@ -73,7 +77,7 @@ internal fun TodayWeatherCard(
                     )
                 }
                 Column(
-                    modifier = Modifier.weight(2.5f),
+                    modifier = Modifier.weight(SideColumnWeight),
                 ) {
                     InfoLabels {
                         WeatherItemLabel(

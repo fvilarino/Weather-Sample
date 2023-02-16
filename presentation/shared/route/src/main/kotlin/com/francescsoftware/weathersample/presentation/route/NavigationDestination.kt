@@ -26,7 +26,7 @@ sealed interface NavigationDestination {
                 CitySearchDestination.isRoute(route) -> CitySearchDestination
 
             WeatherDestination.isRoute(route) -> WeatherDestination
-            else -> throw IllegalStateException("Unknown route [$route]")
+            else -> error("Unknown route [$route]")
         }
     }
 }

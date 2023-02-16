@@ -16,9 +16,9 @@ import retrofit2.Retrofit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-private val MEDIA_TYPE = "application/json".toMediaType()
-private const val HEADER_KEY = "x-rapidapi-key"
-private const val HEADER_HOST = "x-rapidapi-host"
+private val MediaType = "application/json".toMediaType()
+private const val HeaderKey = "x-rapidapi-key"
+private const val HeaderHost = "x-rapidapi-host"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,8 +30,8 @@ object WeatherRepositoryModule {
     internal fun provideWeatherAuthorizationInterceptor(): Interceptor = Interceptor { chain ->
         val original: Request = chain.request()
         val request: Request = original.newBuilder()
-            .header(HEADER_KEY, BuildConfig.RAPID_SERVICE_KEY)
-            .header(HEADER_HOST, BuildConfig.RAPID_SERVICE_WEATHER_HOST)
+            .header(HeaderKey, BuildConfig.RAPID_SERVICE_KEY)
+            .header(HeaderHost, BuildConfig.RAPID_SERVICE_WEATHER_HOST)
             .method(original.method, original.body)
             .build()
         chain.proceed(request)
@@ -45,7 +45,7 @@ object WeatherRepositoryModule {
         @WeatherAuthorizationInterceptor interceptor: Interceptor,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.WEATHER_SERVICE_BASE_URL)
-        .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(MEDIA_TYPE))
+        .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(MediaType))
         .client(okHttpClientBuilder.addInterceptor(interceptor).build())
         .build()
 

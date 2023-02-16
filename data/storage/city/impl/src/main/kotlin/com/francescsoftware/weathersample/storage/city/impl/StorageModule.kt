@@ -13,7 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-private const val SELECTED_CITY_STORAGE_FILE = "selected_city"
+private const val SelectedCityStorageFile = "selected_city"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -36,6 +36,6 @@ object DataStoreModule {
         DataStoreFactory.create(
             serializer = SelectedCitySerializer,
         ) {
-            context.dataStoreFile(SELECTED_CITY_STORAGE_FILE)
+            context.dataStoreFile(SelectedCityStorageFile)
         }
 }

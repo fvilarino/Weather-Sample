@@ -53,7 +53,6 @@ internal class GetForecastInteractorImpl @Inject constructor(
     private suspend fun parseForecast(
         forecast: List<ForecastDayItem>,
     ): Forecast = withContext(dispatcherProvider.default) {
-
         // aggregate the forecast by days
         val days: Map<Date, ForecastDayItem> = forecast
             .filter { item -> item.isValid }
