@@ -61,9 +61,6 @@ jobs:
           java-version: 17
           cache: 'gradle'
 
-      - name: Run ktlint static analysis
-        run: ./gradlew ktlintcheck
-
       - name: Run lint static analysis
         run: ./gradlew lintDebug --stacktrace
 

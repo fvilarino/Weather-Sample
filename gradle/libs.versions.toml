@@ -42,7 +42,6 @@ org-jetbrains-kotlinx-kotlinx-collections-immutable-version = "0.3.5"
 org-jetbrains-kotlinx-kotlinx-coroutines-test-version = "1.6.4"
 org-jetbrains-kotlinx-kotlinx-coroutines-version = "1.6.4"
 org-jetbrains-kotlinx-kotlinx-serialization-json-version = "1.4.1"
-org-jlleitschuh-gradle-ktlint-version = "11.1.0"
 org-junit-jupiter-junit-jupiter-version = "5.9.2"
 org-robolectric-robolectric-version = "4.9.2"
 versions-plugin-version = "0.45.0"
@@ -155,5 +154,4 @@ retrofit = [
 com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version.ref = "versions-plugin-version" }
 com-google-protobuf = { id = "com.google.protobuf", version.ref = "com-google-protobuf-plugin-version" }
 nl-littlerobots-version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "catalog-plugin-version" }
-org-jlleitschuh-gradle-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "org-jlleitschuh-gradle-ktlint-version" }
 io-gitlab-arturbosch-detekt-plugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt-version" }
