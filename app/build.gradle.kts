@@ -79,8 +79,6 @@ dependencies {
     implementation(project(":core:time:api"))
     implementation(project(":core:time:impl"))
 
-    implementation(project(":data:storage:city:api"))
-    implementation(project(":data:storage:city:impl"))
     implementation(project(":data:repository:city:api"))
     implementation(project(":data:repository:city:impl"))
     implementation(project(":data:repository:recents:api"))
@@ -108,10 +106,6 @@ dependencies {
     implementation(libs.androidx.navigation.navigation.ui.ktx)
     implementation(libs.bundles.lifecycle)
     implementation(libs.com.google.android.material)
-
-    // store
-    implementation(libs.androidx.datastore.datastore)
-    implementation(libs.com.google.protobuf.protobuf.javalite)
 
     // kotlin
     implementation(libs.bundles.coroutines)
