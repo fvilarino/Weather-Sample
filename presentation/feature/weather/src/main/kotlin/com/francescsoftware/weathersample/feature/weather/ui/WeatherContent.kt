@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -20,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
@@ -40,19 +41,17 @@ internal fun WeatherContent(
     option: SelectedWeatherOption,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
-    navPadding: Dp = 0.dp,
 ) {
     when (option) {
         SelectedWeatherOption.Today -> TodayWeather(
             state = state,
             todayRefreshCallback = todayRefreshCallback,
-            modifier = modifier.padding(bottom = navPadding),
+            modifier = modifier,
         )
 
         SelectedWeatherOption.Forecast -> WeatherForecast(
             state = state,
             modifier = modifier,
-            navPadding = navPadding,
         )
     }
 }
@@ -85,7 +84,6 @@ private fun TodayWeather(
 private fun WeatherForecast(
     state: WeatherState,
     modifier: Modifier = Modifier,
-    navPadding: Dp = 0.dp,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(
@@ -118,7 +116,7 @@ private fun WeatherForecast(
                 )
             }
             item {
-                Spacer(modifier = Modifier.height(navPadding))
+                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
             }
         }
     }
@@ -136,11 +134,11 @@ private fun PreviewWeatherContent(
         ) {
             WeatherContent(
                 state = stateWrapper.state,
+                option = stateWrapper.option,
+                todayRefreshCallback = {},
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = MarginDouble),
-                option = stateWrapper.option,
-                todayRefreshCallback = {}
+                    .padding(all = MarginDouble)
             )
         }
     }

@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.feature.weather.R
@@ -36,7 +35,6 @@ import kotlinx.collections.immutable.persistentListOf
 internal fun WeatherScreen(
     viewModel: WeatherViewModel,
     modifier: Modifier = Modifier,
-    navPadding: Dp = 0.dp,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -45,7 +43,6 @@ internal fun WeatherScreen(
         onRefreshTodayWeather = viewModel::refreshTodayWeather,
         onRetry = viewModel::retry,
         modifier = modifier,
-        navPadding = navPadding,
     )
 }
 
@@ -55,7 +52,6 @@ private fun WeatherScreen(
     onRefreshTodayWeather: () -> Unit,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
-    navPadding: Dp = 0.dp,
     stateHolder: WeatherStateHolder = rememberWeatherStateHolder(),
 ) {
     val todayLabel = stringResource(id = R.string.today_weather_button_label)
@@ -112,7 +108,7 @@ private fun WeatherScreen(
                 }
 
                 WeatherLoadState.Loading -> LoadingSpinner(
-                    modifier = Modifier.fillMaxSize().padding(bottom = navPadding),
+                    modifier = Modifier.fillMaxSize(),
                 )
 
                 WeatherLoadState.Loaded,
@@ -123,11 +119,10 @@ private fun WeatherScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = MarginDouble),
-                    navPadding = navPadding,
                 )
 
                 WeatherLoadState.Error -> WeatherError(
-                    modifier = Modifier.fillMaxSize().padding(bottom = navPadding),
+                    modifier = Modifier.fillMaxSize(),
                     retry = onRetry,
                 )
             }
@@ -149,12 +144,12 @@ private fun ForecastWeatherScreenPreview(
             holder.onOptionSelect(weatherStateWrapper.option)
             WeatherScreen(
                 state = weatherStateWrapper.state,
-                stateHolder = holder,
                 onRefreshTodayWeather = {},
                 onRetry = {},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(all = MarginDouble),
+                stateHolder = holder,
             )
         }
     }

@@ -63,14 +63,10 @@ internal fun WeatherApp() {
             ) {
                 addSearchDestination(
                     deviceClass = deviceClass,
-                    navPadding = paddingValues.calculateBottomPadding(),
-                    onCityClick = { selectedCity ->
-                        navController.navigate(WeatherDestination.getRoute(selectedCity))
-                    },
-                )
-                addWeatherDetailsDestination(
-                    navPadding = paddingValues.calculateBottomPadding(),
-                )
+                ) { selectedCity ->
+                    navController.navigate(WeatherDestination.getRoute(selectedCity))
+                }
+                addWeatherDetailsDestination()
             }
         }
     }

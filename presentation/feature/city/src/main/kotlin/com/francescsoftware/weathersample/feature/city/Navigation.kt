@@ -2,7 +2,6 @@ package com.francescsoftware.weathersample.feature.city
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -14,7 +13,6 @@ import com.francescsoftware.weathersample.presentation.route.SelectedCity
 
 fun NavGraphBuilder.addSearchDestination(
     deviceClass: DeviceClass,
-    navPadding: Dp,
     onCityClick: (SelectedCity) -> Unit,
 ) {
     composable(
@@ -26,7 +24,6 @@ fun NavGraphBuilder.addSearchDestination(
             deviceClass = deviceClass,
             onCityClick = onCityClick,
             modifier = Modifier.fillMaxSize(),
-            navPadding = navPadding,
         )
     }
 }
