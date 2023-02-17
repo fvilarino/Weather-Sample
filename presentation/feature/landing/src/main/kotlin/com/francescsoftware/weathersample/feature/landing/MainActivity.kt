@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 
+/** {@inheritDoc} */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

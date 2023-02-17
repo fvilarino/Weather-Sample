@@ -13,11 +13,14 @@ import javax.inject.Inject
 import javax.inject.Qualifier
 import kotlin.coroutines.CoroutineContext
 
+/** [CoroutineScope] implementing [Closeable] that cancels the scope on closure. */
 class CloseableCoroutineScope @Inject constructor(
     @MainImmediateCoroutineContext context: CoroutineContext,
 ) : Closeable, CoroutineScope {
+    /** @{inheritDoc} */
     override val coroutineContext: CoroutineContext = context
 
+    /** @{inheritDoc} */
     override fun close() = coroutineContext.cancel()
 }
 

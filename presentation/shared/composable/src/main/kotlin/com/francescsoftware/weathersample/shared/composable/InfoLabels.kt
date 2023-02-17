@@ -12,6 +12,12 @@ import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.styles.WidgetPreviews
 import kotlin.math.max
 
+/**
+ * Displays pairs of label + content ensuring that all labels are of the same length.
+ *
+ * @param modifier - the [Modifier] to apply to this composable
+ * @param content - a list of composables, listed as label, content, label, content to display
+ */
 @Composable
 fun InfoLabels(
     modifier: Modifier = Modifier,

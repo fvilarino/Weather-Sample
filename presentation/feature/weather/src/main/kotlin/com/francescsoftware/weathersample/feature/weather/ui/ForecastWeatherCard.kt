@@ -54,7 +54,9 @@ internal fun ForecastWeatherCard(
                 Icon(
                     painter = painterResource(id = state.iconId),
                     contentDescription = null,
-                    modifier = Modifier.padding(start = MarginDouble).size(64.dp)
+                    modifier = Modifier
+                        .padding(start = MarginDouble)
+                        .size(64.dp)
                 )
                 Text(
                     text = state.header,

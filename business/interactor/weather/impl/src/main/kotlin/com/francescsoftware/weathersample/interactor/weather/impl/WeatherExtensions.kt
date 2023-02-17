@@ -8,6 +8,7 @@ internal fun WeatherLocation.toRepositoryLocation() = when (this) {
         name = name,
         countryCode = countryCode,
     )
+
     is WeatherLocation.Coordinates -> RepositoryLocation.Coordinates(
         latitude = latitude,
         longitude = longitude,

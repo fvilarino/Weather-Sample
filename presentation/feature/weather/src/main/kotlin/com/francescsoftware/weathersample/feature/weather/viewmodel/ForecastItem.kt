@@ -2,19 +2,19 @@ package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import androidx.annotation.DrawableRes
 
-data class ForecastDayState(
+internal data class ForecastDayState(
     val header: ForecastHeaderState,
     val forecast: List<ForecastHourState>,
 )
 
-data class ForecastHeaderState(
+internal data class ForecastHeaderState(
     val id: String,
     val date: String,
     val sunrise: String,
     val sunset: String,
 )
 
-data class ForecastHourState(
+internal data class ForecastHourState(
     val id: Long,
     val header: String,
     @DrawableRes val iconId: Int,

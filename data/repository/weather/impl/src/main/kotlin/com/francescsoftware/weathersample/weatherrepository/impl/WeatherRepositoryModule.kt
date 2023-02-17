@@ -17,17 +17,18 @@ import javax.inject.Qualifier
 import javax.inject.Singleton
 
 private val MediaType = "application/json".toMediaType()
+private val json = Json { ignoreUnknownKeys = true }
 private const val HeaderKey = "x-rapidapi-key"
 private const val HeaderHost = "x-rapidapi-host"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object WeatherRepositoryModule {
+internal object WeatherRepositoryModule {
 
     @Provides
     @Singleton
     @WeatherAuthorizationInterceptor
-    internal fun provideWeatherAuthorizationInterceptor(): Interceptor = Interceptor { chain ->
+    fun provideWeatherAuthorizationInterceptor(): Interceptor = Interceptor { chain ->
         val original: Request = chain.request()
         val request: Request = original.newBuilder()
             .header(HeaderKey, BuildConfig.RAPID_SERVICE_KEY)
@@ -40,37 +41,37 @@ object WeatherRepositoryModule {
     @Provides
     @Singleton
     @WeatherRetrofit
-    internal fun provideWeatherRetrofit(
+    fun provideWeatherRetrofit(
         okHttpClientBuilder: OkHttpClient.Builder,
         @WeatherAuthorizationInterceptor interceptor: Interceptor,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.WEATHER_SERVICE_BASE_URL)
-        .addConverterFactory(Json { ignoreUnknownKeys = true }.asConverterFactory(MediaType))
+        .addConverterFactory(json.asConverterFactory(MediaType))
         .client(okHttpClientBuilder.addInterceptor(interceptor).build())
         .build()
 
     @Provides
     @Singleton
-    internal fun provideWeatherService(
+    fun provideWeatherService(
         @WeatherRetrofit retrofit: Retrofit
     ): WeatherService = retrofit.create(WeatherService::class.java)
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class WeatherRepositoryModuleBinds {
+internal interface WeatherRepositoryModuleBinds {
 
     @Binds
     @Singleton
-    internal abstract fun bindWeatherRepository(
+    fun bindWeatherRepository(
         weatherRepositoryImpl: WeatherRepositoryImpl
     ): WeatherRepository
 }
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class WeatherAuthorizationInterceptor
+internal annotation class WeatherAuthorizationInterceptor
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class WeatherRetrofit
+internal annotation class WeatherRetrofit

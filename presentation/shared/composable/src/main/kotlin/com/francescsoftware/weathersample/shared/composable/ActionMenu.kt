@@ -30,14 +30,30 @@ import com.francescsoftware.weathersample.styles.WidgetPreviews
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+/** Base class for the menu options on a [TopAppBar] */
 sealed interface ActionMenuItem {
+    /** Label for this action menu item */
     val title: String
+
+    /** Called when clicking on this action menu item */
     val onClick: () -> Unit
 
+    /** [ActionMenuItem] that displays on the [TopAppBar] as an icon. */
     sealed interface IconMenuItem : ActionMenuItem {
+        /** The icon to display for this action menu item */
         val icon: ImageVector
+
+        /** The content description describing the [icon] */
         val contentDescription: String?
 
+        /**
+         * [ActionMenuItem] that is always displayed on the [TopAppBar]
+         *
+         * @property title - title for the action menu option
+         * @property contentDescription - accessibility label for the action menu option
+         * @property onClick - called when the user clicks on this menu option
+         * @property icon - icon to display on the [TopAppBar]
+         */
         data class AlwaysShown(
             override val title: String,
             override val contentDescription: String?,
@@ -45,6 +61,14 @@ sealed interface ActionMenuItem {
             override val icon: ImageVector,
         ) : IconMenuItem
 
+        /**
+         * [ActionMenuItem] that is displayed on the [TopAppBar] if there is enough room
+         *
+         * @property title - title for the action menu option
+         * @property contentDescription - accessibility label for the action menu option
+         * @property onClick - called when the user clicks on this menu option
+         * @property icon - icon to display on the [TopAppBar]
+         */
         data class ShownIfRoom(
             override val title: String,
             override val contentDescription: String?,
@@ -53,12 +77,27 @@ sealed interface ActionMenuItem {
         ) : IconMenuItem
     }
 
+    /**
+     * [ActionMenuItem] that is displayed in the overflow drop down menu
+     *
+     * @property title - title for the action menu option
+     * @property onClick - called when the user clicks on this menu option
+     */
     data class NeverShown(
         override val title: String,
         override val onClick: () -> Unit,
     ) : ActionMenuItem
 }
 
+/**
+ * Displays an actions menu.
+ *
+ * @param items - options menu items to display
+ * @param isOpen - if true the dropdown is open, if false it's closed
+ * @param onToggleOverflow - called when tapping on the overflow button
+ * @param modifier - the [Modifier] to apply to this actions menu
+ * @param maxVisibleItems - maximum number of items to display as icons
+ */
 @Composable
 fun ActionsMenu(
     items: ImmutableList<ActionMenuItem>,

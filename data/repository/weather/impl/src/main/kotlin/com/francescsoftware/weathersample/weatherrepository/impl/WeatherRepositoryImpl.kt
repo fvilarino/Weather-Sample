@@ -19,6 +19,7 @@ internal class WeatherRepositoryImpl @Inject constructor(
             is WeatherLocation.City -> weatherService.getTodayWeather(
                 query = formatCityQuery(location),
             )
+
             is WeatherLocation.Coordinates -> weatherService.getTodayWeather(
                 query = formatCoordinates(location),
             )
@@ -35,6 +36,7 @@ internal class WeatherRepositoryImpl @Inject constructor(
                     query = formatCityQuery(location),
                     days = days,
                 )
+
                 is WeatherLocation.Coordinates -> weatherService.getForecast(
                     query = formatCoordinates(location),
                     days = days,

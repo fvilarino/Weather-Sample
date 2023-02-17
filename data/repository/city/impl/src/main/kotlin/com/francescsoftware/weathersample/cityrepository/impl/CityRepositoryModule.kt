@@ -70,8 +70,8 @@ internal interface CityRepositoryModuleBinds {
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class CityAuthorizationInterceptor
+internal annotation class CityAuthorizationInterceptor
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class CityRetrofit
+internal annotation class CityRetrofit

@@ -20,6 +20,12 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
+/**
+ * Displays multiple items ensuring all have the same size
+ *
+ * @param modifier - the [Modifier] to apply to this composable
+ * @param content - the tiles to display
+ */
 @Composable
 fun EqualSizeTiles(
     modifier: Modifier = Modifier,

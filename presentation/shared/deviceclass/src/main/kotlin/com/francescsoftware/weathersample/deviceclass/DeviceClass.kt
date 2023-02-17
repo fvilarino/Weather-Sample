@@ -7,12 +7,19 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 
+/** Describes the type of device the app is running on. */
 enum class DeviceClass {
     Compact,
     Medium,
     Expanded;
 
     companion object {
+        /**
+         * Maps a [WindowSizeClass] object into a [DeviceClass] object.
+         *
+         * @param windowSizeClass - the [WindowSizeClass] to map to a [DeviceClass]
+         * @return the [DeviceClass] mapping to the [windowSizeClass]
+         */
         @Composable
         fun fromWindowSizeClass(windowSizeClass: WindowSizeClass): DeviceClass {
             val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE

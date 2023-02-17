@@ -39,6 +39,7 @@ import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
+/** Identifier for selected option in [TwoOptionsSelector] */
 enum class TwoOptionsSelectorOptions {
     Left,
     Right,
@@ -46,6 +47,17 @@ enum class TwoOptionsSelectorOptions {
 
 private const val SelectorTransitionDurationMillis = 300
 
+/**
+ * Horizontal selector with 2 mutually exclusive options for the user to choose from.
+ *
+ * @param leftLabel - label for the left side option
+ * @param rightLabel - label for the right side option
+ * @param selectedOption - indicates the currently selected option, one of [TwoOptionsSelectorOptions]
+ * @param onOptionSelect - called when the user clicks on an option
+ * @param modifier - the [Modifier] to apply to this selector
+ * @param selectedColor - the color to use for the background of the selected option
+ * @param deselectedColor - the color to use for the background of the unselected option
+ */
 @Composable
 fun TwoOptionsSelector(
     leftLabel: String,

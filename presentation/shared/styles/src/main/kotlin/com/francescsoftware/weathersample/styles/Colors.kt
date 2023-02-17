@@ -1,4 +1,4 @@
-@file:Suppress("MagicNumber")
+@file:Suppress("MagicNumber", "UndocumentedPublicProperty")
 
 package com.francescsoftware.weathersample.styles
 

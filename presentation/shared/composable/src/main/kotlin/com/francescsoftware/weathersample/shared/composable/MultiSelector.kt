@@ -47,18 +47,32 @@ private const val AnimationDurationMillis = 500
 private const val EdgeCornerPercent = 50f
 private const val DefaultCornerPercent = 15f
 
+/** State for the [MultiSelector] composable. */
 @Stable
 interface MultiSelectorState {
+    /** Currently selected index fraction */
     val selectedIndex: Float
+
+    /** Start corner radius percent */
     val startCornerPercent: Int
+
+    /** End corner radius percent */
     val endCornerPercent: Int
+
+    /** Text colors for each option */
     val textColors: List<Color>
 
+    /**
+     * Sets the option at index [index] as selected
+     *
+     * @param scope - [CoroutineScope] to run the select animation on
+     * @param index - positional index of option to select
+     */
     fun selectOption(scope: CoroutineScope, index: Int)
 }
 
 @Stable
-class MultiSelectorStateImpl(
+internal class MultiSelectorStateImpl(
     options: ImmutableList<String>,
     selectedOption: String,
     private val selectedColor: Color,
@@ -157,13 +171,22 @@ class MultiSelectorStateImpl(
     }
 }
 
+/**
+ * Factory method for the [MultiSelectorState]
+ *
+ * @param options - list of labels to display as options
+ * @param selectedOption - label currently selected
+ * @param selectedColor - color for selected option
+ * @param unSelectedColor - color for unselected options
+ * @return an instance of [MultiSelectorState]
+ */
 @Composable
 fun rememberMultiSelectorState(
     options: ImmutableList<String>,
     selectedOption: String,
     selectedColor: Color,
     unSelectedColor: Color,
-): MultiSelectorStateImpl {
+): MultiSelectorState {
     val state = remember {
         MultiSelectorStateImpl(
             options,
@@ -178,11 +201,24 @@ fun rememberMultiSelectorState(
     return state
 }
 
-enum class MultiSelectorOption {
+internal enum class MultiSelectorOption {
     Option,
     Background,
 }
 
+/**
+ * Selector with mutually exclusive selectable options, similar to a RadioButton
+ *
+ * @param options - list of labels for the options
+ * @param selectedOption - currently selected label
+ * @param onOptionSelect - called when tapping on an option
+ * @param modifier - the [Modifier] to apply to this composable
+ * @param selectedColor - text color for the selected option
+ * @param unselectedColor - text color for the unselected option
+ * @param selectedBackgroundColor - background color for the selected option
+ * @param unselectedBackgroundColor - background color for the unselected option
+ * @param state - the state holder for the [MultiSelector]
+ */
 @Composable
 fun MultiSelector(
     options: ImmutableList<String>,
@@ -190,14 +226,14 @@ fun MultiSelector(
     onOptionSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
     selectedColor: Color = MaterialTheme.colorScheme.onPrimary,
-    unselectedcolor: Color = MaterialTheme.colorScheme.onSurface,
+    unselectedColor: Color = MaterialTheme.colorScheme.onSurface,
     selectedBackgroundColor: Color = MaterialTheme.colorScheme.primary,
     unselectedBackgroundColor: Color = MaterialTheme.colorScheme.surface,
     state: MultiSelectorState = rememberMultiSelectorState(
         options = options,
         selectedOption = selectedOption,
         selectedColor = selectedColor,
-        unSelectedColor = unselectedcolor,
+        unSelectedColor = unselectedColor,
     ),
 ) {
     require(options.size >= 2) { "This composable requires at least 2 options" }

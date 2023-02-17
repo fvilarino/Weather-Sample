@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 private const val BufferSize = 64
 
-interface StateReducerFlow<S : State, A : Action> : StateFlow<S>, Dispatcher<A>
+internal interface StateReducerFlow<S : State, A : Action> : StateFlow<S>, Dispatcher<A>
 
 internal fun <S : State, A : Action> stateReducerFlow(
     initialState: S,

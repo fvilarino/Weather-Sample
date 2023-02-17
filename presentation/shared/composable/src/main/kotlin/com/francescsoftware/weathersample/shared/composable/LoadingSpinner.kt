@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
+/** A generic loading spinner */
 @Composable
 fun LoadingSpinner(
     modifier: Modifier = Modifier,

@@ -2,6 +2,24 @@ build:
   maxIssues: 0
   excludeCorrectable: false
 
+comments:
+  active: true
+  UndocumentedPublicClass:
+    active: true
+    ignoreAnnotated:
+      - 'Serializable'
+  UndocumentedPublicFunction:
+    active: true
+    ignoreAnnotated:
+      - 'Preview'
+      - 'PhonePreviews'
+      - 'TabletPreviews'
+      - 'WidgetPreviews'
+  UndocumentedPublicProperty:
+    active: true
+    ignoreAnnotated:
+      - 'SerialName'
+
 complexity:
   active: true
   LongMethod:

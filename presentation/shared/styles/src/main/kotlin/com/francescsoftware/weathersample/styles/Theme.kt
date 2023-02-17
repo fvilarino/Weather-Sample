@@ -27,6 +27,12 @@ private val LightColorScheme = lightColorScheme(
     background = Grey050,
 )
 
+/**
+ * App theme
+ *
+ * @param darkTheme - whether to use a dark theme
+ * @param content - the app content
+ */
 @Composable
 fun WeatherSampleTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

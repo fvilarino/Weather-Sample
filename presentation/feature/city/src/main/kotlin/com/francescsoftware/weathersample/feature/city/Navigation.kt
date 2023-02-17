@@ -11,6 +11,13 @@ import com.francescsoftware.weathersample.feature.city.viewmodel.CityViewModel
 import com.francescsoftware.weathersample.presentation.route.CitySearchDestination
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
 
+/**
+ * Add City Search destination to Nav Graph
+ *
+ * @param deviceClass - The [DeviceClass] the composable is running on
+ * @param onCityClick - Lambda to trigger on city click
+ * @receiver The [NavGraphBuilder] this destination should be added to.
+ */
 fun NavGraphBuilder.addSearchDestination(
     deviceClass: DeviceClass,
     onCityClick: (SelectedCity) -> Unit,

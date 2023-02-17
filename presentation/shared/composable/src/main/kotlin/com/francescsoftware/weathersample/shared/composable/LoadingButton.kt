@@ -45,9 +45,31 @@ import com.francescsoftware.weathersample.styles.WidgetPreviews
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/**
+ * Animation type
+ *
+ * @constructor Create empty Animation type
+ */
 enum class AnimationType {
+    /**
+     * Bounce
+     *
+     * @constructor Create empty Bounce
+     */
     Bounce,
+
+    /**
+     * Lazy bounce
+     *
+     * @constructor Create empty Lazy bounce
+     */
     LazyBounce,
+
+    /**
+     * Fade
+     *
+     * @constructor Create empty Fade
+     */
     Fade,
 }
 
@@ -57,6 +79,18 @@ private const val MinIndicatorAlpha = .2f
 private const val BounceAnimationDurationMillis = 300
 private const val FadeAnimationDurationMillis = 600
 
+/**
+ * A button that displays a loading indicator when busy.
+ *
+ * @param onClick - called when the button is clicked
+ * @param modifier - the [Modifier] to apply to this button
+ * @param enabled - if true the button is enabled, if false it is disabled
+ * @param loading - if true the loading indicator will display, otherwise the content will display
+ * @param animationType - [AnimationType] to use for the loading state
+ * @param colors - [ButtonColors] to to use for the button
+ * @param indicatorSpacing - space, in [Dp], between the loading indicators
+ * @param content - the button content when not animating
+ */
 @Composable
 fun LoadingButton(
     onClick: () -> Unit,
@@ -134,10 +168,23 @@ private val AnimationType.targetValue: Float
         AnimationType.Fade -> MinIndicatorAlpha
     }
 
+/** Loading indicator state */
 @Stable
 interface LoadingIndicatorState {
+    /**
+     * The animation value for an animated dot.
+     *
+     * @param index - the index of the animated dot to get the animated value from
+     * @return the animated value for the dot at [index] position
+     */
     operator fun get(index: Int): Float
 
+    /**
+     * Starts the loading indicator animation.
+     *
+     * @param animationType - [AnimationType] to use for the loading button
+     * @param scope - the [CoroutineScope] to launch the coroutines on
+     */
     fun start(animationType: AnimationType, scope: CoroutineScope)
 }
 
@@ -178,6 +225,13 @@ internal class LoadingIndicatorStateImpl : LoadingIndicatorState {
     }
 }
 
+/**
+ * Factory method for the [LoadingButton] [LoadingIndicator]
+ *
+ * @param animating - if true the indicator animates, if false it does not
+ * @param animationType - [AnimationType] for the indicator animation.
+ * @return an instance of [LoadingIndicatorState]
+ */
 @Composable
 fun rememberLoadingIndicatorState(
     animating: Boolean,

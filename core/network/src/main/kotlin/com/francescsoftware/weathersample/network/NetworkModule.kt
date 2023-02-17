@@ -22,7 +22,7 @@ private const val CacheSize = 10L * 1024L * 1024L
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+internal object NetworkModule {
 
     @Provides
     @Singleton
@@ -52,4 +52,4 @@ object NetworkModule {
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class HeaderLoggingInterceptor
+internal annotation class HeaderLoggingInterceptor

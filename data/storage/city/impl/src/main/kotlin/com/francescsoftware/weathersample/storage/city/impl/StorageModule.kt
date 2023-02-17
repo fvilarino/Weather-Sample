@@ -17,20 +17,20 @@ private const val SelectedCityStorageFile = "selected_city"
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class StorageModule {
+internal interface StorageModule {
     @Binds
     @Singleton
-    internal abstract fun bindSelectedCityStore(
+    fun bindSelectedCityStore(
         selectedCityStore: SelectedCityStoreImpl
     ): SelectedCityStore
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataStoreModule {
+internal object DataStoreModule {
     @Provides
     @Singleton
-    internal fun provideSelectedCityDataStore(
+    fun provideSelectedCityDataStore(
         @ApplicationContext context: Context,
     ): DataStore<SelectedCity> =
         DataStoreFactory.create(

@@ -3,7 +3,7 @@ package com.francescsoftware.weathersample.dispather
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-object DispatcherProviderInstance : DispatcherProvider {
+internal object DispatcherProviderInstance : DispatcherProvider {
 
     private var dispatcher: CoroutineDispatcher? = null
 
@@ -21,8 +21,4 @@ object DispatcherProviderInstance : DispatcherProvider {
 
     override val unconfined: CoroutineDispatcher
         get() = dispatcher ?: Dispatchers.Unconfined
-
-    override fun setDispatcher(dispatcher: CoroutineDispatcher?) {
-        this.dispatcher = dispatcher
-    }
 }

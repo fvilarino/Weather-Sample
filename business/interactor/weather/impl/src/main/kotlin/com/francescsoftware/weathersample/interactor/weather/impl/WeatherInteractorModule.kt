@@ -9,14 +9,14 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class WeatherInteractorModule {
+internal interface WeatherInteractorModule {
     @Binds
-    internal abstract fun bindGetTodayWeatherInteractor(
+    fun bindGetTodayWeatherInteractor(
         getTodayWeatherInteractorImpl: GetTodayWeatherInteractorImpl
     ): GetTodayWeatherInteractor
 
     @Binds
-    internal abstract fun bindGetForecastInteractor(
+    fun bindGetForecastInteractor(
         getForecastInteractorImpl: GetForecastInteractorImpl
     ): GetForecastInteractor
 }

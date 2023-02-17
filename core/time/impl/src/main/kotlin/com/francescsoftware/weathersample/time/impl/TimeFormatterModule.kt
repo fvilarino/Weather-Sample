@@ -9,10 +9,10 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class TimeFormatterModule {
+internal interface TimeFormatterModule {
     @Binds
     @Reusable
-    internal abstract fun bindTimeFormatter(
+    fun bindTimeFormatter(
         timeFormatterImpl: TimeFormatterImpl
     ): TimeFormatter
 }

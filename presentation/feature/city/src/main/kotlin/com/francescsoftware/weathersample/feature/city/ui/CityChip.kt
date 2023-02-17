@@ -18,7 +18,7 @@ import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.styles.WidgetPreviews
 
 @Composable
-fun CityChip(
+internal fun CityChip(
     label: String,
     onClick: () -> Unit,
     onClear: () -> Unit,
