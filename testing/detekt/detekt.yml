@@ -24,7 +24,7 @@ complexity:
   active: true
   LongMethod:
     active: true
-    excludes: "**/generated/**"
+    excludes: [ "**/generated/**" ]
     threshold: 60
     ignoreAnnotated:
       - 'Composable'
