@@ -21,7 +21,7 @@ internal fun Project.configureAndroidLint(
                 checkDependencies = true
                 ignoreTestSources = true
                 warningsAsErrors = true
-                lintConfig = file("${rootDir}/testing/lint/lint-config.xml")
+                lintConfig = file("${rootDir}/analysis/lint/lint-config.xml")
                 htmlOutput = file("${project.buildDir}/reports/lint/lint.html")
             }
         }
