@@ -57,10 +57,6 @@ android {
             isDebuggable = false
         }
     }
-
-    kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.time.ExperimentalTime"
-    }
 }
 
 fun loadSigningProperties(file: File) =
@@ -99,27 +95,5 @@ dependencies {
 
     implementation(project(":utils"))
 
-    // android
-    implementation(libs.androidx.core.core.ktx)
-    implementation(libs.androidx.app.compat)
-    implementation(libs.androidx.navigation.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.navigation.ui.ktx)
-    implementation(libs.bundles.lifecycle)
-    implementation(libs.com.google.android.material)
-
-    // kotlin
-    implementation(libs.bundles.coroutines)
-    implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
-
-    // network
-    implementation(libs.bundles.okhttp)
-    implementation(libs.bundles.retrofit)
-
-    // logging
     implementation(libs.com.jakewharton.timber)
-
-    // test
-    testImplementation(libs.bundles.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit.ktx)
-    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }
