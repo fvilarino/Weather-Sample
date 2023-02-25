@@ -36,6 +36,7 @@ import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.PhonePreviews
 import com.francescsoftware.weathersample.styles.TabletPreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -218,12 +219,12 @@ private fun CityScreenPreview() {
                     CityState(
                         loadState = LoadState.Loaded,
                         query = TextFieldValue(),
-                        cities = listOf(
+                        cities = persistentListOf(
                             VancouverCityModel,
                             BarcelonaCityModel,
                             LondonCityModel,
                         ),
-                        recentCities = listOf(
+                        recentCities = persistentListOf(
                             RecentCityModel("Vancouver"),
                             RecentCityModel("Barcelona"),
                             RecentCityModel("London"),

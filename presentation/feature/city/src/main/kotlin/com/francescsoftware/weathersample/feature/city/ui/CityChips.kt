@@ -15,6 +15,7 @@ import com.francescsoftware.weathersample.feature.city.viewmodel.CityState
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.styles.WidgetPreviews
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun CityChips(
@@ -54,7 +55,7 @@ private fun CityChipsPreview() {
         ) {
             CityChips(
                 state = CityState.initial.copy(
-                    recentCities = listOf(
+                    recentCities = persistentListOf(
                         RecentCityModel("Barcelona"),
                         RecentCityModel("Vancouver"),
                         RecentCityModel("Munich"),

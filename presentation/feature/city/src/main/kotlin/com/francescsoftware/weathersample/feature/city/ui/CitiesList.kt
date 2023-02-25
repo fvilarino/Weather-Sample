@@ -25,6 +25,7 @@ import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.PhonePreviews
 import com.francescsoftware.weathersample.styles.TabletPreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun CitiesList(
@@ -76,10 +77,10 @@ private fun CitiesListPreview() {
             CitiesList(
                 state = CityState.initial.copy(
                     loadState = LoadState.Loaded,
-                    cities = listOf(
+                    cities = persistentListOf(
                         VancouverCityModel,
                         BarcelonaCityModel,
-                        LondonCityModel
+                        LondonCityModel,
                     ),
                 ),
                 onCityClick = {},

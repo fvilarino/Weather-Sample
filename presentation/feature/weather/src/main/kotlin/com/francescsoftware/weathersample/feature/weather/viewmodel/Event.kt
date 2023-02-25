@@ -2,6 +2,8 @@ package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import com.francescsoftware.weathersample.shared.mvi.Action
 import com.francescsoftware.weathersample.shared.mvi.State
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import javax.annotation.concurrent.Immutable
 
 internal enum class WeatherLoadState {
@@ -18,7 +20,7 @@ internal data class WeatherState(
     val cityName: String,
     val cityCountryCode: String,
     val todayState: TodayWeatherCardState,
-    val forecastItems: List<ForecastDayState>,
+    val forecastItems: ImmutableList<ForecastDayState>,
     val errorMessage: String,
 ) : State {
 
@@ -28,7 +30,7 @@ internal data class WeatherState(
             cityName = "",
             cityCountryCode = "",
             todayState = TodayWeatherCardState(),
-            forecastItems = emptyList(),
+            forecastItems = persistentListOf(),
             errorMessage = "",
         )
     }

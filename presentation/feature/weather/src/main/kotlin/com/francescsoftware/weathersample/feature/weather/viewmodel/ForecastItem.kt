@@ -1,10 +1,11 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import androidx.annotation.DrawableRes
+import kotlinx.collections.immutable.ImmutableList
 
 internal data class ForecastDayState(
     val header: ForecastHeaderState,
-    val forecast: List<ForecastHourState>,
+    val forecast: ImmutableList<ForecastHourState>,
 )
 
 internal data class ForecastHeaderState(

@@ -7,6 +7,7 @@ import com.francescsoftware.weathersample.feature.weather.viewmodel.TodayWeather
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.shared.assets.R
+import kotlinx.collections.immutable.persistentListOf
 
 internal data class WeatherStateWrapper(
     val state: WeatherState,
@@ -43,7 +44,7 @@ private val todayState = WeatherState(
         pressure = "1024mb",
         visibility = "10 km",
     ),
-    forecastItems = listOf(
+    forecastItems = persistentListOf(
         ForecastDayState(
             header = ForecastHeaderState(
                 id = "header",
@@ -51,7 +52,7 @@ private val todayState = WeatherState(
                 sunrise = "5:44am",
                 sunset = "8:51pm",
             ),
-            forecast = listOf(
+            forecast = persistentListOf(
                 PartlyCloudyHourForecast,
                 SunnyHourForecast,
                 HeavyRainHourForecast,

@@ -5,6 +5,8 @@ import com.francescsoftware.weathersample.feature.city.model.CityResultModel
 import com.francescsoftware.weathersample.feature.city.model.RecentCityModel
 import com.francescsoftware.weathersample.shared.mvi.Action
 import com.francescsoftware.weathersample.shared.mvi.State
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import javax.annotation.concurrent.Immutable
 
 internal enum class LoadState {
@@ -19,8 +21,8 @@ internal enum class LoadState {
 internal data class CityState(
     val loadState: LoadState,
     val query: TextFieldValue,
-    val cities: List<CityResultModel>,
-    val recentCities: List<RecentCityModel>,
+    val cities: ImmutableList<CityResultModel>,
+    val recentCities: ImmutableList<RecentCityModel>,
     val showRecentCities: Boolean,
 ) : State {
     val loading = loadState == LoadState.Loading
@@ -30,8 +32,8 @@ internal data class CityState(
         val initial = CityState(
             loadState = LoadState.Idle,
             query = TextFieldValue(),
-            cities = emptyList(),
-            recentCities = emptyList(),
+            cities = persistentListOf(),
+            recentCities = persistentListOf(),
             showRecentCities = false,
         )
     }

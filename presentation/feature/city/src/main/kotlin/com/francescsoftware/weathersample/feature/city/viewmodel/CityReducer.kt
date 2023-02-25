@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.feature.city.viewmodel
 
 import com.francescsoftware.weathersample.shared.mvi.Reducer
+import kotlinx.collections.immutable.toPersistentList
 import javax.inject.Inject
 
 internal class CityReducer @Inject constructor() : Reducer<CityState, CityAction> {
@@ -16,11 +17,11 @@ internal class CityReducer @Inject constructor() : Reducer<CityState, CityAction
 
         is CityAction.CitiesLoaded -> state.copy(
             loadState = LoadState.Loaded,
-            cities = action.cities,
+            cities = action.cities.toPersistentList(),
         )
 
         is CityAction.RecentCitiesLoaded -> state.copy(
-            recentCities = action.recentCities,
+            recentCities = action.recentCities.toPersistentList(),
             showRecentCities = true,
         )
 
