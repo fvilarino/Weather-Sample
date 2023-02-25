@@ -6,6 +6,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.kotlin
 
 class AndroidLibraryTestConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -13,10 +14,10 @@ class AndroidLibraryTestConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
                 dependencies {
-                    add("testImplementation", libs.findBundle("junit").get())
+                    add("androidTestImplementation", kotlin("test"))
+                    add("testImplementation", kotlin("test"))
+                    add("testImplementation", libs.findBundle("test").get())
                     add("androidTestImplementation", libs.findBundle("android.test").get())
-                    add("testImplementation", libs.findLibrary("org.jetbrains.kotlinx.kotlinx.coroutines.test").get())
-                    add("testImplementation", libs.findLibrary("io.mockk").get())
                 }
 
                 testOptions {

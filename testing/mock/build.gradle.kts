@@ -1,5 +1,6 @@
 plugins {
     id("weathersample.android.library")
+    id("weathersample.android.library.test")
 }
 
 android {
@@ -11,7 +12,4 @@ dependencies {
     implementation(project(":utils"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
-    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.test)
-    testImplementation(libs.bundles.junit)
-    androidTestImplementation(libs.bundles.android.test)
 }

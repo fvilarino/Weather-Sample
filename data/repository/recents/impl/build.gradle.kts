@@ -23,6 +23,5 @@ dependencies {
 
     testImplementation(libs.bundles.android.test)
     testImplementation(libs.androidx.room.room.testing)
-    testImplementation(libs.app.cash.turbine.turbine)
     testImplementation(libs.org.robolectric.robolectric)
 }
