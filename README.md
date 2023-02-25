@@ -19,8 +19,6 @@ To run the app please obtain a key from RapidApi (https://rapidapi.com/) for bot
 rapid_api_key=<your key here>
 ```
 
-![cities_screen resized](https://user-images.githubusercontent.com/2680481/114630400-58cc0280-9c6f-11eb-84ee-56f997bcf959.png)
 
-![current_weather_screen resized](https://user-images.githubusercontent.com/2680481/114630404-5cf82000-9c6f-11eb-8e4e-1fae1f5d6043.png)
+https://user-images.githubusercontent.com/2680481/221377508-b1531f39-92a3-4431-9bf8-14e0e72b603a.mp4
 
-![forecast_screen resized](https://user-images.githubusercontent.com/2680481/114630408-5f5a7a00-9c6f-11eb-915a-54550388af5f.png)
