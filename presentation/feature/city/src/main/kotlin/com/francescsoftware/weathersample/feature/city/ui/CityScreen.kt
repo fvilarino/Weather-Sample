@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -79,6 +80,8 @@ private fun CityScreen(
     modifier: Modifier = Modifier,
     stateHolder: CityScreenStateHolder = rememberCityScreenStateHolder(),
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     LaunchedEffect(key1 = Unit) {
         snapshotFlow { stateHolder.query }
             .onEach(onQueryChange)
@@ -91,7 +94,10 @@ private fun CityScreen(
                 state = state,
                 stateHolder = stateHolder,
                 onQueryFocused = onQueryFocused,
-                onChipClick = onChipClick,
+                onChipClick = { recentCityModel ->
+                    keyboardController?.hide()
+                    onChipClick(recentCityModel)
+                },
                 onDeleteChip = onDeleteChip,
                 modifier = Modifier
                     .fillMaxWidth()
