@@ -5,7 +5,7 @@ import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.testing.mock.testDispatcherProvider
+import com.francescsoftware.weathersample.testing.mock.TestDispatcherProvider
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
@@ -29,8 +29,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.IOException
-import java.util.Calendar
-import java.util.Date
+import java.util.*
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Forecast as RepositoryForecast
 
@@ -209,7 +208,7 @@ class ForecastWeatherInteractorTest {
         // pre
         val interactor = GetForecastInteractorImpl(
             weatherRepository,
-            testDispatcherProvider,
+            TestDispatcherProvider(),
             timeFormatter
         )
 
@@ -231,7 +230,7 @@ class ForecastWeatherInteractorTest {
         // pre
         val interactor = GetForecastInteractorImpl(
             weatherRepository,
-            testDispatcherProvider,
+            TestDispatcherProvider(),
             timeFormatter
         )
 
@@ -253,7 +252,7 @@ class ForecastWeatherInteractorTest {
         // pre
         val interactor = GetForecastInteractorImpl(
             weatherRepository,
-            testDispatcherProvider,
+            TestDispatcherProvider(),
             timeFormatter,
         )
 
@@ -270,7 +269,7 @@ class ForecastWeatherInteractorTest {
         // pre
         val interactor = GetForecastInteractorImpl(
             weatherRepository,
-            testDispatcherProvider,
+            TestDispatcherProvider(),
             timeFormatter,
         )
         coEvery {

@@ -1,24 +1,22 @@
 package com.francescsoftware.weathersample.dispather
 
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 
 internal object DispatcherProviderInstance : DispatcherProvider {
 
-    private var dispatcher: CoroutineDispatcher? = null
+    override val default: CoroutineContext
+        get() = Dispatchers.Default
 
-    override val default: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Default
+    override val io: CoroutineContext
+        get() = Dispatchers.IO
 
-    override val io: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.IO
+    override val main: CoroutineContext
+        get() = Dispatchers.Main
 
-    override val main: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Main
+    override val mainImmediate: CoroutineContext
+        get() = Dispatchers.Main.immediate
 
-    override val mainImmediate: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Main.immediate
-
-    override val unconfined: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Unconfined
+    override val unconfined: CoroutineContext
+        get() = Dispatchers.Unconfined
 }

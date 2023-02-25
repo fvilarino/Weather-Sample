@@ -1,22 +1,23 @@
 package com.francescsoftware.weathersample.dispather
 
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlin.coroutines.CoroutineContext
 
 /** Provides the [CoroutineDispatcher]s to use in the app. */
 interface DispatcherProvider {
 
     /** [CoroutineDispatcher] for CPU bound tasks. */
-    val default: CoroutineDispatcher
+    val default: CoroutineContext
 
     /** [CoroutineDispatcher] for IO bound tasks. */
-    val io: CoroutineDispatcher
+    val io: CoroutineContext
 
     /** [CoroutineDispatcher] for UI bound tasks. */
-    val main: CoroutineDispatcher
+    val main: CoroutineContext
 
     /** [CoroutineDispatcher] for CPU bound tasks, with immediate dispatching. */
-    val mainImmediate: CoroutineDispatcher
+    val mainImmediate: CoroutineContext
 
     /** [CoroutineDispatcher] that is not confined to a specific thread. */
-    val unconfined: CoroutineDispatcher
+    val unconfined: CoroutineContext
 }

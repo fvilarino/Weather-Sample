@@ -1,30 +1,25 @@
 package com.francescsoftware.weathersample.testing.mock
 
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
-/** {@inheritDoc} */
-val testDispatcherProvider = object : DispatcherProvider {
-    private var dispatcher: CoroutineDispatcher? = null
-
-    /** {@inheritDoc} */
-    override val main: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Unconfined
-
-    /** {@inheritDoc} */
-    override val mainImmediate: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Unconfined
-
-    /** {@inheritDoc} */
-    override val io: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Unconfined
-
-    /** {@inheritDoc} */
-    override val default: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Unconfined
-
-    /** {@inheritDoc} */
-    override val unconfined: CoroutineDispatcher
-        get() = dispatcher ?: Dispatchers.Unconfined
+/**
+ * Dispatcher provider to use in tests.
+ *
+ * @property coroutineContext the coroutine context to use for all dispatchers, defaults to [EmptyCoroutineContext]
+ */
+class TestDispatcherProvider(
+    private val coroutineContext: CoroutineContext = EmptyCoroutineContext,
+) : DispatcherProvider {
+    override val default: CoroutineContext
+        get() = coroutineContext
+    override val io: CoroutineContext
+        get() = coroutineContext
+    override val main: CoroutineContext
+        get() = coroutineContext
+    override val mainImmediate: CoroutineContext
+        get() = coroutineContext
+    override val unconfined: CoroutineContext
+        get() = coroutineContext
 }
