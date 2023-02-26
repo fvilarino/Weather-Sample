@@ -42,7 +42,6 @@ private const val CityLongitude = -123.11
 
 private const val Date = "2022-07-30"
 private const val DateEpoch = 1659132000
-private const val TimeEpoch = 1659135600
 private const val Sunrise = "06:44 AM"
 private const val Sunset = "09:11 PM"
 
@@ -56,8 +55,6 @@ private val HumidityPercent = listOf(54, 71)
 private val VisibilityKilometers = listOf(3, 4)
 private val WeatherDescription = listOf("sunny", "partly cloudy")
 private val WindSpeed = listOf(4.5, 3.8)
-
-private const val OneHourSeconds = 60 * 60
 
 @ExperimentalCoroutinesApi
 class ForecastWeatherInteractorTest {
@@ -125,7 +122,7 @@ class ForecastWeatherInteractorTest {
     )
 
     private val successfulForecast1Entry1 = ForecastEntry(
-        date = Date(TimeEpoch * 1000L),
+        date = timeParser.parseDate(forecastIsoTime[0]),
         description = WeatherDescription[0],
         iconCode = IconCode[0],
         temperature = Temperature[0],
@@ -138,7 +135,7 @@ class ForecastWeatherInteractorTest {
     )
 
     private val successfulForecast1Entry2 = ForecastEntry(
-        date = Date((TimeEpoch + OneHourSeconds) * 1000L),
+        date = timeParser.parseDate(forecastIsoTime[1]),
         description = WeatherDescription[1],
         iconCode = IconCode[1],
         temperature = Temperature[1],
