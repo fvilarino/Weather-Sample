@@ -1,12 +1,14 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
+import com.francescsoftware.weathersample.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.interactor.weather.api.Forecast
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.testing.mock.TestDispatcherProvider
-import com.francescsoftware.weathersample.time.api.TimeFormatter
+import com.francescsoftware.weathersample.time.api.Iso8601DateTime
+import com.francescsoftware.weathersample.time.impl.FakeTimeFormatter
+import com.francescsoftware.weathersample.time.impl.FakeTimeParser
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
@@ -29,7 +31,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.IOException
-import java.util.*
+import java.util.Date
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Forecast as RepositoryForecast
 
@@ -44,6 +46,7 @@ private const val TimeEpoch = 1659135600
 private const val Sunrise = "06:44 AM"
 private const val Sunset = "09:11 PM"
 
+private val ForecastTime = listOf("2022-07-29 16:00", "2022-07-29 17:00")
 private val Temperature = listOf(11.5, 13.7)
 private val FeelsLikeTemperature = listOf(9.5, 11.5)
 private val IconCode = listOf(1000, 1240)
@@ -62,26 +65,13 @@ class ForecastWeatherInteractorTest {
     @MockK
     lateinit var weatherRepository: WeatherRepository
 
-    private val timeFormatter = object : TimeFormatter {
-        override fun setToMidnight(date: Date): Date = Calendar.getInstance().let { calendar ->
-            calendar.time = date
-            calendar.set(Calendar.HOUR_OF_DAY, 0)
-            calendar.set(Calendar.MINUTE, 0)
-            calendar.set(Calendar.SECOND, 0)
-            calendar.time
-        }
+    private val timeFormatter = FakeTimeFormatter()
+    private val timeParser = FakeTimeParser()
 
-        override fun formatDayHour(date: Date): String = date.toString()
-
-        override fun formatDayWithDayOfWeek(date: Date): String = date.toString()
-
-        override fun formatDay(date: Date): String = date.toString()
-
-        override fun formatHour(date: Date): String = date.toString()
-    }
-
+    private val forecastIsoTime = ForecastTime.map { Iso8601DateTime(it) }
     private val forecastHour1 = HourItem(
-        timeEpoch = TimeEpoch,
+        time = forecastIsoTime[0].date,
+        timeEpoch = timeParser.parseDate(forecastIsoTime[0]).time.toInt(),
         tempC = Temperature[0],
         feelslikeC = FeelsLikeTemperature[0],
         precipMm = Precipitation[0].toDouble(),
@@ -97,7 +87,8 @@ class ForecastWeatherInteractorTest {
     )
 
     private val forecastHour2 = HourItem(
-        timeEpoch = TimeEpoch + OneHourSeconds,
+        time = forecastIsoTime[1].date,
+        timeEpoch = timeParser.parseDate(forecastIsoTime[1]).time.toInt(),
         tempC = Temperature[1],
         feelslikeC = FeelsLikeTemperature[1],
         precipMm = Precipitation[1].toDouble(),
@@ -209,7 +200,8 @@ class ForecastWeatherInteractorTest {
         val interactor = GetForecastInteractorImpl(
             weatherRepository,
             TestDispatcherProvider(),
-            timeFormatter
+            timeFormatter,
+            timeParser,
         )
 
         // when we execute the interactor query
@@ -231,7 +223,8 @@ class ForecastWeatherInteractorTest {
         val interactor = GetForecastInteractorImpl(
             weatherRepository,
             TestDispatcherProvider(),
-            timeFormatter
+            timeFormatter,
+            timeParser,
         )
 
         // when we execute the interactor query
@@ -254,6 +247,7 @@ class ForecastWeatherInteractorTest {
             weatherRepository,
             TestDispatcherProvider(),
             timeFormatter,
+            timeParser,
         )
 
         // when we execute the interactor query
@@ -271,6 +265,7 @@ class ForecastWeatherInteractorTest {
             weatherRepository,
             TestDispatcherProvider(),
             timeFormatter,
+            timeParser,
         )
         coEvery {
             weatherRepository.getForecast(any())

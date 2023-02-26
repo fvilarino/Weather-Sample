@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.testing.mock
+package com.francescsoftware.weathersample.dispatcher
 
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import kotlin.coroutines.CoroutineContext

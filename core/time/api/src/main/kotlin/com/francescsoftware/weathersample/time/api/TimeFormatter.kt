@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.time.api
 
-import java.util.Date
+import java.util.*
 
 /** Time formatting utilities */
 interface TimeFormatter {

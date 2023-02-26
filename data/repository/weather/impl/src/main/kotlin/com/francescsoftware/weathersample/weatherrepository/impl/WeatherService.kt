@@ -15,6 +15,6 @@ internal interface WeatherService {
     @GET("forecast.json")
     suspend fun getForecast(
         @Query("q") query: String? = null,
-        @Query("days") days: Int = 7,
+        @Query("days") days: Int = 3,
     ): Response<ForecastResponse>
 }

@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.time.impl
 
 import com.francescsoftware.weathersample.time.api.TimeFormatter
+import com.francescsoftware.weathersample.time.api.TimeParser
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
@@ -15,4 +16,10 @@ internal interface TimeFormatterModule {
     fun bindTimeFormatter(
         timeFormatterImpl: TimeFormatterImpl
     ): TimeFormatter
+
+    @Binds
+    @Reusable
+    fun bindTimeParser(
+        timeParserImpl: TimeParserImpl
+    ): TimeParser
 }

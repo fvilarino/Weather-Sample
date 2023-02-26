@@ -7,11 +7,12 @@ import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
+import com.francescsoftware.weathersample.time.api.Iso8601DateTime
 import com.francescsoftware.weathersample.time.api.TimeFormatter
+import com.francescsoftware.weathersample.time.api.TimeParser
+import com.francescsoftware.weathersample.time.api.TimeParsingException
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
-import com.francescsoftware.weathersample.utils.time.Seconds
-import com.francescsoftware.weathersample.utils.time.toDate
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Astro
@@ -26,6 +27,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val timeFormatter: TimeFormatter,
+    private val timerParser: TimeParser,
 ) : GetForecastInteractor {
 
     override suspend fun execute(location: WeatherLocation): Either<Forecast> {
@@ -34,7 +36,13 @@ internal class GetForecastInteractorImpl @Inject constructor(
             onSuccess = { data ->
                 val forecast = data.forecast?.forecastDay
                 if (forecast?.isNotEmpty() == true) {
-                    Either.Success(parseForecast(forecast))
+                    try {
+                        Either.Success(parseForecast(forecast))
+                    } catch (ex: ForecastParseException) {
+                        Either.Failure(WeatherException(cause = ex))
+                    } catch (ex: TimeParsingException) {
+                        Either.Failure(WeatherException(cause = ex))
+                    }
                 } else {
                     Either.Failure(WeatherException("Invalid forecast data received"))
                 }
@@ -57,8 +65,9 @@ internal class GetForecastInteractorImpl @Inject constructor(
         val days: Map<Date, ForecastDayItem> = forecast
             .filter { item -> item.isValid }
             .associateBy { item ->
+                val time = item.hour?.firstOrNull()?.time ?: throw ForecastParseException()
                 timeFormatter.setToMidnight(
-                    Seconds((item.dateEpoch ?: 0).toLong()).toDate()
+                    timerParser.parseDate(Iso8601DateTime(time))
                 )
             }
             .filterValues { item -> item.isValid }
@@ -70,7 +79,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
                     date = entry.key,
                     sunrise = entry.value.astro?.sunrise.orEmpty(),
                     sunset = entry.value.astro?.sunset.orEmpty(),
-                    entries = entry.value.hour?.map { hour -> hour.toForecastEntry() }.orEmpty()
+                    entries = entry.value.hour?.map { hour -> hour.toForecastEntry(timerParser) }.orEmpty()
                 )
             }
             .map { entry ->
@@ -83,8 +92,10 @@ internal class GetForecastInteractorImpl @Inject constructor(
         )
     }
 
-    private fun HourItem.toForecastEntry() = ForecastEntry(
-        date = Seconds((timeEpoch ?: 0).toLong()).toDate(),
+    private fun HourItem.toForecastEntry(
+        timerParser: TimeParser,
+    ) = ForecastEntry(
+        date = this.time?.let { date -> timerParser.parseDate(Iso8601DateTime(date)) } ?: Date(),
         description = condition?.text.orEmpty(),
         iconCode = condition?.code ?: 0,
         temperature = tempC ?: 0.0,
@@ -106,7 +117,8 @@ internal class GetForecastInteractorImpl @Inject constructor(
         get() = this?.isNotEmpty() == true && all { item -> item.isValid }
 
     private val HourItem.isValid: Boolean
-        get() = timeEpoch != null &&
+        get() = time != null &&
+            timeEpoch != null &&
             tempC != null &&
             feelslikeC != null &&
             windKph != null &&
@@ -117,3 +129,5 @@ internal class GetForecastInteractorImpl @Inject constructor(
     private val Condition?.isValid: Boolean
         get() = this != null && code != null && icon != null && text != null
 }
+
+private class ForecastParseException : RuntimeException()
