@@ -6,14 +6,21 @@
   "packageRules": [
     {
       "matchPackagePatterns": [
-        "*"
+        "androidx.compose.compiler:compiler"
       ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
+      "groupName": "kotlin"
+    },
+    {
+      "matchPackagePatterns": [
+        "org.jetbrains.kotlin.*"
       ],
-      "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch"
+      "groupName": "kotlin"
+    },
+    {
+      "matchPackagePatterns": [
+        "com.google.devtools.ksp"
+      ],
+      "groupName": "kotlin"
     }
   ]
 }
