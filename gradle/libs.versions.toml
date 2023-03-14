@@ -40,7 +40,7 @@ org-jetbrains-kotlinx-kotlinx-coroutines-version = "1.6.4"
 org-jetbrains-kotlinx-kotlinx-serialization-json-version = "1.4.1"
 org-junit-jupiter-junit-jupiter-version = "5.9.2"
 org-robolectric-robolectric-version = "4.9.2"
-versions-plugin-version = "0.45.0"
+versions-plugin-version = "0.46.0"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-activity-compose-version" }
