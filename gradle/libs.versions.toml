@@ -6,6 +6,7 @@ androidx-benchmark-benchmark-macro-junit4-version = "1.2.0-alpha11"
 androidx-compose-bom-version = "2023.01.00"
 androidx-compose-compiler-version = "1.4.2"
 androidx-core-core-ktx-version = "1.10.0-rc01"
+androidx-core-core-splashscreen-version = "1.0.0"
 androidx-hilt-hilt-navigation-compose-version = "1.1.0-alpha01"
 androidx-lifecycle-lifecycle-version = "2.6.0"
 androidx-navigation-version = "2.6.0-alpha07"
@@ -56,6 +57,7 @@ androidx-compose-ui-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-core-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-core-ktx-version" }
+androidx-core-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-core-splashscreen-version" }
 androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt-hilt-navigation-compose-version" }
 androidx-lifecycle-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "androidx-lifecycle-lifecycle-version" }
 androidx-lifecycle-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-lifecycle-version" }
@@ -78,7 +80,7 @@ com-google-android-material = { module = "com.google.android.material:material",
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger-version" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger-version" }
 com-google-dagger-hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger-version" }
-com-google-truth-truth = { module = "com.google.truth:truth", version.ref = "com-google-truth-truth-version"}
+com-google-truth-truth = { module = "com.google.truth:truth", version.ref = "com-google-truth-truth-version" }
 com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", version.ref = "com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter-version" }
 com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter-version" }
 com-jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "com-jakewharton-timber-version" }

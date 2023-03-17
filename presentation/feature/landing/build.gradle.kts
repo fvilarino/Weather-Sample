@@ -26,6 +26,7 @@ dependencies {
     implementation(libs.androidx.compose.material3.window.sizeclass)
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.navigation.navigation.compose)
+    implementation(libs.androidx.core.core.splashscreen)
 
     implementation(libs.androidx.app.compat)
     implementation(libs.androidx.hilt.hilt.navigation.compose)
