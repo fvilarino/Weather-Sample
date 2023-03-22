@@ -2,7 +2,7 @@
 androidx-activity-activity-compose-version = "1.7.0-rc01"
 androidx-annotation-version = "1.6.0"
 androidx-arch-core-core-testing-version = "2.2.0"
-androidx-benchmark-benchmark-macro-junit4-version = "1.2.0-alpha11"
+androidx-benchmark-benchmark-macro-junit4-version = "1.2.0-alpha12"
 androidx-compose-bom-version = "2023.01.00"
 androidx-compose-compiler-version = "1.4.2"
 androidx-core-core-ktx-version = "1.10.0-rc01"
