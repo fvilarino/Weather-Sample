@@ -11,5 +11,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "build-logic"
+include(":build-number")
 include(":convention")
 include(":keys")

@@ -4,6 +4,7 @@ import java.util.Properties
 plugins {
     id("weathersample.android.application")
     id("weathersample.android.hilt")
+    id("weathersample.android.buildnumber")
 }
 
 android {
@@ -11,6 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.francescsoftware.weathersample"
+        versionCode = buildNumber.versionCode.toInt()
     }
 
     signingConfigs {
@@ -96,4 +98,15 @@ dependencies {
     implementation(project(":utils"))
 
     implementation(libs.com.jakewharton.timber)
+}
+
+afterEvaluate {
+    tasks
+        .asSequence()
+        .filter { task ->
+            task.name.equals("clean", ignoreCase = true) ||
+                task.name.contains("assemble", ignoreCase = true)
+        }.forEach { task ->
+            task.dependsOn(":analysis:installGitHooks")
+        }
 }

@@ -7,7 +7,6 @@ internal fun configureAndroidApplication(
 ) {
     applicationExtension.apply {
         defaultConfig {
-            versionCode = Config.Build.VersionCode
             versionName = Config.Build.VersionName
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
