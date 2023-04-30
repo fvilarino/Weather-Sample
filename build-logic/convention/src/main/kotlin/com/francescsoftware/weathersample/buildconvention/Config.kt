@@ -2,7 +2,6 @@ package com.francescsoftware.weathersample.buildconvention
 
 object Config {
     object Build {
-        const val VersionCode = 1
         const val VersionName = "1.0.0"
 
         const val MinSdk = 23

@@ -13,12 +13,19 @@ Tech stack:
 * AAC Viewmodels
 * AAC Navigation
 
-To run the app please obtain a key from RapidApi (https://rapidapi.com/) for both the geo cities (https://rapidapi.com/wirefreethought/api/geodb-cities) and the open weather map (https://rapidapi.com/community/api/open-weather-map) and then update create a file named `keys.properties` inside the `certs` folder with your key, following this format
+To run the app please obtain a key from RapidApi (https://rapidapi.com/) for both the geo cities (https://rapidapi.com/wirefreethought/api/geodb-cities) and the open weather map (https://rapidapi.com/community/api/open-weather-map) services and then create a file named `keys.properties` inside the `certs` folder with your key, following this format
 
 ```
 rapid_api_key=<your key here>
 ```
 
+Then create a file named `build_number.properties` on the project root folder with this content
+
+```
+build_number=<your build number>
+```
+
+where `<your build number>` is any integer value.
 
 https://user-images.githubusercontent.com/2680481/221377508-b1531f39-92a3-4431-9bf8-14e0e72b603a.mp4
 

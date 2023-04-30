@@ -5,13 +5,6 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-env:
-  alias: ${{ secrets.alias }}
-  keyPass: ${{ secrets.keyPass }}
-  store: ${{ secrets.store }}
-  storePass: ${{ secrets.storePass }}
-  rapid_api_key: ${{ secrets.rapid_api_key }}
-
 jobs:
   build:
     name: Build
@@ -29,6 +22,13 @@ jobs:
 
       - name: Build the app
         run: ./gradlew assembleRelease --stacktrace
+        env:
+          alias: ${{ secrets.alias }}
+          keyPass: ${{ secrets.keyPass }}
+          store: ${{ secrets.store }}
+          storePass: ${{ secrets.storePass }}
+          rapid_api_key: ${{ secrets.rapid_api_key }}
+          buildNumber: 1
 
   test:
     name: Unit Tests
@@ -46,9 +46,40 @@ jobs:
 
       - name: Run tests
         run: ./gradlew testDebugUnitTest --stacktrace
+        env:
+          alias: ${{ secrets.alias }}
+          keyPass: ${{ secrets.keyPass }}
+          store: ${{ secrets.store }}
+          storePass: ${{ secrets.storePass }}
+          rapid_api_key: ${{ secrets.rapid_api_key }}
+          buildNumber: 1
 
-  analysis:
-    name: Static Analysis
+  detekt:
+    name: Static Analysis - Detekt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: 17
+          cache: 'gradle'
+
+      - name: Run detekt static analysis
+        run: ./gradlew detekt
+        env:
+          alias: ${{ secrets.alias }}
+          keyPass: ${{ secrets.keyPass }}
+          store: ${{ secrets.store }}
+          storePass: ${{ secrets.storePass }}
+          rapid_api_key: ${{ secrets.rapid_api_key }}
+          buildNumber: 1
+
+  lint:
+    name: Static Analysis - Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -63,6 +94,10 @@ jobs:
 
       - name: Run lint static analysis
         run: ./gradlew lintDebug --stacktrace
-
-      - name: Run detekt static analysis
-        run: ./gradlew detekt
+        env:
+          alias: ${{ secrets.alias }}
+          keyPass: ${{ secrets.keyPass }}
+          store: ${{ secrets.store }}
+          storePass: ${{ secrets.storePass }}
+          rapid_api_key: ${{ secrets.rapid_api_key }}
+          buildNumber: 1
