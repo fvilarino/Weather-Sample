@@ -22,7 +22,7 @@ rapid_api_key=<your key here>
 Then create a file named `build_number.properties` on the project root folder with this content
 
 ```
-build_number=<your build number>
+buildNumber=<your build number>
 ```
 
 where `<your build number>` is any integer value.
