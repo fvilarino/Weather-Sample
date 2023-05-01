@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.francescsoftware.weathersample"
-        versionCode = buildNumber.versionCode.toInt()
+        versionCode = BuildNumber.versionCode.toInt()
     }
 
     signingConfigs {

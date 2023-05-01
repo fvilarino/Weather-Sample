@@ -31,13 +31,18 @@ open class BuildNumber {
 class BuildNumberPlugin : Plugin<Project> {
 
     /** @{inheritDoc} */
-    override fun apply(target: Project) {
-        val extension = target.extensions.create<BuildNumber>("buildNumber")
+    override fun apply(project: Project) {
+        val extension = project.extensions.create<BuildNumber>("BuildNumber")
         val properties = Properties()
-        val buildNumberFile = target.rootProject.file(PropertiesFile)
-        if (buildNumberFile.exists()) {
-            buildNumberFile.inputStream().use { stream ->
-                properties.load(stream)
+        if (project.hasProperty(PropertyName)) {
+            val buildNumber = project.properties[PropertyName].toString()
+            properties.setProperty(PropertyName, buildNumber)
+        } else {
+            val buildNumberFile = project.rootProject.file(PropertiesFile)
+            if (buildNumberFile.exists()) {
+                buildNumberFile.inputStream().use { stream ->
+                    properties.load(stream)
+                }
             }
         }
         extension.setProperties(properties)
