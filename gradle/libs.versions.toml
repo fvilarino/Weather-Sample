@@ -133,10 +133,6 @@ test = [
     "org-junit-jupiter-junit-jupiter-api",
     "org-junit-vintage-junit-vintage-engine",
 ]
-lifecycle = [
-    "androidx-lifecycle-lifecycle-common-java8",
-    "androidx-lifecycle-lifecycle-viewmodel-ktx",
-]
 okhttp = [
     "com-squareup-okhttp3-logging-interceptor",
     "com-squareup-okhttp3-okhttp",

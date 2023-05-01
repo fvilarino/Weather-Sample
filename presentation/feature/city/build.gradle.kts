@@ -20,7 +20,7 @@ dependencies {
     implementation(project(":business:interactor:city:api"))
 
     implementation(libs.bundles.compose)
-    implementation(libs.androidx.navigation.navigation.compose)
-    implementation(libs.bundles.lifecycle)
+    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.hilt.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.navigation.compose)
 }
