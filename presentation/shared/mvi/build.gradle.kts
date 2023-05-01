@@ -12,6 +12,6 @@ dependencies {
     implementation(project(":core:coroutines"))
     implementation(project(":core:dispatcher"))
 
-    implementation(libs.bundles.lifecycle)
+    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
     implementation(libs.bundles.compose)
 }
