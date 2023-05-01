@@ -6,24 +6,21 @@ import java.util.Properties
 private const val PropertyName = "buildNumber"
 private const val PropertiesFile = "build_number.properties"
 
-/** Build number property holder */
+/** Build number extension */
 open class BuildNumber {
     /** The version code to use for the build */
     val versionCode: Long
-        get() {
-            val property = (properties?.get(PropertyName) ?: System.getenv(PropertyName))?.toString()
-            return property?.toLongOrNull() ?: error("Could not locate the build number")
-        }
+        get() = buildNumber ?: error("Could not locate the build number")
 
-    private var properties: Properties? = null
+    private var buildNumber: Long? = null
 
     /**
-     * Sets the [Properties] containing the build number
+     * Sets the build number to use
      *
-     * @param properties the [Properties] with the build number
+     * @param buildNumber the number to use for the build
      */
-    fun setProperties(properties: Properties) {
-        this.properties = properties
+    internal fun setBuildNumber(buildNumber: Long) {
+        this.buildNumber = buildNumber
     }
 }
 
@@ -33,18 +30,20 @@ class BuildNumberPlugin : Plugin<Project> {
     /** @{inheritDoc} */
     override fun apply(project: Project) {
         val extension = project.extensions.create<BuildNumber>("BuildNumber")
-        val properties = Properties()
-        if (project.hasProperty(PropertyName)) {
-            val buildNumber = project.properties[PropertyName].toString()
-            properties.setProperty(PropertyName, buildNumber)
-        } else {
-            val buildNumberFile = project.rootProject.file(PropertiesFile)
-            if (buildNumberFile.exists()) {
+        val buildNumberFile = project.rootProject.file(PropertiesFile)
+        val buildNumber = when {
+            project.hasProperty(PropertyName) -> project.properties[PropertyName]?.toString()?.toLongOrNull()
+            buildNumberFile.exists() -> {
+                val properties = Properties()
                 buildNumberFile.inputStream().use { stream ->
                     properties.load(stream)
                 }
+                properties[PropertyName]?.toString()?.toLongOrNull()
             }
+            else -> System.getenv(PropertyName)?.toString()?.toLongOrNull()
         }
-        extension.setProperties(properties)
+        if (buildNumber != null) {
+            extension.setBuildNumber(buildNumber)
+        }
     }
 }
