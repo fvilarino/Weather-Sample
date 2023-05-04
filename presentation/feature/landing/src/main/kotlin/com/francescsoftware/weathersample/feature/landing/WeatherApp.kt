@@ -4,7 +4,6 @@ import android.app.Activity
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
@@ -47,7 +46,6 @@ internal fun WeatherApp() {
                     },
                     onIconClick = navController::popBackStack,
                     actions = { currentDestination.TopBarActions() },
-                    modifier = Modifier.systemBarsPadding(),
                 )
             },
         ) { paddingValues ->
@@ -66,7 +64,9 @@ internal fun WeatherApp() {
                 ) { selectedCity ->
                     navController.navigate(WeatherDestination.getRoute(selectedCity))
                 }
-                addWeatherDetailsDestination()
+                addWeatherDetailsDestination(
+                    deviceClass = deviceClass,
+                )
             }
         }
     }

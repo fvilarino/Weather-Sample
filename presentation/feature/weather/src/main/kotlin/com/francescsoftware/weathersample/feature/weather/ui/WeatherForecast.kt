@@ -1,14 +1,12 @@
 package com.francescsoftware.weathersample.feature.weather.ui
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -16,72 +14,16 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
-import com.francescsoftware.weathersample.feature.weather.R
-import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
-import com.francescsoftware.weathersample.shared.composable.LoadingButton
 import com.francescsoftware.weathersample.styles.MarginDouble
-import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.PhonePreviews
-import com.francescsoftware.weathersample.styles.TabletPreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
-private val WeatherCardWidth = 360.dp
-
 @Composable
-internal fun WeatherContent(
-    state: WeatherState,
-    option: SelectedWeatherOption,
-    todayRefreshCallback: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    when (option) {
-        SelectedWeatherOption.Today -> TodayWeather(
-            state = state,
-            todayRefreshCallback = todayRefreshCallback,
-            modifier = modifier,
-        )
-
-        SelectedWeatherOption.Forecast -> WeatherForecast(
-            state = state,
-            modifier = modifier,
-        )
-    }
-}
-
-@Composable
-private fun TodayWeather(
-    state: WeatherState,
-    todayRefreshCallback: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        TodayWeatherCard(
-            state = state.todayState,
-            modifier = Modifier.width(WeatherCardWidth),
-        )
-        LoadingButton(
-            onClick = todayRefreshCallback,
-            modifier = Modifier.padding(top = MarginQuad),
-            loading = state.loadState == WeatherLoadState.Refreshing,
-        ) {
-            Text(text = stringResource(id = R.string.refresh))
-        }
-    }
-}
-
-@Composable
-private fun WeatherForecast(
+internal fun WeatherForecast(
     state: WeatherState,
     modifier: Modifier = Modifier,
 ) {
@@ -123,22 +65,22 @@ private fun WeatherForecast(
 }
 
 @PhonePreviews
-@TabletPreviews
 @Composable
-private fun PreviewWeatherContent(
-    @PreviewParameter(WeatherStateWrapperProvider::class) stateWrapper: WeatherStateWrapper,
+private fun PreviewWeatherForecast(
+    @PreviewParameter(
+        provider = WeatherStateWrapperProvider::class,
+        limit = 1,
+    ) stateWrapper: WeatherStateWrapper,
 ) {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
         ) {
-            WeatherContent(
+            WeatherForecast(
                 state = stateWrapper.state,
-                option = stateWrapper.option,
-                todayRefreshCallback = {},
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = MarginDouble)
+                    .padding(all = MarginDouble),
             )
         }
     }
