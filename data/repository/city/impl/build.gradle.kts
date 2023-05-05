@@ -30,4 +30,6 @@ dependencies {
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.retrofit)
+
+    testImplementation(libs.bundles.android.test)
 }
