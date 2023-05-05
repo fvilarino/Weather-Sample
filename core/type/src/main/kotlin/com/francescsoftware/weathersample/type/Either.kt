@@ -13,6 +13,15 @@ inline fun <R, T> Either<T>.fold(
     is Either.Failure -> onFailure(error)
 }
 
+inline fun <T, R> Either<T>.map(
+    mapper: (value: T) -> R
+): Either<R> {
+    return when (this) {
+        is Either.Success -> Either.Success(mapper(value))
+        is Either.Failure -> this
+    }
+}
+
 val <T> Either<T>.isSuccess: Boolean
     get() = this is Either.Success
 

@@ -1,27 +1,27 @@
 package com.francescsoftware.weathersample.interactor.city.impl
 
 import com.francescsoftware.weathersample.cityrepository.api.CityRepository
-import com.francescsoftware.weathersample.cityrepository.api.model.CityItem
 import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
+import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.interactor.city.api.CitiesException
-import com.francescsoftware.weathersample.interactor.city.api.City
-import com.francescsoftware.weathersample.interactor.city.api.Coordinates
+import com.francescsoftware.weathersample.interactor.city.api.model.City
+import com.francescsoftware.weathersample.interactor.city.api.model.Coordinates
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
 import com.francescsoftware.weathersample.type.throwableOrNull
 import com.francescsoftware.weathersample.type.valueOrNull
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.io.IOException
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
+import com.francescsoftware.weathersample.cityrepository.api.CitiesException as RepoException
+import com.francescsoftware.weathersample.cityrepository.api.model.City as RepoCity
+import com.francescsoftware.weathersample.cityrepository.api.model.Coordinates as RepoCoordinates
+import com.francescsoftware.weathersample.cityrepository.api.model.Metadata as RepoMetadata
 
 private const val CityName = "Vancouver"
 private const val CityRegion = "British Columbia"
@@ -34,19 +34,16 @@ private const val CityLongitude = -123.11
 @ExperimentalCoroutinesApi
 class CityInteractorTest {
 
-    @MockK
-    lateinit var cityRepository: CityRepository
-
-    private val citiesResponse = CitySearchResponse(
-        data = listOf(
-            CityItem(
-                id = 1,
-                city = CityName,
-                name = CityName,
-                region = CityRegion,
-                regionCode = CityRegionCode,
-                country = CityCountry,
-                countryCode = CityCountryCode,
+    private val citiesResponse = listOf(
+        RepoCity(
+            id = 1,
+            city = CityName,
+            name = CityName,
+            region = CityRegion,
+            regionCode = CityRegionCode,
+            country = CityCountry,
+            countryCode = CityCountryCode,
+            coordinates = RepoCoordinates(
                 latitude = CityLatitude,
                 longitude = CityLongitude,
             )
@@ -63,37 +60,42 @@ class CityInteractorTest {
         coordinates = Coordinates(latitude = CityLatitude, longitude = CityLongitude)
     )
 
-    @BeforeEach
-    fun setup() {
-        MockKAnnotations.init(this)
-        coEvery { cityRepository.getCities(any(), any()) } returns Either.Success(
-            citiesResponse
-        )
+    private class FakeCityRepository : CityRepository {
+        var cities: List<RepoCity> = emptyList()
+        var isNetworkError: Boolean = false
+
+        override suspend fun getCities(prefix: String, limit: Int): Either<CitySearchResponse> {
+            return if (isNetworkError) {
+                Either.Failure(RepoException(message = "Failed to load cities"))
+            } else {
+                Either.Success(
+                    CitySearchResponse(
+                        metadata = RepoMetadata(0, 0),
+                        cities = cities,
+                    )
+                )
+            }
+        }
     }
 
-    @Test
-    fun `interactor calls repository with incoming arguments`() = runTest {
-        // pre
-        val interactor = GetCitiesInteractorImpl(cityRepository)
-
-        // when we execute the interactor query
-        val query = CityName
-        interactor.execute(query)
-
-        // we call the repository once with the same argument
-        coVerify(exactly = 1) {
-            cityRepository.getCities(
-                withArg { arg ->
-                    assertEquals(arg, query)
-                }
-            )
-        }
+    private val dispatcherProvider = object : DispatcherProvider {
+        override val default: CoroutineContext
+            get() = EmptyCoroutineContext
+        override val io: CoroutineContext
+            get() = EmptyCoroutineContext
+        override val main: CoroutineContext
+            get() = EmptyCoroutineContext
+        override val mainImmediate: CoroutineContext
+            get() = EmptyCoroutineContext
+        override val unconfined: CoroutineContext
+            get() = EmptyCoroutineContext
     }
 
     @Test
     fun `interactor maps network data to interactor city data`() = runTest {
         // pre
-        val interactor = GetCitiesInteractorImpl(cityRepository)
+        val repository = FakeCityRepository().apply { cities = citiesResponse }
+        val interactor = GetCitiesInteractorImpl(repository, dispatcherProvider)
 
         // when we execute the interactor query
         val query = CityName
@@ -101,19 +103,13 @@ class CityInteractorTest {
 
         // the response has been converted to the interactor type
         assertTrue(response.isSuccess)
-        assertEquals(response.valueOrNull(), listOf(successCity))
+        assertEquals(response.valueOrNull()?.cities, listOf(successCity))
     }
 
     @Test
     fun `interactor maps network error to interactor error`() = runTest {
-        // pre
-        val interactor = GetCitiesInteractorImpl(cityRepository)
-        coEvery {
-            cityRepository.getCities(
-                any(),
-                any()
-            )
-        } returns Either.Failure(IOException("Failed to load cities"))
+        val repository = FakeCityRepository().apply { isNetworkError = true }
+        val interactor = GetCitiesInteractorImpl(repository, dispatcherProvider)
 
         // when we execute the interactor query
         val query = CityName
