@@ -67,11 +67,6 @@ fun loadSigningProperties(file: File) =
     }
 
 dependencies {
-    implementation(project(":business:interactor:city:api"))
-    implementation(project(":business:interactor:city:impl"))
-    implementation(project(":business:interactor:weather:api"))
-    implementation(project(":business:interactor:weather:impl"))
-
     implementation(project(":core:dispatcher"))
     implementation(project(":core:network"))
     implementation(project(":core:time:api"))
@@ -84,16 +79,21 @@ dependencies {
     implementation(project(":data:repository:weather:api"))
     implementation(project(":data:repository:weather:impl"))
 
-    implementation(project(":presentation:feature:city"))
-    implementation(project(":presentation:feature:landing"))
-    implementation(project(":presentation:feature:weather"))
-    implementation(project(":presentation:shared:assets"))
-    implementation(project(":presentation:shared:composable"))
-    implementation(project(":presentation:shared:lookup:api"))
-    implementation(project(":presentation:shared:lookup:impl"))
-    implementation(project(":presentation:shared:mvi"))
-    implementation(project(":presentation:shared:route"))
-    implementation(project(":presentation:shared:styles"))
+    implementation(project(":domain:interactor:city:api"))
+    implementation(project(":domain:interactor:city:impl"))
+    implementation(project(":domain:interactor:weather:api"))
+    implementation(project(":domain:interactor:weather:impl"))
+
+    implementation(project(":ui:feature:city"))
+    implementation(project(":ui:feature:landing"))
+    implementation(project(":ui:feature:weather"))
+    implementation(project(":ui:shared:assets"))
+    implementation(project(":ui:shared:composable"))
+    implementation(project(":ui:shared:lookup:api"))
+    implementation(project(":ui:shared:lookup:impl"))
+    implementation(project(":ui:shared:mvi"))
+    implementation(project(":ui:shared:route"))
+    implementation(project(":ui:shared:styles"))
 
     implementation(project(":utils"))
 
