@@ -5,7 +5,7 @@ import com.francescsoftware.weathersample.cityrepository.api.model.Coordinates
 import com.francescsoftware.weathersample.cityrepository.impl.model.CityModel
 import com.francescsoftware.weathersample.cityrepository.impl.model.CitySearchResponseModel
 import com.francescsoftware.weathersample.cityrepository.impl.model.MetadataModel
-import com.francescsoftware.weathersample.dispather.DispatcherProvider
+import com.francescsoftware.weathersample.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.type.Either
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -13,8 +13,6 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import retrofit2.Response
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 private const val VancouverName = "Vancouver"
 private const val VancouverRegion = "British Columbia"
@@ -113,23 +111,10 @@ internal class CityRepositoryImplTest {
         }
     }
 
-    private val dispatcherProvider = object : DispatcherProvider {
-        override val default: CoroutineContext
-            get() = EmptyCoroutineContext
-        override val io: CoroutineContext
-            get() = EmptyCoroutineContext
-        override val main: CoroutineContext
-            get() = EmptyCoroutineContext
-        override val mainImmediate: CoroutineContext
-            get() = EmptyCoroutineContext
-        override val unconfined: CoroutineContext
-            get() = EmptyCoroutineContext
-    }
-
     @Test
     fun `success network response returns cities`() = runTest {
         val service = FakeCityService().apply { cities = networkCities }
-        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = dispatcherProvider)
+        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
         Assertions.assertTrue(response is Either.Success)
         val cityList = (response as Either.Success).value.cities
@@ -152,7 +137,7 @@ internal class CityRepositoryImplTest {
         )
 
         val service = FakeCityService().apply { cities = invalidCities }
-        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = dispatcherProvider)
+        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
         Assertions.assertTrue(response is Either.Failure)
     }
@@ -160,7 +145,7 @@ internal class CityRepositoryImplTest {
     @Test
     fun `network errors returns error`() = runTest {
         val service = FakeCityService().apply { networkError = true }
-        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = dispatcherProvider)
+        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
         Assertions.assertTrue(response is Either.Failure)
     }
