@@ -5,7 +5,7 @@ import com.francescsoftware.weathersample.cityrepository.api.model.Coordinates
 import com.francescsoftware.weathersample.cityrepository.impl.model.CityModel
 import com.francescsoftware.weathersample.cityrepository.impl.model.CitySearchResponseModel
 import com.francescsoftware.weathersample.cityrepository.impl.model.MetadataModel
-import com.francescsoftware.weathersample.dispatcher.TestDispatcherProvider
+import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.type.Either
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

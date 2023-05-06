@@ -20,13 +20,13 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             dependencies {
                 add("implementation", (project(":core:coroutines")))
                 add("implementation", (project(":core:type")))
-                add("implementation", (project(":presentation:shared:assets")))
-                add("implementation", (project(":presentation:shared:composable")))
-                add("implementation", (project(":presentation:shared:deviceclass")))
-                add("implementation", (project(":presentation:shared:lookup:api")))
-                add("implementation", (project(":presentation:shared:mvi")))
-                add("implementation", (project(":presentation:shared:route")))
-                add("implementation", (project(":presentation:shared:styles")))
+                add("implementation", (project(":ui:shared:assets")))
+                add("implementation", (project(":ui:shared:composable")))
+                add("implementation", (project(":ui:shared:deviceclass")))
+                add("implementation", (project(":ui:shared:lookup:api")))
+                add("implementation", (project(":ui:shared:mvi")))
+                add("implementation", (project(":ui:shared:route")))
+                add("implementation", (project(":ui:shared:styles")))
             }
         }
     }
