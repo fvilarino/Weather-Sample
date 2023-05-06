@@ -1,67 +1,37 @@
 package com.francescsoftware.weathersample.interactor.city.impl
 
 import com.francescsoftware.weathersample.cityrepository.api.CityRepository
-import com.francescsoftware.weathersample.cityrepository.api.model.CityItem
 import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
+import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.interactor.city.api.CitiesException
-import com.francescsoftware.weathersample.interactor.city.api.City
-import com.francescsoftware.weathersample.interactor.city.api.Coordinates
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
+import com.francescsoftware.weathersample.interactor.city.api.model.Cities
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class GetCitiesInteractorImpl @Inject constructor(
     private val cityRepository: CityRepository,
+    private val dispatcherProvider: DispatcherProvider,
 ) : GetCitiesInteractor {
 
-    override suspend fun execute(prefix: String, limit: Int): Either<List<City>> {
+    override suspend fun execute(prefix: String, limit: Int): Either<Cities> {
         val citiesResponse: Either<CitySearchResponse> = cityRepository.getCities(prefix, limit)
         return citiesResponse.fold(
             onSuccess = { response ->
-                val data = response.data
-                if (data != null) {
-                    val cities = data
-                        .filter { city -> city.isValid }
-                        .map { city -> city.toCity() }
-                    Either.Success(cities)
-                } else {
-                    Either.Success(emptyList())
+                withContext(dispatcherProvider.default) {
+                    Either.Success(response.toCities())
                 }
             },
             onFailure = { response ->
-                val cause = response.cause
                 Either.Failure(
-                    if (cause != null) {
-                        CitiesException("Error fetching cities", cause)
-                    } else {
-                        CitiesException("Error fetching cities")
-                    }
+                    CitiesException(
+                        message = response.message ?: "Error fetching cities",
+                        cause = response.cause,
+                    )
                 )
             }
         )
     }
-
-    private val CityItem.isValid: Boolean
-        get() = id != null &&
-            name != null &&
-            region != null &&
-            regionCode != null &&
-            country != null &&
-            countryCode != null &&
-            latitude != null &&
-            longitude != null
-
-    private fun CityItem.toCity() = City(
-        id = id ?: 0,
-        name = name.orEmpty(),
-        region = region.orEmpty(),
-        regionCode = regionCode.orEmpty(),
-        country = country.orEmpty(),
-        countryCode = countryCode.orEmpty(),
-        coordinates = Coordinates(
-            latitude = latitude ?: 0.0,
-            longitude = longitude ?: 0.0,
-        )
-    )
 }

@@ -1,14 +1,12 @@
 package com.francescsoftware.weathersample.cityrepository.api.model
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
+/**
+ * Contains pagination data for the response
+ *
+ * @property currentOffset current result offset
+ * @property totalCount total number of result
+ */
 data class Metadata(
-
-    @SerialName("currentOffset")
-    val currentOffset: Int? = null,
-
-    @SerialName("totalCount")
-    val totalCount: Int? = null
+    val currentOffset: Int,
+    val totalCount: Int,
 )

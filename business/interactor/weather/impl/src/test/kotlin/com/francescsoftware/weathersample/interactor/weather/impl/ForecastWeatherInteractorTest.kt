@@ -9,31 +9,25 @@ import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.time.api.Iso8601DateTime
 import com.francescsoftware.weathersample.time.impl.FakeTimeFormatter
 import com.francescsoftware.weathersample.time.impl.FakeTimeParser
-import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
 import com.francescsoftware.weathersample.type.throwableOrNull
 import com.francescsoftware.weathersample.type.valueOrNull
-import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
+import com.francescsoftware.weathersample.weatherrepository.api.model.Current
+import com.francescsoftware.weathersample.weatherrepository.api.model.Location
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Astro
-import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastDayItem
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Day
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastHour
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastResponse
-import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.HourItem
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import java.io.IOException
 import java.util.Date
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Forecast as RepositoryForecast
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastDay as RepoForecastDay
 
 private const val CityName = "Vancouver"
 private const val CountryCode = "CA"
@@ -59,53 +53,125 @@ private val WindSpeed = listOf(4.5, 3.8)
 @ExperimentalCoroutinesApi
 class ForecastWeatherInteractorTest {
 
-    @MockK
-    lateinit var weatherRepository: WeatherRepository
-
     private val timeFormatter = FakeTimeFormatter()
     private val timeParser = FakeTimeParser()
 
     private val forecastIsoTime = ForecastTime.map { Iso8601DateTime(it) }
-    private val forecastHour1 = HourItem(
+    private val forecastHour1 = ForecastHour(
+        isDay = 1,
         time = forecastIsoTime[0].date,
         timeEpoch = timeParser.parseDate(forecastIsoTime[0]).time.toInt(),
-        tempC = Temperature[0],
-        feelslikeC = FeelsLikeTemperature[0],
-        precipMm = Precipitation[0].toDouble(),
+        tempCelsius = Temperature[0],
+        tempFahrenheit = 0.0,
+        feelsLikeCelsius = FeelsLikeTemperature[0],
+        feelsLikeFahrenheit = 0.0,
+        windChillCelsius = 0.0,
+        willChillFahrenheit = 0.0,
+        windDirection = "",
+        windDegree = 0,
         windKph = WindSpeed[0],
+        windMph = 0.0,
+        gustKph = 0.0,
+        gustMph = 0.0,
+        cloud = 0,
         humidity = HumidityPercent[0],
-        visKm = VisibilityKilometers[0].toDouble(),
-        uv = UvIndex[0].toDouble(),
+        dewPointCelsius = 0.0,
+        dewPointFahrenheit = 0.0,
+        uvIndex = UvIndex[0].toDouble(),
+        headIndexCelsius = 0.0,
+        heatIndexFahrenheit = 0.0,
+        willItRain = 0,
+        chanceOfRain = 0,
+        precipitationMm = Precipitation[0].toDouble(),
+        precipitationInches = 0.0,
         condition = Condition(
             code = IconCode[0],
             icon = "",
             text = WeatherDescription[0],
-        )
+        ),
+        willItSnow = 0,
+        chanceOfSnow = 0,
+        pressureMb = 0.0,
+        pressureIn = 0.0,
+        visibilityKm = VisibilityKilometers[0].toDouble(),
+        visibilityMiles = 0.0,
     )
 
-    private val forecastHour2 = HourItem(
+    private val forecastHour2 = ForecastHour(
+        isDay = 1,
         time = forecastIsoTime[1].date,
         timeEpoch = timeParser.parseDate(forecastIsoTime[1]).time.toInt(),
-        tempC = Temperature[1],
-        feelslikeC = FeelsLikeTemperature[1],
-        precipMm = Precipitation[1].toDouble(),
+        tempCelsius = Temperature[1],
+        feelsLikeCelsius = FeelsLikeTemperature[1],
+        precipitationMm = Precipitation[1].toDouble(),
         windKph = WindSpeed[1],
         humidity = HumidityPercent[1],
-        visKm = VisibilityKilometers[1].toDouble(),
-        uv = UvIndex[1].toDouble(),
+        visibilityKm = VisibilityKilometers[1].toDouble(),
+        uvIndex = UvIndex[1].toDouble(),
         condition = Condition(
             code = IconCode[1],
             icon = "",
             text = WeatherDescription[1],
-        )
+        ),
+        tempFahrenheit = 0.0,
+        feelsLikeFahrenheit = 0.0,
+        windChillCelsius = 0.0,
+        willChillFahrenheit = 0.0,
+        windDirection = "",
+        windDegree = 0,
+        windMph = 0.0,
+        gustKph = 0.0,
+        gustMph = 0.0,
+        cloud = 0,
+        dewPointCelsius = 0.0,
+        dewPointFahrenheit = 0.0,
+        headIndexCelsius = 0.0,
+        heatIndexFahrenheit = 0.0,
+        willItRain = 0,
+        chanceOfRain = 0,
+        precipitationInches = 0.0,
+        willItSnow = 0,
+        chanceOfSnow = 0,
+        pressureMb = 0.0,
+        pressureIn = 0.0,
+        visibilityMiles = 0.0,
     )
 
-    private val todayForecast1 = ForecastDayItem(
+    private val todayForecast1 = RepoForecastDay(
+        day = Day(
+            condition = Condition(
+                code = IconCode[0],
+                icon = "",
+                text = WeatherDescription[0],
+            ),
+            averageTempCelsius = 0.0,
+            averageTempFahrenheit = 0.0,
+            maxTempCelsius = 0.0,
+            maxTempFahrenheit = 0.0,
+            minTempCelsius = 0.0,
+            minTempFahrenheit = 0.0,
+            dailyChanceOfRain = 0,
+            dailyWillItRain = 0,
+            totalPrecipitationMm = 0.0,
+            totalPrecipitationIn = 0.0,
+            dailyWillItSnow = 0,
+            dailyChanceOfSnow = 0,
+            averageHumidity = 0.0,
+            maxWindKph = 0.0,
+            maxWindMph = 0.0,
+            averageVisibilityKm = 0.0,
+            averageVisibilityMiles = 0.0,
+            uvIndex = 0.0,
+        ),
         date = Date,
         dateEpoch = DateEpoch,
         astro = Astro(
             sunrise = Sunrise,
             sunset = Sunset,
+            moonrise = "",
+            moonset = "",
+            moonIllumination = "",
+            moonPhase = "",
         ),
         hour = listOf(
             forecastHour1,
@@ -113,11 +179,52 @@ class ForecastWeatherInteractorTest {
         ),
     )
 
-    private val forecastRepositoryResponse = ForecastResponse(
+    private val emptyCurrent = Current(
+        isDay = 0,
+        lastUpdated = "",
+        lastUpdatedEpoch = 0,
+        condition = Condition(
+            code = 0,
+            icon = "",
+            text = "",
+        ),
+        tempCelsius = 0.0,
+        tempFahrenheit = 0.0,
+        feelsLikeCelsius = 0.0,
+        feelsLikeFahrenheit = 0.0,
+        uvIndex = 0.0,
+        precipitationMm = 0.0,
+        precipitationInches = 0.0,
+        humidity = 0,
+        pressureMb = 0.0,
+        pressureIn = 0.0,
+        windDirection = "",
+        windDegree = 0,
+        windKph = 0.0,
+        windMph = 0.0,
+        gustKph = 0.0,
+        gustMph = 0.0,
+        cloud = 0,
+        visibilityKm = 0.0,
+        visibilityMiles = 0.0,
+    )
+
+    private val emptyLocation = Location(
+        localtime = "",
+        localtimeEpoch = 0,
+        name = "",
+        region = "",
+        country = "",
+        latitude = 0.0,
+        longitude = 0.0,
+        timezoneId = "",
+    )
+
+    private val forecastWeatherResponse = ForecastResponse(
+        current = emptyCurrent,
+        location = emptyLocation,
         forecast = RepositoryForecast(
-            forecastDay = listOf(
-                todayForecast1,
-            )
+            forecastDay = listOf(todayForecast1),
         )
     )
 
@@ -173,106 +280,84 @@ class ForecastWeatherInteractorTest {
         longitude = CityLongitude,
     )
 
-    private val queryCity = RepositoryLocation.City(
-        name = CityName,
-        countryCode = CountryCode,
-    )
-
-    private val queryCoordinates = RepositoryLocation.Coordinates(
-        latitude = CityLatitude,
-        longitude = CityLongitude,
-    )
-
-    @BeforeEach
-    fun setup() {
-        MockKAnnotations.init(this)
-        coEvery { weatherRepository.getForecast(any()) } returns Either.Success(
-            forecastRepositoryResponse
-        )
-    }
-
     @Test
     fun `interactor calls repository with incoming city arguments`() = runTest {
-        // pre
+        val repository = FakeWeatherRepository().apply {
+            forecastResponse = forecastWeatherResponse
+        }
+
         val interactor = GetForecastInteractorImpl(
-            weatherRepository,
+            repository,
             TestDispatcherProvider(),
             timeFormatter,
             timeParser,
         )
-
-        // when we execute the interactor query
         interactor.execute(incomingCity)
-
-        // we call the repository once with the same argument
-        coVerify(exactly = 1) {
-            weatherRepository.getForecast(
-                withArg { arg ->
-                    assertEquals(arg, queryCity)
-                }
-            )
-        }
+        Assertions.assertEquals(
+            (repository.lastLocation as RepositoryLocation.City).name,
+            incomingCity.name
+        )
+        Assertions.assertEquals(
+            (repository.lastLocation as RepositoryLocation.City).countryCode,
+            incomingCity.countryCode
+        )
     }
 
     @Test
     fun `interactor calls repository with incoming coordinate arguments`() = runTest {
-        // pre
+        val repository = FakeWeatherRepository().apply {
+            forecastResponse = forecastWeatherResponse
+        }
+
         val interactor = GetForecastInteractorImpl(
-            weatherRepository,
+            repository,
             TestDispatcherProvider(),
             timeFormatter,
             timeParser,
         )
 
-        // when we execute the interactor query
         interactor.execute(incomingCoordinates)
 
-        // we call the repository once with the same argument
-        coVerify(exactly = 1) {
-            weatherRepository.getForecast(
-                withArg { arg ->
-                    assertEquals(queryCoordinates, arg)
-                }
-            )
-        }
+        Assertions.assertEquals(
+            (repository.lastLocation as RepositoryLocation.Coordinates).latitude,
+            incomingCoordinates.latitude
+        )
+        Assertions.assertEquals(
+            (repository.lastLocation as RepositoryLocation.Coordinates).longitude,
+            incomingCoordinates.longitude
+        )
     }
 
     @Test
     fun `interactor maps network data to interactor today weather`() = runTest {
-        // pre
+        val repository = FakeWeatherRepository().apply {
+            forecastResponse = forecastWeatherResponse
+        }
         val interactor = GetForecastInteractorImpl(
-            weatherRepository,
+            repository,
             TestDispatcherProvider(),
             timeFormatter,
             timeParser,
         )
-
-        // when we execute the interactor query
         val response = interactor.execute(incomingCity)
 
-        // the response has been converted to the interactor type
-        assertTrue(response.isSuccess)
-        assertEquals(forecastSuccessfulResponse, response.valueOrNull())
+        Assertions.assertTrue(response.isSuccess)
+        Assertions.assertEquals(forecastSuccessfulResponse, response.valueOrNull())
     }
 
     @Test
     fun `interactor maps network error to interactor error`() = runTest {
-        // pre
+        val repository = FakeWeatherRepository().apply { networkError = true }
         val interactor = GetForecastInteractorImpl(
-            weatherRepository,
+            repository,
             TestDispatcherProvider(),
             timeFormatter,
             timeParser,
         )
-        coEvery {
-            weatherRepository.getForecast(any())
-        } returns Either.Failure(IOException("Failed to load weather"))
 
-        // when we execute the interactor query
         val response = interactor.execute(incomingCity)
 
-        // the response has been converted to the interactor type
-        assertTrue(response.isFailure)
-        assertTrue(response.throwableOrNull() is WeatherException)
+        Assertions.assertTrue(response.isFailure)
+        Assertions.assertTrue(response.throwableOrNull() is WeatherException)
     }
 }

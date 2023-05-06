@@ -3,12 +3,13 @@ package com.francescsoftware.weathersample.feature.city.viewmodel
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.feature.city.R
 import com.francescsoftware.weathersample.feature.city.model.CityResultModel
-import com.francescsoftware.weathersample.interactor.city.api.City
 import com.francescsoftware.weathersample.interactor.city.api.GetCitiesInteractor
+import com.francescsoftware.weathersample.interactor.city.api.model.City
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.shared.mvi.Middleware
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
+import com.francescsoftware.weathersample.type.map
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -58,7 +59,11 @@ internal class CityMiddleware @Inject constructor(
                     prefix = prefix,
                 )
             }.onEach { cities ->
-                onCitiesLoaded(cities)
+                onCitiesLoaded(
+                    cities.map { response ->
+                        response.cities
+                    }
+                )
             }.launchIn(scope)
     }
 

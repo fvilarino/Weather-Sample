@@ -1,17 +1,12 @@
 package com.francescsoftware.weathersample.cityrepository.api.model
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
+/**
+ * Cities response
+ *
+ * @property metadata pagination data
+ * @property cities list of cities
+ */
 data class CitySearchResponse(
-
-    @SerialName("metadata")
-    val metadata: Metadata? = null,
-
-    @SerialName("data")
-    val data: List<CityItem>? = null,
-
-    @SerialName("links")
-    val links: List<LinksItem>? = null
+    val metadata: Metadata,
+    val cities: List<City>,
 )

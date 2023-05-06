@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.cityrepository.impl
 
-import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
+import com.francescsoftware.weathersample.cityrepository.impl.model.CitySearchResponseModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,5 +10,5 @@ internal interface CityService {
     suspend fun getCities(
         @Query("namePrefix") namePrefix: String?,
         @Query("limit") limit: Int?,
-    ): Response<CitySearchResponse>
+    ): Response<CitySearchResponseModel>
 }

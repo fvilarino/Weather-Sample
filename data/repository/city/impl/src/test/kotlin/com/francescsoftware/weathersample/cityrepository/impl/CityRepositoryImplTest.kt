@@ -1,7 +1,11 @@
 package com.francescsoftware.weathersample.cityrepository.impl
 
-import com.francescsoftware.weathersample.cityrepository.api.model.CityItem
-import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
+import com.francescsoftware.weathersample.cityrepository.api.model.City
+import com.francescsoftware.weathersample.cityrepository.api.model.Coordinates
+import com.francescsoftware.weathersample.cityrepository.impl.model.CityModel
+import com.francescsoftware.weathersample.cityrepository.impl.model.CitySearchResponseModel
+import com.francescsoftware.weathersample.cityrepository.impl.model.MetadataModel
+import com.francescsoftware.weathersample.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.type.Either
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -29,7 +33,7 @@ private const val BarcelonaLongitude = 2.17
 internal class CityRepositoryImplTest {
 
     private val networkCities = listOf(
-        CityItem(
+        CityModel(
             id = 1,
             city = VancouverName,
             name = VancouverName,
@@ -40,7 +44,7 @@ internal class CityRepositoryImplTest {
             latitude = VancouverLatitude,
             longitude = VancouverLongitude,
         ),
-        CityItem(
+        CityModel(
             id = 2,
             city = BarcelonaName,
             name = BarcelonaName,
@@ -53,11 +57,40 @@ internal class CityRepositoryImplTest {
         ),
     )
 
+    private val expectedCities = listOf(
+        City(
+            id = 1,
+            city = VancouverName,
+            name = VancouverName,
+            region = VancouverRegion,
+            regionCode = VancouverRegionCode,
+            country = VancouverCountry,
+            countryCode = VancouverCountryCode,
+            coordinates = Coordinates(
+                latitude = VancouverLatitude,
+                longitude = VancouverLongitude,
+            ),
+        ),
+        City(
+            id = 2,
+            city = BarcelonaName,
+            name = BarcelonaName,
+            region = BarcelonaRegion,
+            regionCode = BarcelonaRegionCode,
+            country = BarcelonaCountry,
+            countryCode = BarcelonaCountryCode,
+            coordinates = Coordinates(
+                latitude = BarcelonaLatitude,
+                longitude = BarcelonaLongitude,
+            ),
+        ),
+    )
+
     private inner class FakeCityService : CityService {
-        var cities: List<CityItem> = emptyList()
+        var cities: List<CityModel> = emptyList()
         var networkError: Boolean = false
 
-        override suspend fun getCities(namePrefix: String?, limit: Int?): Response<CitySearchResponse> {
+        override suspend fun getCities(namePrefix: String?, limit: Int?): Response<CitySearchResponseModel> {
             return if (networkError) {
                 Response.error(
                     404,
@@ -66,8 +99,12 @@ internal class CityRepositoryImplTest {
                 )
             } else {
                 Response.success(
-                    CitySearchResponse(
-                        data = cities
+                    CitySearchResponseModel(
+                        metadata = MetadataModel(
+                            currentOffset = 0,
+                            totalCount = 0,
+                        ),
+                        data = cities,
                     )
                 )
             }
@@ -77,20 +114,38 @@ internal class CityRepositoryImplTest {
     @Test
     fun `success network response returns cities`() = runTest {
         val service = FakeCityService().apply { cities = networkCities }
-        val repository = CityRepositoryImpl(cityService = service)
+        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
         Assertions.assertTrue(response is Either.Success)
-        val cityList = (response as Either.Success).value.data!!
+        val cityList = (response as Either.Success).value.cities
         Assertions.assertEquals(cityList.size, networkCities.size)
-        networkCities.forEachIndexed { index, networkCity ->
-            Assertions.assertEquals(networkCity, cityList[index])
+        cityList.forEachIndexed { index, city ->
+            Assertions.assertEquals(city, expectedCities[index])
         }
+    }
+
+    @Test
+    fun `invalid data returns error`() = runTest {
+        val invalidCities = networkCities + CityModel(
+            name = "Tokyo",
+            region = null,
+            regionCode = null,
+            country = "Japan",
+            countryCode = "JP",
+            latitude = 0.0,
+            longitude = 0.0,
+        )
+
+        val service = FakeCityService().apply { cities = invalidCities }
+        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
+        val response = repository.getCities(prefix = "", limit = 10)
+        Assertions.assertTrue(response is Either.Failure)
     }
 
     @Test
     fun `network errors returns error`() = runTest {
         val service = FakeCityService().apply { networkError = true }
-        val repository = CityRepositoryImpl(cityService = service)
+        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
         Assertions.assertTrue(response is Either.Failure)
     }

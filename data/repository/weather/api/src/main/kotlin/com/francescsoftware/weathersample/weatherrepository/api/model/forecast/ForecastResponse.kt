@@ -2,18 +2,16 @@ package com.francescsoftware.weathersample.weatherrepository.api.model.forecast
 
 import com.francescsoftware.weathersample.weatherrepository.api.model.Current
 import com.francescsoftware.weathersample.weatherrepository.api.model.Location
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
+/**
+ * Weather forecast
+ *
+ * @property current current weather conditions
+ * @property location location for the forecast
+ * @property forecast weather forecast
+ */
 data class ForecastResponse(
-
-    @SerialName("current")
-    val current: Current? = null,
-
-    @SerialName("location")
-    val location: Location? = null,
-
-    @SerialName("forecast")
-    val forecast: Forecast? = null
+    val current: Current,
+    val location: Location,
+    val forecast: Forecast,
 )

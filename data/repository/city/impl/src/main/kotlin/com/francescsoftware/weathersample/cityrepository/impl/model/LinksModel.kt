@@ -1,10 +1,10 @@
-package com.francescsoftware.weathersample.cityrepository.api.model
+package com.francescsoftware.weathersample.cityrepository.impl.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LinksItem(
+internal data class LinksModel(
 
     @SerialName("rel")
     val rel: String? = null,

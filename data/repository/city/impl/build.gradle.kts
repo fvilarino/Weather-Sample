@@ -23,9 +23,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:dispatcher"))
     implementation(project(":core:network"))
     implementation(project(":core:type"))
     implementation(project(":data:repository:city:api"))
+    testImplementation(project(":testing:mock"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.bundles.okhttp)

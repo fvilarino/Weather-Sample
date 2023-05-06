@@ -1,31 +1,24 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
+import com.francescsoftware.weathersample.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.interactor.weather.api.TodayClouds
 import com.francescsoftware.weathersample.interactor.weather.api.TodayMain
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
 import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
 import com.francescsoftware.weathersample.type.throwableOrNull
 import com.francescsoftware.weathersample.type.valueOrNull
-import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
 import com.francescsoftware.weathersample.weatherrepository.api.model.Current
+import com.francescsoftware.weathersample.weatherrepository.api.model.Location
 import com.francescsoftware.weathersample.weatherrepository.api.model.today.TodayWeatherResponse
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import java.io.IOException
 import kotlin.math.roundToInt
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
 
@@ -51,29 +44,47 @@ private const val UvIndex = 7
 @ExperimentalCoroutinesApi
 class TodayWeatherInteractorTest {
 
-    @MockK
-    lateinit var weatherRepository: WeatherRepository
+    private val emptyLocation = Location(
+        localtime = "",
+        localtimeEpoch = 0,
+        name = "",
+        region = "",
+        country = "",
+        latitude = 0.0,
+        longitude = 0.0,
+        timezoneId = "",
+    )
 
     private val todayWeatherResponse = TodayWeatherResponse(
+        location = emptyLocation,
         current = Current(
+            isDay = 1,
+            lastUpdated = "",
+            lastUpdatedEpoch = 0,
             condition = Condition(
                 code = ConditionCode,
                 icon = "",
                 text = WeatherDescription,
             ),
-            tempC = CurrentTemperature,
-            tempF = CurrentTemperature * 1.8 + 32.0,
-            feelslikeC = FeelsLikeTemperature,
-            feelslikeF = FeelsLikeTemperature * 1.8 + 32.0,
-            uv = UvIndex.toDouble(),
-            precipMm = Precipitation.toDouble(),
+            tempCelsius = CurrentTemperature,
+            tempFahrenheit = CurrentTemperature * 1.8 + 32.0,
+            feelsLikeCelsius = FeelsLikeTemperature,
+            feelsLikeFahrenheit = FeelsLikeTemperature * 1.8 + 32.0,
+            uvIndex = UvIndex.toDouble(),
+            precipitationMm = Precipitation.toDouble(),
+            precipitationInches = 0.0,
             humidity = HumidityPercent,
             pressureMb = PressureMb,
-            windDir = "N",
+            pressureIn = 0.0,
+            windDirection = "N",
+            windDegree = 0,
             windKph = WindSpeed,
+            windMph = 0.0,
             gustKph = GustSpeed,
+            gustMph = 0.0,
             cloud = Clouds,
-            visKm = VisibilityKilometers.toDouble()
+            visibilityKm = VisibilityKilometers.toDouble(),
+            visibilityMiles = 0.0,
         )
     )
 
@@ -99,109 +110,102 @@ class TodayWeatherInteractorTest {
         visibility = VisibilityKilometers,
     )
 
-    private val incomingCity: WeatherLocation = WeatherLocation.City(
+    private val incomingCity: WeatherLocation.City = WeatherLocation.City(
         name = CityName,
         countryCode = CountryCode,
     )
 
-    private val incomingCoordinates: WeatherLocation = WeatherLocation.Coordinates(
+    private val incomingCoordinates: WeatherLocation.Coordinates = WeatherLocation.Coordinates(
         latitude = CityLatitude,
         longitude = CityLongitude,
     )
 
-    private val queryCity: RepositoryLocation = RepositoryLocation.City(
-        name = CityName,
-        countryCode = CountryCode,
-    )
+    @Test
+    fun `interactor calls repository with incoming city arguments`() = runTest {
+        val repository = FakeWeatherRepository().apply {
+            todayResponse = todayWeatherResponse
+        }
+        val interactor = GetTodayWeatherInteractorImpl(
+            weatherRepository = repository,
+            dispatcherProvider = TestDispatcherProvider(),
+        )
 
-    private val queryCoordinates: RepositoryLocation = RepositoryLocation.Coordinates(
-        latitude = CityLatitude,
-        longitude = CityLongitude,
-    )
+        interactor.execute(incomingCity)
 
-    @BeforeEach
-    fun setup() {
-        MockKAnnotations.init(this)
-        coEvery { weatherRepository.getTodayWeather(any()) } returns Either.Success(
-            todayWeatherResponse
+        Assertions.assertEquals(
+            (repository.lastLocation as RepositoryLocation.City).name,
+            incomingCity.name
+        )
+        Assertions.assertEquals(
+            (repository.lastLocation as RepositoryLocation.City).countryCode,
+            incomingCity.countryCode
         )
     }
 
     @Test
-    fun `interactor calls repository with incoming city arguments`() = runTest {
-        // pre
-        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
-
-        // when we execute the interactor query
-        interactor.execute(incomingCity)
-
-        // we call the repository once with the same argument
-        coVerify(exactly = 1) {
-            weatherRepository.getTodayWeather(
-                withArg { arg ->
-                    assertEquals(arg, queryCity)
-                }
-            )
-        }
-    }
-
-    @Test
     fun `interactor calls repository with incoming coordinate arguments`() = runTest {
-        // pre
-        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
+        val repository = FakeWeatherRepository().apply {
+            todayResponse = todayWeatherResponse
+        }
+        val interactor = GetTodayWeatherInteractorImpl(
+            weatherRepository = repository,
+            dispatcherProvider = TestDispatcherProvider(),
+        )
 
-        // when we execute the interactor query
         interactor.execute(incomingCoordinates)
 
-        // we call the repository once with the same argument
-        coVerify(exactly = 1) {
-            weatherRepository.getTodayWeather(
-                withArg { arg ->
-                    assertEquals(arg, queryCoordinates)
-                }
-            )
-        }
+        Assertions.assertEquals(
+            (repository.lastLocation as RepositoryLocation.Coordinates).latitude,
+            incomingCoordinates.latitude
+        )
+        Assertions.assertEquals(
+            (repository.lastLocation as RepositoryLocation.Coordinates).longitude,
+            incomingCoordinates.longitude
+        )
     }
 
     @Test
     fun `interactor maps network data to interactor today weather`() = runTest {
-        // pre
-        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
-
-        // when we execute the interactor query
+        val repository = FakeWeatherRepository().apply {
+            todayResponse = todayWeatherResponse
+        }
+        val interactor = GetTodayWeatherInteractorImpl(
+            weatherRepository = repository,
+            dispatcherProvider = TestDispatcherProvider(),
+        )
         val response = interactor.execute(incomingCity)
 
-        // the response has been converted to the interactor type
-        assertTrue(response.isSuccess)
-        assertEquals(response.valueOrNull(), successfulTodayWeather)
+        Assertions.assertTrue(response.isSuccess)
+        Assertions.assertEquals(response.valueOrNull(), successfulTodayWeather)
     }
 
     @Test
     fun `interactor maps network data to interactor forecast weather`() = runTest {
-        // pre
-        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
-
-        // when we execute the interactor query
+        val repository = FakeWeatherRepository().apply {
+            todayResponse = todayWeatherResponse
+        }
+        val interactor = GetTodayWeatherInteractorImpl(
+            weatherRepository = repository,
+            dispatcherProvider = TestDispatcherProvider(),
+        )
         val response = interactor.execute(incomingCity)
 
-        // the response has been converted to the interactor type
-        assertTrue(response.isSuccess)
-        assertEquals(response.valueOrNull(), successfulTodayWeather)
+        Assertions.assertTrue(response.isSuccess)
+        Assertions.assertEquals(response.valueOrNull(), successfulTodayWeather)
     }
 
     @Test
     fun `interactor maps network error to interactor error`() = runTest {
-        // pre
-        val interactor = GetTodayWeatherInteractorImpl(weatherRepository)
-        coEvery {
-            weatherRepository.getTodayWeather(any())
-        } returns Either.Failure(IOException("Failed to load today weather"))
-
-        // when we execute the interactor query
+        val repository = FakeWeatherRepository().apply {
+            networkError = true
+        }
+        val interactor = GetTodayWeatherInteractorImpl(
+            weatherRepository = repository,
+            dispatcherProvider = TestDispatcherProvider(),
+        )
         val response = interactor.execute(incomingCity)
 
-        // the response has been converted to the interactor type
-        assertTrue(response.isFailure)
-        assertTrue(response.throwableOrNull() is WeatherException)
+        Assertions.assertTrue(response.isFailure)
+        Assertions.assertTrue(response.throwableOrNull() is WeatherException)
     }
 }
