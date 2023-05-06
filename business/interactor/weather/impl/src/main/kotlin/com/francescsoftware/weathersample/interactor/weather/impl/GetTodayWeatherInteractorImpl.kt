@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
+import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.TodayClouds
 import com.francescsoftware.weathersample.interactor.weather.api.TodayMain
@@ -10,30 +11,28 @@ import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
-import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
-import com.francescsoftware.weathersample.weatherrepository.api.model.Current
 import com.francescsoftware.weathersample.weatherrepository.api.model.today.TodayWeatherResponse
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
 internal class GetTodayWeatherInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
+    private val dispatcherProvider: DispatcherProvider,
 ) : GetTodayWeatherInteractor {
 
     override suspend fun execute(location: WeatherLocation): Either<TodayWeather> {
         val response = weatherRepository.getTodayWeather(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { weatherResponse ->
-                if (weatherResponse.isValid) {
+                withContext(dispatcherProvider.default) {
                     val weather = TodayWeather(
                         main = weatherResponse.toTodayMain(),
                         wind = weatherResponse.toTodayWind(),
-                        visibility = weatherResponse.current?.visKm?.roundToInt() ?: 0,
+                        visibility = weatherResponse.current.visibilityKm.roundToInt(),
                         clouds = weatherResponse.toTodayClouds(),
                     )
                     Either.Success(weather)
-                } else {
-                    Either.Failure(WeatherException("Invalid data received"))
                 }
             },
             onFailure = { throwable ->
@@ -49,46 +48,25 @@ internal class GetTodayWeatherInteractorImpl @Inject constructor(
 
     private fun TodayWeatherResponse.toTodayMain(): TodayMain =
         TodayMain(
-            code = current?.condition?.code ?: 0,
-            description = current?.condition?.text.orEmpty(),
-            temp = current?.tempC ?: 0.0,
-            feelsLike = current?.feelslikeC ?: 0.0,
-            humidity = current?.humidity ?: 0,
-            pressure = current?.pressureMb?.roundToInt() ?: 0,
-            precipitation = current?.precipMm?.roundToInt() ?: 0,
-            uvIndex = current?.uv?.roundToInt() ?: 0,
+            code = current.condition.code,
+            description = current.condition.text,
+            temp = current.tempCelsius,
+            feelsLike = current.feelsLikeCelsius,
+            humidity = current.humidity,
+            pressure = current.pressureMb.roundToInt(),
+            precipitation = current.precipitationMm.roundToInt(),
+            uvIndex = current.uvIndex.roundToInt(),
         )
 
     private fun TodayWeatherResponse.toTodayWind(): TodayWind =
         TodayWind(
-            direction = current?.windDir.orEmpty(),
-            speed = current?.windKph ?: 0.0,
-            gust = current?.gustKph ?: 0.0,
+            direction = current.windDirection,
+            speed = current.windKph,
+            gust = current.gustKph,
         )
 
     private fun TodayWeatherResponse.toTodayClouds(): TodayClouds =
         TodayClouds(
-            all = current?.cloud ?: 0,
+            all = current.cloud,
         )
-
-    private val TodayWeatherResponse.isValid: Boolean
-        get() = current.isValid
-
-    private val Current?.isValid: Boolean
-        get() = this != null &&
-            condition.isValid &&
-            tempC != null &&
-            tempF != null &&
-            feelslikeC != null &&
-            feelslikeF != null &&
-            humidity != null &&
-            pressureMb != null &&
-            windDir != null &&
-            windKph != null &&
-            gustKph != null &&
-            visKm != null &&
-            cloud != null
-
-    private val Condition?.isValid: Boolean
-        get() = this != null && code != null && icon != null && text != null
 }

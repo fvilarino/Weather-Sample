@@ -1,10 +1,10 @@
-package com.francescsoftware.weathersample.weatherrepository.api.model.forecast
+package com.francescsoftware.weathersample.weatherrepository.impl.model.forecast
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ForecastDayItem(
+internal data class ForecastDayModel(
 
     @SerialName("date")
     val date: String? = null,
@@ -13,11 +13,11 @@ data class ForecastDayItem(
     val dateEpoch: Int? = null,
 
     @SerialName("astro")
-    val astro: Astro? = null,
+    val astro: AstroModel? = null,
 
     @SerialName("day")
-    val day: Day? = null,
+    val day: DayModel? = null,
 
     @SerialName("hour")
-    val hour: List<HourItem>? = null,
+    val hour: List<HourModel>? = null,
 )

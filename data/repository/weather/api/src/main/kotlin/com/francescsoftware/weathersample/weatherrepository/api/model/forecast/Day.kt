@@ -1,66 +1,48 @@
 package com.francescsoftware.weathersample.weatherrepository.api.model.forecast
 
 import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
+/**
+ * Day weather info
+ *
+ * @property condition weather condition
+ * @property averageTempCelsius average temperature in Celsius
+ * @property averageTempFahrenheit average temperature in Fahrenheit
+ * @property maxTempCelsius max temperature in Celsius
+ * @property maxTempFahrenheit max temperature in Fahrenheit
+ * @property minTempCelsius min temperature in Celsius
+ * @property minTempFahrenheit min temperature in Fahrenheit
+ * @property dailyChanceOfRain daily chance of rain
+ * @property dailyWillItRain whether it may rain
+ * @property totalPrecipitationMm total precipitation in millimeters
+ * @property totalPrecipitationIn total precipitation in inches
+ * @property dailyWillItSnow whether it may snow
+ * @property dailyChanceOfSnow chance of snow
+ * @property averageHumidity average humidity
+ * @property maxWindKph maximum wind speed in km/h
+ * @property maxWindMph maximum wind speed in mi/h
+ * @property averageVisibilityKm average visibility in km
+ * @property averageVisibilityMiles average visibility in miles
+ * @property uvIndex UV index
+ */
 data class Day(
-
-    @SerialName("avgvis_km")
-    val avgvisKm: Double? = null,
-
-    @SerialName("uv")
-    val uv: Double? = null,
-
-    @SerialName("avgtemp_f")
-    val avgtempF: Double? = null,
-
-    @SerialName("avgtemp_c")
-    val avgtempC: Double? = null,
-
-    @SerialName("daily_chance_of_snow")
-    val dailyChanceOfSnow: Int? = null,
-
-    @SerialName("maxtemp_c")
-    val maxtempC: Double? = null,
-
-    @SerialName("maxtemp_f")
-    val maxtempF: Double? = null,
-
-    @SerialName("mintemp_c")
-    val mintempC: Double? = null,
-
-    @SerialName("avgvis_miles")
-    val avgvisMiles: Double? = null,
-
-    @SerialName("daily_will_it_rain")
-    val dailyWillItRain: Int? = null,
-
-    @SerialName("mintemp_f")
-    val mintempF: Double? = null,
-
-    @SerialName("totalprecip_in")
-    val totalprecipIn: Double? = null,
-
-    @SerialName("avghumidity")
-    val avghumidity: Double? = null,
-
-    @SerialName("condition")
-    val condition: Condition? = null,
-
-    @SerialName("maxwind_kph")
-    val maxwindKph: Double? = null,
-
-    @SerialName("maxwind_mph")
-    val maxwindMph: Double? = null,
-
-    @SerialName("daily_chance_of_rain")
-    val dailyChanceOfRain: Int? = null,
-
-    @SerialName("totalprecip_mm")
-    val totalprecipMm: Double? = null,
-
-    @SerialName("daily_will_it_snow")
-    val dailyWillItSnow: Int? = null,
+    val condition: Condition,
+    val averageTempCelsius: Double,
+    val averageTempFahrenheit: Double,
+    val maxTempCelsius: Double,
+    val maxTempFahrenheit: Double,
+    val minTempCelsius: Double,
+    val minTempFahrenheit: Double,
+    val dailyChanceOfRain: Int,
+    val dailyWillItRain: Int,
+    val totalPrecipitationMm: Double,
+    val totalPrecipitationIn: Double,
+    val dailyWillItSnow: Int,
+    val dailyChanceOfSnow: Int,
+    val averageHumidity: Double,
+    val maxWindKph: Double,
+    val maxWindMph: Double,
+    val averageVisibilityKm: Double,
+    val averageVisibilityMiles: Double,
+    val uvIndex: Double,
 )

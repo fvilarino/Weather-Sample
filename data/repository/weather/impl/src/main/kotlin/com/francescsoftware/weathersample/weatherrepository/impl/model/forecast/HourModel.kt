@@ -1,11 +1,11 @@
-package com.francescsoftware.weathersample.weatherrepository.api.model.forecast
+package com.francescsoftware.weathersample.weatherrepository.impl.model.forecast
 
-import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
+import com.francescsoftware.weathersample.weatherrepository.impl.model.ConditionModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HourItem(
+internal data class HourModel(
 
     @SerialName("feelslike_c")
     val feelslikeC: Double? = null,
@@ -83,7 +83,7 @@ data class HourItem(
     val precipMm: Double? = null,
 
     @SerialName("condition")
-    val condition: Condition? = null,
+    val condition: ConditionModel? = null,
 
     @SerialName("will_it_snow")
     val willItSnow: Int? = null,

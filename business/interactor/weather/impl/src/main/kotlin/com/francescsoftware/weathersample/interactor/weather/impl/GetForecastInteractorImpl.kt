@@ -14,14 +14,12 @@ import com.francescsoftware.weathersample.time.api.TimeParsingException
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
-import com.francescsoftware.weathersample.weatherrepository.api.model.Condition
-import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Astro
-import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastDayItem
-import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.HourItem
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastHour
 import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
 import kotlin.math.roundToInt
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastDay as RepoForecastDay
 
 internal class GetForecastInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
@@ -34,8 +32,8 @@ internal class GetForecastInteractorImpl @Inject constructor(
         val response = weatherRepository.getForecast(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { data ->
-                val forecast = data.forecast?.forecastDay
-                if (forecast?.isNotEmpty() == true) {
+                val forecast = data.forecast.forecastDay
+                if (forecast.isNotEmpty()) {
                     try {
                         Either.Success(parseForecast(forecast))
                     } catch (ex: ForecastParseException) {
@@ -59,27 +57,25 @@ internal class GetForecastInteractorImpl @Inject constructor(
     }
 
     private suspend fun parseForecast(
-        forecast: List<ForecastDayItem>,
+        forecast: List<RepoForecastDay>,
     ): Forecast = withContext(dispatcherProvider.default) {
         // aggregate the forecast by days
-        val days: Map<Date, ForecastDayItem> = forecast
-            .filter { item -> item.isValid }
+        val days: Map<Date, RepoForecastDay> = forecast
             .associateBy { item ->
-                val time = item.hour?.firstOrNull()?.time ?: throw ForecastParseException()
+                val time = item.hour.firstOrNull()?.time ?: throw ForecastParseException()
                 timeFormatter.setToMidnight(
                     timerParser.parseDate(Iso8601DateTime(time))
                 )
             }
-            .filterValues { item -> item.isValid }
 
         // convert to forecast days
         val forecastDays: List<ForecastDay> = days
             .mapValues { entry ->
                 ForecastDay(
                     date = entry.key,
-                    sunrise = entry.value.astro?.sunrise.orEmpty(),
-                    sunset = entry.value.astro?.sunset.orEmpty(),
-                    entries = entry.value.hour?.map { hour -> hour.toForecastEntry(timerParser) }.orEmpty()
+                    sunrise = entry.value.astro.sunrise,
+                    sunset = entry.value.astro.sunset,
+                    entries = entry.value.hour.map { hour -> hour.toForecastEntry(timerParser) }
                 )
             }
             .map { entry ->
@@ -92,42 +88,20 @@ internal class GetForecastInteractorImpl @Inject constructor(
         )
     }
 
-    private fun HourItem.toForecastEntry(
+    private fun ForecastHour.toForecastEntry(
         timerParser: TimeParser,
     ) = ForecastEntry(
-        date = this.time?.let { date -> timerParser.parseDate(Iso8601DateTime(date)) } ?: Date(),
-        description = condition?.text.orEmpty(),
-        iconCode = condition?.code ?: 0,
-        temperature = tempC ?: 0.0,
-        feelsLikeTemperature = feelslikeC ?: 0.0,
-        precipitation = precipMm?.roundToInt() ?: 0,
-        windSpeed = windKph ?: 0.0,
-        uvIndex = uv?.roundToInt() ?: 0,
-        humidityPercent = humidity ?: 0,
-        visibility = visKm?.roundToInt() ?: 0,
+        date = this.time.let { date -> timerParser.parseDate(Iso8601DateTime(date)) },
+        description = condition.text,
+        iconCode = condition.code,
+        temperature = tempCelsius,
+        feelsLikeTemperature = feelsLikeCelsius,
+        precipitation = precipitationMm.roundToInt(),
+        windSpeed = windKph,
+        uvIndex = uvIndex.roundToInt(),
+        humidityPercent = humidity,
+        visibility = visibilityKm.roundToInt(),
     )
-
-    private val ForecastDayItem.isValid: Boolean
-        get() = astro.isValid && hour.isValid
-
-    private val Astro?.isValid: Boolean
-        get() = this != null && sunrise?.isNotEmpty() == true && sunset?.isNotEmpty() == true
-
-    private val List<HourItem>?.isValid: Boolean
-        get() = this?.isNotEmpty() == true && all { item -> item.isValid }
-
-    private val HourItem.isValid: Boolean
-        get() = time != null &&
-            timeEpoch != null &&
-            tempC != null &&
-            feelslikeC != null &&
-            windKph != null &&
-            humidity != null &&
-            visKm != null &&
-            condition.isValid
-
-    private val Condition?.isValid: Boolean
-        get() = this != null && code != null && icon != null && text != null
 }
 
 private class ForecastParseException : RuntimeException()
