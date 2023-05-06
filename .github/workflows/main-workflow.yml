@@ -35,6 +35,12 @@ jobs:
           java-version: 17
           cache: 'gradle'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Accept licenses
+        run: yes | sdkmanager --licenses
+
       - name: Build the app
         run: ./gradlew assembleRelease --stacktrace
         env:
@@ -58,6 +64,12 @@ jobs:
           distribution: "zulu"
           java-version: 17
           cache: 'gradle'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Accept licenses
+        run: yes | sdkmanager --licenses
 
       - name: Run tests
         run: ./gradlew testDebugUnitTest --stacktrace
@@ -83,6 +95,12 @@ jobs:
           java-version: 17
           cache: 'gradle'
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Accept licenses
+        run: yes | sdkmanager --licenses
+
       - name: Run detekt static analysis
         run: ./gradlew detektMain
         env:
@@ -106,6 +124,12 @@ jobs:
           distribution: "zulu"
           java-version: 17
           cache: 'gradle'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Accept licenses
+        run: yes | sdkmanager --licenses
 
       - name: Run lint static analysis
         run: ./gradlew lintDebug --stacktrace
