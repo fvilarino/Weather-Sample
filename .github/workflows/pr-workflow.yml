@@ -69,7 +69,7 @@ jobs:
           cache: 'gradle'
 
       - name: Run detekt static analysis
-        run: ./gradlew detekt
+        run: ./gradlew detektMain
         env:
           alias: ${{ secrets.alias }}
           keyPass: ${{ secrets.keyPass }}

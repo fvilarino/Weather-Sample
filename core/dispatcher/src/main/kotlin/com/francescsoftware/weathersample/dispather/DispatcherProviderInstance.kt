@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.dispather
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
+@Suppress("InjectDispatcher")
 internal object DispatcherProviderInstance : DispatcherProvider {
 
     override val default: CoroutineContext
