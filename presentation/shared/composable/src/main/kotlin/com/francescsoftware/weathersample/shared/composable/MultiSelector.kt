@@ -89,15 +89,15 @@ internal class MultiSelectorStateImpl(
     override val textColors: List<Color>
         get() = _textColors.value
 
-    private var _selectedIndex = Animatable(options.indexOf(selectedOption).toFloat())
-    private var _startCornerPercent = Animatable(
+    private val _selectedIndex = Animatable(options.indexOf(selectedOption).toFloat())
+    private val _startCornerPercent = Animatable(
         if (options.first() == selectedOption) {
             EdgeCornerPercent
         } else {
             DefaultCornerPercent
         }
     )
-    private var _endCornerPercent = Animatable(
+    private val _endCornerPercent = Animatable(
         if (options.last() == selectedOption) {
             EdgeCornerPercent
         } else {
@@ -105,7 +105,7 @@ internal class MultiSelectorStateImpl(
         }
     )
 
-    private var _textColors: State<List<Color>> = derivedStateOf {
+    private val _textColors: State<List<Color>> = derivedStateOf {
         List(numOptions) { index ->
             lerp(
                 start = unselectedColor,

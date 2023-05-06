@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
  * @param middlewares - a list of [Middleware] to handle [Action]s
  * @param initialState - the initial [State]]
  */
-abstract class MviViewModel<S : State, A : Action>(
+open class MviViewModel<S : State, A : Action>(
     closeableScope: CloseableCoroutineScope,
     reducer: Reducer<S, A>,
     middlewares: List<Middleware<S, A>> = emptyList(),
