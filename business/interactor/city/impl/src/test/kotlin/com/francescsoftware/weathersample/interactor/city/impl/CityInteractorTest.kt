@@ -2,7 +2,7 @@ package com.francescsoftware.weathersample.interactor.city.impl
 
 import com.francescsoftware.weathersample.cityrepository.api.CityRepository
 import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
-import com.francescsoftware.weathersample.dispather.DispatcherProvider
+import com.francescsoftware.weathersample.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.interactor.city.api.model.City
 import com.francescsoftware.weathersample.interactor.city.api.model.Coordinates
@@ -16,8 +16,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 import com.francescsoftware.weathersample.cityrepository.api.CitiesException as RepoException
 import com.francescsoftware.weathersample.cityrepository.api.model.City as RepoCity
 import com.francescsoftware.weathersample.cityrepository.api.model.Coordinates as RepoCoordinates
@@ -78,24 +76,11 @@ class CityInteractorTest {
         }
     }
 
-    private val dispatcherProvider = object : DispatcherProvider {
-        override val default: CoroutineContext
-            get() = EmptyCoroutineContext
-        override val io: CoroutineContext
-            get() = EmptyCoroutineContext
-        override val main: CoroutineContext
-            get() = EmptyCoroutineContext
-        override val mainImmediate: CoroutineContext
-            get() = EmptyCoroutineContext
-        override val unconfined: CoroutineContext
-            get() = EmptyCoroutineContext
-    }
-
     @Test
     fun `interactor maps network data to interactor city data`() = runTest {
         // pre
         val repository = FakeCityRepository().apply { cities = citiesResponse }
-        val interactor = GetCitiesInteractorImpl(repository, dispatcherProvider)
+        val interactor = GetCitiesInteractorImpl(repository, TestDispatcherProvider())
 
         // when we execute the interactor query
         val query = CityName
@@ -109,7 +94,7 @@ class CityInteractorTest {
     @Test
     fun `interactor maps network error to interactor error`() = runTest {
         val repository = FakeCityRepository().apply { isNetworkError = true }
-        val interactor = GetCitiesInteractorImpl(repository, dispatcherProvider)
+        val interactor = GetCitiesInteractorImpl(repository, TestDispatcherProvider())
 
         // when we execute the interactor query
         val query = CityName

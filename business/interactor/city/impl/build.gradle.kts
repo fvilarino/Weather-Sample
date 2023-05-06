@@ -16,4 +16,6 @@ dependencies {
     implementation(project(":data:repository:city:api"))
     implementation(project(":data:repository:recents:api"))
     implementation(project(":utils"))
+
+    testImplementation(project(":testing:mock"))
 }
