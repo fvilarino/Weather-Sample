@@ -12,7 +12,6 @@ android {
 dependencies {
     implementation(project(":core:time:api"))
     implementation(project(":domain:interactor:weather:api"))
-    implementation(project(":utils"))
 
     // compose
     implementation(libs.bundles.compose)
