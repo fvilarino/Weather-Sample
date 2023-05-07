@@ -10,7 +10,7 @@ interface GetCitiesInteractor {
      *
      * @param prefix - prefix to filter cities
      * @param limit - max number of results to return
-     * @return an [Either] with a [List] of [City]
+     * @return an [Either] with the resulting [Cities]
      */
     suspend fun execute(prefix: String = "", limit: Int = 10): Either<Cities>
 }

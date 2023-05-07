@@ -171,7 +171,7 @@ private fun splitMenuItems(
     if (availableSlots > 0 && ifRoomItems.isNotEmpty()) {
         val visible = ifRoomItems.subList(0, availableSlots.coerceAtMost(ifRoomItems.size))
         alwaysShownItems.addAll(visible)
-        ifRoomItems.removeAll(visible)
+        ifRoomItems.removeAll(visible.toSet())
     }
 
     return MenuItems(
