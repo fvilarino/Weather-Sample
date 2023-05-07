@@ -20,6 +20,10 @@ android {
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
