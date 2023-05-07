@@ -19,7 +19,7 @@ dependencies {
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
     implementation(libs.androidx.room.room.ktx)
     implementation(libs.androidx.room.room.runtime)
-    kapt(libs.androidx.room.room.compiler)
+    ksp(libs.androidx.room.room.compiler)
 
     testImplementation(libs.bundles.android.test)
     testImplementation(libs.androidx.room.room.testing)

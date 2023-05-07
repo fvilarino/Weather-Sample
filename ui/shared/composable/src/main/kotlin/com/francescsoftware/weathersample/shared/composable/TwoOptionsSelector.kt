@@ -205,7 +205,7 @@ private fun twoOptionsSelectorTransitionData(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, widthDp = 360, heightDp = 80)
 @Composable
 private fun PreviewTwoOptionsSelector() {
-    WeatherSampleTheme() {
+    WeatherSampleTheme {
         var option by remember {
             mutableStateOf(TwoOptionsSelectorOptions.Left)
         }

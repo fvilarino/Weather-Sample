@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 
 /** Handles asynchronous [Action] processing in the MVI framework */
 abstract class Middleware<S : State, A : Action> {
-    protected lateinit var dispatcher: Dispatcher<A>
+    private lateinit var dispatcher: Dispatcher<A>
     protected lateinit var scope: CoroutineScope
 
     /**

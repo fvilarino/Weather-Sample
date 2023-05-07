@@ -32,7 +32,7 @@ object CitySearchDestination : NavigationDestination {
     )
 
     /** @{inheritDoc} */
-    override val titleId: Int = com.francescsoftware.weathersample.shared.assets.R.string.app_name
+    override val titleId: Int = R.string.app_name
 
     /** @{inheritDoc} */
     override val iconId: Int = 0

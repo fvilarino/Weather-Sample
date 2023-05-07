@@ -15,8 +15,9 @@ buildscript {
 
 plugins {
     alias(libs.plugins.com.github.ben.manes.versions)
-    alias(libs.plugins.nl.littlerobots.version.catalog.update)
+    alias(libs.plugins.com.google.devtools.ksp.plugin)
     alias(libs.plugins.io.gitlab.arturbosch.detekt.plugin)
+    alias(libs.plugins.nl.littlerobots.version.catalog.update)
 }
 
 tasks.register("clean", Delete::class) {

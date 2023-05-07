@@ -180,6 +180,7 @@ private fun Cities(
     Crossfade(
         targetState = state.loadState,
         modifier = modifier,
+        label = "cityCrossFade",
     ) { loadState ->
         when (loadState) {
             LoadState.Idle -> {

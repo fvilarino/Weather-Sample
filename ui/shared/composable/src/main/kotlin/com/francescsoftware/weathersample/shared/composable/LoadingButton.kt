@@ -102,8 +102,14 @@ fun LoadingButton(
     indicatorSpacing: Dp = MarginSingle,
     content: @Composable () -> Unit,
 ) {
-    val contentAlpha by animateFloatAsState(targetValue = if (loading) 0f else 1f)
-    val loadingAlpha by animateFloatAsState(targetValue = if (loading) 1f else 0f)
+    val contentAlpha by animateFloatAsState(
+        targetValue = if (loading) 0f else 1f,
+        label = "content",
+    )
+    val loadingAlpha by animateFloatAsState(
+        targetValue = if (loading) 1f else 0f,
+        label = "loading",
+    )
     Button(
         onClick = onClick,
         modifier = modifier,
