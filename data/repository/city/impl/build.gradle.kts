@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.francescsoftware.weathersample.cityrepository.impl"
-    val rapidApiKey = configKeys.rapidApiKey
+    val rapidApiKey = ConfigKeys.rapidApiKey
     buildTypes {
         all {
             buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"https://wft-geo-db.p.rapidapi.com/\"")
