@@ -1,34 +1,35 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
-import java.util.Properties
+import java.util.*
+
+private const val RapidApiKey = "rapid_api_key"
+private const val RapiApiKeysFile = "./certs/keys.properties"
 
 open class ConfigKeys {
     val rapidApiKey: String
-        get() = get("rapid_api_key")
+        get() = key ?: error("Can't locate RapidApi key")
 
-    private var properties: Properties? = null
+    private var key: String? = null
 
-    fun setProperties(properties: Properties) {
-        this.properties = properties
-    }
-
-    private fun get(propertyName: String): String {
-        val property = properties?.get(propertyName) ?: System.getenv(propertyName)
-        return property?.toString() ?: error("Can't locate property $propertyName")
+    internal fun setKey(key: String) {
+        this.key = key
     }
 }
 
 class KeysLoaderPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        val extension = target.extensions.create<ConfigKeys>("configKeys")
+        val extension = target.extensions.create<ConfigKeys>("ConfigKeys")
         val properties = Properties()
-        val keysFile = target.rootProject.file("./certs/keys.properties")
+        val keysFile = target.rootProject.file(RapiApiKeysFile)
         if (keysFile.exists()) {
             keysFile.inputStream().use { stream ->
                 properties.load(stream)
             }
         }
-        extension.setProperties(properties)
+        val key = properties.getProperty(RapidApiKey) ?: System.getenv(RapidApiKey)
+        if (key != null) {
+            extension.setKey(key)
+        }
     }
 }
