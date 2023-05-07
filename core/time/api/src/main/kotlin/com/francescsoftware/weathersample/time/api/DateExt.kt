@@ -1,8 +1,11 @@
-package com.francescsoftware.weathersample.utils.time
+package com.francescsoftware.weathersample.time.api
 
 import java.util.Calendar
 import java.util.Date
 
+/**
+ * Checks if this [Date] is today
+ */
 val Date.isToday: Boolean
     get() {
         val now = Calendar.getInstance()
@@ -12,6 +15,9 @@ val Date.isToday: Boolean
             now.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)
     }
 
+/**
+ * Checks if this [Date] is tomorrow
+ */
 val Date.isTomorrow: Boolean
     get() {
         val date = Calendar.getInstance().apply {
@@ -20,6 +26,3 @@ val Date.isTomorrow: Boolean
         }.time
         return date.isToday
     }
-
-fun Millis.toDate(): Date = Date(value)
-fun Seconds.toDate(): Date = Date(milliseconds())

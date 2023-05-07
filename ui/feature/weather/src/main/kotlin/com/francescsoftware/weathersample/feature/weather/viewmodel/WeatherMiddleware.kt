@@ -10,9 +10,9 @@ import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.shared.mvi.Middleware
 import com.francescsoftware.weathersample.time.api.TimeFormatter
+import com.francescsoftware.weathersample.time.api.isToday
+import com.francescsoftware.weathersample.time.api.isTomorrow
 import com.francescsoftware.weathersample.type.valueOrNull
-import com.francescsoftware.weathersample.utils.time.isToday
-import com.francescsoftware.weathersample.utils.time.isTomorrow
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async

@@ -95,8 +95,6 @@ dependencies {
     implementation(project(":ui:shared:route"))
     implementation(project(":ui:shared:styles"))
 
-    implementation(project(":utils"))
-
     implementation(libs.com.jakewharton.timber)
 }
 
