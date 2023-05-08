@@ -35,8 +35,10 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:type"))
     implementation(project(":data:repository:weather:api"))
+    testImplementation(project(":testing:fake"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.retrofit)
+    testImplementation(libs.com.squareup.okhttp3.mockwebserver)
 }

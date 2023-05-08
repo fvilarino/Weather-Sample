@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 internal data class CurrentModel(
 
     @SerialName("feelslike_c")
-    val feelslikeC: Double? = null,
+    val feelsLikeC: Double? = null,
 
     @SerialName("uv")
     val uv: Double? = null,
@@ -16,7 +16,7 @@ internal data class CurrentModel(
     val lastUpdated: String? = null,
 
     @SerialName("feelslike_f")
-    val feelslikeF: Double? = null,
+    val feelsLikeF: Double? = null,
 
     @SerialName("wind_degree")
     val windDegree: Int? = null,

@@ -30,10 +30,10 @@ internal fun TodayWeatherModel.toWeatherResponse(): TodayWeatherResponse = Today
 
 @Suppress("CyclomaticComplexMethod")
 internal fun CurrentModel.toCurrent(): Current = Current(
-    feelsLikeCelsius = feelslikeC ?: 0.0,
+    feelsLikeCelsius = feelsLikeC ?: 0.0,
     uvIndex = uv ?: 0.0,
     lastUpdated = lastUpdated.orEmpty(),
-    feelsLikeFahrenheit = feelslikeF ?: 0.0,
+    feelsLikeFahrenheit = feelsLikeF ?: 0.0,
     windDegree = windDegree ?: 0,
     lastUpdatedEpoch = lastUpdatedEpoch ?: 0,
     isDay = isDay ?: 0,
