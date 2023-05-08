@@ -19,8 +19,8 @@ internal val CurrentModel?.isValid: Boolean
         condition.isValid &&
         tempC != null &&
         tempF != null &&
-        feelslikeC != null &&
-        feelslikeF != null &&
+        feelsLikeC != null &&
+        feelsLikeF != null &&
         humidity != null &&
         pressureMb != null &&
         windDir != null &&

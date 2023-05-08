@@ -87,6 +87,7 @@ com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter = { module = 
 com-jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "com-jakewharton-timber-version" }
 com-slack-lint-compose-compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "com-slack-lint-compose-compose-lint-checks-version" }
 com-squareup-okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "com-squareup-okhttp3-version" }
+com-squareup-okhttp3-mockwebserver = {module = "com.squareup.okhttp3:mockwebserver", version.ref = "com-squareup-okhttp3-version" }
 com-squareup-okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "com-squareup-okhttp3-version" }
 com-squareup-okio = { module = "com.squareup.okio:okio", version.ref = "com-squareup-okio-version" }
 com-squareup-retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "com-squareup-retrofit2-retrofit-version" }
@@ -125,16 +126,6 @@ coroutines = [
     "org-jetbrains-kotlinx-kotlinx-coroutines-android",
     "org-jetbrains-kotlinx-kotlinx-coroutines-core",
 ]
-test = [
-    "app-cash-turbine-turbine",
-    "com-google-truth-truth",
-    "io-mockk",
-    "junit-junit",
-    "org-jetbrains-kotlinx-kotlinx-coroutines-test",
-    "org-junit-jupiter-junit-jupiter",
-    "org-junit-jupiter-junit-jupiter-api",
-    "org-junit-vintage-junit-vintage-engine",
-]
 okhttp = [
     "com-squareup-okhttp3-logging-interceptor",
     "com-squareup-okhttp3-okhttp",
@@ -144,6 +135,16 @@ retrofit = [
     "com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter",
     "com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter",
     "com-squareup-retrofit2-retrofit",
+]
+test = [
+    "app-cash-turbine-turbine",
+    "com-google-truth-truth",
+    "io-mockk",
+    "junit-junit",
+    "org-jetbrains-kotlinx-kotlinx-coroutines-test",
+    "org-junit-jupiter-junit-jupiter",
+    "org-junit-jupiter-junit-jupiter-api",
+    "org-junit-vintage-junit-vintage-engine",
 ]
 
 [plugins]
