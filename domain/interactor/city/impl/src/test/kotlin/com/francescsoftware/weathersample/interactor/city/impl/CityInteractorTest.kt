@@ -11,10 +11,9 @@ import com.francescsoftware.weathersample.type.isFailure
 import com.francescsoftware.weathersample.type.isSuccess
 import com.francescsoftware.weathersample.type.throwableOrNull
 import com.francescsoftware.weathersample.type.valueOrNull
+import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import com.francescsoftware.weathersample.cityrepository.api.CitiesException as RepoException
 import com.francescsoftware.weathersample.cityrepository.api.model.City as RepoCity
@@ -87,8 +86,8 @@ class CityInteractorTest {
         val response = interactor.execute(query)
 
         // the response has been converted to the interactor type
-        assertTrue(response.isSuccess)
-        assertEquals(response.valueOrNull()?.cities, listOf(successCity))
+        Truth.assertThat(response.isSuccess).isTrue()
+        Truth.assertThat(response.valueOrNull()?.cities).isEqualTo(listOf(successCity))
     }
 
     @Test
@@ -101,7 +100,7 @@ class CityInteractorTest {
         val response = interactor.execute(query)
 
         // the response has been converted to the interactor type
-        assertTrue(response.isFailure)
-        assertTrue(response.throwableOrNull() is CitiesException)
+        Truth.assertThat(response.isFailure).isTrue()
+        Truth.assertThat(response.throwableOrNull()).isInstanceOf(CitiesException::class.java)
     }
 }

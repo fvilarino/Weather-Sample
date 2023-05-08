@@ -7,10 +7,10 @@ import com.francescsoftware.weathersample.cityrepository.impl.model.CitySearchRe
 import com.francescsoftware.weathersample.cityrepository.impl.model.MetadataModel
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.type.Either
+import com.google.common.truth.Truth
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import retrofit2.Response
 
@@ -116,11 +116,11 @@ internal class CityRepositoryImplTest {
         val service = FakeCityService().apply { cities = networkCities }
         val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
-        Assertions.assertTrue(response is Either.Success)
+        Truth.assertThat(response).isInstanceOf(Either.Success::class.java)
         val cityList = (response as Either.Success).value.cities
-        Assertions.assertEquals(cityList.size, networkCities.size)
+        Truth.assertThat(cityList.size).isEqualTo(networkCities.size)
         cityList.forEachIndexed { index, city ->
-            Assertions.assertEquals(city, expectedCities[index])
+            Truth.assertThat(city).isEqualTo(expectedCities[index])
         }
     }
 
@@ -139,7 +139,7 @@ internal class CityRepositoryImplTest {
         val service = FakeCityService().apply { cities = invalidCities }
         val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
-        Assertions.assertTrue(response is Either.Failure)
+        Truth.assertThat(response).isInstanceOf(Either.Failure::class.java)
     }
 
     @Test
@@ -147,6 +147,6 @@ internal class CityRepositoryImplTest {
         val service = FakeCityService().apply { networkError = true }
         val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
-        Assertions.assertTrue(response is Either.Failure)
+        Truth.assertThat(response).isInstanceOf(Either.Failure::class.java)
     }
 }
