@@ -13,7 +13,7 @@ import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.time.api.isToday
 import com.francescsoftware.weathersample.time.api.isTomorrow
 import com.francescsoftware.weathersample.type.valueOrNull
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -90,7 +90,7 @@ internal class WeatherMiddleware @Inject constructor(
                 .entries.map { entry ->
                     entry.toForecastCardState()
                 }
-                .toPersistentList()
+                .toImmutableList()
         )
     }
 

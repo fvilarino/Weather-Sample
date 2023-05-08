@@ -1,7 +1,7 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import com.francescsoftware.weathersample.shared.mvi.Reducer
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 
 internal class WeatherReducer @Inject constructor() : Reducer<WeatherState, WeatherAction> {
@@ -25,7 +25,7 @@ internal class WeatherReducer @Inject constructor() : Reducer<WeatherState, Weat
         is WeatherAction.Loaded -> state.copy(
             loadState = WeatherLoadState.Loaded,
             todayState = action.currentWeather,
-            forecastItems = action.forecastItems.toPersistentList(),
+            forecastItems = action.forecastItems.toImmutableList(),
         )
 
         is WeatherAction.TodayLoaded -> state.copy(

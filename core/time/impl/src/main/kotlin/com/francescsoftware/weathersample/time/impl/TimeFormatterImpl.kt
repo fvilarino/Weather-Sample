@@ -2,7 +2,9 @@ package com.francescsoftware.weathersample.time.impl
 
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 private const val DayHourFormat = "MMMM, dd HH:mm"

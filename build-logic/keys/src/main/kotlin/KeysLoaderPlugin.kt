@@ -1,7 +1,7 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
-import java.util.*
+import java.util.Properties
 
 private const val RapidApiKey = "rapid_api_key"
 private const val RapiApiKeysFile = "./certs/keys.properties"
