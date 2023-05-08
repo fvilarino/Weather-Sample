@@ -127,6 +127,7 @@ coroutines = [
 ]
 test = [
     "app-cash-turbine-turbine",
+    "com-google-truth-truth",
     "io-mockk",
     "junit-junit",
     "org-jetbrains-kotlinx-kotlinx-coroutines-test",

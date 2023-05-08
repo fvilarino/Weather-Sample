@@ -20,9 +20,9 @@ import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.A
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.Day
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastHour
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastResponse
+import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.util.Date
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation as RepositoryLocation
@@ -293,14 +293,10 @@ class ForecastWeatherInteractorTest {
             timeParser,
         )
         interactor.execute(incomingCity)
-        Assertions.assertEquals(
-            (repository.lastLocation as RepositoryLocation.City).name,
-            incomingCity.name
-        )
-        Assertions.assertEquals(
-            (repository.lastLocation as RepositoryLocation.City).countryCode,
-            incomingCity.countryCode
-        )
+        Truth.assertThat((repository.lastLocation as RepositoryLocation.City).name).isEqualTo(incomingCity.name)
+        Truth
+            .assertThat((repository.lastLocation as RepositoryLocation.City).countryCode)
+            .isEqualTo(incomingCity.countryCode)
     }
 
     @Test
@@ -318,14 +314,12 @@ class ForecastWeatherInteractorTest {
 
         interactor.execute(incomingCoordinates)
 
-        Assertions.assertEquals(
-            (repository.lastLocation as RepositoryLocation.Coordinates).latitude,
-            incomingCoordinates.latitude
-        )
-        Assertions.assertEquals(
-            (repository.lastLocation as RepositoryLocation.Coordinates).longitude,
-            incomingCoordinates.longitude
-        )
+        Truth
+            .assertThat((repository.lastLocation as RepositoryLocation.Coordinates).latitude)
+            .isEqualTo(incomingCoordinates.latitude)
+        Truth
+            .assertThat((repository.lastLocation as RepositoryLocation.Coordinates).longitude)
+            .isEqualTo(incomingCoordinates.longitude)
     }
 
     @Test
@@ -341,8 +335,8 @@ class ForecastWeatherInteractorTest {
         )
         val response = interactor.execute(incomingCity)
 
-        Assertions.assertTrue(response.isSuccess)
-        Assertions.assertEquals(forecastSuccessfulResponse, response.valueOrNull())
+        Truth.assertThat(response.isSuccess).isTrue()
+        Truth.assertThat(response.valueOrNull()).isEqualTo(forecastSuccessfulResponse)
     }
 
     @Test
@@ -357,7 +351,7 @@ class ForecastWeatherInteractorTest {
 
         val response = interactor.execute(incomingCity)
 
-        Assertions.assertTrue(response.isFailure)
-        Assertions.assertTrue(response.throwableOrNull() is WeatherException)
+        Truth.assertThat(response.isFailure).isTrue()
+        Truth.assertThat(response.throwableOrNull()).isInstanceOf(WeatherException::class.java)
     }
 }
