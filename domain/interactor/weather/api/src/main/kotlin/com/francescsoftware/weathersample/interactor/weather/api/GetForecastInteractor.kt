@@ -62,5 +62,5 @@ interface GetForecastInteractor {
      * @param location - the [WeatherLocation] to get the forecast for
      * @return an [Either] with the [Forecast] for the [WeatherLocation]
      */
-    suspend fun execute(location: WeatherLocation): Either<Forecast>
+    suspend operator fun invoke(location: WeatherLocation): Either<Forecast>
 }

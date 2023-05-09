@@ -1,7 +1,7 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import com.francescsoftware.weathersample.feature.weather.R
-import com.francescsoftware.weathersample.interactor.weather.api.TodayMain
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayMain
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import java.util.Locale
 

@@ -41,7 +41,7 @@ internal class TodayMiddleware @Inject constructor(
             name = name,
             countryCode = countryCode,
         )
-        getTodayWeatherInteractor.execute(location).fold(
+        getTodayWeatherInteractor(location).fold(
             onSuccess = { todayWeather ->
                 dispatch(
                     WeatherAction.TodayLoaded(

@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
-import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayWeather
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 
 internal fun TodayWeather.toWeatherCardState(stringLookup: StringLookup) =

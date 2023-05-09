@@ -12,5 +12,5 @@ interface GetCitiesInteractor {
      * @param limit - max number of results to return
      * @return an [Either] with the resulting [Cities]
      */
-    suspend fun execute(prefix: String = "", limit: Int = 10): Either<Cities>
+    suspend operator fun invoke(prefix: String = "", limit: Int = 10): Either<Cities>
 }

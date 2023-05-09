@@ -28,7 +28,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
     private val timerParser: TimeParser,
 ) : GetForecastInteractor {
 
-    override suspend fun execute(location: WeatherLocation): Either<Forecast> {
+    override suspend operator fun invoke(location: WeatherLocation): Either<Forecast> {
         val response = weatherRepository.getForecast(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { data ->

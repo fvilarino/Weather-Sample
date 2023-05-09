@@ -55,9 +55,7 @@ internal class CityMiddleware @Inject constructor(
             .debounce(DebounceMillis)
             .map { prefix ->
                 dispatch(CityAction.Loading)
-                getCitiesInteractor.execute(
-                    prefix = prefix,
-                )
+                getCitiesInteractor(prefix = prefix)
             }.onEach { cities ->
                 onCitiesLoaded(
                     cities.map { response ->

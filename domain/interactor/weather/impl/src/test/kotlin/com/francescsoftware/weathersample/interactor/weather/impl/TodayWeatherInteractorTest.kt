@@ -1,10 +1,10 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
-import com.francescsoftware.weathersample.interactor.weather.api.TodayClouds
-import com.francescsoftware.weathersample.interactor.weather.api.TodayMain
-import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
-import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayClouds
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayMain
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayWeather
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.type.isFailure

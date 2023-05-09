@@ -62,8 +62,8 @@ internal class WeatherMiddleware @Inject constructor(
                 name = name,
                 countryCode = countryCode,
             )
-            val currentAsync = async { getTodayWeatherInteractor.execute(location) }
-            val forecastAsync = async { getForecastInteractor.execute(location) }
+            val currentAsync = async { getTodayWeatherInteractor(location) }
+            val forecastAsync = async { getForecastInteractor(location) }
             val current = currentAsync.await().valueOrNull()
             val forecast = forecastAsync.await().valueOrNull()
             if (current != null && forecast != null) {

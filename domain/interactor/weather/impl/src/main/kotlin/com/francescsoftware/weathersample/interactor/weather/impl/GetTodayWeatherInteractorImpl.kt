@@ -2,12 +2,12 @@ package com.francescsoftware.weathersample.interactor.weather.impl
 
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
-import com.francescsoftware.weathersample.interactor.weather.api.TodayClouds
-import com.francescsoftware.weathersample.interactor.weather.api.TodayMain
-import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
-import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayClouds
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayMain
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayWeather
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayWind
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
@@ -21,7 +21,7 @@ internal class GetTodayWeatherInteractorImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ) : GetTodayWeatherInteractor {
 
-    override suspend fun execute(location: WeatherLocation): Either<TodayWeather> {
+    override suspend operator fun invoke(location: WeatherLocation): Either<TodayWeather> {
         val response = weatherRepository.getTodayWeather(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { weatherResponse ->
