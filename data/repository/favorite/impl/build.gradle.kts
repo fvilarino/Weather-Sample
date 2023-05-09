@@ -1,0 +1,33 @@
+plugins {
+    id("weathersample.android.library")
+    id("weathersample.android.hilt")
+    id("weathersample.android.library.test")
+}
+
+android {
+    namespace = "com.francescsoftware.weathersample.repository.favorite.impl"
+}
+
+ksp {
+    arg(RoomSchemaArgProvider(File(projectDir, "schemas")))
+}
+
+dependencies {
+    implementation(project(":data:repository:favorite:api"))
+
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
+    implementation(libs.androidx.room.room.ktx)
+    implementation(libs.androidx.room.room.runtime)
+    ksp(libs.androidx.room.room.compiler)
+
+    testImplementation(libs.androidx.room.room.testing)
+    testImplementation(libs.org.robolectric.robolectric)
+}
+internal class RoomSchemaArgProvider(
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    val schemaDir: File,
+) : CommandLineArgumentProvider {
+
+    override fun asArguments(): Iterable<String> = listOf("room.schemaLocation=${schemaDir.path}")
+}
