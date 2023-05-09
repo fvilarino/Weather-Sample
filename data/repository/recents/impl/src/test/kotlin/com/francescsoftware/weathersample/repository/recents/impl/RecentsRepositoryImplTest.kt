@@ -9,20 +9,19 @@ import com.francescsoftware.weathersample.repository.recents.api.RecentCity
 import com.francescsoftware.weathersample.repository.recents.impl.dao.RecentCitiesDao
 import com.francescsoftware.weathersample.repository.recents.impl.dao.RecentCitiesDatabase
 import com.francescsoftware.weathersample.repository.recents.impl.dao.RecentCityEntity
+import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @Config(manifest = Config.NONE)
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
-class RecentsRepositoryImplTest {
+internal class RecentsRepositoryImplTest {
     private lateinit var recentCitiesDatabase: RecentCitiesDatabase
     private lateinit var dao: RecentCitiesDao
     private lateinit var repository: RecentsRepositoryImpl
@@ -47,9 +46,9 @@ class RecentsRepositoryImplTest {
         dao.insertRecentCity(city1)
         dao.insertRecentCity(city2)
         val cities = repository.getRecentCities(limit = 10).first()
-        Assert.assertEquals(2, cities.size)
-        Assert.assertEquals(RecentCity(name = city1.name), cities[0])
-        Assert.assertEquals(RecentCity(name = city2.name), cities[1])
+        Truth.assertThat(cities.size).isEqualTo(2)
+        Truth.assertThat(cities[0]).isEqualTo(RecentCity(name = city1.name))
+        Truth.assertThat(cities[1]).isEqualTo(RecentCity(name = city2.name))
     }
 
     @Test
@@ -61,10 +60,10 @@ class RecentsRepositoryImplTest {
         dao.insertRecentCity(city2)
         dao.insertRecentCity(city3)
         val cities = repository.getRecentCities(limit = 10).first()
-        Assert.assertEquals(3, cities.size)
-        Assert.assertEquals(RecentCity(name = city2.name), cities[0])
-        Assert.assertEquals(RecentCity(name = city3.name), cities[1])
-        Assert.assertEquals(RecentCity(name = city1.name), cities[2])
+        Truth.assertThat(cities.size).isEqualTo(3)
+        Truth.assertThat(cities[0]).isEqualTo(RecentCity(name = city2.name))
+        Truth.assertThat(cities[1]).isEqualTo(RecentCity(name = city3.name))
+        Truth.assertThat(cities[2]).isEqualTo(RecentCity(name = city1.name))
     }
 
     @Test
@@ -75,24 +74,33 @@ class RecentsRepositoryImplTest {
             dao.insertRecentCity(city)
         }
         var cities = repository.getRecentCities(limit = 4).first()
-        Assert.assertEquals(4, cities.size)
+        Truth.assertThat(cities.size).isEqualTo(4)
         cities = repository.getRecentCities(limit = 20).first()
-        Assert.assertEquals(totalCities, cities.size)
+        Truth.assertThat(cities.size).isEqualTo(totalCities)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `get recent cities emits on update`() = runTest {
         repository.getRecentCities(limit = 10).test {
-            Assert.assertEquals(0, awaitItem().size)
-            val city1 = RecentCityEntity(name = "Vancouver", lastUsed = 2L)
+            val vancouver = "Vancouver"
+            val barcelona = "Barcelona"
+            Truth.assertThat(awaitItem()).isEmpty()
+            val city1 = RecentCityEntity(name = vancouver, lastUsed = 2L)
             dao.insertRecentCity(city1)
-            Assert.assertEquals(1, awaitItem().size)
-            val city2 = RecentCityEntity(name = "Barcelona", lastUsed = 1L)
+            var items = awaitItem()
+            Truth.assertThat(items.size).isEqualTo(1)
+            Truth.assertThat(items[0].name).isEqualTo(vancouver)
+            val city2 = RecentCityEntity(name = barcelona, lastUsed = 1L)
             dao.insertRecentCity(city2)
-            Assert.assertEquals(2, awaitItem().size)
+            items = awaitItem()
+            Truth.assertThat(items.size).isEqualTo(2)
+            Truth.assertThat(items[0].name).isEqualTo(vancouver)
+            Truth.assertThat(items[1].name).isEqualTo(barcelona)
             dao.deleteRecentCity(name = city1.name)
-            Assert.assertEquals(1, awaitItem().size)
+            items = awaitItem()
+            Truth.assertThat(items.size).isEqualTo(1)
+            Truth.assertThat(items[0].name).isEqualTo(barcelona)
         }
     }
 
@@ -101,7 +109,7 @@ class RecentsRepositoryImplTest {
         val recentCity = RecentCity("Vancouver")
         repository.saveRecentCity(recentCity = recentCity)
         val entries = dao.getCities(limit = 1).first()
-        Assert.assertEquals(recentCity.name, entries.first().name)
+        Truth.assertThat(entries.first().name).isEqualTo(recentCity.name)
     }
 
     @Test
@@ -112,6 +120,6 @@ class RecentsRepositoryImplTest {
 
         repository.deleteRecentCity(recentCity = recentCity)
         val entries = dao.getCities(limit = 10).first()
-        Assert.assertTrue(entries.isEmpty())
+        Truth.assertThat(entries).isEmpty()
     }
 }
