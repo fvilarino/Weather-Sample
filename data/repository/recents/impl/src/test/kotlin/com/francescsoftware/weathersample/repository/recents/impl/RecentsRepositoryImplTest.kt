@@ -67,7 +67,7 @@ internal class RecentsRepositoryImplTest {
     }
 
     @Test
-    fun `get recent cities returns at most the liit requested`() = runTest {
+    fun `get recent cities returns at most the max number requested`() = runTest {
         val totalCities = 10
         repeat(totalCities) {
             val city = RecentCityEntity(name = "city_$it", lastUsed = it.toLong())
