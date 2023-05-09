@@ -1,152 +1,146 @@
 package com.francescsoftware.weathersample.cityrepository.impl
 
+import com.francescsoftware.weathersample.cityrepository.api.CitiesException
 import com.francescsoftware.weathersample.cityrepository.api.model.City
 import com.francescsoftware.weathersample.cityrepository.api.model.Coordinates
-import com.francescsoftware.weathersample.cityrepository.impl.model.CityModel
-import com.francescsoftware.weathersample.cityrepository.impl.model.CitySearchResponseModel
-import com.francescsoftware.weathersample.cityrepository.impl.model.MetadataModel
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.type.Either
+import com.francescsoftware.weathersample.type.throwableOrNull
 import com.google.common.truth.Truth
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.ResponseBody.Companion.toResponseBody
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
 import org.junit.jupiter.api.Test
-import retrofit2.Response
+import retrofit2.Retrofit
 
-private const val VancouverName = "Vancouver"
-private const val VancouverRegion = "British Columbia"
-private const val VancouverRegionCode = "BC"
-private const val VancouverCountry = "Canada"
-private const val VancouverCountryCode = "CA"
-private const val VancouverLatitude = 49.24
-private const val VancouverLongitude = -123.11
-
-private const val BarcelonaName = "Barcelona"
-private const val BarcelonaRegion = "Catalunya"
-private const val BarcelonaRegionCode = "CA"
-private const val BarcelonaCountry = "Spain"
-private const val BarcelonaCountryCode = "ES"
-private const val BarcelonaLatitude = 41.39
-private const val BarcelonaLongitude = 2.17
+private val ExpectedCities = listOf(
+    City(
+        id = 3323992,
+        city = "Milwich",
+        name = "Milwich",
+        region = "Staffordshire",
+        regionCode = "STS",
+        country = "United Kingdom",
+        countryCode = "GB",
+        coordinates = Coordinates(
+            latitude = 52.8879,
+            longitude = -2.04314,
+        ),
+    ),
+    City(
+        id = 3415353,
+        city = "Milwino",
+        name = "Milwino",
+        region = "Pomeranian Voivodeship",
+        regionCode = "22",
+        country = "Poland",
+        countryCode = "PL",
+        coordinates = Coordinates(
+            latitude = 54.51944,
+            longitude = 18.13167,
+        ),
+    ),
+    City(
+        id = 3371102,
+        city = "Milwaukee",
+        name = "Milwaukee",
+        region = "North Carolina",
+        regionCode = "NC",
+        country = "United States of America",
+        countryCode = "US",
+        coordinates = Coordinates(
+            latitude = 36.4056,
+            longitude = -77.2322,
+        ),
+    )
+)
 
 internal class CityRepositoryImplTest {
 
-    private val networkCities = listOf(
-        CityModel(
-            id = 1,
-            city = VancouverName,
-            name = VancouverName,
-            region = VancouverRegion,
-            regionCode = VancouverRegionCode,
-            country = VancouverCountry,
-            countryCode = VancouverCountryCode,
-            latitude = VancouverLatitude,
-            longitude = VancouverLongitude,
-        ),
-        CityModel(
-            id = 2,
-            city = BarcelonaName,
-            name = BarcelonaName,
-            region = BarcelonaRegion,
-            regionCode = BarcelonaRegionCode,
-            country = BarcelonaCountry,
-            countryCode = BarcelonaCountryCode,
-            latitude = BarcelonaLatitude,
-            longitude = BarcelonaLongitude,
-        ),
-    )
+    private val json = Json { ignoreUnknownKeys = true }
+    private val mediaType = "application/json".toMediaType()
+    private val mockWebServer = MockWebServer()
+    private val service = Retrofit.Builder()
+        .baseUrl(mockWebServer.url("/"))
+        .addConverterFactory(json.asConverterFactory(mediaType))
+        .client(OkHttpClient.Builder().build())
+        .build()
+        .create(CityService::class.java)
 
-    private val expectedCities = listOf(
-        City(
-            id = 1,
-            city = VancouverName,
-            name = VancouverName,
-            region = VancouverRegion,
-            regionCode = VancouverRegionCode,
-            country = VancouverCountry,
-            countryCode = VancouverCountryCode,
-            coordinates = Coordinates(
-                latitude = VancouverLatitude,
-                longitude = VancouverLongitude,
-            ),
-        ),
-        City(
-            id = 2,
-            city = BarcelonaName,
-            name = BarcelonaName,
-            region = BarcelonaRegion,
-            regionCode = BarcelonaRegionCode,
-            country = BarcelonaCountry,
-            countryCode = BarcelonaCountryCode,
-            coordinates = Coordinates(
-                latitude = BarcelonaLatitude,
-                longitude = BarcelonaLongitude,
-            ),
-        ),
-    )
-
-    private inner class FakeCityService : CityService {
-        var cities: List<CityModel> = emptyList()
-        var networkError: Boolean = false
-
-        override suspend fun getCities(namePrefix: String?, limit: Int?): Response<CitySearchResponseModel> {
-            return if (networkError) {
-                Response.error(
-                    404,
-                    "{\"key\":[\"URL does not exist\"]}"
-                        .toResponseBody("application/json".toMediaTypeOrNull()),
-                )
-            } else {
-                Response.success(
-                    CitySearchResponseModel(
-                        metadata = MetadataModel(
-                            currentOffset = 0,
-                            totalCount = 0,
-                        ),
-                        data = cities,
-                    )
-                )
-            }
-        }
+    @After
+    fun cleanUp() {
+        mockWebServer.shutdown()
     }
 
     @Test
     fun `success network response returns cities`() = runTest {
-        val service = FakeCityService().apply { cities = networkCities }
-        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
+        val networkResponse = MockResponse()
+            .addHeader("Content-Type", "application/json; charset=utf-8")
+            .setResponseCode(200)
+            .setBody(CitiesResponse)
+        mockWebServer.enqueue(networkResponse)
+        val repository = CityRepositoryImpl(
+            cityService = service,
+            dispatcherProvider = TestDispatcherProvider(),
+        )
         val response = repository.getCities(prefix = "", limit = 10)
         Truth.assertThat(response).isInstanceOf(Either.Success::class.java)
         val cityList = (response as Either.Success).value.cities
-        Truth.assertThat(cityList.size).isEqualTo(networkCities.size)
+        Truth.assertThat(cityList.size).isEqualTo(ExpectedCities.size)
         cityList.forEachIndexed { index, city ->
-            Truth.assertThat(city).isEqualTo(expectedCities[index])
+            Truth.assertThat(city).isEqualTo(ExpectedCities[index])
         }
     }
 
     @Test
     fun `invalid data returns error`() = runTest {
-        val invalidCities = networkCities + CityModel(
-            name = "Tokyo",
-            region = null,
-            regionCode = null,
-            country = "Japan",
-            countryCode = "JP",
-            latitude = 0.0,
-            longitude = 0.0,
+        val networkResponse = MockResponse()
+            .addHeader("Content-Type", "application/json; charset=utf-8")
+            .setResponseCode(200)
+            .setBody(InvalidCitiesResponse)
+        mockWebServer.enqueue(networkResponse)
+        val repository = CityRepositoryImpl(
+            cityService = service,
+            dispatcherProvider = TestDispatcherProvider(),
         )
-
-        val service = FakeCityService().apply { cities = invalidCities }
-        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
         val response = repository.getCities(prefix = "", limit = 10)
         Truth.assertThat(response).isInstanceOf(Either.Failure::class.java)
     }
 
     @Test
-    fun `network errors returns error`() = runTest {
-        val service = FakeCityService().apply { networkError = true }
-        val repository = CityRepositoryImpl(cityService = service, dispatcherProvider = TestDispatcherProvider())
+    fun `400 network error returns error`() = runTest {
+        val networkResponse = MockResponse()
+            .addHeader("Content-Type", "application/json; charset=utf-8")
+            .setResponseCode(404)
+            .setBody("{}")
+        mockWebServer.enqueue(networkResponse)
+        val repository = CityRepositoryImpl(
+            cityService = service,
+            dispatcherProvider = TestDispatcherProvider(),
+        )
         val response = repository.getCities(prefix = "", limit = 10)
         Truth.assertThat(response).isInstanceOf(Either.Failure::class.java)
+        Truth.assertThat(response.throwableOrNull()).isInstanceOf(CitiesException::class.java)
+    }
+
+    @Test
+    fun `500 network error returns error`() = runTest {
+        val networkResponse = MockResponse()
+            .addHeader("Content-Type", "application/json; charset=utf-8")
+            .setResponseCode(500)
+            .setBody("{}")
+        mockWebServer.enqueue(networkResponse)
+        val repository = CityRepositoryImpl(
+            cityService = service,
+            dispatcherProvider = TestDispatcherProvider(),
+        )
+        val response = repository.getCities(prefix = "", limit = 10)
+        Truth.assertThat(response).isInstanceOf(Either.Failure::class.java)
+        Truth.assertThat(response.throwableOrNull()).isInstanceOf(CitiesException::class.java)
     }
 }
