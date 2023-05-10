@@ -6,11 +6,10 @@ plugins {
 
 android {
     namespace = "com.francescsoftware.weathersample.repository.recents.impl"
-    kapt {
-        arguments {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
-    }
+}
+
+ksp {
+    arg(RecentsRoomSchemaArgProvider(File(projectDir, "schemas")))
 }
 
 dependencies {
@@ -24,4 +23,13 @@ dependencies {
     testImplementation(libs.bundles.android.test)
     testImplementation(libs.androidx.room.room.testing)
     testImplementation(libs.org.robolectric.robolectric)
+}
+
+internal class RecentsRoomSchemaArgProvider(
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    val schemaDir: File,
+) : CommandLineArgumentProvider {
+
+    override fun asArguments(): Iterable<String> = listOf("room.schemaLocation=${schemaDir.path}")
 }

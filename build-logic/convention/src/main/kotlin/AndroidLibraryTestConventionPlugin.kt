@@ -23,7 +23,7 @@ class AndroidLibraryTestConventionPlugin : Plugin<Project> {
                 testOptions {
                     unitTests.all { test ->
                         test.useJUnitPlatform {
-                            includeEngines("junit-jupiter", "junit-vintage")
+                            includeEngines("junit-jupiter")
                         }
                         test.testLogging {
                             events("passed", "skipped", "failed")

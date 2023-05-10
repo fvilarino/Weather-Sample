@@ -105,7 +105,7 @@ org-jetbrains-kotlinx-kotlinx-coroutines-test = { module = "org.jetbrains.kotlin
 org-jetbrains-kotlinx-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "org-jetbrains-kotlinx-kotlinx-serialization-json-version" }
 org-junit-jupiter-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "org-junit-jupiter-junit-jupiter-version" }
 org-junit-jupiter-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "org-junit-jupiter-junit-jupiter-version" }
-org-junit-vintage-junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "org-junit-jupiter-junit-jupiter-version" }
+org-junit-jupiter-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "org-junit-jupiter-junit-jupiter-version" }
 org-robolectric-robolectric = { module = "org.robolectric:robolectric", version.ref = "org-robolectric-robolectric-version" }
 
 [bundles]
@@ -144,7 +144,7 @@ test = [
     "org-jetbrains-kotlinx-kotlinx-coroutines-test",
     "org-junit-jupiter-junit-jupiter",
     "org-junit-jupiter-junit-jupiter-api",
-    "org-junit-vintage-junit-vintage-engine",
+    "org-junit-jupiter-junit-jupiter-engine",
 ]
 
 [plugins]
