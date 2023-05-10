@@ -10,5 +10,5 @@ interface GetFavoriteCitiesInteractor {
      *
      * @return a [Flow] of [List] of [FavoriteCity]
      */
-    operator fun invoke(limit: Int): Flow<List<FavoriteCity>>
+    operator fun invoke(): Flow<List<FavoriteCity>>
 }

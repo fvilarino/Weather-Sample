@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.deviceclass.DeviceClass
+import com.francescsoftware.weathersample.feature.city.model.CityResultModel
 import com.francescsoftware.weathersample.feature.city.model.RecentCityModel
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityState
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityViewModel
@@ -60,6 +61,7 @@ internal fun CityScreen(
             viewModel.onCityClick(selectedCity)
             onCityClick(selectedCity)
         },
+        onFavoriteClick = viewModel::onFavoriteClick,
         onQueryChange = viewModel::onQueryChange,
         onQueryFocused = viewModel::onQueryFocused,
         onChipClick = viewModel::onChipClick,
@@ -74,6 +76,7 @@ private fun CityScreen(
     actions: CitySearchDestination.ActionsState,
     deviceClass: DeviceClass,
     onCityClick: (SelectedCity) -> Unit,
+    onFavoriteClick: (CityResultModel) -> Unit,
     onQueryChange: (TextFieldValue) -> Unit,
     onQueryFocused: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
@@ -109,6 +112,7 @@ private fun CityScreen(
             Cities(
                 state = state,
                 onCityClick = onCityClick,
+                onFavoriteClick = onFavoriteClick,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = MarginDouble),
@@ -175,6 +179,7 @@ private fun CityPane(
 private fun Cities(
     state: CityState,
     onCityClick: (SelectedCity) -> Unit,
+    onFavoriteClick: (CityResultModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Crossfade(
@@ -193,6 +198,7 @@ private fun Cities(
             LoadState.Loaded -> CitiesList(
                 state = state,
                 onCityClick = onCityClick,
+                onFavoriteClick = onFavoriteClick,
                 modifier = Modifier.fillMaxSize(),
             )
 
@@ -240,13 +246,14 @@ private fun CityScreenPreview() {
                 state = state,
                 actions = CitySearchDestination.ActionsState(),
                 deviceClass = DeviceClass.Compact,
-                onCityClick = {},
+                onCityClick = { },
+                onFavoriteClick = { },
                 onQueryChange = { query ->
                     state = state.copy(query = query)
                 },
-                onQueryFocused = {},
-                onChipClick = {},
-                onDeleteChip = {},
+                onQueryFocused = { },
+                onChipClick = { },
+                onDeleteChip = { },
             )
         }
     }

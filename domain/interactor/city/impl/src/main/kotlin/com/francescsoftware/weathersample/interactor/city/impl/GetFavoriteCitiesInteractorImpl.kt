@@ -11,7 +11,7 @@ internal class GetFavoriteCitiesInteractorImpl @Inject constructor(
     private val favoriteRepository: FavoriteRepository,
 ) : GetFavoriteCitiesInteractor {
 
-    override fun invoke(limit: Int): Flow<List<FavoriteCity>> = favoriteRepository
+    override fun invoke(): Flow<List<FavoriteCity>> = favoriteRepository
         .getFavoriteCities()
         .map { cities ->
             cities.map { city ->

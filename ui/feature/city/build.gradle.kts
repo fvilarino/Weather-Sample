@@ -17,6 +17,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:dispatcher"))
     implementation(project(":domain:interactor:city:api"))
 
     implementation(libs.bundles.compose)
