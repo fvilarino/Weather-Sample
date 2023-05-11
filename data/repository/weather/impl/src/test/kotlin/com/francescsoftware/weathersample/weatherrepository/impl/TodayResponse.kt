@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.impl
+package com.francescsoftware.weathersample.weatherrepository.impl
 
 internal const val TodayResponse = """
     {

@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.impl
+package com.francescsoftware.weathersample.weatherrepository.impl
 
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.type.Either
