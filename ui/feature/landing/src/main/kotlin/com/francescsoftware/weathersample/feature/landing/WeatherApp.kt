@@ -21,7 +21,7 @@ import com.francescsoftware.weathersample.feature.weather.addWeatherDetailsDesti
 import com.francescsoftware.weathersample.presentation.route.CitySearchDestination
 import com.francescsoftware.weathersample.presentation.route.NavigationDestination
 import com.francescsoftware.weathersample.presentation.route.WeatherDestination
-import com.francescsoftware.weathersample.shared.composable.AppBar
+import com.francescsoftware.weathersample.shared.composable.common.AppBar
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
 
 @Composable

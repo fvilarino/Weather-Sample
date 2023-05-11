@@ -21,8 +21,6 @@ dependencies {
     implementation(project(":ui:feature:weather"))
 
     // compose
-    implementation(platform(libs.androidx.compose.compose.bom))
-    implementation(libs.bundles.compose)
     implementation(libs.androidx.compose.material3.window.sizeclass)
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.navigation.navigation.compose)

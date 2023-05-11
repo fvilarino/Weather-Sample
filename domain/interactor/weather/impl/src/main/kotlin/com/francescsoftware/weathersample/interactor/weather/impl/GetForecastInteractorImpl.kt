@@ -1,12 +1,11 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
-import com.francescsoftware.weathersample.interactor.weather.api.Forecast
-import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
-import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
+import com.francescsoftware.weathersample.interactor.weather.api.model.Forecast
+import com.francescsoftware.weathersample.interactor.weather.api.model.ForecastDay
 import com.francescsoftware.weathersample.time.api.Iso8601DateTime
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.time.api.TimeParser
@@ -14,11 +13,10 @@ import com.francescsoftware.weathersample.time.api.TimeParsingException
 import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
-import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastHour
+import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastResponse
 import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
-import kotlin.math.roundToInt
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastDay as RepoForecastDay
 
 internal class GetForecastInteractorImpl @Inject constructor(
@@ -32,10 +30,9 @@ internal class GetForecastInteractorImpl @Inject constructor(
         val response = weatherRepository.getForecast(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { data ->
-                val forecast = data.forecast.forecastDay
-                if (forecast.isNotEmpty()) {
+                if (data.forecast.forecastDay.isNotEmpty()) {
                     try {
-                        Either.Success(parseForecast(forecast))
+                        Either.Success(parseForecast(data))
                     } catch (ex: ForecastParseException) {
                         Either.Failure(WeatherException(cause = ex))
                     } catch (ex: TimeParsingException) {
@@ -57,10 +54,10 @@ internal class GetForecastInteractorImpl @Inject constructor(
     }
 
     private suspend fun parseForecast(
-        forecast: List<RepoForecastDay>,
+        data: ForecastResponse,
     ): Forecast = withContext(dispatcherProvider.default) {
         // aggregate the forecast by days
-        val days: Map<Date, RepoForecastDay> = forecast
+        val days: Map<Date, RepoForecastDay> = data.forecast.forecastDay
             .associateBy { item ->
                 val time = item.hour.firstOrNull()?.time ?: throw ForecastParseException()
                 timeFormatter.setToMidnight(
@@ -84,24 +81,10 @@ internal class GetForecastInteractorImpl @Inject constructor(
                 )
             }
         Forecast(
+            current = data.current.toCurrent(),
             forecastDays.sortedBy { forecastDay -> forecastDay.date }
         )
     }
-
-    private fun ForecastHour.toForecastEntry(
-        timerParser: TimeParser,
-    ) = ForecastEntry(
-        date = this.time.let { date -> timerParser.parseDate(Iso8601DateTime(date)) },
-        description = condition.text,
-        iconCode = condition.code,
-        temperature = tempCelsius,
-        feelsLikeTemperature = feelsLikeCelsius,
-        precipitation = precipitationMm.roundToInt(),
-        windSpeed = windKph,
-        uvIndex = uvIndex.roundToInt(),
-        humidityPercent = humidity,
-        visibility = visibilityKm.roundToInt(),
-    )
 }
 
 private class ForecastParseException : RuntimeException()

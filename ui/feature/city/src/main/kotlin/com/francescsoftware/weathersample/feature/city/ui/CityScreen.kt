@@ -31,7 +31,7 @@ import com.francescsoftware.weathersample.feature.city.viewmodel.CityViewModel
 import com.francescsoftware.weathersample.feature.city.viewmodel.LoadState
 import com.francescsoftware.weathersample.presentation.route.CitySearchDestination
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
-import com.francescsoftware.weathersample.shared.composable.DualPane
+import com.francescsoftware.weathersample.shared.composable.common.DualPane
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.PhonePreviews

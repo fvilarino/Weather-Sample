@@ -1,13 +1,14 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import com.francescsoftware.weathersample.feature.weather.R
-import com.francescsoftware.weathersample.interactor.weather.api.Forecast
-import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
-import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
+import com.francescsoftware.weathersample.interactor.weather.api.model.Forecast
+import com.francescsoftware.weathersample.interactor.weather.api.model.ForecastDay
+import com.francescsoftware.weathersample.interactor.weather.api.model.ForecastEntry
 import com.francescsoftware.weathersample.lookup.api.StringLookup
+import com.francescsoftware.weathersample.shared.composable.weather.ForecastHourState
 import com.francescsoftware.weathersample.shared.mvi.Middleware
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.time.api.isToday

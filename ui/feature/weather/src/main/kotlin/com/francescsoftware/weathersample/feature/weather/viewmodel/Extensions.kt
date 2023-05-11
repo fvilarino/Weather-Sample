@@ -2,10 +2,11 @@ package com.francescsoftware.weathersample.feature.weather.viewmodel
 
 import com.francescsoftware.weathersample.interactor.weather.api.model.TodayWeather
 import com.francescsoftware.weathersample.lookup.api.StringLookup
+import com.francescsoftware.weathersample.shared.composable.weather.CurrentWeatherState
 
 internal fun TodayWeather.toWeatherCardState(stringLookup: StringLookup) =
-    TodayWeatherCardState(
-        temperature = main.temp.formatTemperature(stringLookup),
+    CurrentWeatherState(
+        temperature = main.temperature.formatTemperature(stringLookup),
         feelsLikeTemperature = main.feelsLike.formatTemperature(stringLookup),
         precipitation = main.precipitation.toString(),
         uvIndex = main.uvIndex.toString(),

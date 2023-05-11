@@ -91,7 +91,7 @@ class TodayWeatherInteractorTest {
     private val successfulTodayWeather = TodayWeather(
         main = TodayMain(
             description = WeatherDescription,
-            temp = CurrentTemperature,
+            temperature = CurrentTemperature,
             feelsLike = FeelsLikeTemperature,
             humidity = HumidityPercent,
             pressure = PressureMb.roundToInt(),

@@ -1,9 +1,9 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
-import com.francescsoftware.weathersample.interactor.weather.api.Forecast
-import com.francescsoftware.weathersample.interactor.weather.api.ForecastDay
-import com.francescsoftware.weathersample.interactor.weather.api.ForecastEntry
+import com.francescsoftware.weathersample.interactor.weather.api.model.Forecast
+import com.francescsoftware.weathersample.interactor.weather.api.model.ForecastDay
+import com.francescsoftware.weathersample.interactor.weather.api.model.ForecastEntry
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.time.api.Iso8601DateTime

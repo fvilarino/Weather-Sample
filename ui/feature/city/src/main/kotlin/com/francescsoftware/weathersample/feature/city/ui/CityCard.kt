@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.feature.city.R
 import com.francescsoftware.weathersample.feature.city.model.CityResultModel
-import com.francescsoftware.weathersample.shared.composable.InfoLabels
+import com.francescsoftware.weathersample.shared.composable.common.InfoLabels
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme

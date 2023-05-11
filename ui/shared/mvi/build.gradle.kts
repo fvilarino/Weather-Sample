@@ -13,5 +13,4 @@ dependencies {
     implementation(project(":core:dispatcher"))
 
     implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
-    implementation(libs.bundles.compose)
 }

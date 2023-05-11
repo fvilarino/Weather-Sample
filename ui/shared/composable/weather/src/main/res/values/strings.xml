@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="temperature_label">Temp:</string>
+    <string name="feels_like_label">Feels:</string>
+    <string name="precipitation_label">Prep:</string>
+    <string name="precipitation_mm">mm</string>
+    <string name="wind_speed_label">Wind:</string>
+    <string name="humidity_label">Humidity:</string>
+    <string name="pressure_label">Pressure:</string>
+    <string name="visibility_label">Visibility:</string>
+</resources>

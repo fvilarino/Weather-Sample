@@ -5,7 +5,7 @@ package com.francescsoftware.weathersample.interactor.weather.api.model
  *
  * @property description - precipitation in mm
  * @property code - weather code
- * @property temp - temperature
+ * @property temperature - temperature
  * @property feelsLike - feels like temperature
  * @property humidity - humidity percent
  * @property pressure - atmospheric pressure
@@ -15,7 +15,7 @@ package com.francescsoftware.weathersample.interactor.weather.api.model
 data class TodayMain(
     val description: String,
     val code: Int,
-    val temp: Double,
+    val temperature: Double,
     val feelsLike: Double,
     val humidity: Int,
     val pressure: Int,

@@ -7,8 +7,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.francescsoftware.weathersample.shared.assets.R
-import com.francescsoftware.weathersample.shared.composable.ActionMenuItem
-import com.francescsoftware.weathersample.shared.composable.ActionsMenu
+import com.francescsoftware.weathersample.shared.composable.common.ActionMenuItem
+import com.francescsoftware.weathersample.shared.composable.common.ActionsMenu
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

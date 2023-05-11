@@ -3,10 +3,10 @@ package com.francescsoftware.weathersample.feature.weather.ui
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastDayState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastHeaderState
-import com.francescsoftware.weathersample.feature.weather.viewmodel.TodayWeatherCardState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.shared.assets.R
+import com.francescsoftware.weathersample.shared.composable.weather.CurrentWeatherState
 import kotlinx.collections.immutable.persistentListOf
 
 internal data class WeatherStateWrapper(
@@ -32,7 +32,7 @@ private val todayState = WeatherState(
     loadState = WeatherLoadState.Loaded,
     cityName = "Coquitlam, British Columbia",
     cityCountryCode = "CA",
-    todayState = TodayWeatherCardState(
+    todayState = CurrentWeatherState(
         temperature = "16.4°C",
         feelsLikeTemperature = "14.3°C",
         precipitation = "10",

@@ -1,8 +1,8 @@
 package com.francescsoftware.weathersample.feature.weather.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastHourState
 import com.francescsoftware.weathersample.shared.assets.R
+import com.francescsoftware.weathersample.shared.composable.weather.ForecastHourState
 
 internal val PartlyCloudyHourForecast = ForecastHourState(
     id = 1L,
