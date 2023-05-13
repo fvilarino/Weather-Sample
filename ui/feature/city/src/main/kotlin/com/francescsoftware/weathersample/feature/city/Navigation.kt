@@ -23,7 +23,7 @@ fun NavGraphBuilder.addSearchDestination(
     onCityClick: (SelectedCity) -> Unit,
 ) {
     composable(
-        route = CitySearchDestination.getRoute(),
+        route = CitySearchDestination.route,
     ) {
         val cityViewModel: CityViewModel = hiltViewModel()
         CityScreen(

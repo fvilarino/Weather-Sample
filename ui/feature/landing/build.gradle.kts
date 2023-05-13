@@ -18,6 +18,7 @@ android {
 dependencies {
 
     implementation(project(":ui:feature:city"))
+    implementation(project(":ui:feature:favorites"))
     implementation(project(":ui:feature:weather"))
 
     // compose

@@ -14,13 +14,16 @@ object WeatherDestination : NavigationDestination {
     override val iconContentDescriptionId: Int =
         com.francescsoftware.weathersample.shared.assets.R.string.content_description_back
 
+    /** @{inheritDoc} */
+    override val bottomNavContent = null
+
     private const val routeRoot = "weather"
     private const val cityNameArg = "city"
     private const val countryArg = "country"
     private const val countryCodeArg = "countryCode"
 
     /** The route for the Weather screen */
-    const val weatherRoute: String = "$routeRoot/{$cityNameArg}/{$countryArg}/{$countryCodeArg}"
+    override val route: String = "$routeRoot/{$cityNameArg}/{$countryArg}/{$countryCodeArg}"
 
     /**
      * Gets the weather screen route for a [SelectedCity]

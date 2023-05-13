@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.interactor.weather.api.model
 
+import com.francescsoftware.weathersample.core.type.weather.Speed
+
 /**
  * Wind
  *
@@ -9,6 +11,6 @@ package com.francescsoftware.weathersample.interactor.weather.api.model
  */
 data class TodayWind(
     val direction: String,
-    val speed: Double,
-    val gust: Double,
+    val speed: Speed,
+    val gust: Speed,
 )

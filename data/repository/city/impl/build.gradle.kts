@@ -29,7 +29,7 @@ android {
 dependencies {
     implementation(project(":core:dispatcher"))
     implementation(project(":core:network"))
-    implementation(project(":core:type"))
+    implementation(project(":core:type:either"))
     implementation(project(":data:repository:city:api"))
     testImplementation(project(":testing:fake"))
 

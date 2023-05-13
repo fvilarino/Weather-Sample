@@ -3,9 +3,9 @@ package com.francescsoftware.weathersample.cityrepository.impl
 import com.francescsoftware.weathersample.cityrepository.api.CitiesException
 import com.francescsoftware.weathersample.cityrepository.api.model.City
 import com.francescsoftware.weathersample.cityrepository.api.model.Coordinates
+import com.francescsoftware.weathersample.core.type.either.Either
+import com.francescsoftware.weathersample.core.type.either.throwableOrNull
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
-import com.francescsoftware.weathersample.type.Either
-import com.francescsoftware.weathersample.type.throwableOrNull
 import com.google.common.truth.Truth
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest

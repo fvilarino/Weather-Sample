@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
+import com.francescsoftware.weathersample.core.type.either.valueOrNull
 import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
@@ -8,12 +9,15 @@ import com.francescsoftware.weathersample.interactor.weather.api.model.Forecast
 import com.francescsoftware.weathersample.interactor.weather.api.model.ForecastDay
 import com.francescsoftware.weathersample.interactor.weather.api.model.ForecastEntry
 import com.francescsoftware.weathersample.lookup.api.StringLookup
+import com.francescsoftware.weathersample.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.shared.composable.weather.ForecastHourState
 import com.francescsoftware.weathersample.shared.mvi.Middleware
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.time.api.isToday
 import com.francescsoftware.weathersample.time.api.isTomorrow
-import com.francescsoftware.weathersample.type.valueOrNull
+import com.francescsoftware.weathersample.ui.common.format.weather.drawableId
+import com.francescsoftware.weathersample.ui.common.format.weather.format
+import com.francescsoftware.weathersample.ui.common.format.weather.weatherIconFromCode
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -22,6 +26,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 internal class WeatherMiddleware @Inject constructor(
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
@@ -120,12 +125,12 @@ internal class WeatherMiddleware @Inject constructor(
                 }
             ),
             iconId = weatherIconFromCode(iconCode).drawableId,
-            temperature = temperature.formatTemperature(stringLookup),
-            feelsLikeTemperature = feelsLikeTemperature.formatTemperature(stringLookup),
-            precipitation = precipitation.toString(),
+            temperature = temperature.format(stringLookup),
+            feelsLikeTemperature = feelsLike.format(stringLookup),
+            precipitation = precipitation.millimeters.roundToInt().toString(),
             uvIndex = uvIndex.toString(),
-            windSpeed = windSpeed.formatWind(stringLookup),
-            humidity = humidityPercent.formatHumidity(stringLookup),
-            visibility = visibility.formatVisibility(stringLookup),
+            windSpeed = windSpeed.format(stringLookup),
+            humidity = humidity.format(stringLookup),
+            visibility = visibility.format(stringLookup),
         )
 }

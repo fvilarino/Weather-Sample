@@ -35,7 +35,7 @@ internal fun WeatherError(
         ) {
             Text(
                 text = stringResource(id = R.string.weather_error_loading),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleLarge,
             )
             Spacer(modifier = Modifier.height(MarginDouble))
             OutlinedButton(onClick = retry) {

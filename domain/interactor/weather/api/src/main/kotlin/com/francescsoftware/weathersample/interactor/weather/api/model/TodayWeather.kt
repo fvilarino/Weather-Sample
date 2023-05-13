@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.interactor.weather.api.model
 
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
+
 /**
  * Weather for today
  *
@@ -11,6 +13,6 @@ package com.francescsoftware.weathersample.interactor.weather.api.model
 data class TodayWeather(
     val main: TodayMain,
     val wind: TodayWind,
-    val visibility: Int,
+    val visibility: AverageVisibility,
     val clouds: TodayClouds,
 )

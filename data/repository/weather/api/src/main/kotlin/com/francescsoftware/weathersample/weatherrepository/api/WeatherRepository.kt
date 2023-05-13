@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.weatherrepository.api
 
-import com.francescsoftware.weathersample.type.Either
+import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastResponse
 import com.francescsoftware.weathersample.weatherrepository.api.model.today.TodayWeatherResponse
 

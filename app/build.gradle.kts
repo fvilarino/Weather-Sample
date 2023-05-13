@@ -71,6 +71,8 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:time:api"))
     implementation(project(":core:time:impl"))
+    implementation(project(":core:type:either"))
+    implementation(project(":core:type:weather"))
 
     implementation(project(":data:repository:city:api"))
     implementation(project(":data:repository:city:impl"))
@@ -87,6 +89,7 @@ dependencies {
     implementation(project(":domain:interactor:weather:impl"))
 
     implementation(project(":ui:feature:city"))
+    implementation(project(":ui:feature:favorites"))
     implementation(project(":ui:feature:landing"))
     implementation(project(":ui:feature:weather"))
     implementation(project(":ui:shared:assets"))
@@ -94,6 +97,7 @@ dependencies {
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:lookup:api"))
     implementation(project(":ui:shared:lookup:impl"))
+    implementation(project(":ui:shared:format:weather"))
     implementation(project(":ui:shared:mvi"))
     implementation(project(":ui:shared:route"))
     implementation(project(":ui:shared:styles"))

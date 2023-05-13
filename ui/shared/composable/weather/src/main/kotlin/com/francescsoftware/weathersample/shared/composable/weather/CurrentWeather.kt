@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -41,107 +42,111 @@ fun CurrentWeather(
     state: CurrentWeatherState,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    Card(
         modifier = modifier,
     ) {
-        Row(
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(
-                painter = painterResource(id = state.iconId),
-                contentDescription = null,
-                modifier = Modifier
-                    .weight(SideColumnWeight)
-                    .height(WeatherIconHeight)
-                    .aspectRatio(ratio = 1f, matchHeightConstraintsFirst = true),
-            )
-            Column(
-                modifier = Modifier.weight(CentralColumnWeight),
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
-                    text = state.temperature,
-                    style = MaterialTheme.typography.headlineSmall,
+                Icon(
+                    painter = painterResource(id = state.iconId),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .weight(SideColumnWeight)
+                        .height(WeatherIconHeight)
+                        .aspectRatio(ratio = 1f, matchHeightConstraintsFirst = true),
                 )
-                Text(
-                    text = state.description,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
+                Column(
+                    modifier = Modifier.weight(CentralColumnWeight),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
+                        text = state.temperature,
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+                    Text(
+                        text = state.description,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
+                Column(
+                    modifier = Modifier.weight(SideColumnWeight),
+                ) {
+                    InfoLabels {
+                        WeatherItemLabel(
+                            label = stringResource(id = R.string.temperature_label),
+                        )
+                        WeatherItemContent(
+                            label = state.temperature,
+                            modifier = Modifier.padding(start = MarginSingle),
+                        )
+                        WeatherItemLabel(
+                            label = stringResource(id = R.string.feels_like_label),
+                        )
+                        WeatherItemContent(
+                            label = state.feelsLikeTemperature,
+                            modifier = Modifier.padding(start = MarginSingle),
+                        )
+                        WeatherItemLabel(
+                            label = stringResource(id = R.string.precipitation_label),
+                        )
+                        WeatherItemContent(
+                            label = buildAnnotatedString {
+                                append(state.precipitation)
+                                withStyle(style = SpanStyle(fontSize = 8.sp)) {
+                                    append(stringResource(id = R.string.precipitation_mm))
+                                }
+                            },
+                            modifier = Modifier.padding(start = MarginSingle),
+                        )
+                    }
+                }
             }
-            Column(
-                modifier = Modifier.weight(SideColumnWeight),
-            ) {
-                InfoLabels {
+            Row {
+                InfoLabels(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = MarginTreble)
+                ) {
                     WeatherItemLabel(
-                        label = stringResource(id = R.string.temperature_label),
+                        label = stringResource(id = R.string.wind_speed_label),
                     )
                     WeatherItemContent(
-                        label = state.temperature,
+                        label = state.windSpeed,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                     WeatherItemLabel(
-                        label = stringResource(id = R.string.feels_like_label),
+                        label = stringResource(id = R.string.humidity_label),
                     )
                     WeatherItemContent(
-                        label = state.feelsLikeTemperature,
-                        modifier = Modifier.padding(start = MarginSingle),
-                    )
-                    WeatherItemLabel(
-                        label = stringResource(id = R.string.precipitation_label),
-                    )
-                    WeatherItemContent(
-                        label = buildAnnotatedString {
-                            append(state.precipitation)
-                            withStyle(style = SpanStyle(fontSize = 8.sp)) {
-                                append(stringResource(id = R.string.precipitation_mm))
-                            }
-                        },
+                        label = state.humidity,
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
-            }
-        }
-        Row {
-            InfoLabels(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = MarginTreble)
-            ) {
-                WeatherItemLabel(
-                    label = stringResource(id = R.string.wind_speed_label),
-                )
-                WeatherItemContent(
-                    label = state.windSpeed,
-                    modifier = Modifier.padding(start = MarginSingle),
-                )
-                WeatherItemLabel(
-                    label = stringResource(id = R.string.humidity_label),
-                )
-                WeatherItemContent(
-                    label = state.humidity,
-                    modifier = Modifier.padding(start = MarginSingle),
-                )
-            }
-            InfoLabels(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = MarginTreble)
-            ) {
-                WeatherItemLabel(
-                    label = stringResource(id = R.string.pressure_label),
-                )
-                WeatherItemContent(
-                    label = state.pressure,
-                    modifier = Modifier.padding(start = MarginSingle),
-                )
-                WeatherItemLabel(
-                    label = stringResource(id = R.string.visibility_label),
-                )
-                WeatherItemContent(
-                    label = state.visibility,
-                    modifier = Modifier.padding(start = MarginSingle),
-                )
+                InfoLabels(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = MarginTreble)
+                ) {
+                    WeatherItemLabel(
+                        label = stringResource(id = R.string.pressure_label),
+                    )
+                    WeatherItemContent(
+                        label = state.pressure,
+                        modifier = Modifier.padding(start = MarginSingle),
+                    )
+                    WeatherItemLabel(
+                        label = stringResource(id = R.string.visibility_label),
+                    )
+                    WeatherItemContent(
+                        label = state.visibility,
+                        modifier = Modifier.padding(start = MarginSingle),
+                    )
+                }
             }
         }
     }

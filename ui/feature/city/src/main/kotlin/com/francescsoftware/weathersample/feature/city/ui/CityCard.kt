@@ -3,12 +3,7 @@ package com.francescsoftware.weathersample.feature.city.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +14,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.feature.city.R
 import com.francescsoftware.weathersample.feature.city.model.CityResultModel
+import com.francescsoftware.weathersample.shared.composable.common.FavoriteToggle
 import com.francescsoftware.weathersample.shared.composable.common.InfoLabels
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginSingle
@@ -74,14 +70,10 @@ internal fun CityCard(
                     modifier = Modifier.padding(start = MarginSingle),
                 )
             }
-            IconButton(
-                onClick = { onFavoriteClick(city) }
-            ) {
-                Icon(
-                    imageVector = if (city.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = stringResource(id = R.string.content_description_toggle_favorite),
-                )
-            }
+            FavoriteToggle(
+                isFavorite = city.isFavorite,
+                onClick = { onFavoriteClick(city) },
+            )
         }
     }
 }

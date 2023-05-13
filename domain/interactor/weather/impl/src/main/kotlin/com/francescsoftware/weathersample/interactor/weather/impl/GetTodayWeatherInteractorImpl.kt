@@ -1,16 +1,16 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
+import com.francescsoftware.weathersample.core.type.either.Either
+import com.francescsoftware.weathersample.core.type.either.fold
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.interactor.weather.api.model.TodayWeather
-import com.francescsoftware.weathersample.type.Either
-import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 internal class GetTodayWeatherInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
@@ -25,7 +25,7 @@ internal class GetTodayWeatherInteractorImpl @Inject constructor(
                     val weather = TodayWeather(
                         main = weatherResponse.toTodayMain(),
                         wind = weatherResponse.toTodayWind(),
-                        visibility = weatherResponse.current.visibilityKm.roundToInt(),
+                        visibility = AverageVisibility.fromKm(weatherResponse.current.visibilityKm),
                         clouds = weatherResponse.toTodayClouds(),
                     )
                     Either.Success(weather)

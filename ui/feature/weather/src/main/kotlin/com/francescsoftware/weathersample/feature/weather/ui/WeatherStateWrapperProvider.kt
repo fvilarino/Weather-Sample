@@ -2,11 +2,11 @@ package com.francescsoftware.weathersample.feature.weather.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastDayState
-import com.francescsoftware.weathersample.feature.weather.viewmodel.ForecastHeaderState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.shared.assets.R
 import com.francescsoftware.weathersample.shared.composable.weather.CurrentWeatherState
+import com.francescsoftware.weathersample.shared.composable.weather.ForecastHeaderState
 import kotlinx.collections.immutable.persistentListOf
 
 internal data class WeatherStateWrapper(

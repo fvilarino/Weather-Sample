@@ -1,5 +1,12 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
+import com.francescsoftware.weathersample.core.type.weather.Humidity
+import com.francescsoftware.weathersample.core.type.weather.Precipitation
+import com.francescsoftware.weathersample.core.type.weather.Pressure
+import com.francescsoftware.weathersample.core.type.weather.Speed
+import com.francescsoftware.weathersample.core.type.weather.Temperature
+import com.francescsoftware.weathersample.core.type.weather.UvIndex
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.interactor.weather.api.model.Current
 import com.francescsoftware.weathersample.interactor.weather.api.model.ForecastEntry
@@ -30,19 +37,19 @@ internal fun TodayWeatherResponse.toTodayMain(): TodayMain =
     TodayMain(
         code = current.condition.code,
         description = current.condition.text,
-        temperature = current.tempCelsius,
-        feelsLike = current.feelsLikeCelsius,
-        humidity = current.humidity,
-        pressure = current.pressureMb.roundToInt(),
-        precipitation = current.precipitationMm.roundToInt(),
-        uvIndex = current.uvIndex.roundToInt(),
+        temperature = Temperature.fromCelsius(current.tempCelsius),
+        feelsLike = Temperature.fromCelsius(current.feelsLikeCelsius),
+        humidity = Humidity(current.humidity),
+        pressure = Pressure.fromMillibars(current.pressureMb),
+        precipitation = Precipitation.fromMillimeters(current.precipitationMm),
+        uvIndex = UvIndex(current.uvIndex.roundToInt()),
     )
 
 internal fun TodayWeatherResponse.toTodayWind(): TodayWind =
     TodayWind(
         direction = current.windDirection,
-        speed = current.windKph,
-        gust = current.gustKph,
+        speed = Speed.fromKph(current.windKph),
+        gust = Speed.fromKph(current.gustKph),
     )
 
 internal fun TodayWeatherResponse.toTodayClouds(): TodayClouds =
@@ -53,11 +60,15 @@ internal fun TodayWeatherResponse.toTodayClouds(): TodayClouds =
 internal fun RepoCurrent.toCurrent(): Current = Current(
     description = condition.text,
     code = condition.code,
-    temperature = tempCelsius,
-    feelsLike = feelsLikeCelsius,
-    humidity = humidity,
-    pressure = pressureMb,
-    precipitation = precipitationMm,
+    temperature = Temperature.fromCelsius(tempCelsius),
+    feelsLike = Temperature.fromCelsius(feelsLikeCelsius),
+    wind = Speed.fromKph(windKph),
+    humidity = Humidity(humidity),
+    pressure = Pressure.fromMillibars(pressureMb),
+    precipitation = Precipitation.fromMillimeters(precipitationMm),
+    uvIndex = UvIndex(uvIndex.roundToInt()),
+    visibility = AverageVisibility.fromKm(visibilityKm),
+    iconCode = condition.code,
 )
 
 internal fun ForecastHour.toForecastEntry(
@@ -66,11 +77,11 @@ internal fun ForecastHour.toForecastEntry(
     date = this.time.let { date -> timerParser.parseDate(Iso8601DateTime(date)) },
     description = condition.text,
     iconCode = condition.code,
-    temperature = tempCelsius,
-    feelsLikeTemperature = feelsLikeCelsius,
-    precipitation = precipitationMm.roundToInt(),
-    windSpeed = windKph,
-    uvIndex = uvIndex.roundToInt(),
-    humidityPercent = humidity,
-    visibility = visibilityKm.roundToInt(),
+    temperature = Temperature.fromCelsius(tempCelsius),
+    feelsLike = Temperature.fromCelsius(feelsLikeCelsius),
+    precipitation = Precipitation.fromMillimeters(precipitationMm),
+    windSpeed = Speed.fromKph(windKph),
+    uvIndex = UvIndex(uvIndex.roundToInt()),
+    humidity = Humidity(humidity),
+    visibility = AverageVisibility.fromKm(visibilityKm),
 )

@@ -8,16 +8,8 @@
     <string name="forecast_weather_button_label">Forecast</string>
     <string name="uv_index_label">UV:</string>
     <string name="content_description_weather_icon">Weather icon</string>
-    <string name="formatted_temperature">%1$.1f°C</string>
-    <string name="formatted_wind">%1$.1f kph</string>
-    <string name="formatted_humidity">%1$d %%</string>
-    <string name="formatted_pressure">%1$d mb</string>
-    <string name="formatted_visibility">%1$d km</string>
-    <string name="formatted_precipitation">%1$dmm</string>
     <string name="retry">Retry</string>
     <string name="failed_to_load_weather_data">Failed to load weather data</string>
-    <string name="sunrise_label">Sunrise:</string>
-    <string name="sunset_label">Sunset:</string>
     <string name="content_description_forecast_icon">Forecast icon</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>

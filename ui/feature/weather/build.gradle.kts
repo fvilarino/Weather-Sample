@@ -11,8 +11,10 @@ android {
 
 dependencies {
     implementation(project(":core:time:api"))
+    implementation(project(":core:type:weather"))
     implementation(project(":domain:interactor:weather:api"))
     implementation(project(":ui:shared:composable:weather"))
+    implementation(project(":ui:shared:format:weather"))
 
     // compose
     implementation(libs.androidx.navigation.navigation.compose)

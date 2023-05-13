@@ -1,7 +1,7 @@
 package com.francescsoftware.weathersample.interactor.city.api
 
+import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.interactor.city.api.model.Cities
-import com.francescsoftware.weathersample.type.Either
 
 /** Gets a list of cities matching the prefix */
 interface GetCitiesInteractor {

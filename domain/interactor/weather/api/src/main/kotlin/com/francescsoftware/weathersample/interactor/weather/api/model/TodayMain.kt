@@ -1,5 +1,11 @@
 package com.francescsoftware.weathersample.interactor.weather.api.model
 
+import com.francescsoftware.weathersample.core.type.weather.Humidity
+import com.francescsoftware.weathersample.core.type.weather.Precipitation
+import com.francescsoftware.weathersample.core.type.weather.Pressure
+import com.francescsoftware.weathersample.core.type.weather.Temperature
+import com.francescsoftware.weathersample.core.type.weather.UvIndex
+
 /**
  * Main weather attributes
  *
@@ -15,10 +21,10 @@ package com.francescsoftware.weathersample.interactor.weather.api.model
 data class TodayMain(
     val description: String,
     val code: Int,
-    val temperature: Double,
-    val feelsLike: Double,
-    val humidity: Int,
-    val pressure: Int,
-    val precipitation: Int,
-    val uvIndex: Int,
+    val temperature: Temperature,
+    val feelsLike: Temperature,
+    val humidity: Humidity,
+    val pressure: Pressure,
+    val precipitation: Precipitation,
+    val uvIndex: UvIndex,
 )

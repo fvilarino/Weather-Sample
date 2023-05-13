@@ -8,4 +8,6 @@
     <string name="humidity_label">Humidity:</string>
     <string name="pressure_label">Pressure:</string>
     <string name="visibility_label">Visibility:</string>
+    <string name="sunrise_label">Sunrise:</string>
+    <string name="sunset_label">Sunset:</string>
 </resources>

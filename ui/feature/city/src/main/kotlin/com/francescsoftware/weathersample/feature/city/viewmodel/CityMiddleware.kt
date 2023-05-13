@@ -1,6 +1,9 @@
 package com.francescsoftware.weathersample.feature.city.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
+import com.francescsoftware.weathersample.core.type.either.Either
+import com.francescsoftware.weathersample.core.type.either.fold
+import com.francescsoftware.weathersample.core.type.either.map
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.feature.city.R
 import com.francescsoftware.weathersample.feature.city.model.CityResultModel
@@ -12,9 +15,6 @@ import com.francescsoftware.weathersample.interactor.city.api.model.City
 import com.francescsoftware.weathersample.interactor.city.api.model.FavoriteCity
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.shared.mvi.Middleware
-import com.francescsoftware.weathersample.type.Either
-import com.francescsoftware.weathersample.type.fold
-import com.francescsoftware.weathersample.type.map
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

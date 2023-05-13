@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
+import com.francescsoftware.weathersample.core.type.either.Either
+import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.interactor.weather.api.GetForecastInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
@@ -10,8 +12,6 @@ import com.francescsoftware.weathersample.time.api.Iso8601DateTime
 import com.francescsoftware.weathersample.time.api.TimeFormatter
 import com.francescsoftware.weathersample.time.api.TimeParser
 import com.francescsoftware.weathersample.time.api.TimeParsingException
-import com.francescsoftware.weathersample.type.Either
-import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
 import com.francescsoftware.weathersample.weatherrepository.api.model.forecast.ForecastResponse
 import kotlinx.coroutines.withContext

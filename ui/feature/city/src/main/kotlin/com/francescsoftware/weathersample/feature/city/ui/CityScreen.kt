@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -19,11 +21,13 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.deviceclass.DeviceClass
+import com.francescsoftware.weathersample.feature.city.R
 import com.francescsoftware.weathersample.feature.city.model.CityResultModel
 import com.francescsoftware.weathersample.feature.city.model.RecentCityModel
 import com.francescsoftware.weathersample.feature.city.viewmodel.CityState
@@ -32,6 +36,8 @@ import com.francescsoftware.weathersample.feature.city.viewmodel.LoadState
 import com.francescsoftware.weathersample.presentation.route.CitySearchDestination
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
 import com.francescsoftware.weathersample.shared.composable.common.DualPane
+import com.francescsoftware.weathersample.shared.composable.common.GenericMessage
+import com.francescsoftware.weathersample.shared.composable.common.ProgressIndicator
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.MarginQuad
 import com.francescsoftware.weathersample.styles.PhonePreviews
@@ -191,7 +197,7 @@ private fun Cities(
             LoadState.Idle -> {
             }
 
-            LoadState.Loading -> CitiesLoading(
+            LoadState.Loading -> ProgressIndicator(
                 modifier = Modifier.fillMaxSize(),
             )
 
@@ -202,11 +208,14 @@ private fun Cities(
                 modifier = Modifier.fillMaxSize(),
             )
 
-            LoadState.NoResults -> CitiesNoResults(
+            LoadState.NoResults -> GenericMessage(
+                message = stringResource(id = R.string.no_results_found_label),
                 modifier = Modifier.fillMaxSize(),
             )
 
-            LoadState.Error -> CitiesLoadError(
+            LoadState.Error -> GenericMessage(
+                message = stringResource(id = R.string.city_error_loading),
+                icon = Icons.Default.Warning,
                 modifier = Modifier.fillMaxSize(),
             )
         }

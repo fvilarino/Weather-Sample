@@ -1,7 +1,7 @@
 package com.francescsoftware.weathersample.weatherrepository.impl
 
+import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
-import com.francescsoftware.weathersample.type.Either
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation
 import com.francescsoftware.weathersample.weatherrepository.impl.WeatherRepositoryImpl
 import com.francescsoftware.weathersample.weatherrepository.impl.WeatherService
