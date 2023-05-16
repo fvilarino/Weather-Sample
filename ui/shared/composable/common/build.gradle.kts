@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.shared.composable.common"
+    namespace = "com.francescsoftware.weathersample.ui.shared.composable.common"
 
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + listOf(

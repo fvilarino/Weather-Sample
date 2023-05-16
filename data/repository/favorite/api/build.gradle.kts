@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.repository.favorite.api"
+    namespace = "com.francescsoftware.weathersample.data.repository.favorite.api"
 }
 
 dependencies {

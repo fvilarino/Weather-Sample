@@ -1,9 +1,9 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.viewmodel
 
-import com.francescsoftware.weathersample.interactor.city.api.DeleteFavoriteCityInteractor
-import com.francescsoftware.weathersample.interactor.city.api.model.FavoriteCity
-import com.francescsoftware.weathersample.shared.mvi.Middleware
+import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteFavoriteCityInteractor
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.FavoriteCity
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.City
+import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

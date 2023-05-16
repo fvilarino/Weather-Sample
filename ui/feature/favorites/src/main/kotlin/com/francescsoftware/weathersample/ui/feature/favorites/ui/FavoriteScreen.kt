@@ -10,14 +10,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.francescsoftware.weathersample.deviceclass.DeviceClass
-import com.francescsoftware.weathersample.shared.composable.common.GenericMessage
-import com.francescsoftware.weathersample.shared.composable.common.ProgressIndicator
-import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.feature.favorites.R
 import com.francescsoftware.weathersample.ui.feature.favorites.viewmodel.FavoriteState
 import com.francescsoftware.weathersample.ui.feature.favorites.viewmodel.FavoriteViewModel
 import com.francescsoftware.weathersample.ui.feature.favorites.viewmodel.LoadState
+import com.francescsoftware.weathersample.ui.shared.composable.common.GenericMessage
+import com.francescsoftware.weathersample.ui.shared.composable.common.ProgressIndicator
+import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
+import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 
 @Composable
 internal fun FavoriteScreen(

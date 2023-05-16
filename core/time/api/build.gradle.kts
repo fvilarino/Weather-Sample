@@ -4,5 +4,5 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.time.api"
+    namespace = "com.francescsoftware.weathersample.core.time.api"
 }

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.feature.city"
+    namespace = "com.francescsoftware.weathersample.ui.feature.city"
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs +
             "-opt-in=kotlinx.coroutines.FlowPreview" +

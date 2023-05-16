@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.weatherrepository.impl"
+    namespace = "com.francescsoftware.weathersample.data.repository.weather.impl"
     val rapidApiKey = ConfigKeys.rapidApiKey
     buildTypes {
         all {

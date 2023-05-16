@@ -1,11 +1,11 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.viewmodel
 
-import com.francescsoftware.weathersample.coroutines.CloseableCoroutineScope
-import com.francescsoftware.weathersample.shared.mvi.Action
-import com.francescsoftware.weathersample.shared.mvi.MviViewModel
-import com.francescsoftware.weathersample.shared.mvi.State
+import com.francescsoftware.weathersample.core.coroutines.CloseableCoroutineScope
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.City
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.FavoritePagerState
+import com.francescsoftware.weathersample.ui.shared.mvi.Action
+import com.francescsoftware.weathersample.ui.shared.mvi.MviViewModel
+import com.francescsoftware.weathersample.ui.shared.mvi.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import javax.inject.Inject

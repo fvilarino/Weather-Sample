@@ -1,9 +1,9 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.ui
 
-import com.francescsoftware.weathersample.shared.assets.R
-import com.francescsoftware.weathersample.shared.composable.weather.CurrentWeatherState
-import com.francescsoftware.weathersample.shared.composable.weather.ForecastHeaderState
-import com.francescsoftware.weathersample.shared.composable.weather.ForecastHourState
+import com.francescsoftware.weathersample.ui.shared.assets.R
+import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
 import kotlinx.collections.immutable.persistentListOf
 
 private val PartlyCloudyHourForecast = ForecastHourState(

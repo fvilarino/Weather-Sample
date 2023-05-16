@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.shared.composable.weather"
+    namespace = "com.francescsoftware.weathersample.ui.shared.composable.weather"
 
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"

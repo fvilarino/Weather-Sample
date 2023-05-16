@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.dispather"
+    namespace = "com.francescsoftware.weathersample.core.dispather"
 }
 
 dependencies {

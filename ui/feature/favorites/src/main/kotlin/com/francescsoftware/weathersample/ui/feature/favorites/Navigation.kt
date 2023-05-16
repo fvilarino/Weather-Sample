@@ -5,10 +5,10 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.francescsoftware.weathersample.deviceclass.DeviceClass
-import com.francescsoftware.weathersample.presentation.route.FavoritesDestination
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.FavoriteScreen
 import com.francescsoftware.weathersample.ui.feature.favorites.viewmodel.FavoriteViewModel
+import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
+import com.francescsoftware.weathersample.ui.shared.route.FavoritesDestination
 
 /**
  * Add Favorites destination to Nav Graph

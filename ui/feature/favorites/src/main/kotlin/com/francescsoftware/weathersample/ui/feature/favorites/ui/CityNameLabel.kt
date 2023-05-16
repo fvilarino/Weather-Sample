@@ -14,10 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.francescsoftware.weathersample.styles.MarginDouble
-import com.francescsoftware.weathersample.styles.WeatherSampleTheme
-import com.francescsoftware.weathersample.styles.WidgetPreviews
 import com.francescsoftware.weathersample.ui.feature.favorites.R
+import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
+import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
 
 @Composable
 internal fun CityNameLabel(
