@@ -20,9 +20,11 @@ dependencies {
     implementation(libs.androidx.room.room.runtime)
     ksp(libs.androidx.room.room.compiler)
 
+    testImplementation(libs.bundles.android.test)
     testImplementation(libs.androidx.room.room.testing)
     testImplementation(libs.org.robolectric.robolectric)
 }
+
 internal class RoomSchemaArgProvider(
     @get:InputDirectory
     @get:PathSensitive(PathSensitivity.RELATIVE)
