@@ -53,6 +53,13 @@ naming:
 
 style:
   active: true
+  MagicNumber:
+    active: true
+    ignoreAnnotated:
+      - 'Preview'
+      - 'PhonePreviews'
+      - 'TabletPreviews'
+      - 'WidgetPreviews'
   UnusedPrivateMember:
     active: true
     ignoreAnnotated:

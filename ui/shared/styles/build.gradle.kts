@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.shared.styles"
+    namespace = "com.francescsoftware.weathersample.ui.shared.styles"
 }
 
 dependencies {

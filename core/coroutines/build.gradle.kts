@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.coroutines"
+    namespace = "com.francescsoftware.weathersample.core.coroutines"
 }
 
 dependencies {

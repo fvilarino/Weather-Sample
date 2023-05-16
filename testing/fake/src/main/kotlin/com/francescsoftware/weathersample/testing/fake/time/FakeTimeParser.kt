@@ -1,8 +1,8 @@
 package com.francescsoftware.weathersample.testing.fake.time
 
-import com.francescsoftware.weathersample.time.api.Iso8601Date
-import com.francescsoftware.weathersample.time.api.Iso8601DateTime
-import com.francescsoftware.weathersample.time.api.TimeParser
+import com.francescsoftware.weathersample.core.time.api.Iso8601Date
+import com.francescsoftware.weathersample.core.time.api.Iso8601DateTime
+import com.francescsoftware.weathersample.core.time.api.TimeParser
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

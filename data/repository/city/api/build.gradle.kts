@@ -3,9 +3,9 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.cityrepository.api"
+    namespace = "com.francescsoftware.weathersample.data.repository.city.api"
 }
 
 dependencies {
-    implementation(project(":core:type"))
+    implementation(project(":core:type:either"))
 }

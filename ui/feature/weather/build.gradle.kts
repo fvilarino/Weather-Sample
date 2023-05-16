@@ -6,15 +6,17 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.feature.weather"
+    namespace = "com.francescsoftware.weathersample.ui.feature.weather"
 }
 
 dependencies {
     implementation(project(":core:time:api"))
+    implementation(project(":core:type:weather"))
     implementation(project(":domain:interactor:weather:api"))
+    implementation(project(":ui:shared:composable:weather"))
+    implementation(project(":ui:shared:format:weather"))
 
     // compose
-    implementation(libs.bundles.compose)
     implementation(libs.androidx.navigation.navigation.compose)
     implementation(libs.androidx.hilt.hilt.navigation.compose)
 }
