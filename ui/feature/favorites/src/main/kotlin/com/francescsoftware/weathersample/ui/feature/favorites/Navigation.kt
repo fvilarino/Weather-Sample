@@ -16,7 +16,6 @@ import com.francescsoftware.weathersample.ui.feature.favorites.viewmodel.Favorit
  * @param deviceClass - The [DeviceClass] the composable is running on
  * @receiver The [NavGraphBuilder] this destination should be added to.
  */
-
 fun NavGraphBuilder.addFavoritesDestination(
     deviceClass: DeviceClass,
 ) {

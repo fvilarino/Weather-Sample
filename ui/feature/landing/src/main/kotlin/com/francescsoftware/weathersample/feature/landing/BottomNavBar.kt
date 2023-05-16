@@ -7,13 +7,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import com.francescsoftware.weathersample.presentation.route.NavigationDestination
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun BottomNavBar(
     items: ImmutableList<NavigationDestination>,
-    currentRoute: String?,
+    currentDestination: NavDestination?,
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -23,7 +25,9 @@ internal fun BottomNavBar(
         items.forEach { destination ->
             val content = requireNotNull(destination.bottomNavContent)
             NavigationBarItem(
-                selected = destination.isRoute(currentRoute),
+                selected = currentDestination?.hierarchy?.any { navDestination ->
+                    navDestination.route == destination.route
+                } == true,
                 icon = {
                     Icon(
                         imageVector = content.icon,

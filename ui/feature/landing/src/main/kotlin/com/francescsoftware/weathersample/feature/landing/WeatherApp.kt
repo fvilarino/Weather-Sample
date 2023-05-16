@@ -41,7 +41,6 @@ internal fun WeatherApp() {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         val currentDestination = NavigationDestination.fromRoute(currentRoute)
-
         Scaffold(
             topBar = {
                 AppBar(
@@ -62,8 +61,7 @@ internal fun WeatherApp() {
                 {
                     BottomNavBar(
                         items = bottomBarItems,
-                        currentRoute = currentRoute,
-                        modifier = Modifier.fillMaxWidth(),
+                        currentDestination = navBackStackEntry?.destination,
                         onClick = { destination ->
                             navController.navigate(destination) {
                                 popUpTo(navController.graph.findStartDestination().id) {
@@ -73,6 +71,7 @@ internal fun WeatherApp() {
                                 restoreState = true
                             }
                         },
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             },
@@ -83,8 +82,16 @@ internal fun WeatherApp() {
                 if (deviceClass == DeviceClass.Expanded) {
                     NavRail(
                         items = bottomBarItems,
-                        currentRoute = currentRoute,
-                        onClick = { route -> navController.navigate(route) },
+                        currentDestination = navBackStackEntry?.destination,
+                        onClick = { destination ->
+                            navController.navigate(destination) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
                     )
                 }
                 NavHost(
