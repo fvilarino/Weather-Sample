@@ -1,9 +1,9 @@
 package com.francescsoftware.weathersample.weatherrepository.impl
 
+import com.francescsoftware.weathersample.core.type.either.Either
+import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.network.safeApiCall
-import com.francescsoftware.weathersample.type.Either
-import com.francescsoftware.weathersample.type.fold
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherException
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherLocation
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository

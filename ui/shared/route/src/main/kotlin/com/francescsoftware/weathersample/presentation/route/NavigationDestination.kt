@@ -3,9 +3,31 @@ package com.francescsoftware.weathersample.presentation.route
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
+
+/**
+ * Payload for bottom navigation destinations
+ *
+ * @property labelId the label to display on the bottom nav bar
+ * @property icon the icon to display on the bottom nav bar
+ * @property contentDescriptionId the content description associated with this nav bar item
+ */
+data class BottomNavContent(
+    @get: StringRes
+    val labelId: Int,
+
+    val icon: ImageVector,
+
+    @get: StringRes
+    val contentDescriptionId: Int
+)
 
 /** Navigation destination */
 sealed interface NavigationDestination {
+
+    /** This [NavigationDestination] route */
+    val route: String
+
     /** Title to display on the action bar */
     @get: StringRes
     val titleId: Int
@@ -14,9 +36,12 @@ sealed interface NavigationDestination {
     @get: DrawableRes
     val iconId: Int
 
-    /** Content desctiption for hte [iconId] */
+    /** Content description for hte [iconId] */
     @get: StringRes
     val iconContentDescriptionId: Int
+
+    /** The content for the bottom navigation bar */
+    val bottomNavContent: BottomNavContent?
 
     /**
      * Checks whether the [route] represents this destination
@@ -43,6 +68,7 @@ sealed interface NavigationDestination {
                 CitySearchDestination.isRoute(route) -> CitySearchDestination
 
             WeatherDestination.isRoute(route) -> WeatherDestination
+            FavoritesDestination.isRoute(route) -> FavoritesDestination
             else -> error("Unknown route [$route]")
         }
     }

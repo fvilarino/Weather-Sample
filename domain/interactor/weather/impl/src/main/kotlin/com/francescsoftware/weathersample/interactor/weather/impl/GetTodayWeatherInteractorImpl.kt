@@ -1,27 +1,23 @@
 package com.francescsoftware.weathersample.interactor.weather.impl
 
+import com.francescsoftware.weathersample.core.type.either.Either
+import com.francescsoftware.weathersample.core.type.either.fold
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
-import com.francescsoftware.weathersample.interactor.weather.api.TodayClouds
-import com.francescsoftware.weathersample.interactor.weather.api.TodayMain
-import com.francescsoftware.weathersample.interactor.weather.api.TodayWeather
-import com.francescsoftware.weathersample.interactor.weather.api.TodayWind
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.type.Either
-import com.francescsoftware.weathersample.type.fold
+import com.francescsoftware.weathersample.interactor.weather.api.model.TodayWeather
 import com.francescsoftware.weathersample.weatherrepository.api.WeatherRepository
-import com.francescsoftware.weathersample.weatherrepository.api.model.today.TodayWeatherResponse
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 internal class GetTodayWeatherInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val dispatcherProvider: DispatcherProvider,
 ) : GetTodayWeatherInteractor {
 
-    override suspend fun execute(location: WeatherLocation): Either<TodayWeather> {
+    override suspend operator fun invoke(location: WeatherLocation): Either<TodayWeather> {
         val response = weatherRepository.getTodayWeather(location.toRepositoryLocation())
         return response.fold(
             onSuccess = { weatherResponse ->
@@ -29,7 +25,7 @@ internal class GetTodayWeatherInteractorImpl @Inject constructor(
                     val weather = TodayWeather(
                         main = weatherResponse.toTodayMain(),
                         wind = weatherResponse.toTodayWind(),
-                        visibility = weatherResponse.current.visibilityKm.roundToInt(),
+                        visibility = AverageVisibility.fromKm(weatherResponse.current.visibilityKm),
                         clouds = weatherResponse.toTodayClouds(),
                     )
                     Either.Success(weather)
@@ -45,28 +41,4 @@ internal class GetTodayWeatherInteractorImpl @Inject constructor(
             },
         )
     }
-
-    private fun TodayWeatherResponse.toTodayMain(): TodayMain =
-        TodayMain(
-            code = current.condition.code,
-            description = current.condition.text,
-            temp = current.tempCelsius,
-            feelsLike = current.feelsLikeCelsius,
-            humidity = current.humidity,
-            pressure = current.pressureMb.roundToInt(),
-            precipitation = current.precipitationMm.roundToInt(),
-            uvIndex = current.uvIndex.roundToInt(),
-        )
-
-    private fun TodayWeatherResponse.toTodayWind(): TodayWind =
-        TodayWind(
-            direction = current.windDirection,
-            speed = current.windKph,
-            gust = current.gustKph,
-        )
-
-    private fun TodayWeatherResponse.toTodayClouds(): TodayClouds =
-        TodayClouds(
-            all = current.cloud,
-        )
 }

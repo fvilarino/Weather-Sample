@@ -31,6 +31,7 @@ import kotlinx.collections.immutable.persistentListOf
 internal fun CitiesList(
     state: CityState,
     onCityClick: (SelectedCity) -> Unit,
+    onFavoriteClick: (CityResultModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -50,6 +51,7 @@ internal fun CitiesList(
             CityCard(
                 city = city,
                 onClick = { model -> onCityClick(model.toSelectedCity()) },
+                onFavoriteClick = onFavoriteClick,
                 modifier = Modifier.fillMaxWidth(),
                 contentPadding = PaddingValues(all = MarginSingle),
             )
@@ -83,7 +85,8 @@ private fun CitiesListPreview() {
                         LondonCityModel,
                     ),
                 ),
-                onCityClick = {},
+                onCityClick = { },
+                onFavoriteClick = { },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(all = MarginDouble),

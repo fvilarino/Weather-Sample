@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.feature.city.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.coroutines.CloseableCoroutineScope
+import com.francescsoftware.weathersample.feature.city.model.CityResultModel
 import com.francescsoftware.weathersample.feature.city.model.RecentCityModel
 import com.francescsoftware.weathersample.presentation.route.SelectedCity
 import com.francescsoftware.weathersample.shared.mvi.MviViewModel
@@ -35,6 +36,10 @@ internal class CityViewModel @Inject constructor(
 
     fun onCityClick(selectedCity: SelectedCity) {
         handleAction(CityAction.OnCityClick(RecentCityModel(name = selectedCity.name)))
+    }
+
+    fun onFavoriteClick(cityResultModel: CityResultModel) {
+        handleAction(CityAction.OnFavoriteClick(city = cityResultModel))
     }
 
     fun onChipClick(recent: RecentCityModel) {

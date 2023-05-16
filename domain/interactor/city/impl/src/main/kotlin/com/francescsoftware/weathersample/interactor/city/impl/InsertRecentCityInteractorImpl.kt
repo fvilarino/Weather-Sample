@@ -10,7 +10,8 @@ import com.francescsoftware.weathersample.repository.recents.api.RecentCity as R
 internal class InsertRecentCityInteractorImpl @Inject constructor(
     private val recentsRepository: RecentsRepository
 ) : InsertRecentCityInteractor {
-    override suspend fun execute(city: RecentCity) {
+
+    override suspend operator fun invoke(city: RecentCity) {
         recentsRepository.saveRecentCity(
             RepoCity(
                 name = city.name.lowercase().replaceFirstChar { it.titlecase(Locale.getDefault()) }

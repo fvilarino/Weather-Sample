@@ -15,7 +15,7 @@ fun NavGraphBuilder.addWeatherDetailsDestination(
     deviceClass: DeviceClass,
 ) {
     composable(
-        route = WeatherDestination.weatherRoute,
+        route = WeatherDestination.route,
     ) {
         val weatherViewModel: WeatherViewModel = hiltViewModel()
         WeatherScreen(

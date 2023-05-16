@@ -40,7 +40,7 @@ internal class RecentCitiesMiddleware @Inject constructor(
 
     private fun loadRecentCities() {
         if (recentsJob == null) {
-            recentsJob = getRecentCitiesInteractor.execute(limit = MaxRecentCities)
+            recentsJob = getRecentCitiesInteractor(limit = MaxRecentCities)
                 .map { cities -> cities.map { city -> RecentCityModel(name = city.name) } }
                 .onEach { recentCities ->
                     if (recentCities.isEmpty()) {
@@ -59,7 +59,7 @@ internal class RecentCitiesMiddleware @Inject constructor(
 
     private fun saveCity(recentCityModel: RecentCityModel) {
         scope.launch {
-            insertRecentCitiesInteractor.execute(RecentCity(name = recentCityModel.name))
+            insertRecentCitiesInteractor(RecentCity(name = recentCityModel.name))
         }
     }
 
@@ -78,7 +78,7 @@ internal class RecentCitiesMiddleware @Inject constructor(
 
     private fun onDeleteChip(recentCityModel: RecentCityModel) {
         scope.launch {
-            deleteRecentCityInteractor.execute(city = RecentCity(name = recentCityModel.name))
+            deleteRecentCityInteractor(city = RecentCity(name = recentCityModel.name))
         }
     }
 }

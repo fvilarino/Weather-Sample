@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":ui:shared:composable"))
+    implementation(project(":ui:shared:composable:common"))
     implementation(project(":ui:shared:assets"))
 
     implementation(libs.androidx.compose.ui.ui)

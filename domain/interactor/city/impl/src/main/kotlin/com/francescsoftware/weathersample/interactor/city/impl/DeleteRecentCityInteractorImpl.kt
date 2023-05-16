@@ -9,7 +9,8 @@ import com.francescsoftware.weathersample.repository.recents.api.RecentCity as R
 internal class DeleteRecentCityInteractorImpl @Inject constructor(
     private val recentsRepository: RecentsRepository
 ) : DeleteRecentCityInteractor {
-    override suspend fun execute(city: RecentCity) {
+
+    override suspend operator fun invoke(city: RecentCity) {
         recentsRepository.deleteRecentCity(
             RepoCity(name = city.name)
         )

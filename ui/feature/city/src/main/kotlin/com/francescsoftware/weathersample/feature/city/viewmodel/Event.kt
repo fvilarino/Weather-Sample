@@ -44,7 +44,7 @@ internal sealed interface CityAction : Action {
     data class CitiesLoaded(val cities: List<CityResultModel>) : CityAction
     data class RecentCitiesLoaded(val recentCities: List<RecentCityModel>) : CityAction
     data class OnCityClick(val cityModel: RecentCityModel) : CityAction
-
+    data class OnFavoriteClick(val city: CityResultModel) : CityAction
     data class OnChipClick(val recentCityModel: RecentCityModel) : CityAction
     data class OnDeleteChipClick(val recentCityModel: RecentCityModel) : CityAction
     object Start : CityAction

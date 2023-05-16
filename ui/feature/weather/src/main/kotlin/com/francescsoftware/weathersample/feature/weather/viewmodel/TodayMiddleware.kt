@@ -1,11 +1,11 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
+import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.feature.weather.R
 import com.francescsoftware.weathersample.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.lookup.api.StringLookup
 import com.francescsoftware.weathersample.shared.mvi.Middleware
-import com.francescsoftware.weathersample.type.fold
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,7 +41,7 @@ internal class TodayMiddleware @Inject constructor(
             name = name,
             countryCode = countryCode,
         )
-        getTodayWeatherInteractor.execute(location).fold(
+        getTodayWeatherInteractor(location).fold(
             onSuccess = { todayWeather ->
                 dispatch(
                     WeatherAction.TodayLoaded(

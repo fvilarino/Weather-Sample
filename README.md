@@ -3,7 +3,7 @@
 ## Introduction
 Weather Sample is a simple weather app showcasing some of the material principles.
 
-The app is multimodule, written in Kotlin using Jetpack Compose for the UI. The app consists of 2 screens, a city search screen and a weather screen. The weather screen is itself split into 2 sections, current weather and forecast.
+The app is multimodule, written in Kotlin using Jetpack Compose for the UI. The app consists of 3 screens, a city search screen, a weather screen for a specific city split into current weather and forecast, and a carousel of favorite cities displaying current weather and forecast for each city.
 
 ## Getting set up
 1. Clone the project
@@ -41,5 +41,4 @@ $ ./gradlew assembleDebug -PbuildNumber=1
 * AAC Navigation
 * MVI
 
-https://user-images.githubusercontent.com/2680481/221377508-b1531f39-92a3-4431-9bf8-14e0e72b603a.mp4
-
+https://github.com/fvilarino/Weather-Sample/assets/2680481/647399e0-6cf9-45fa-84f2-e3bf5be4111a

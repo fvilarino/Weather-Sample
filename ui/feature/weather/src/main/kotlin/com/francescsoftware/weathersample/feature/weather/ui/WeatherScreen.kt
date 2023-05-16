@@ -15,7 +15,7 @@ import com.francescsoftware.weathersample.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherViewModel
-import com.francescsoftware.weathersample.shared.composable.LoadingSpinner
+import com.francescsoftware.weathersample.shared.composable.common.LoadingSpinner
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.PhonePreviews
 import com.francescsoftware.weathersample.styles.TabletPreviews

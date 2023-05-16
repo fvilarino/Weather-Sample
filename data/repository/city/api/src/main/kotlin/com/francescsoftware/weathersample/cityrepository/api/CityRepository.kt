@@ -1,7 +1,7 @@
 package com.francescsoftware.weathersample.cityrepository.api
 
 import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
-import com.francescsoftware.weathersample.type.Either
+import com.francescsoftware.weathersample.core.type.either.Either
 
 /** Repository for cities */
 interface CityRepository {

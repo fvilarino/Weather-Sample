@@ -7,5 +7,5 @@ interface DeleteRecentCityInteractor {
      *
      * @param city - the [RecentCity] to delete
      */
-    suspend fun execute(city: RecentCity)
+    suspend operator fun invoke(city: RecentCity)
 }

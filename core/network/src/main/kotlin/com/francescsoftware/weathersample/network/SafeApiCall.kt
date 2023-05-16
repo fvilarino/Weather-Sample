@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.network
 
-import com.francescsoftware.weathersample.type.Either
+import com.francescsoftware.weathersample.core.type.either.Either
 import retrofit2.HttpException
 import java.io.IOException
 import kotlin.coroutines.cancellation.CancellationException

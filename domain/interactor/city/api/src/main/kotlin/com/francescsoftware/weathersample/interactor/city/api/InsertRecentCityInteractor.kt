@@ -8,5 +8,5 @@ interface InsertRecentCityInteractor {
      *
      * @param city - the city to store
      */
-    suspend fun execute(city: RecentCity)
+    suspend operator fun invoke(city: RecentCity)
 }

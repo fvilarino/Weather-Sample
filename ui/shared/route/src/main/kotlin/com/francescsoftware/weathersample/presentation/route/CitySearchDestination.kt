@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.presentation.route
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,8 +9,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.francescsoftware.weathersample.shared.assets.R
-import com.francescsoftware.weathersample.shared.composable.ActionMenuItem
-import com.francescsoftware.weathersample.shared.composable.ActionsMenu
+import com.francescsoftware.weathersample.shared.composable.common.ActionMenuItem
+import com.francescsoftware.weathersample.shared.composable.common.ActionsMenu
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,23 +42,23 @@ object CitySearchDestination : NavigationDestination {
     /** @{inheritDoc} */
     override val iconContentDescriptionId: Int = 0
 
+    /** @{inheritDoc} */
+    override val bottomNavContent = BottomNavContent(
+        labelId = R.string.search_bottom_nav,
+        icon = Icons.Default.Search,
+        contentDescriptionId = R.string.content_description_search_bottom_nav,
+    )
+
     /** The deeplink route for the city screen */
-    const val cityRoute: String = "city_search"
+    override val route: String = "city_search"
 
     private val _actionsState = MutableStateFlow(ActionsState())
 
     /** Flow of [ActionsState] representing the clicked actions */
     val actionsState: StateFlow<ActionsState> = _actionsState.asStateFlow()
 
-    /**
-     * The route to navigate to the city screen
-     *
-     * @return a string representing the city screen route
-     */
-    fun getRoute(): String = cityRoute
-
     /** @{inheritDoc} */
-    override fun isRoute(route: String?): Boolean = route == cityRoute
+    override fun isRoute(route: String?): Boolean = route == this.route
 
     /** @{inheritDoc} */
     @Composable

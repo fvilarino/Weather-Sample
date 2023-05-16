@@ -3,10 +3,10 @@ package com.francescsoftware.weathersample.cityrepository.impl
 import com.francescsoftware.weathersample.cityrepository.api.CitiesException
 import com.francescsoftware.weathersample.cityrepository.api.CityRepository
 import com.francescsoftware.weathersample.cityrepository.api.model.CitySearchResponse
+import com.francescsoftware.weathersample.core.type.either.Either
+import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.network.safeApiCall
-import com.francescsoftware.weathersample.type.Either
-import com.francescsoftware.weathersample.type.fold
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

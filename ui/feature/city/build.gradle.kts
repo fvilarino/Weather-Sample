@@ -17,9 +17,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:dispatcher"))
     implementation(project(":domain:interactor:city:api"))
 
-    implementation(libs.bundles.compose)
     implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.hilt.hilt.navigation.compose)
     implementation(libs.androidx.navigation.navigation.compose)

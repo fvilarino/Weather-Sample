@@ -18,5 +18,5 @@ interface GetRecentCitiesInteractor {
      * @param limit - max number of cities to load
      * @return a [Flow] of [List] of [RecentCity]
      */
-    fun execute(limit: Int): Flow<List<RecentCity>>
+    operator fun invoke(limit: Int): Flow<List<RecentCity>>
 }

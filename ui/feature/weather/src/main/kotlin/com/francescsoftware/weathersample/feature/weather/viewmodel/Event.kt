@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.feature.weather.viewmodel
 
+import com.francescsoftware.weathersample.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.shared.mvi.Action
 import com.francescsoftware.weathersample.shared.mvi.State
 import kotlinx.collections.immutable.ImmutableList
@@ -19,7 +20,7 @@ internal data class WeatherState(
     val loadState: WeatherLoadState,
     val cityName: String,
     val cityCountryCode: String,
-    val todayState: TodayWeatherCardState,
+    val todayState: CurrentWeatherState,
     val forecastItems: ImmutableList<ForecastDayState>,
     val errorMessage: String,
 ) : State {
@@ -29,7 +30,7 @@ internal data class WeatherState(
             loadState = WeatherLoadState.Idle,
             cityName = "",
             cityCountryCode = "",
-            todayState = TodayWeatherCardState(),
+            todayState = CurrentWeatherState(),
             forecastItems = persistentListOf(),
             errorMessage = "",
         )
@@ -56,12 +57,12 @@ internal sealed interface WeatherAction : Action {
     ) : WeatherAction
 
     data class Loaded(
-        val currentWeather: TodayWeatherCardState,
+        val currentWeather: CurrentWeatherState,
         val forecastItems: List<ForecastDayState>,
     ) : WeatherAction
 
     data class TodayLoaded(
-        val currentWeather: TodayWeatherCardState,
+        val currentWeather: CurrentWeatherState,
     ) : WeatherAction
 
     data class LoadError(

@@ -10,7 +10,8 @@ import javax.inject.Inject
 internal class GetRecentCitiesInteractorImpl @Inject constructor(
     private val recentsRepository: RecentsRepository
 ) : GetRecentCitiesInteractor {
-    override fun execute(limit: Int): Flow<List<RecentCity>> = recentsRepository
+
+    override operator fun invoke(limit: Int): Flow<List<RecentCity>> = recentsRepository
         .getRecentCities(limit = limit)
         .map { cities ->
             cities.map { city ->

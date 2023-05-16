@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.feature.weather.viewmodel.WeatherState
+import com.francescsoftware.weathersample.shared.composable.weather.ForecastHeader
 import com.francescsoftware.weathersample.styles.MarginDouble
 import com.francescsoftware.weathersample.styles.PhonePreviews
 import com.francescsoftware.weathersample.styles.WeatherSampleTheme
