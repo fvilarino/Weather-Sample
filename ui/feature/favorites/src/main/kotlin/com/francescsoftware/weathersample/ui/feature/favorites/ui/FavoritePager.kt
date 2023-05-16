@@ -22,13 +22,13 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import com.francescsoftware.weathersample.deviceclass.DeviceClass
-import com.francescsoftware.weathersample.shared.composable.common.PagerIndicator
-import com.francescsoftware.weathersample.styles.MarginDouble
-import com.francescsoftware.weathersample.styles.MarginSingle
-import com.francescsoftware.weathersample.styles.PhonePreviews
-import com.francescsoftware.weathersample.styles.TabletPreviews
-import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.ui.shared.composable.common.PagerIndicator
+import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
+import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
+import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
+import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
+import com.francescsoftware.weathersample.ui.shared.styles.TabletPreviews
+import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
 import kotlin.math.absoluteValue
 

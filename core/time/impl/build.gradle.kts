@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.time.impl"
+    namespace = "com.francescsoftware.weathersample.core.time.impl"
 }
 
 dependencies {

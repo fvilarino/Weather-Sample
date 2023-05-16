@@ -14,17 +14,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.francescsoftware.weathersample.shared.composable.weather.CurrentWeatherState
-import com.francescsoftware.weathersample.shared.composable.weather.ForecastHeader
-import com.francescsoftware.weathersample.shared.composable.weather.ForecastHeaderState
-import com.francescsoftware.weathersample.shared.composable.weather.ForecastHourState
-import com.francescsoftware.weathersample.shared.composable.weather.ForecastWeather
-import com.francescsoftware.weathersample.shared.composable.weather.TodayWeatherCard
-import com.francescsoftware.weathersample.styles.MarginDouble
-import com.francescsoftware.weathersample.styles.MarginQuad
-import com.francescsoftware.weathersample.styles.MarginSingle
-import com.francescsoftware.weathersample.styles.PhonePreviews
-import com.francescsoftware.weathersample.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeader
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastWeather
+import com.francescsoftware.weathersample.ui.shared.composable.weather.TodayWeatherCard
+import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
+import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
+import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
+import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
+import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.ImmutableList
 
 internal data class FavoriteCardState(

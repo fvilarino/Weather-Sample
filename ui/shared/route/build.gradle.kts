@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.ui.route"
+    namespace = "com.francescsoftware.weathersample.ui.shared.route"
 }
 
 dependencies {

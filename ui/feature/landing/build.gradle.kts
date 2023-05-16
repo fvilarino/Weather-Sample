@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.feature.landing"
+    namespace = "com.francescsoftware.weathersample.ui.feature.landing"
 
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs +

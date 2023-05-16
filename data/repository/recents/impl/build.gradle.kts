@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.repository.recents.impl"
+    namespace = "com.francescsoftware.weathersample.data.repository.recents.impl"
 }
 
 ksp {

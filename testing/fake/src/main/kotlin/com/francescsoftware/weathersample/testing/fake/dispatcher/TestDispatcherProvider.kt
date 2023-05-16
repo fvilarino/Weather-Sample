@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.testing.fake.dispatcher
 
-import com.francescsoftware.weathersample.dispather.DispatcherProvider
+import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 

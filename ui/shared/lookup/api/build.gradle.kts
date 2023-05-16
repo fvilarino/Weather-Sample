@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.lookup.api"
+    namespace = "com.francescsoftware.weathersample.ui.shared.lookup.api"
 }
 
 dependencies {

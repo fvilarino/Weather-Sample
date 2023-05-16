@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.viewmodel
 
-import com.francescsoftware.weathersample.shared.mvi.Reducer
+import com.francescsoftware.weathersample.ui.shared.mvi.Reducer
 import javax.inject.Inject
 
 internal class FavoriteReducer @Inject constructor() : Reducer<FavoriteState, FavoriteAction> {

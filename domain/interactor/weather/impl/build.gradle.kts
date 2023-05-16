@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.interactor.weather.impl"
+    namespace = "com.francescsoftware.weathersample.domain.interactor.weather.impl"
 }
 
 dependencies {

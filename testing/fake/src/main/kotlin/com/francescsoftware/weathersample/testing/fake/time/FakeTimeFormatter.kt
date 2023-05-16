@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.testing.fake.time
 
-import com.francescsoftware.weathersample.time.api.TimeFormatter
+import com.francescsoftware.weathersample.core.time.api.TimeFormatter
 import java.util.Calendar
 import java.util.Date
 

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.feature.weather"
+    namespace = "com.francescsoftware.weathersample.ui.feature.weather"
 }
 
 dependencies {

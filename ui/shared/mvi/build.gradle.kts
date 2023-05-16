@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.shared.mvi"
+    namespace = "com.francescsoftware.weathersample.ui.shared.mvi"
 }
 
 dependencies {

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.deviceclass"
+    namespace = "com.francescsoftware.weathersample.ui.shared.deviceclass"
 }
 
 dependencies {
