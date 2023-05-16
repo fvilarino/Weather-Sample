@@ -41,5 +41,4 @@ $ ./gradlew assembleDebug -PbuildNumber=1
 * AAC Navigation
 * MVI
 
-https://user-images.githubusercontent.com/2680481/221377508-b1531f39-92a3-4431-9bf8-14e0e72b603a.mp4
-
+https://github.com/fvilarino/Weather-Sample/assets/2680481/647399e0-6cf9-45fa-84f2-e3bf5be4111a
