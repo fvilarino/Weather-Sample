@@ -43,7 +43,6 @@ org-jetbrains-kotlinx-kotlinx-serialization-json-version = "1.5.1"
 org-junit-jupiter-junit-jupiter-version = "5.9.3"
 org-robolectric-robolectric-version = "4.10.2"
 versions-plugin-version = "0.46.0"
-org-jetbrains-kotlin-jvm = "1.8.0"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-activity-compose-version" }
@@ -155,4 +154,3 @@ com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version.
 com-google-devtools-ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp-plugin-version" }
 io-gitlab-arturbosch-detekt-plugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt-version" }
 nl-littlerobots-version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "catalog-plugin-version" }
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
