@@ -225,7 +225,7 @@ private fun Cities(
 @PhonePreviews
 @TabletPreviews
 @Composable
-private fun CityScreenPreview() {
+private fun PreviewCityScreen() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background
