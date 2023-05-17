@@ -43,14 +43,14 @@ private const val DateEpoch = 1659132000
 private const val Sunrise = "06:44 AM"
 private const val Sunset = "09:11 PM"
 
-private const val currentTemperature = 17.4
-private const val currentFeelsLike = 15.1
-private const val currentWind = 3.4
-private const val currentHumidity = 62
-private const val currentPressure = 1024.0
-private const val currentPrecipitation = 1.8
-private const val currentUvIndex = 7
-private const val currentVisibility = 10.0
+private const val CurrentTemperature = 17.4
+private const val CurrentFeelsLike = 15.1
+private const val CurrentWind = 3.4
+private const val CurrentHumidity = 62
+private const val CurrentPressure = 1024.0
+private const val CurrentPrecipitation = 1.8
+private const val CurrentUvIndex = 7
+private const val CurrentVisibility = 10.0
 
 private val ForecastTimes = listOf("2022-07-29 16:00", "2022-07-29 17:00")
 private val Temperatures = listOf(11.5, 13.7)
@@ -201,24 +201,24 @@ internal class ForecastWeatherInteractorTest {
             icon = "",
             text = "",
         ),
-        tempCelsius = currentTemperature,
+        tempCelsius = CurrentTemperature,
         tempFahrenheit = 0.0,
-        feelsLikeCelsius = currentFeelsLike,
+        feelsLikeCelsius = CurrentFeelsLike,
         feelsLikeFahrenheit = 0.0,
-        uvIndex = currentUvIndex.toDouble(),
-        precipitationMm = currentPrecipitation,
+        uvIndex = CurrentUvIndex.toDouble(),
+        precipitationMm = CurrentPrecipitation,
         precipitationInches = 0.0,
-        humidity = currentHumidity,
-        pressureMb = currentPressure,
+        humidity = CurrentHumidity,
+        pressureMb = CurrentPressure,
         pressureIn = 0.0,
         windDirection = "",
         windDegree = 0,
-        windKph = currentWind,
+        windKph = CurrentWind,
         windMph = 0.0,
         gustKph = 0.0,
         gustMph = 0.0,
         cloud = 0,
-        visibilityKm = currentVisibility,
+        visibilityKm = CurrentVisibility,
         visibilityMiles = 0.0,
     )
 
@@ -283,14 +283,14 @@ internal class ForecastWeatherInteractorTest {
             current = com.francescsoftware.weathersample.domain.interactor.weather.api.model.Current(
                 description = "",
                 code = 0,
-                temperature = Temperature.fromCelsius(currentTemperature),
-                feelsLike = Temperature.fromCelsius(currentFeelsLike),
-                wind = Speed.fromKph(currentWind),
-                humidity = Humidity(currentHumidity),
-                pressure = Pressure.fromMillibars(currentPressure),
-                precipitation = Precipitation.fromMillimeters(currentPrecipitation),
-                uvIndex = UvIndex(currentUvIndex),
-                visibility = AverageVisibility.fromKm(currentVisibility),
+                temperature = Temperature.fromCelsius(CurrentTemperature),
+                feelsLike = Temperature.fromCelsius(CurrentFeelsLike),
+                wind = Speed.fromKph(CurrentWind),
+                humidity = Humidity(CurrentHumidity),
+                pressure = Pressure.fromMillibars(CurrentPressure),
+                precipitation = Precipitation.fromMillimeters(CurrentPrecipitation),
+                uvIndex = UvIndex(CurrentUvIndex),
+                visibility = AverageVisibility.fromKm(CurrentVisibility),
                 iconCode = 0,
             ),
             items = listOf(

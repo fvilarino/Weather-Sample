@@ -2,8 +2,6 @@ package com.francescsoftware.weathersample.data.repository.weather.impl
 
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.data.repository.weather.impl.WeatherRepositoryImpl
-import com.francescsoftware.weathersample.data.repository.weather.impl.WeatherService
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.google.common.truth.Truth
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
