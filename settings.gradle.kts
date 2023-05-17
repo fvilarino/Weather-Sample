@@ -52,5 +52,3 @@ include(":ui:shared:route")
 include(":ui:shared:styles")
 include(":testing:fake")
 include(":testing:macrobenchmark")
-
-include(":core:type:weather")
