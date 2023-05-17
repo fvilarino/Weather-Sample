@@ -15,21 +15,18 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.francescsoftware.weathersample.ui.feature.city.addSearchDestination
-import com.francescsoftware.weathersample.ui.feature.favorites.addFavoritesDestination
-import com.francescsoftware.weathersample.ui.feature.weather.addWeatherDetailsDestination
+import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesRootDestination
+import com.francescsoftware.weathersample.ui.feature.favorites.navigation.addFavoritesNavGraph
+import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
+import com.francescsoftware.weathersample.ui.feature.search.navigation.addSearchNavGraph
 import com.francescsoftware.weathersample.ui.shared.composable.common.AppBar
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
-import com.francescsoftware.weathersample.ui.shared.route.CitySearchDestination
-import com.francescsoftware.weathersample.ui.shared.route.FavoritesDestination
-import com.francescsoftware.weathersample.ui.shared.route.NavigationDestination
-import com.francescsoftware.weathersample.ui.shared.route.WeatherDestination
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
 
-private val bottomBarItems = persistentListOf(
-    CitySearchDestination,
-    FavoritesDestination,
+private val navGraphDestinations = persistentListOf(
+    SearchRootDestination,
+    FavoritesRootDestination,
 )
 
 @Composable
@@ -40,7 +37,9 @@ internal fun WeatherApp() {
         val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
-        val currentDestination = NavigationDestination.fromRoute(currentRoute)
+        val currentDestination = navGraphDestinations.firstNotNullOfOrNull { navGraph ->
+            navGraph.getDestination(currentRoute)
+        } ?: navGraphDestinations.first().rootDestination
         Scaffold(
             topBar = {
                 AppBar(
@@ -60,7 +59,7 @@ internal fun WeatherApp() {
             } else {
                 {
                     BottomNavBar(
-                        items = bottomBarItems,
+                        items = navGraphDestinations,
                         currentDestination = navBackStackEntry?.destination,
                         onClick = { destination ->
                             navController.navigate(destination) {
@@ -81,7 +80,7 @@ internal fun WeatherApp() {
             ) {
                 if (deviceClass == DeviceClass.Expanded) {
                     NavRail(
-                        items = bottomBarItems,
+                        items = navGraphDestinations,
                         currentDestination = navBackStackEntry?.destination,
                         onClick = { destination ->
                             navController.navigate(destination) {
@@ -96,18 +95,15 @@ internal fun WeatherApp() {
                 }
                 NavHost(
                     navController,
-                    startDestination = CitySearchDestination.route,
+                    startDestination = navGraphDestinations.first().navGraphRoute,
                     modifier = Modifier.weight(1f),
                 ) {
-                    addSearchDestination(
+                    addSearchNavGraph(
                         deviceClass = deviceClass,
-                    ) { selectedCity ->
-                        navController.navigate(WeatherDestination.getRoute(selectedCity))
+                    ) { route ->
+                        navController.navigate(route)
                     }
-                    addWeatherDetailsDestination(
-                        deviceClass = deviceClass,
-                    )
-                    addFavoritesDestination(
+                    addFavoritesNavGraph(
                         deviceClass = deviceClass,
                     )
                 }

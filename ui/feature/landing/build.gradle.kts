@@ -17,9 +17,8 @@ android {
 
 dependencies {
 
-    implementation(project(":ui:feature:city"))
     implementation(project(":ui:feature:favorites"))
-    implementation(project(":ui:feature:weather"))
+    implementation(project(":ui:feature:search"))
 
     // compose
     implementation(libs.androidx.compose.material3.window.sizeclass)
