@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.ui.feature.landing
+package com.francescsoftware.weathersample.ui.feature.home
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

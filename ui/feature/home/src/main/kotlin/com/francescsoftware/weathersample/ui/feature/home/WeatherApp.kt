@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.ui.feature.landing
+package com.francescsoftware.weathersample.ui.feature.home
 
 import android.app.Activity
 import androidx.compose.foundation.layout.Row
