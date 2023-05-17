@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.ui.feature.landing
+package com.francescsoftware.weathersample.ui.feature.home
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail

@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name="com.francescsoftware.weathersample.ui.feature.landing.MainActivity"
+            android:name="com.francescsoftware.weathersample.ui.feature.home.MainActivity"
             android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
             android:exported="true">
             <intent-filter>
