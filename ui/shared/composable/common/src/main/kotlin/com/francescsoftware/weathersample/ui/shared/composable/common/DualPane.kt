@@ -88,7 +88,7 @@ fun DualPane(
 
 @PhonePreviews
 @Composable
-private fun DualPanePreview(
+private fun PreviewDualPane(
     @PreviewParameter(DeviceClassProvider::class) deviceClass: DeviceClass,
 ) {
     WeatherSampleTheme {

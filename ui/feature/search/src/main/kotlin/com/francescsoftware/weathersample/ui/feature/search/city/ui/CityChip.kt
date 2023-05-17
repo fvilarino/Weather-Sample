@@ -47,7 +47,7 @@ internal fun CityChip(
 
 @WidgetPreviews
 @Composable
-private fun ChipPreview() {
+private fun PreviewChip() {
     WeatherSampleTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
