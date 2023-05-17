@@ -88,10 +88,9 @@ dependencies {
     implementation(project(":domain:interactor:weather:api"))
     implementation(project(":domain:interactor:weather:impl"))
 
-    implementation(project(":ui:feature:city"))
     implementation(project(":ui:feature:favorites"))
     implementation(project(":ui:feature:landing"))
-    implementation(project(":ui:feature:weather"))
+    implementation(project(":ui:feature:search"))
     implementation(project(":ui:shared:assets"))
     implementation(project(":ui:shared:composable:common"))
     implementation(project(":ui:shared:composable:weather"))

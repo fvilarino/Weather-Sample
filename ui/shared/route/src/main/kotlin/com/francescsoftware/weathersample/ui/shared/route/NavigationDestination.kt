@@ -3,27 +3,9 @@ package com.francescsoftware.weathersample.ui.shared.route
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
-
-/**
- * Payload for bottom navigation destinations
- *
- * @property labelId the label to display on the bottom nav bar
- * @property icon the icon to display on the bottom nav bar
- * @property contentDescriptionId the content description associated with this nav bar item
- */
-data class BottomNavContent(
-    @get: StringRes
-    val labelId: Int,
-
-    val icon: ImageVector,
-
-    @get: StringRes
-    val contentDescriptionId: Int
-)
 
 /** Navigation destination */
-sealed interface NavigationDestination {
+interface NavigationDestination {
 
     /** This [NavigationDestination] route */
     val route: String
@@ -40,9 +22,6 @@ sealed interface NavigationDestination {
     @get: StringRes
     val iconContentDescriptionId: Int
 
-    /** The content for the bottom navigation bar */
-    val bottomNavContent: BottomNavContent?
-
     /**
      * Checks whether the [route] represents this destination
      *
@@ -54,22 +33,5 @@ sealed interface NavigationDestination {
     /** Composable rendering the top bar actions */
     @Composable
     fun TopBarActions() {
-    }
-
-    companion object {
-        /**
-         * Maps a route toa [NavigationDestination]
-         *
-         * @param route - the route to map
-         * @return a [NavigationDestination] matching the [route]
-         */
-        fun fromRoute(route: String?): NavigationDestination = when {
-            route == null ||
-                CitySearchDestination.isRoute(route) -> CitySearchDestination
-
-            WeatherDestination.isRoute(route) -> WeatherDestination
-            FavoritesDestination.isRoute(route) -> FavoritesDestination
-            else -> error("Unknown route [$route]")
-        }
     }
 }
