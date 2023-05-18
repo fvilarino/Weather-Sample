@@ -41,7 +41,7 @@ org-jetbrains-kotlinx-kotlinx-coroutines-test-version = "1.7.1"
 org-jetbrains-kotlinx-kotlinx-coroutines-version = "1.7.1"
 org-jetbrains-kotlinx-kotlinx-serialization-json-version = "1.5.1"
 org-junit-jupiter-junit-jupiter-version = "5.9.3"
-org-robolectric-robolectric-version = "4.10.2"
+org-robolectric-robolectric-version = "4.10.3"
 versions-plugin-version = "0.46.0"
 
 [libraries]
