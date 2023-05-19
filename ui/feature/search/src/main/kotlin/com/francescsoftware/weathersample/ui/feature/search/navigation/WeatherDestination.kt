@@ -6,8 +6,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.navDeepLink
 import com.francescsoftware.weathersample.ui.shared.assets.R
+import com.francescsoftware.weathersample.ui.shared.route.DeeplinkScheme
 import com.francescsoftware.weathersample.ui.shared.route.NavigationDestination
+
+private const val RouteRoot = "weather"
+private const val CityNameArg = "city"
+private const val CountryCodeArg = "countryCode"
+private const val DeeplinkHost = "weather"
 
 /** The Weather screen destination */
 internal object WeatherDestination : NavigationDestination {
@@ -26,13 +33,13 @@ internal object WeatherDestination : NavigationDestination {
         @Composable
         get() = stringResource(id = R.string.content_description_back)
 
-    private const val routeRoot = "weather"
-    private const val cityNameArg = "city"
-    private const val countryArg = "country"
-    private const val countryCodeArg = "countryCode"
-
     /** The route for the Weather screen */
-    override val route: String = "$routeRoot/{$cityNameArg}/{$countryArg}/{$countryCodeArg}"
+    override val route: String = "$RouteRoot/{$CityNameArg}/{$CountryCodeArg}"
+
+    /** @{inheritDoc} */
+    override val deeplinks = listOf(
+        navDeepLink { uriPattern = "$DeeplinkScheme://$DeeplinkHost/{$CityNameArg}/{$CountryCodeArg}" }
+    )
 
     /**
      * Gets the weather screen route for a [SelectedCity]
@@ -41,7 +48,7 @@ internal object WeatherDestination : NavigationDestination {
      * @return the route to navigate to
      */
     fun getRoute(selectedCity: SelectedCity): String =
-        "$routeRoot/${selectedCity.name}/${selectedCity.country}/${selectedCity.countryCode}"
+        "$RouteRoot/${selectedCity.name}/${selectedCity.countryCode}"
 
     /**
      * Retrieves the [SelectedCity] from the route payload
@@ -50,11 +57,10 @@ internal object WeatherDestination : NavigationDestination {
      * @return the [SelectedCity] from the [SavedStateHandle]
      */
     fun getCity(savedStateHandle: SavedStateHandle): SelectedCity = SelectedCity(
-        name = savedStateHandle.get<String>(cityNameArg).orEmpty(),
-        country = savedStateHandle.get<String>(countryArg).orEmpty(),
-        countryCode = savedStateHandle.get<String>(countryCodeArg).orEmpty(),
+        name = savedStateHandle.get<String>(CityNameArg).orEmpty(),
+        countryCode = savedStateHandle.get<String>(CountryCodeArg).orEmpty(),
     )
 
     /** @{inheritDoc} */
-    override fun isRoute(route: String?): Boolean = route?.startsWith(routeRoot) == true
+    override fun isRoute(route: String?): Boolean = route?.startsWith(RouteRoot) == true
 }
