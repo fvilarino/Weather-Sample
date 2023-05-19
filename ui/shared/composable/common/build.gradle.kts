@@ -19,4 +19,6 @@ dependencies {
     implementation(project(":ui:shared:assets"))
     implementation(project(":ui:shared:deviceclass"))
     implementation(project(":ui:shared:styles"))
+
+    implementation(libs.org.jetbrains.kotlinx.kotlinx.collections.immutable)
 }
