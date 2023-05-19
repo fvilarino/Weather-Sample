@@ -5,9 +5,13 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.navDeepLink
 import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.route.BottomNavContent
 import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestination
+import com.francescsoftware.weathersample.ui.shared.route.DeeplinkScheme
+
+private const val DeeplinkHost = "favorite"
 
 /** Favorites screen Destination */
 internal object FavoritesDestination : BottomNavigationDestination {
@@ -32,6 +36,11 @@ internal object FavoritesDestination : BottomNavigationDestination {
         labelId = R.string.favorite_bottom_nav,
         icon = Icons.Default.FavoriteBorder,
         contentDescriptionId = R.string.content_description_search_bottom_nav,
+    )
+
+    /** @{inheritDoc} */
+    override val deeplinks = listOf(
+        navDeepLink { uriPattern = "$DeeplinkScheme://$DeeplinkHost" }
     )
 
     /** The deeplink route for the city screen */

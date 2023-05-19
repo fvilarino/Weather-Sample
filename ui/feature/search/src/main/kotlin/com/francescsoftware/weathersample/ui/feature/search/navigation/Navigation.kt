@@ -40,6 +40,7 @@ fun NavGraphBuilder.addSearchNavGraph(
         }
         composable(
             route = WeatherDestination.route,
+            deepLinks = WeatherDestination.deeplinks,
         ) {
             val weatherViewModel: WeatherViewModel = hiltViewModel()
             WeatherScreen(

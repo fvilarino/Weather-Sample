@@ -25,6 +25,7 @@ fun NavGraphBuilder.addFavoritesNavGraph(
     ) {
         composable(
             route = FavoritesDestination.route,
+            deepLinks = FavoritesDestination.deeplinks,
         ) {
             val favoriteViewModel: FavoriteViewModel = hiltViewModel()
             FavoriteScreen(
