@@ -1,8 +1,7 @@
 package com.francescsoftware.weathersample.ui.shared.route
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 
 /** Navigation destination */
 interface NavigationDestination {
@@ -11,16 +10,16 @@ interface NavigationDestination {
     val route: String
 
     /** Title to display on the action bar */
-    @get: StringRes
-    val titleId: Int
+    @get: Composable
+    val title: String
 
     /** Icon ID to draw on the top left of the action bar */
-    @get: DrawableRes
-    val iconId: Int
+    @get: Composable
+    val icon: ImageVector?
 
-    /** Content description for hte [iconId] */
-    @get: StringRes
-    val iconContentDescriptionId: Int
+    /** Content description for hte [icon] */
+    @get: Composable
+    val iconContentDescription: String?
 
     /**
      * Checks whether the [route] represents this destination

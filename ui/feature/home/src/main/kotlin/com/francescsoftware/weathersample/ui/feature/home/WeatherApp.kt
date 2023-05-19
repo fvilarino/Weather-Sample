@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -43,13 +42,9 @@ internal fun WeatherApp() {
         Scaffold(
             topBar = {
                 AppBar(
-                    title = stringResource(id = currentDestination.titleId),
-                    iconId = currentDestination.iconId,
-                    iconContentDescription = if (currentDestination.iconContentDescriptionId != 0) {
-                        stringResource(id = currentDestination.iconContentDescriptionId)
-                    } else {
-                        null
-                    },
+                    title = currentDestination.title,
+                    icon = currentDestination.icon,
+                    iconContentDescription = currentDestination.iconContentDescription,
                     onIconClick = navController::popBackStack,
                     actions = { currentDestination.TopBarActions() },
                 )

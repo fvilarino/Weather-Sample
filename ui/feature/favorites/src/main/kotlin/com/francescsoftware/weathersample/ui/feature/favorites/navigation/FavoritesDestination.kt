@@ -2,6 +2,9 @@ package com.francescsoftware.weathersample.ui.feature.favorites.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.route.BottomNavContent
 import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestination
@@ -10,13 +13,19 @@ import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestin
 internal object FavoritesDestination : BottomNavigationDestination {
 
     /** @{inheritDoc} */
-    override val titleId: Int = R.string.app_name
+    override val title: String
+        @Composable
+        get() = stringResource(id = R.string.app_name)
 
     /** @{inheritDoc} */
-    override val iconId: Int = 0
+    override val icon: ImageVector?
+        @Composable
+        get() = null
 
     /** @{inheritDoc} */
-    override val iconContentDescriptionId: Int = 0
+    override val iconContentDescription: String?
+        @Composable
+        get() = null
 
     /** @{inheritDoc} */
     override val bottomNavContent = BottomNavContent(
