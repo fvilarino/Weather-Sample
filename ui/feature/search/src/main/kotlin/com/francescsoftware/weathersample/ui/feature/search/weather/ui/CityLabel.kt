@@ -15,6 +15,7 @@ import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
+import java.util.Locale
 
 @Composable
 internal fun CityLabel(
@@ -33,8 +34,10 @@ internal fun CityLabel(
         Text(
             text = stringResource(
                 id = R.string.weather_city_name,
-                cityName,
-                countryCode,
+                cityName.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                },
+                countryCode.uppercase(),
             ),
             modifier = Modifier.padding(horizontal = MarginDouble),
             textAlign = TextAlign.Center,
@@ -53,7 +56,9 @@ private fun PreviewCityLabel() {
             CityLabel(
                 cityName = "Vancouver",
                 countryCode = "CA",
-                modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(all = MarginDouble),
             )
         }
     }

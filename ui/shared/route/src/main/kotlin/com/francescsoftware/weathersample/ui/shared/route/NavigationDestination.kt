@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.ui.shared.route
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavDeepLink
 
 /** Navigation destination */
 interface NavigationDestination {
@@ -20,6 +21,10 @@ interface NavigationDestination {
     /** Content description for hte [icon] */
     @get: Composable
     val iconContentDescription: String?
+
+    /** List of deeplinks to access this destination */
+    val deeplinks: List<NavDeepLink>
+        get() = emptyList()
 
     /**
      * Checks whether the [route] represents this destination
