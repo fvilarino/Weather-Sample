@@ -8,6 +8,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
+import com.francescsoftware.weathersample.core.type.weather.Humidity
+import com.francescsoftware.weathersample.core.type.weather.Precipitation
+import com.francescsoftware.weathersample.core.type.weather.Pressure
+import com.francescsoftware.weathersample.core.type.weather.Speed
+import com.francescsoftware.weathersample.core.type.weather.Temperature
+import com.francescsoftware.weathersample.core.type.weather.UvIndex
 import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.styles.CardElevation
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
@@ -48,16 +55,16 @@ private fun TodayWeatherCardPreview() {
             color = MaterialTheme.colorScheme.background,
         ) {
             val state = CurrentWeatherState(
-                temperature = "16.4°C",
-                feelsLikeTemperature = "14.3°C",
-                precipitation = "10",
-                uvIndex = "3",
+                temperature = Temperature.fromCelsius(16.4),
+                feelsLikeTemperature = Temperature.fromCelsius(14.3),
+                precipitation = Precipitation.fromMillimeters(12.4),
+                uvIndex = UvIndex(2),
                 description = "Partly cloudy",
                 iconId = R.drawable.ic_partly_cloudy,
-                windSpeed = "4.3kph",
-                humidity = "54%",
-                pressure = "1024mb",
-                visibility = "10000 m",
+                windSpeed = Speed.fromKph(4.3),
+                humidity = Humidity(54),
+                pressure = Pressure.fromMillibars(1024.0),
+                visibility = AverageVisibility.fromKm(3.5),
             )
             TodayWeatherCard(state = state)
         }

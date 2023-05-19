@@ -1,6 +1,15 @@
+@file: Suppress("MagicNumber")
+
 package com.francescsoftware.weathersample.ui.feature.search.weather.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
+import com.francescsoftware.weathersample.core.type.weather.Humidity
+import com.francescsoftware.weathersample.core.type.weather.Precipitation
+import com.francescsoftware.weathersample.core.type.weather.Pressure
+import com.francescsoftware.weathersample.core.type.weather.Speed
+import com.francescsoftware.weathersample.core.type.weather.Temperature
+import com.francescsoftware.weathersample.core.type.weather.UvIndex
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.ForecastDayState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
@@ -33,16 +42,16 @@ private val todayState = WeatherState(
     cityName = "Coquitlam, British Columbia",
     cityCountryCode = "CA",
     todayState = CurrentWeatherState(
-        temperature = "16.4°C",
-        feelsLikeTemperature = "14.3°C",
-        precipitation = "10",
-        uvIndex = "5",
+        temperature = Temperature.fromCelsius(16.4),
+        feelsLikeTemperature = Temperature.fromCelsius(14.3),
+        precipitation = Precipitation.fromMillimeters(10.0),
+        uvIndex = UvIndex(5),
         description = "Partly cloudy",
         iconId = R.drawable.ic_partly_cloudy,
-        windSpeed = "4.3kph",
-        humidity = "54%",
-        pressure = "1024mb",
-        visibility = "10 km",
+        windSpeed = Speed.fromKph(5.8),
+        humidity = Humidity(54),
+        pressure = Pressure.fromMillibars(1024.0),
+        visibility = AverageVisibility.fromKm(7.3),
     ),
     forecastItems = persistentListOf(
         ForecastDayState(

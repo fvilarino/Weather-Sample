@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.ui.shared.format.weather
+package com.francescsoftware.weathersample.ui.shared.weathericon
 
 import androidx.annotation.DrawableRes
 

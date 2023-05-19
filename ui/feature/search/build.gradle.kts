@@ -23,7 +23,7 @@ dependencies {
     implementation(project(":domain:interactor:city:api"))
     implementation(project(":domain:interactor:weather:api"))
     implementation(project(":ui:shared:composable:weather"))
-    implementation(project(":ui:shared:format:weather"))
+    implementation(project(":ui:shared:weathericon"))
 
     implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.hilt.hilt.navigation.compose)

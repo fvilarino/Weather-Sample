@@ -2,6 +2,12 @@ package com.francescsoftware.weathersample.ui.shared.composable.weather
 
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Immutable
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
+import com.francescsoftware.weathersample.core.type.weather.Humidity
+import com.francescsoftware.weathersample.core.type.weather.Precipitation
+import com.francescsoftware.weathersample.core.type.weather.Speed
+import com.francescsoftware.weathersample.core.type.weather.Temperature
+import com.francescsoftware.weathersample.core.type.weather.UvIndex
 
 /**
  * The weather forecast state
@@ -22,11 +28,11 @@ data class ForecastHourState(
     val id: Long,
     val header: String,
     @DrawableRes val iconId: Int,
-    val temperature: String,
-    val feelsLikeTemperature: String,
-    val precipitation: String,
-    val uvIndex: String,
-    val windSpeed: String,
-    val humidity: String,
-    val visibility: String,
+    val temperature: Temperature,
+    val feelsLikeTemperature: Temperature,
+    val precipitation: Precipitation,
+    val uvIndex: UvIndex,
+    val windSpeed: Speed,
+    val humidity: Humidity,
+    val visibility: AverageVisibility,
 )
