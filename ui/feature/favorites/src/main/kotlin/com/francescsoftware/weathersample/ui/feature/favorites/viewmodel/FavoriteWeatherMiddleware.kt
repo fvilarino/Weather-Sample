@@ -91,7 +91,7 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
                                 name = forecastInfo.city.name,
                                 countryCode = forecastInfo.city.countryCode,
                             ),
-                            current = current.toWeatherCardState(stringLookup),
+                            current = current.toWeatherCardState(),
                             forecast = forecastInfo.forecast.toForecastItems(
                                 stringLookup,
                                 timeFormatter,

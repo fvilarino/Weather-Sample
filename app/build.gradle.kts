@@ -95,12 +95,12 @@ dependencies {
     implementation(project(":ui:shared:composable:common"))
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:deviceclass"))
-    implementation(project(":ui:shared:format:weather"))
     implementation(project(":ui:shared:lookup:api"))
     implementation(project(":ui:shared:lookup:impl"))
     implementation(project(":ui:shared:mvi"))
     implementation(project(":ui:shared:route"))
     implementation(project(":ui:shared:styles"))
+    implementation(project(":ui:shared:weathericon"))
 
     implementation(libs.com.jakewharton.timber)
 }

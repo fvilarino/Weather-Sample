@@ -14,12 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
+import com.francescsoftware.weathersample.core.type.weather.Humidity
+import com.francescsoftware.weathersample.core.type.weather.Precipitation
+import com.francescsoftware.weathersample.core.type.weather.Speed
+import com.francescsoftware.weathersample.core.type.weather.Temperature
+import com.francescsoftware.weathersample.core.type.weather.UvIndex
 import com.francescsoftware.weathersample.ui.shared.composable.common.InfoLabels
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
@@ -69,26 +71,21 @@ fun ForecastWeather(
                     label = stringResource(id = R.string.temperature_label),
                 )
                 WeatherItemContent(
-                    label = state.temperature,
+                    label = state.temperature.format(),
                     modifier = Modifier.padding(start = MarginSingle),
                 )
                 WeatherItemLabel(
                     label = stringResource(id = R.string.feels_like_label),
                 )
                 WeatherItemContent(
-                    label = state.feelsLikeTemperature,
+                    label = state.feelsLikeTemperature.format(),
                     modifier = Modifier.padding(start = MarginSingle),
                 )
                 WeatherItemLabel(
                     label = stringResource(id = R.string.precipitation_label),
                 )
                 WeatherItemContent(
-                    label = buildAnnotatedString {
-                        append(state.precipitation)
-                        withStyle(style = SpanStyle(fontSize = 8.sp)) {
-                            append(stringResource(id = R.string.precipitation_mm))
-                        }
-                    },
+                    label = state.precipitation.format(),
                     modifier = Modifier.padding(start = MarginSingle),
                 )
             }
@@ -101,21 +98,21 @@ fun ForecastWeather(
                     label = stringResource(id = R.string.wind_speed_label),
                 )
                 WeatherItemContent(
-                    label = state.windSpeed,
+                    label = state.windSpeed.format(),
                     modifier = Modifier.padding(start = MarginSingle),
                 )
                 WeatherItemLabel(
                     label = stringResource(id = R.string.humidity_label),
                 )
                 WeatherItemContent(
-                    label = state.humidity,
+                    label = state.humidity.format(),
                     modifier = Modifier.padding(start = MarginSingle),
                 )
                 WeatherItemLabel(
                     label = stringResource(id = R.string.visibility_label),
                 )
                 WeatherItemContent(
-                    label = state.visibility,
+                    label = state.visibility.format(),
                     modifier = Modifier.padding(start = MarginSingle),
                 )
             }
@@ -123,17 +120,18 @@ fun ForecastWeather(
     }
 }
 
+@Suppress("MagicNumber")
 private val SunnyHourForecast = ForecastHourState(
     id = 2L,
     header = "14:00 - Sunny",
     iconId = com.francescsoftware.weathersample.ui.shared.assets.R.drawable.ic_sunny,
-    temperature = "18.7°C",
-    feelsLikeTemperature = "21.5°C",
-    precipitation = "10",
-    uvIndex = "8",
-    windSpeed = "14.1 kph",
-    humidity = "75 %",
-    visibility = "10 km",
+    temperature = Temperature.fromCelsius(18.7),
+    feelsLikeTemperature = Temperature.fromCelsius(17.5),
+    precipitation = Precipitation.fromMillimeters(10.0),
+    uvIndex = UvIndex(0),
+    windSpeed = Speed.fromKph(14.1),
+    humidity = Humidity(75),
+    visibility = AverageVisibility.fromKm(10.0),
 )
 
 @WidgetPreviews

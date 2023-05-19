@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="formatted_temperature">%1$.1f°C</string>
-    <string name="formatted_wind">%1$.1f kph</string>
-    <string name="formatted_humidity">%1$d %%</string>
-    <string name="formatted_pressure">%1$d mb</string>
-    <string name="formatted_visibility">%1$d km</string>
-    <string name="formatted_precipitation">%1$dmm</string>
-</resources>

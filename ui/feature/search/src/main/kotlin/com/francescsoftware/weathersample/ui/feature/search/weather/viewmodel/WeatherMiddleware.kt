@@ -13,11 +13,10 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
-import com.francescsoftware.weathersample.ui.shared.format.weather.drawableId
-import com.francescsoftware.weathersample.ui.shared.format.weather.format
-import com.francescsoftware.weathersample.ui.shared.format.weather.weatherIconFromCode
 import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
+import com.francescsoftware.weathersample.ui.shared.weathericon.drawableId
+import com.francescsoftware.weathersample.ui.shared.weathericon.weatherIconFromCode
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -26,7 +25,6 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 internal class WeatherMiddleware @Inject constructor(
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
@@ -75,7 +73,7 @@ internal class WeatherMiddleware @Inject constructor(
             if (current != null && forecast != null) {
                 dispatch(
                     WeatherAction.Loaded(
-                        currentWeather = current.toWeatherCardState(stringLookup),
+                        currentWeather = current.toWeatherCardState(),
                         forecastItems = forecast.toForecastItems()
                     )
                 )
@@ -125,12 +123,12 @@ internal class WeatherMiddleware @Inject constructor(
                 }
             ),
             iconId = weatherIconFromCode(iconCode).drawableId,
-            temperature = temperature.format(stringLookup),
-            feelsLikeTemperature = feelsLike.format(stringLookup),
-            precipitation = precipitation.millimeters.roundToInt().toString(),
-            uvIndex = uvIndex.toString(),
-            windSpeed = windSpeed.format(stringLookup),
-            humidity = humidity.format(stringLookup),
-            visibility = visibility.format(stringLookup),
+            temperature = temperature,
+            feelsLikeTemperature = feelsLike,
+            precipitation = precipitation,
+            uvIndex = uvIndex,
+            windSpeed = windSpeed,
+            humidity = humidity,
+            visibility = visibility,
         )
 }
