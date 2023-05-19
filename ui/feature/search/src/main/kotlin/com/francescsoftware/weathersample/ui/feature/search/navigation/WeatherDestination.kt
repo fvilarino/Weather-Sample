@@ -1,5 +1,10 @@
 package com.francescsoftware.weathersample.ui.feature.search.navigation
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
 import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.route.NavigationDestination
@@ -7,14 +12,19 @@ import com.francescsoftware.weathersample.ui.shared.route.NavigationDestination
 /** The Weather screen destination */
 internal object WeatherDestination : NavigationDestination {
     /** @{inheritDoc} */
-    override val titleId: Int = R.string.weather_label
+    override val title: String
+        @Composable
+        get() = stringResource(id = R.string.weather_label)
 
     /** @{inheritDoc} */
-    override val iconId: Int = R.drawable.ic_arrow_back
+    override val icon: ImageVector
+        @Composable
+        get() = Icons.Default.ArrowBack
 
     /** @{inheritDoc} */
-    override val iconContentDescriptionId: Int =
-        R.string.content_description_back
+    override val iconContentDescription: String
+        @Composable
+        get() = stringResource(id = R.string.content_description_back)
 
     private const val routeRoot = "weather"
     private const val cityNameArg = "city"
