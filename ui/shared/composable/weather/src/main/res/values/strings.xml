@@ -10,4 +10,13 @@
     <string name="visibility_label">Visibility:</string>
     <string name="sunrise_label">Sunrise:</string>
     <string name="sunset_label">Sunset:</string>
+    <string name="formatted_temperature">%1$.1f°</string>
+    <string name="temperature_celsius">C</string>
+    <string name="formatted_temperature_celsius">%1$.1f°C</string>
+    <string name="wind_speed">kph</string>
+    <string name="formatted_humidity">%1$d %%</string>
+    <string name="precipitation_millimeters">mm</string>
+    <string name="pressure_millibars">mb</string>
+    <string name="visibility_km">km</string>
+    <string name="formatted_precipitation">%1$dmm</string>
 </resources>

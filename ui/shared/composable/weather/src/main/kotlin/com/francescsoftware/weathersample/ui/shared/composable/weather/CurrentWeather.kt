@@ -16,11 +16,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
+import com.francescsoftware.weathersample.core.type.weather.Humidity
+import com.francescsoftware.weathersample.core.type.weather.Precipitation
+import com.francescsoftware.weathersample.core.type.weather.Pressure
+import com.francescsoftware.weathersample.core.type.weather.Speed
+import com.francescsoftware.weathersample.core.type.weather.Temperature
+import com.francescsoftware.weathersample.core.type.weather.UvIndex
 import com.francescsoftware.weathersample.ui.shared.composable.common.InfoLabels
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.MarginTreble
@@ -65,7 +68,10 @@ fun CurrentWeather(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        text = state.temperature,
+                        text = stringResource(
+                            id = R.string.formatted_temperature_celsius,
+                            state.temperature.celsius,
+                        ),
                         style = MaterialTheme.typography.headlineSmall,
                     )
                     Text(
@@ -81,26 +87,21 @@ fun CurrentWeather(
                             label = stringResource(id = R.string.temperature_label),
                         )
                         WeatherItemContent(
-                            label = state.temperature,
+                            label = state.temperature.format(),
                             modifier = Modifier.padding(start = MarginSingle),
                         )
                         WeatherItemLabel(
                             label = stringResource(id = R.string.feels_like_label),
                         )
                         WeatherItemContent(
-                            label = state.feelsLikeTemperature,
+                            label = state.feelsLikeTemperature.format(),
                             modifier = Modifier.padding(start = MarginSingle),
                         )
                         WeatherItemLabel(
                             label = stringResource(id = R.string.precipitation_label),
                         )
                         WeatherItemContent(
-                            label = buildAnnotatedString {
-                                append(state.precipitation)
-                                withStyle(style = SpanStyle(fontSize = 8.sp)) {
-                                    append(stringResource(id = R.string.precipitation_mm))
-                                }
-                            },
+                            label = state.precipitation.format(),
                             modifier = Modifier.padding(start = MarginSingle),
                         )
                     }
@@ -116,14 +117,14 @@ fun CurrentWeather(
                         label = stringResource(id = R.string.wind_speed_label),
                     )
                     WeatherItemContent(
-                        label = state.windSpeed,
+                        label = state.windSpeed.format(),
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                     WeatherItemLabel(
                         label = stringResource(id = R.string.humidity_label),
                     )
                     WeatherItemContent(
-                        label = state.humidity,
+                        label = state.humidity.format(),
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
@@ -136,14 +137,14 @@ fun CurrentWeather(
                         label = stringResource(id = R.string.pressure_label),
                     )
                     WeatherItemContent(
-                        label = state.pressure,
+                        label = state.pressure.format(),
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                     WeatherItemLabel(
                         label = stringResource(id = R.string.visibility_label),
                     )
                     WeatherItemContent(
-                        label = state.visibility,
+                        label = state.visibility.format(),
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                 }
@@ -160,16 +161,16 @@ private fun PreviewTodayWeatherCard() {
             color = MaterialTheme.colorScheme.background,
         ) {
             val state = CurrentWeatherState(
-                temperature = "16.4°C",
-                feelsLikeTemperature = "14.3°C",
-                precipitation = "10",
-                uvIndex = "3",
+                temperature = Temperature.fromCelsius(16.4),
+                feelsLikeTemperature = Temperature.fromCelsius(14.3),
+                precipitation = Precipitation.fromMillimeters(10.0),
+                uvIndex = UvIndex(3),
                 description = "Partly cloudy",
                 iconId = com.francescsoftware.weathersample.ui.shared.assets.R.drawable.ic_partly_cloudy,
-                windSpeed = "4.3kph",
-                humidity = "54%",
-                pressure = "1024mb",
-                visibility = "10000 m",
+                windSpeed = Speed.fromKph(4.3),
+                humidity = Humidity(54),
+                pressure = Pressure.fromMillibars(1024.0),
+                visibility = AverageVisibility.fromKm(10.0),
             )
             CurrentWeather(state = state)
         }

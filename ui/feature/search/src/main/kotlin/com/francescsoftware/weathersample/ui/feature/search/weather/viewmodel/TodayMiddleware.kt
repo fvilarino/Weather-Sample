@@ -45,7 +45,7 @@ internal class TodayMiddleware @Inject constructor(
             onSuccess = { todayWeather ->
                 dispatch(
                     WeatherAction.TodayLoaded(
-                        currentWeather = todayWeather.toWeatherCardState(stringLookup),
+                        currentWeather = todayWeather.toWeatherCardState(),
                     )
                 )
             },

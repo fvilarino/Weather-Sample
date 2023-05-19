@@ -12,26 +12,24 @@ import com.francescsoftware.weathersample.ui.feature.favorites.ui.ForecastDaySta
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
-import com.francescsoftware.weathersample.ui.shared.format.weather.drawableId
-import com.francescsoftware.weathersample.ui.shared.format.weather.format
-import com.francescsoftware.weathersample.ui.shared.format.weather.weatherIconFromCode
 import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
+import com.francescsoftware.weathersample.ui.shared.weathericon.drawableId
+import com.francescsoftware.weathersample.ui.shared.weathericon.weatherIconFromCode
 import kotlinx.collections.immutable.toImmutableList
 import java.util.Date
 import java.util.Locale
-import kotlin.math.roundToInt
 
-internal fun Current.toWeatherCardState(stringLookup: StringLookup) =
+internal fun Current.toWeatherCardState() =
     CurrentWeatherState(
-        temperature = temperature.format(stringLookup),
-        feelsLikeTemperature = feelsLike.format(stringLookup),
-        precipitation = precipitation.millimeters.roundToInt().toString(),
-        uvIndex = uvIndex.toString(),
+        temperature = temperature,
+        feelsLikeTemperature = feelsLike,
+        precipitation = precipitation,
+        uvIndex = uvIndex,
         description = description.formatDescription(),
-        windSpeed = wind.format(stringLookup),
-        humidity = humidity.format(stringLookup),
-        pressure = pressure.format(stringLookup),
-        visibility = visibility.format(stringLookup),
+        windSpeed = wind,
+        humidity = humidity,
+        pressure = pressure,
+        visibility = visibility,
         iconId = weatherIconFromCode(iconCode).drawableId,
     )
 
@@ -88,11 +86,11 @@ private fun ForecastEntry.toForecastCardState(
             }
         ),
         iconId = weatherIconFromCode(iconCode).drawableId,
-        temperature = temperature.format(stringLookup),
-        feelsLikeTemperature = feelsLike.format(stringLookup),
-        precipitation = precipitation.millimeters.toString(),
-        uvIndex = uvIndex.toString(),
-        windSpeed = windSpeed.format(stringLookup),
-        humidity = humidity.format(stringLookup),
-        visibility = visibility.format(stringLookup),
+        temperature = temperature,
+        feelsLikeTemperature = feelsLike,
+        precipitation = precipitation,
+        uvIndex = uvIndex,
+        windSpeed = windSpeed,
+        humidity = humidity,
+        visibility = visibility,
     )
