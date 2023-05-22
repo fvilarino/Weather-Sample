@@ -40,6 +40,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
@@ -68,7 +69,7 @@ interface MultiSelectorState {
      * @param scope - [CoroutineScope] to run the select animation on
      * @param index - positional index of option to select
      */
-    fun selectOption(scope: CoroutineScope, index: Int)
+    suspend fun selectOption(scope: CoroutineScope, index: Int)
 }
 
 @Stable
@@ -121,24 +122,26 @@ internal class MultiSelectorStateImpl(
         easing = FastOutSlowInEasing,
     )
 
-    override fun selectOption(scope: CoroutineScope, index: Int) {
-        scope.launch {
-            _selectedIndex.animateTo(
-                targetValue = index.toFloat(),
-                animationSpec = animationSpec,
-            )
-        }
-        scope.launch {
-            _startCornerPercent.animateTo(
-                targetValue = if (index == 0) EdgeCornerPercent else DefaultCornerPercent,
-                animationSpec = animationSpec,
-            )
-        }
-        scope.launch {
-            _endCornerPercent.animateTo(
-                targetValue = if (index == numOptions - 1) EdgeCornerPercent else DefaultCornerPercent,
-                animationSpec = animationSpec,
-            )
+    override suspend fun selectOption(scope: CoroutineScope, index: Int) {
+        coroutineScope {
+            scope.launch {
+                _selectedIndex.animateTo(
+                    targetValue = index.toFloat(),
+                    animationSpec = animationSpec,
+                )
+            }
+            scope.launch {
+                _startCornerPercent.animateTo(
+                    targetValue = if (index == 0) EdgeCornerPercent else DefaultCornerPercent,
+                    animationSpec = animationSpec,
+                )
+            }
+            scope.launch {
+                _endCornerPercent.animateTo(
+                    targetValue = if (index == numOptions - 1) EdgeCornerPercent else DefaultCornerPercent,
+                    animationSpec = animationSpec,
+                )
+            }
         }
     }
 

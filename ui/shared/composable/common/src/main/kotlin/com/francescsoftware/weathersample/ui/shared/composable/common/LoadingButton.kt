@@ -9,7 +9,9 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +30,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,7 +45,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginHalf
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 /**
@@ -185,32 +188,31 @@ interface LoadingIndicatorState {
      */
     operator fun get(index: Int): Float
 
-    /**
-     * Starts the loading indicator animation.
-     *
-     * @param animationType - [AnimationType] to use for the loading button
-     * @param scope - the [CoroutineScope] to launch the coroutines on
-     */
-    fun start(animationType: AnimationType, scope: CoroutineScope)
+    /** Starts the loading indicator animation. */
+    suspend fun start()
 }
 
-internal class LoadingIndicatorStateImpl : LoadingIndicatorState {
+internal class LoadingIndicatorStateImpl(
+    private val animationType: AnimationType,
+) : LoadingIndicatorState {
     private val animatedValues = List(NumIndicators) { mutableStateOf(0f) }
 
     override fun get(index: Int): Float = animatedValues[index].value
 
-    override fun start(animationType: AnimationType, scope: CoroutineScope) {
-        repeat(NumIndicators) { index ->
-            scope.launch {
-                animate(
-                    initialValue = animationType.initialValue,
-                    targetValue = animationType.targetValue,
-                    animationSpec = infiniteRepeatable(
-                        animation = animationType.animationSpec,
-                        repeatMode = RepeatMode.Reverse,
-                        initialStartOffset = StartOffset(animationType.animationDelay * index)
-                    ),
-                ) { value, _ -> animatedValues[index].value = value }
+    override suspend fun start() {
+        coroutineScope {
+            repeat(NumIndicators) { index ->
+                launch {
+                    animate(
+                        initialValue = animationType.initialValue,
+                        targetValue = animationType.targetValue,
+                        animationSpec = infiniteRepeatable(
+                            animation = animationType.animationSpec,
+                            repeatMode = RepeatMode.Reverse,
+                            initialStartOffset = StartOffset(animationType.animationDelay * index)
+                        ),
+                    ) { value, _ -> animatedValues[index].value = value }
+                }
             }
         }
     }
@@ -221,37 +223,40 @@ internal class LoadingIndicatorStateImpl : LoadingIndicatorState {
 
         other as LoadingIndicatorStateImpl
 
-        if (animatedValues != other.animatedValues) return false
-
-        return true
+        return animatedValues == other.animatedValues
     }
 
-    override fun hashCode(): Int {
-        return animatedValues.hashCode()
+    override fun hashCode(): Int = animatedValues.hashCode()
+
+    companion object {
+        val Saver = Saver<LoadingIndicatorStateImpl, List<*>>(
+            save = { stateHolder ->
+                listOf(
+                    stateHolder.animationType,
+                )
+            },
+            restore = { args ->
+                LoadingIndicatorStateImpl(
+                    animationType = args[0] as AnimationType,
+                )
+            }
+        )
     }
 }
 
 /**
  * Factory method for the [LoadingButton] [LoadingIndicator]
  *
- * @param animating - if true the indicator animates, if false it does not
  * @param animationType - [AnimationType] for the indicator animation.
  * @return an instance of [LoadingIndicatorState]
  */
 @Composable
 fun rememberLoadingIndicatorState(
-    animating: Boolean,
     animationType: AnimationType,
-): LoadingIndicatorState {
-    val state = remember {
-        LoadingIndicatorStateImpl()
-    }
-    LaunchedEffect(key1 = Unit) {
-        if (animating) {
-            state.start(animationType, this)
-        }
-    }
-    return state
+): LoadingIndicatorState = rememberSaveable(
+    saver = LoadingIndicatorStateImpl.Saver,
+) {
+    LoadingIndicatorStateImpl(animationType = animationType)
 }
 
 @Composable
@@ -262,7 +267,12 @@ private fun LoadingIndicator(
     color: Color = MaterialTheme.colorScheme.onPrimary,
     indicatorSpacing: Dp = MarginHalf,
 ) {
-    val state = rememberLoadingIndicatorState(animating, animationType)
+    val state = rememberLoadingIndicatorState(animationType)
+    LaunchedEffect(key1 = animating, key2 = animationType) {
+        if (animating) {
+            state.start()
+        }
+    }
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -307,22 +317,56 @@ private fun LoadingDot(
 @Composable
 private fun PreviewLoadingButton() {
     WeatherSampleTheme {
-        var loading by remember {
+        var loading1 by rememberSaveable {
+            mutableStateOf(false)
+        }
+        var loading2 by rememberSaveable {
+            mutableStateOf(false)
+        }
+        var loading3 by rememberSaveable {
             mutableStateOf(false)
         }
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            LoadingButton(
-                onClick = { loading = !loading },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginDouble),
-                loading = loading,
+            Column(
+                verticalArrangement = Arrangement.SpaceEvenly,
             ) {
-                Text(
-                    text = "Refresh"
-                )
+                LoadingButton(
+                    onClick = { loading1 = !loading1 },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = MarginDouble),
+                    loading = loading1,
+                ) {
+                    Text(
+                        text = "Refresh"
+                    )
+                }
+                LoadingButton(
+                    onClick = { loading2 = !loading2 },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = MarginDouble),
+                    animationType = AnimationType.LazyBounce,
+                    loading = loading2,
+                ) {
+                    Text(
+                        text = "Refresh"
+                    )
+                }
+                LoadingButton(
+                    onClick = { loading3 = !loading3 },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = MarginDouble),
+                    animationType = AnimationType.Fade,
+                    loading = loading3,
+                ) {
+                    Text(
+                        text = "Refresh"
+                    )
+                }
             }
         }
     }

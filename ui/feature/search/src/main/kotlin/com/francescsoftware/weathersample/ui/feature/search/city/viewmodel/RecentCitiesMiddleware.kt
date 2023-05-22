@@ -9,6 +9,7 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.RecentCity
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -32,9 +33,9 @@ internal class RecentCitiesMiddleware @Inject constructor(
     ) {
         when (action) {
             CityAction.QueryFocused -> loadRecentCities()
-            is CityAction.OnCityClick -> saveCity(action.cityModel)
+            is CityAction.OnCityClick -> scope.saveCity(action.cityModel)
             is CityAction.OnChipClick -> onChipClick(action.recentCityModel)
-            is CityAction.OnDeleteChipClick -> onDeleteChip(action.recentCityModel)
+            is CityAction.OnDeleteChipClick -> scope.onDeleteChip(action.recentCityModel)
             else -> {}
         }
     }
@@ -60,10 +61,8 @@ internal class RecentCitiesMiddleware @Inject constructor(
         }
     }
 
-    private fun saveCity(recentCityModel: RecentCityModel) {
-        scope.launch {
-            insertRecentCitiesInteractor(RecentCity(name = recentCityModel.name))
-        }
+    private fun CoroutineScope.saveCity(recentCityModel: RecentCityModel) = launch {
+        insertRecentCitiesInteractor(RecentCity(name = recentCityModel.name))
     }
 
     private fun onChipClick(recentCityModel: RecentCityModel) {
@@ -79,9 +78,7 @@ internal class RecentCitiesMiddleware @Inject constructor(
         )
     }
 
-    private fun onDeleteChip(recentCityModel: RecentCityModel) {
-        scope.launch {
-            deleteRecentCityInteractor(city = RecentCity(name = recentCityModel.name))
-        }
+    private fun CoroutineScope.onDeleteChip(recentCityModel: RecentCityModel) = launch {
+        deleteRecentCityInteractor(city = RecentCity(name = recentCityModel.name))
     }
 }

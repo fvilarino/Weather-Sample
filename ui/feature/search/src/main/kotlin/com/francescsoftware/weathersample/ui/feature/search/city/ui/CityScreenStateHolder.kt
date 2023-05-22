@@ -56,7 +56,7 @@ private class CityScreenStateHolderImpl(
     }
 
     companion object {
-        val Saver = Saver<CityScreenStateHolderImpl, List<Any>>(
+        val Saver = Saver<CityScreenStateHolderImpl, List<*>>(
             save = { stateHolder ->
                 listOf(
                     stateHolder.query.annotatedString.text,
