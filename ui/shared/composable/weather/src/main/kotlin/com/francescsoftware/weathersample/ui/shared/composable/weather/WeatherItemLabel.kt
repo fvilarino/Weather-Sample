@@ -13,7 +13,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
 
-private const val MediumEmphasisAlpha = .7f
+private const val MediumEmphasisAlpha = .75f
 
 /**
  * A label for a weather item

@@ -13,7 +13,8 @@ import com.francescsoftware.weathersample.core.type.weather.UvIndex
  * The weather forecast state
  *
  * @property id a unique ID for this forecast
- * @property header the forecast header
+ * @property time the forecast time
+ * @property description the forecast description
  * @property iconId the icon associated with the forecast
  * @property temperature the temperature in celsius
  * @property feelsLikeTemperature the feels like temperature in celsius
@@ -26,7 +27,8 @@ import com.francescsoftware.weathersample.core.type.weather.UvIndex
 @Immutable
 data class ForecastHourState(
     val id: Long,
-    val header: String,
+    val time: String,
+    val description: String,
     @DrawableRes val iconId: Int,
     val temperature: Temperature,
     val feelsLikeTemperature: Temperature,
