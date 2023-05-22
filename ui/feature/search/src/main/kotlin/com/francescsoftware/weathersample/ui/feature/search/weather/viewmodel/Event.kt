@@ -58,7 +58,7 @@ internal sealed interface WeatherAction : Action {
 
     data class Loaded(
         val currentWeather: CurrentWeatherState,
-        val forecastItems: List<ForecastDayState>,
+        val forecastItems: ImmutableList<ForecastDayState>,
     ) : WeatherAction
 
     data class TodayLoaded(

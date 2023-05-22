@@ -5,8 +5,10 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.model.Favor
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.City
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.coroutines.launch
+import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
+@Immutable
 internal class FavoriteCityMiddleware @Inject constructor(
     private val deleteFavoriteCityInteractor: DeleteFavoriteCityInteractor,
 ) : Middleware<FavoriteState, FavoriteAction>() {

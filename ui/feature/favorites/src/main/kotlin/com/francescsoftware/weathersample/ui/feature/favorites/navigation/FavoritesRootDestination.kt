@@ -3,6 +3,8 @@ package com.francescsoftware.weathersample.ui.feature.favorites.navigation
 import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestination
 import com.francescsoftware.weathersample.ui.shared.route.NavigationDestination
 import com.francescsoftware.weathersample.ui.shared.route.RootNavigationDestination
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 /** The root for the favorites nav graph */
 object FavoritesRootDestination : RootNavigationDestination {
@@ -13,7 +15,7 @@ object FavoritesRootDestination : RootNavigationDestination {
     override val rootDestination: BottomNavigationDestination = FavoritesDestination
 
     /** @{inheritDoc} */
-    override val destinations: List<NavigationDestination> = listOf(
+    override val destinations: ImmutableList<NavigationDestination> = persistentListOf(
         FavoritesDestination
     )
 
