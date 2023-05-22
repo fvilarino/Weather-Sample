@@ -15,6 +15,7 @@ import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -111,7 +112,7 @@ internal class CityMiddleware @Inject constructor(
                                     favorite.name == city.name && favorite.countryCode == city.countryCode
                                 }
                                 city.toCityResultModel(favoriteCity?.id ?: NoFavorite)
-                            }
+                            }.toPersistentList()
                         )
                     )
                 }

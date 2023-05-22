@@ -8,6 +8,7 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.InsertRecen
 import com.francescsoftware.weathersample.domain.interactor.city.api.RecentCity
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -41,7 +42,9 @@ internal class RecentCitiesMiddleware @Inject constructor(
     private fun loadRecentCities() {
         if (recentsJob == null) {
             recentsJob = getRecentCitiesInteractor(limit = MaxRecentCities)
-                .map { cities -> cities.map { city -> RecentCityModel(name = city.name) } }
+                .map { cities ->
+                    cities.map { city -> RecentCityModel(name = city.name) }.toPersistentList()
+                }
                 .onEach { recentCities ->
                     if (recentCities.isEmpty()) {
                         dispatch(

@@ -1,13 +1,15 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.model
 
+import javax.annotation.concurrent.Immutable
+
+@Immutable
 internal data class CityResultModel(
     val id: Long,
     val favoriteId: Int,
-    val name: CharSequence,
-    val country: CharSequence,
+    val name: String,
+    val country: String,
     val countryCode: String,
-    val coordinates: CharSequence,
+    val coordinates: String,
 ) {
-    val isFavorite: Boolean
-        get() = favoriteId >= 0
+    val isFavorite: Boolean = favoriteId >= 0
 }

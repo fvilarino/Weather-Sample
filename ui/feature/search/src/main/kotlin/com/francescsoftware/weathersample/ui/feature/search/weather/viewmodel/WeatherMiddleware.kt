@@ -17,6 +17,7 @@ import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import com.francescsoftware.weathersample.ui.shared.weathericon.drawableId
 import com.francescsoftware.weathersample.ui.shared.weathericon.weatherIconFromCode
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -87,7 +88,7 @@ internal class WeatherMiddleware @Inject constructor(
         }
     }
 
-    private fun Forecast.toForecastItems(): List<ForecastDayState> = items.map { forecastDay ->
+    private fun Forecast.toForecastItems(): ImmutableList<ForecastDayState> = items.map { forecastDay ->
         ForecastDayState(
             header = forecastDay.toForecastHeaderState(),
             forecast = forecastDay
@@ -96,7 +97,7 @@ internal class WeatherMiddleware @Inject constructor(
                 }
                 .toImmutableList()
         )
-    }
+    }.toImmutableList()
 
     private fun ForecastDay.toForecastHeaderState(): ForecastHeaderState =
         ForecastHeaderState(
