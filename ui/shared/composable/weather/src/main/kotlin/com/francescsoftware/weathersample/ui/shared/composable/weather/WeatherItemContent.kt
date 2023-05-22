@@ -50,7 +50,7 @@ fun WeatherItemContent(
 ) {
     Text(
         text = label,
-        style = MaterialTheme.typography.bodySmall,
+        style = MaterialTheme.typography.bodyLarge,
         modifier = modifier,
     )
 }
