@@ -32,7 +32,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
 
 private val WeatherIconHeight = 80.dp
 private const val SideColumnWeight = 1f
-private const val CentralColumnWeight = 2f * SideColumnWeight
+private const val CentralColumnWeight = 1.7f * SideColumnWeight
 
 /**
  * Displays the current weather
