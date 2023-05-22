@@ -14,7 +14,8 @@ import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastH
 
 internal val PartlyCloudyHourForecast = ForecastHourState(
     id = 1L,
-    header = "02:00 - Scattered Clouds",
+    time = "02:00",
+    description = "Scattered Clouds",
     iconId = R.drawable.ic_partly_cloudy,
     temperature = Temperature.fromCelsius(16.4),
     feelsLikeTemperature = Temperature.fromCelsius(15.5),
@@ -27,7 +28,8 @@ internal val PartlyCloudyHourForecast = ForecastHourState(
 
 internal val SunnyHourForecast = ForecastHourState(
     id = 2L,
-    header = "14:00 - Sunny",
+    time = "14:00",
+    description = "Sunny",
     iconId = R.drawable.ic_sunny,
     temperature = Temperature.fromCelsius(18.7),
     feelsLikeTemperature = Temperature.fromCelsius(17.5),
@@ -40,7 +42,8 @@ internal val SunnyHourForecast = ForecastHourState(
 
 internal val HeavyRainHourForecast = ForecastHourState(
     id = 3L,
-    header = "06:00 - Heavy Rain",
+    time = "06:00",
+    description = "Heavy Rain",
     iconId = R.drawable.ic_heavy_rain,
     temperature = Temperature.fromCelsius(6.2),
     feelsLikeTemperature = Temperature.fromCelsius(5.0),
@@ -53,7 +56,8 @@ internal val HeavyRainHourForecast = ForecastHourState(
 
 internal val SnowHourForecast = ForecastHourState(
     id = 4L,
-    header = "07:00 - Snow",
+    time = "07:00",
+    description = "Snow",
     iconId = R.drawable.ic_snow,
     temperature = Temperature.fromCelsius(3.4),
     feelsLikeTemperature = Temperature.fromCelsius(-5.5),
@@ -66,7 +70,8 @@ internal val SnowHourForecast = ForecastHourState(
 
 internal val LightRainHourForecast = ForecastHourState(
     id = 5L,
-    header = "08:00 - Light Rain",
+    time = "08:00",
+    description = "Light Rain",
     iconId = R.drawable.ic_light_rain,
     temperature = Temperature.fromCelsius(13.7),
     feelsLikeTemperature = Temperature.fromCelsius(14.0),

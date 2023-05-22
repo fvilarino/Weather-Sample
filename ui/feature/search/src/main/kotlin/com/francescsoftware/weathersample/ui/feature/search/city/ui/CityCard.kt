@@ -45,7 +45,7 @@ internal fun CityCard(
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = city.name.toString(),
+                    text = city.name,
                     style = MaterialTheme.typography.bodyLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -56,7 +56,7 @@ internal fun CityCard(
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = city.country.toString(),
+                    text = city.country,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = MarginSingle),
                 )
@@ -65,7 +65,7 @@ internal fun CityCard(
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = city.coordinates.toString(),
+                    text = city.coordinates,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = MarginSingle),
                 )

@@ -46,7 +46,7 @@ internal fun Forecast.toForecastItems(
         header = forecastDay.toForecastHeaderState(stringLookup, timeFormatter),
         forecast = forecastDay
             .entries.map { entry ->
-                entry.toForecastCardState(stringLookup, timeFormatter)
+                entry.toForecastCardState(timeFormatter)
             }
             .toImmutableList()
     )
@@ -73,18 +73,14 @@ private fun Date.toHeaderLabel(
 }
 
 private fun ForecastEntry.toForecastCardState(
-    stringLookup: StringLookup,
     timeFormatter: TimeFormatter,
 ): ForecastHourState =
     ForecastHourState(
         id = date.time,
-        header = stringLookup.getString(
-            R.string.forecast_card_header,
-            timeFormatter.formatHour(date),
-            description.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-            }
-        ),
+        time = timeFormatter.formatHour(date),
+        description = description.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+        },
         iconId = weatherIconFromCode(iconCode).drawableId,
         temperature = temperature,
         feelsLikeTemperature = feelsLike,

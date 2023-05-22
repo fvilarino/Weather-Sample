@@ -116,13 +116,10 @@ internal class WeatherMiddleware @Inject constructor(
     private fun ForecastEntry.toForecastCardState(): ForecastHourState =
         ForecastHourState(
             id = date.time,
-            header = stringLookup.getString(
-                R.string.forecast_card_header,
-                timeFormatter.formatHour(date),
-                description.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                }
-            ),
+            time = timeFormatter.formatHour(date),
+            description = description.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+            },
             iconId = weatherIconFromCode(iconCode).drawableId,
             temperature = temperature,
             feelsLikeTemperature = feelsLike,
