@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
@@ -51,6 +52,7 @@ fun WeatherItemContent(
     Text(
         text = label,
         style = MaterialTheme.typography.bodyLarge,
+        fontWeight = FontWeight.Bold,
         modifier = modifier,
     )
 }

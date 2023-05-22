@@ -34,9 +34,11 @@ internal fun AverageVisibility.format(): AnnotatedString = format(
  * @return the formatted humidity
  */
 @Composable
-internal fun Humidity.format() = stringResource(
-    id = R.string.formatted_humidity,
-    value,
+internal fun Humidity.format() = AnnotatedString(
+    text = stringResource(
+        id = R.string.formatted_humidity,
+        value,
+    )
 )
 
 @Composable

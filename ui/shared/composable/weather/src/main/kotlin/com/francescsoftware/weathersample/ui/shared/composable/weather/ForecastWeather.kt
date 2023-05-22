@@ -1,10 +1,13 @@
 package com.francescsoftware.weathersample.ui.shared.composable.weather
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
 import com.francescsoftware.weathersample.core.type.weather.Humidity
@@ -27,6 +31,8 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
+
+private val HeaderIconSize = 64.dp
 
 /**
  * Displays a weather forecast
@@ -42,19 +48,33 @@ fun ForecastWeather(
     Column(
         modifier = modifier,
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+        ) {
             Icon(
                 painter = painterResource(id = state.iconId),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(start = MarginDouble)
-                    .size(64.dp)
+                    .size(HeaderIconSize)
             )
             Text(
-                text = state.header,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxWidth(),
+                text = state.description,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = MarginDouble)
+                    .align(Alignment.CenterVertically),
                 textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                text = state.time,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.End,
+                modifier = Modifier.width(HeaderIconSize),
+                maxLines = 1,
             )
         }
         Row(
@@ -123,7 +143,8 @@ fun ForecastWeather(
 @Suppress("MagicNumber")
 private val SunnyHourForecast = ForecastHourState(
     id = 2L,
-    header = "14:00 - Sunny",
+    time = "14:00",
+    description = "Sunny",
     iconId = com.francescsoftware.weathersample.ui.shared.assets.R.drawable.ic_sunny,
     temperature = Temperature.fromCelsius(18.7),
     feelsLikeTemperature = Temperature.fromCelsius(17.5),
@@ -134,6 +155,11 @@ private val SunnyHourForecast = ForecastHourState(
     visibility = AverageVisibility.fromKm(10.0),
 )
 
+private val RainyHourForecast = SunnyHourForecast.copy(
+    description = "Patchy rain possible",
+    iconId = com.francescsoftware.weathersample.ui.shared.assets.R.drawable.ic_light_rain,
+)
+
 @WidgetPreviews
 @Composable
 private fun ForecastWeatherCardPreview() {
@@ -141,10 +167,19 @@ private fun ForecastWeatherCardPreview() {
         Surface(
             color = MaterialTheme.colorScheme.background,
         ) {
-            ForecastWeather(
-                state = SunnyHourForecast,
-                modifier = Modifier.padding(all = MarginSingle),
-            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(MarginDouble),
+            ) {
+                ForecastWeather(
+                    state = SunnyHourForecast,
+                    modifier = Modifier.padding(all = MarginSingle),
+                )
+                Divider()
+                ForecastWeather(
+                    state = RainyHourForecast,
+                    modifier = Modifier.padding(all = MarginSingle),
+                )
+            }
         }
     }
 }
