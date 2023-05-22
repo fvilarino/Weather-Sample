@@ -4,6 +4,7 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteFavor
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.FavoriteCity
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.City
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
@@ -14,20 +15,18 @@ internal class FavoriteCityMiddleware @Inject constructor(
 ) : Middleware<FavoriteState, FavoriteAction>() {
     override fun process(state: FavoriteState, action: FavoriteAction) {
         when (action) {
-            is FavoriteAction.DeleteFavorite -> deleteFavorite(action.city)
+            is FavoriteAction.DeleteFavorite -> scope.deleteFavorite(action.city)
             else -> {}
         }
     }
 
-    private fun deleteFavorite(city: City) {
-        scope.launch {
-            deleteFavoriteCityInteractor(
-                FavoriteCity(
-                    id = city.favoriteId,
-                    name = city.name,
-                    countryCode = city.countryCode,
-                )
+    private fun CoroutineScope.deleteFavorite(city: City) = launch {
+        deleteFavoriteCityInteractor(
+            FavoriteCity(
+                id = city.favoriteId,
+                name = city.name,
+                countryCode = city.countryCode,
             )
-        }
+        )
     }
 }
