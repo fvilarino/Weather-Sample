@@ -13,6 +13,7 @@ import com.francescsoftware.weathersample.core.type.weather.Precipitation
 import com.francescsoftware.weathersample.core.type.weather.Pressure
 import com.francescsoftware.weathersample.core.type.weather.Speed
 import com.francescsoftware.weathersample.core.type.weather.Temperature
+import kotlin.math.roundToInt
 
 private val UnitsFontSize = 8.sp
 
@@ -51,7 +52,7 @@ internal fun Precipitation.format() = format(
  */
 @Composable
 internal fun Pressure.format(): AnnotatedString = format(
-    label = millibars.toString(),
+    label = millibars.roundToInt().toString(),
     units = stringResource(R.string.pressure_millibars),
 )
 
