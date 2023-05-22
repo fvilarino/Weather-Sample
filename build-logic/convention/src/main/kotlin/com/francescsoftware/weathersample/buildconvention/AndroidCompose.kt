@@ -14,6 +14,18 @@ internal fun Project.configureAndroidCompose(
         buildFeatures {
             compose = true
         }
+        kotlinOptions {
+            if (project.findProperty("enableComposeCompilerReports") == "true") {
+                freeCompilerArgs += listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+                        project.buildDir.absolutePath + "/compose_metrics",
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                        project.buildDir.absolutePath + "/compose_metrics",
+                )
+            }
+        }
         composeOptions {
             kotlinCompilerExtensionVersion = libs.findVersion("androidx-compose-compiler-version").get().toString()
         }

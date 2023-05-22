@@ -41,8 +41,8 @@ internal data class CityState(
 
 internal sealed interface CityAction : Action {
     data class QueryUpdated(val query: TextFieldValue) : CityAction
-    data class CitiesLoaded(val cities: List<CityResultModel>) : CityAction
-    data class RecentCitiesLoaded(val recentCities: List<RecentCityModel>) : CityAction
+    data class CitiesLoaded(val cities: ImmutableList<CityResultModel>) : CityAction
+    data class RecentCitiesLoaded(val recentCities: ImmutableList<RecentCityModel>) : CityAction
     data class OnCityClick(val cityModel: RecentCityModel) : CityAction
     data class OnFavoriteClick(val city: CityResultModel) : CityAction
     data class OnChipClick(val recentCityModel: RecentCityModel) : CityAction

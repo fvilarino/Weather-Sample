@@ -1,6 +1,9 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -14,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.ui.feature.search.R
@@ -40,18 +42,14 @@ internal fun CitiesSearchBox(
         singleLine = true,
         leadingIcon = {
             Icon(
-                painter = painterResource(
-                    id = com.francescsoftware.weathersample.ui.shared.assets.R.drawable.ic_baseline_location_city_24
-                ),
+                imageVector = Icons.Default.LocationCity,
                 contentDescription = null,
             )
         },
         trailingIcon = {
             IconButton(onClick = onClearQuery) {
                 Icon(
-                    painter = painterResource(
-                        id = com.francescsoftware.weathersample.ui.shared.assets.R.drawable.ic_baseline_clear_24
-                    ),
+                    imageVector = Icons.Default.Clear,
                     contentDescription = stringResource(id = R.string.content_description_clear),
                 )
             }

@@ -90,7 +90,7 @@ private fun WeatherScreen(
 
 @PhonePreviews
 @Composable
-private fun PhoneForecastWeatherScreenPreview(
+private fun PreviewPhoneForecastWeatherScreen(
     @PreviewParameter(
         provider = WeatherStateWrapperProvider::class,
     ) weatherStateWrapper: WeatherStateWrapper,
@@ -114,7 +114,7 @@ private fun PhoneForecastWeatherScreenPreview(
 
 @TabletPreviews
 @Composable
-private fun TabletForecastWeatherScreenPreview(
+private fun PreviewTabletForecastWeatherScreen(
     @PreviewParameter(
         provider = WeatherStateWrapperProvider::class,
     ) weatherStateWrapper: WeatherStateWrapper,

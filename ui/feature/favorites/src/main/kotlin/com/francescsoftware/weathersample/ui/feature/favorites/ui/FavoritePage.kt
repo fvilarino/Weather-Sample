@@ -13,6 +13,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeader
@@ -27,18 +28,21 @@ import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.ImmutableList
 
+@Immutable
 internal data class FavoriteCardState(
     val city: City,
     val current: CurrentWeatherState,
     val forecast: ImmutableList<ForecastDayState>,
 )
 
+@Immutable
 internal data class City(
     val favoriteId: Int,
     val name: String,
     val countryCode: String,
 )
 
+@Immutable
 internal data class ForecastDayState(
     val header: ForecastHeaderState,
     val forecast: ImmutableList<ForecastHourState>,
