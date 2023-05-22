@@ -42,7 +42,7 @@ private class WeatherStateHolderImpl(
     }
 
     companion object {
-        val Saver = Saver<WeatherStateHolderImpl, List<Any>>(
+        val Saver = Saver<WeatherStateHolderImpl, List<*>>(
             save = {
                 listOf(it.option.value)
             },

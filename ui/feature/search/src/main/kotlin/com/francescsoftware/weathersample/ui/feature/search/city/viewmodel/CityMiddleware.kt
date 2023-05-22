@@ -16,6 +16,7 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResul
 import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -57,7 +58,7 @@ internal class CityMiddleware @Inject constructor(
         when (action) {
             CityAction.Start -> onStart()
             is CityAction.QueryUpdated -> onQueryUpdated(action.query)
-            is CityAction.OnFavoriteClick -> onFavoriteClick(action.city)
+            is CityAction.OnFavoriteClick -> scope.onFavoriteClick(action.city)
             else -> {}
         }
     }
@@ -123,13 +124,11 @@ internal class CityMiddleware @Inject constructor(
         )
     }
 
-    private fun onFavoriteClick(city: CityResultModel) {
-        scope.launch {
-            if (city.isFavorite) {
-                deleteFavoriteCityInteractor(city.toFavoriteCity())
-            } else {
-                insertFavoriteCityInteractor(city.toFavoriteCity().copy(id = 0))
-            }
+    private fun CoroutineScope.onFavoriteClick(city: CityResultModel) = launch {
+        if (city.isFavorite) {
+            deleteFavoriteCityInteractor(city.toFavoriteCity())
+        } else {
+            insertFavoriteCityInteractor(city.toFavoriteCity().copy(id = 0))
         }
     }
 
