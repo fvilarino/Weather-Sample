@@ -26,6 +26,10 @@ interface NavigationDestination {
     val deeplinks: List<NavDeepLink>
         get() = emptyList()
 
+    /** Indicates whether the bottom nav bar is visible on this destination */
+    val showBottomBar: Boolean
+        get() = true
+
     /**
      * Checks whether the [route] represents this destination
      *

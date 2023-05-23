@@ -41,6 +41,9 @@ internal object WeatherDestination : NavigationDestination {
         navDeepLink { uriPattern = "$DeeplinkScheme://$DeeplinkHost/{$CityNameArg}/{$CountryCodeArg}" }
     )
 
+    /** @{inheritDoc} */
+    override val showBottomBar: Boolean = false
+
     /**
      * Gets the weather screen route for a [SelectedCity]
      *
