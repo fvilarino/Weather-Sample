@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.ui.feature.home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,6 +21,7 @@ internal fun NavRail(
     modifier: Modifier = Modifier,
 ) {
     NavigationRail(
+        contentColor = NavigationColors.navigationContentColor(),
         modifier = modifier,
     ) {
         items.forEach { destination ->
@@ -35,6 +37,13 @@ internal fun NavRail(
                     )
                 },
                 label = { Text(text = stringResource(id = content.labelId)) },
+                colors = NavigationRailItemDefaults.colors(
+                    indicatorColor = NavigationColors.navigationIndicatorColor(),
+                    selectedIconColor = NavigationColors.navigationSelectedItemColor(),
+                    selectedTextColor = NavigationColors.navigationSelectedItemColor(),
+                    unselectedIconColor = NavigationColors.navigationContentColor(),
+                    unselectedTextColor = NavigationColors.navigationContentColor(),
+                ),
                 onClick = { onClick(destination.navGraphRoute) },
             )
         }
