@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -76,13 +77,7 @@ internal fun WeatherApp() {
                             items = navGraphDestinations,
                             currentDestination = navBackStackEntry?.destination,
                             onClick = { destination ->
-                                navController.navigate(destination) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
+                                navController.navigateToBottomNavDestination(destination)
                             },
                             modifier = Modifier.fillMaxWidth(),
                         )
@@ -101,13 +96,7 @@ internal fun WeatherApp() {
                             items = navGraphDestinations,
                             currentDestination = navBackStackEntry?.destination,
                             onClick = { destination ->
-                                navController.navigate(destination) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
+                                navController.navigateToBottomNavDestination(destination)
                             },
                         )
                     }
@@ -144,6 +133,18 @@ internal fun WeatherApp() {
                 }
             }
         }
+    }
+}
+
+private fun NavHostController.navigateToBottomNavDestination(
+    destination: String,
+) {
+    navigate(destination) {
+        popUpTo(graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
     }
 }
 
