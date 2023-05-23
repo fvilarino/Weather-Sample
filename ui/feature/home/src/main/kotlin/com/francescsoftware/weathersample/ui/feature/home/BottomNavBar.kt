@@ -4,6 +4,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ internal fun BottomNavBar(
     modifier: Modifier = Modifier
 ) {
     NavigationBar(
+        contentColor = NavigationColors.navigationContentColor(),
         modifier = modifier,
     ) {
         items.forEach { destination ->
@@ -41,6 +43,13 @@ internal fun BottomNavBar(
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = NavigationColors.navigationIndicatorColor(),
+                    selectedIconColor = NavigationColors.navigationSelectedItemColor(),
+                    selectedTextColor = NavigationColors.navigationSelectedItemColor(),
+                    unselectedIconColor = NavigationColors.navigationContentColor(),
+                    unselectedTextColor = NavigationColors.navigationContentColor(),
+                ),
                 onClick = { onClick(destination.navGraphRoute) },
             )
         }
