@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.ui.shared.composable.common
 
-import android.content.res.Configuration
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -32,10 +31,10 @@ import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
+import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -231,7 +230,7 @@ fun MultiSelector(
     selectedColor: Color = MaterialTheme.colorScheme.onPrimary,
     unselectedColor: Color = MaterialTheme.colorScheme.onSurface,
     selectedBackgroundColor: Color = MaterialTheme.colorScheme.primary,
-    unselectedBackgroundColor: Color = MaterialTheme.colorScheme.surface,
+    unselectedBackgroundColor: Color = MaterialTheme.colorScheme.surfaceVariant,
     state: MultiSelectorState = rememberMultiSelectorState(
         options = options,
         selectedOption = selectedOption,
@@ -314,8 +313,7 @@ fun MultiSelector(
     }
 }
 
-@Preview(widthDp = 420)
-@Preview(widthDp = 420, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@PhonePreviews
 @Composable
 fun PreviewMultiSelector() {
     WeatherSampleTheme {
