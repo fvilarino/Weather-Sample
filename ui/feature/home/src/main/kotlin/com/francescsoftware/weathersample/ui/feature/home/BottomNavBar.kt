@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.ui.feature.home
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -34,7 +35,12 @@ internal fun BottomNavBar(
                         contentDescription = stringResource(id = content.contentDescriptionId),
                     )
                 },
-                label = { Text(text = stringResource(id = content.labelId)) },
+                label = {
+                    Text(
+                        text = stringResource(id = content.labelId),
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                },
                 onClick = { onClick(destination.navGraphRoute) },
             )
         }
