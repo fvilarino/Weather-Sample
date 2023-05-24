@@ -28,18 +28,8 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Setup JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: "zulu"
-          java-version: 17
-          cache: 'gradle'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-
-      - name: Accept licenses
-        run: yes | sdkmanager --licenses
+      - name: Configure workflow
+        uses: ./.github/actions/setup
 
       - name: Build the app
         run: ./gradlew assembleRelease --stacktrace
@@ -58,18 +48,8 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Setup JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: "zulu"
-          java-version: 17
-          cache: 'gradle'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-
-      - name: Accept licenses
-        run: yes | sdkmanager --licenses
+      - name: Configure workflow
+        uses: ./.github/actions/setup
 
       - name: Run tests
         run: ./gradlew testDebugUnitTest --stacktrace
@@ -88,18 +68,8 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Setup JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: "zulu"
-          java-version: 17
-          cache: 'gradle'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-
-      - name: Accept licenses
-        run: yes | sdkmanager --licenses
+      - name: Configure workflow
+        uses: ./.github/actions/setup
 
       - name: Run detekt static analysis
         run: ./gradlew detektMain
@@ -118,18 +88,8 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Setup JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: "zulu"
-          java-version: 17
-          cache: 'gradle'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-
-      - name: Accept licenses
-        run: yes | sdkmanager --licenses
+      - name: Configure workflow
+        uses: ./.github/actions/setup
 
       - name: Run lint static analysis
         run: ./gradlew lintDebug --stacktrace

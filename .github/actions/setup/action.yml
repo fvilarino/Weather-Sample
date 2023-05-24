@@ -1,0 +1,23 @@
+name: "Workflow setup"
+description: "Configures common workflow steps"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: "zulu"
+        java-version: 17
+        cache: 'gradle'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+
+    - name: Accept licenses
+      shell: bash
+      run: yes | sdkmanager --licenses
+
+    - name: Complete
+      shell: bash
+      run: echo "Setup complete"
