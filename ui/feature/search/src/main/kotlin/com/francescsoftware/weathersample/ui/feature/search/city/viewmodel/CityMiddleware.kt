@@ -109,7 +109,7 @@ internal class CityMiddleware @Inject constructor(
                     dispatch(
                         CityAction.CitiesLoaded(
                             list.map { city ->
-                                val favoriteCity = favorites.firstOrNull() { favorite ->
+                                val favoriteCity = favorites.firstOrNull { favorite ->
                                     favorite.name == city.name && favorite.countryCode == city.countryCode
                                 }
                                 city.toCityResultModel(favoriteCity?.id ?: NoFavorite)
