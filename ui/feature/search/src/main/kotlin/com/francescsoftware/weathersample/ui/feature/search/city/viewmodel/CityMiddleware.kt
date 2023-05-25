@@ -147,7 +147,7 @@ internal class CityMiddleware @Inject constructor(
 
     private fun CityResultModel.toFavoriteCity(): FavoriteCity = FavoriteCity(
         id = favoriteId,
-        name = name.toString(),
+        name = name,
         countryCode = countryCode,
     )
 }

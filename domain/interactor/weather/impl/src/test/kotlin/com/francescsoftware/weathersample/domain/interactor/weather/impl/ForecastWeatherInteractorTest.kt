@@ -34,7 +34,6 @@ import com.francescsoftware.weathersample.testing.fake.time.FakeTimeFormatter
 import com.francescsoftware.weathersample.testing.fake.time.FakeTimeParser
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 import java.util.Date
 

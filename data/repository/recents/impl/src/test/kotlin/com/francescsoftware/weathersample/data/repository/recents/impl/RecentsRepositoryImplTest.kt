@@ -12,7 +12,6 @@ import com.francescsoftware.weathersample.data.repository.recents.api.RecentCity
 import com.francescsoftware.weathersample.data.repository.recents.impl.dao.RecentCitiesDao
 import com.francescsoftware.weathersample.data.repository.recents.impl.dao.RecentCitiesDatabase
 import com.francescsoftware.weathersample.data.repository.recents.impl.dao.RecentCityEntity
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
@@ -81,7 +80,6 @@ internal class RecentsRepositoryImplTest {
         assertThat(cities.size).isEqualTo(totalCities)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `get recent cities emits on update`() = runTest {
         repository.getRecentCities(limit = 10).test {

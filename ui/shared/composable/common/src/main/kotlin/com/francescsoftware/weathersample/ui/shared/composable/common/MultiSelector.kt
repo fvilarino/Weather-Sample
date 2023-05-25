@@ -156,9 +156,7 @@ internal class MultiSelectorStateImpl(
         if (_startCornerPercent != other._startCornerPercent) return false
         if (_endCornerPercent != other._endCornerPercent) return false
         if (numOptions != other.numOptions) return false
-        if (animationSpec != other.animationSpec) return false
-
-        return true
+        return animationSpec == other.animationSpec
     }
 
     override fun hashCode(): Int {
