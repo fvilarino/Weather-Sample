@@ -8,21 +8,14 @@
     <string name="city_error_loading">Could not load cities</string>
     <string name="no_results_found_label">No results found</string>
     <string name="content_description_clear">Clear</string>
-    <string name="content_description_toggle_favorite">Toggle Favorite</string>
     <string name="weather_error_loading">Could not load weather</string>
-    <string name="weather">Weather</string>
     <string name="weather_city_label">City</string>
     <string name="weather_city_name">%1$s, %2$s</string>
     <string name="today_weather_button_label">Today</string>
     <string name="forecast_weather_button_label">Forecast</string>
-    <string name="uv_index_label">UV:</string>
-    <string name="content_description_weather_icon">Weather icon</string>
     <string name="retry">Retry</string>
     <string name="failed_to_load_weather_data">Failed to load weather data</string>
-    <string name="content_description_forecast_icon">Forecast icon</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
-    <string name="forecast_card_header">%1$s - %2$s</string>
-    <string name="failed_to_load_forecast">Failed to load forecast</string>
     <string name="refresh">Refresh</string>
 </resources>

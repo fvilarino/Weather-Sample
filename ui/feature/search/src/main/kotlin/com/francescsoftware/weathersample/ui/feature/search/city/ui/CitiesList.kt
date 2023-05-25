@@ -63,7 +63,7 @@ internal fun CitiesList(
 }
 
 private fun CityResultModel.toSelectedCity() = SelectedCity(
-    name = name.toString(),
+    name = name,
     countryCode = countryCode,
 )
 
