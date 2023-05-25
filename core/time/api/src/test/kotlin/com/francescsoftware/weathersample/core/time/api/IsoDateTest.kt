@@ -1,8 +1,10 @@
 package com.francescsoftware.weathersample.core.time.api
 
-import com.google.common.truth.Truth
+import assertk.assertFailure
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import org.junit.jupiter.api.Test
-import kotlin.test.assertFailsWith
 
 internal class IsoDateTest {
 
@@ -10,29 +12,29 @@ internal class IsoDateTest {
     fun `valid date is parsed`() {
         val date = "2023-02-25"
         val isoDate = Iso8601Date(date)
-        Truth.assertThat(isoDate.date).isEqualTo(date)
+        assertThat(isoDate.date).isEqualTo(date)
     }
 
     @Test
     fun `valid datetime is parsed`() {
         val date = "2023-02-25 16:34"
         val isoDate = Iso8601DateTime(date)
-        Truth.assertThat(isoDate.date).isEqualTo(date)
+        assertThat(isoDate.date).isEqualTo(date)
     }
 
     @Test
     fun `invalid date throws exception`() {
         val date = "2023-02"
-        assertFailsWith(TimeParsingException::class) {
+        assertFailure {
             Iso8601Date(date)
-        }
+        }.isInstanceOf<TimeParsingException>()
     }
 
     @Test
     fun `invalid datetime throws exception`() {
         val date = "2023-02-25 14-21"
-        assertFailsWith(TimeParsingException::class) {
+        assertFailure {
             Iso8601DateTime(date)
-        }
+        }.isInstanceOf<TimeParsingException>()
     }
 }

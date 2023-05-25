@@ -13,7 +13,7 @@ class KotlinTestLibraryConventionPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
                 add("testCompileOnly", libs.findLibrary("junit.junit").get())
-                add("testImplementation", libs.findLibrary("com.google.truth.truth").get())
+                add("testImplementation", libs.findLibrary("com.willowtreeapps.assertk.assertk").get())
                 add("testImplementation", libs.findLibrary("org.junit.jupiter.junit.jupiter").get())
                 add("testImplementation", libs.findLibrary("io.mockk").get())
             }
