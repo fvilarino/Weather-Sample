@@ -1,6 +1,10 @@
 package com.francescsoftware.weathersample.core.type.either
 
-import com.google.common.truth.Truth
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isFalse
+import assertk.assertions.isNull
+import assertk.assertions.isTrue
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
@@ -10,25 +14,25 @@ class EitherTest {
     @Test
     fun `successful Either returns true for isSuccess`() {
         val either: Either<Int> = Either.Success(0)
-        Truth.assertThat(either.isSuccess).isTrue()
+        assertThat(either.isSuccess).isTrue()
     }
 
     @Test
     fun `successful Either returns false for isFailure`() {
         val either: Either<Int> = Either.Success(0)
-        Truth.assertThat(either.isFailure).isTrue()
+        assertThat(either.isFailure).isTrue()
     }
 
     @Test
     fun `failure Either returns false for isSuccess`() {
         val either: Either<Int> = Either.Failure(Throwable())
-        Truth.assertThat(either.isSuccess).isFalse()
+        assertThat(either.isSuccess).isFalse()
     }
 
     @Test
     fun `failure Either returns true for isFailure`() {
         val either: Either<Int> = Either.Failure(Throwable())
-        Truth.assertThat(either.isFailure).isTrue()
+        assertThat(either.isFailure).isTrue()
     }
 
     @Test
@@ -59,26 +63,26 @@ class EitherTest {
     fun `success Either valueOrNull returns value`() {
         val result = 1
         val either: Either<Int> = Either.Success(result)
-        Truth.assertThat(either.valueOrNull()).isEqualTo(result)
+        assertThat(either.valueOrNull()).isEqualTo(result)
     }
 
     @Test
     fun `failure Either valueOrNull returns null`() {
         val either: Either<Int> = Either.Failure(Throwable())
-        Truth.assertThat(either.valueOrNull()).isNull()
+        assertThat(either.valueOrNull()).isNull()
     }
 
     @Test
     fun `success Either throwableOrNull returns null`() {
         val result = 1
         val either: Either<Int> = Either.Success(result)
-        Truth.assertThat(either.throwableOrNull()).isNull()
+        assertThat(either.throwableOrNull()).isNull()
     }
 
     @Test
     fun `failure Either throwableOrNull returns throwable`() {
         val throwable = Throwable()
         val either: Either<Int> = Either.Failure(throwable)
-        Truth.assertThat(either.throwableOrNull()).isEqualTo(throwable)
+        assertThat(either.throwableOrNull()).isEqualTo(throwable)
     }
 }

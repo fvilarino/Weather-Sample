@@ -1,9 +1,13 @@
 package com.francescsoftware.weathersample.data.repository.weather.impl
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
+import assertk.assertions.isNotNull
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation
+import com.francescsoftware.weathersample.data.repository.weather.api.model.today.TodayWeatherResponse
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
-import com.google.common.truth.Truth
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
@@ -48,13 +52,13 @@ internal class WeatherRepositoryImplTest {
             countryCode = "CA",
         )
         val response = repository.getTodayWeather(location = location)
-        Truth.assertThat(response).isInstanceOf(Either.Success::class.java)
+        assertThat(response).isNotNull().isInstanceOf<Either.Success<TodayWeatherResponse>>()
         val weather = (response as Either.Success).value
-        Truth.assertThat(weather.current.tempCelsius).isEqualTo(14.0)
-        Truth.assertThat(weather.current.tempFahrenheit).isEqualTo(57.2)
-        Truth.assertThat(weather.current.windKph).isEqualTo(15.1)
-        Truth.assertThat(weather.current.humidity).isEqualTo(82)
-        Truth.assertThat(weather.current.pressureMb).isEqualTo(1015.0)
+        assertThat(weather.current.tempCelsius).isEqualTo(14.0)
+        assertThat(weather.current.tempFahrenheit).isEqualTo(57.2)
+        assertThat(weather.current.windKph).isEqualTo(15.1)
+        assertThat(weather.current.humidity).isEqualTo(82)
+        assertThat(weather.current.pressureMb).isEqualTo(1015.0)
     }
 
     @Test
@@ -73,7 +77,7 @@ internal class WeatherRepositoryImplTest {
             countryCode = "CA",
         )
         val response = repository.getTodayWeather(location = location)
-        Truth.assertThat(response).isInstanceOf(Either.Failure::class.java)
+        assertThat(response).isInstanceOf<Either.Failure>()
     }
 
     @Test
@@ -92,42 +96,42 @@ internal class WeatherRepositoryImplTest {
             countryCode = "CA",
         )
         val response = repository.getForecast(location = location)
-        Truth.assertThat(response).isInstanceOf(Either.Success::class.java)
+        assertThat(response).isNotNull().isInstanceOf<Either.Success<TodayWeatherResponse>>()
         val weather = (response as Either.Success).value
         // current
-        Truth.assertThat(weather.current.tempCelsius).isEqualTo(14.3)
-        Truth.assertThat(weather.current.tempFahrenheit).isEqualTo(57.7)
-        Truth.assertThat(weather.current.windKph).isEqualTo(4.0)
-        Truth.assertThat(weather.current.humidity).isEqualTo(62)
-        Truth.assertThat(weather.current.pressureMb).isEqualTo(1015.0)
+        assertThat(weather.current.tempCelsius).isEqualTo(14.3)
+        assertThat(weather.current.tempFahrenheit).isEqualTo(57.7)
+        assertThat(weather.current.windKph).isEqualTo(4.0)
+        assertThat(weather.current.humidity).isEqualTo(62)
+        assertThat(weather.current.pressureMb).isEqualTo(1015.0)
 
         // forecast
-        Truth.assertThat(weather.forecast.forecastDay.size).isEqualTo(1)
+        assertThat(weather.forecast.forecastDay.size).isEqualTo(1)
         val hours = weather.forecast.forecastDay.first().hour
-        Truth.assertThat(hours[0].tempCelsius).isEqualTo(9.6)
-        Truth.assertThat(hours[0].feelsLikeCelsius).isEqualTo(9.1)
-        Truth.assertThat(hours[0].windKph).isEqualTo(5.8)
-        Truth.assertThat(hours[0].humidity).isEqualTo(78)
-        Truth.assertThat(hours[0].visibilityKm).isEqualTo(10.0)
-        Truth.assertThat(hours[0].precipitationMm).isEqualTo(0.0)
-        Truth.assertThat(hours[0].condition.text).isEqualTo("Cloudy")
-        Truth.assertThat(hours[1].tempCelsius).isEqualTo(9.1)
-        Truth.assertThat(hours[1].feelsLikeCelsius).isEqualTo(8.3)
-        Truth.assertThat(hours[1].windKph).isEqualTo(6.5)
-        Truth.assertThat(hours[1].humidity).isEqualTo(80)
-        Truth.assertThat(hours[1].visibilityKm).isEqualTo(9.0)
-        Truth.assertThat(hours[1].precipitationMm).isEqualTo(5.0)
-        Truth.assertThat(hours[1].condition.text).isEqualTo("Partly cloudy")
-        Truth.assertThat(hours[2].tempCelsius).isEqualTo(9.0)
-        Truth.assertThat(hours[2].feelsLikeCelsius).isEqualTo(8.7)
-        Truth.assertThat(hours[2].windKph).isEqualTo(5.0)
-        Truth.assertThat(hours[2].humidity).isEqualTo(79)
-        Truth.assertThat(hours[2].visibilityKm).isEqualTo(10.0)
-        Truth.assertThat(hours[2].precipitationMm).isEqualTo(7.5)
-        Truth.assertThat(hours[2].condition.text).isEqualTo("Clear")
+        assertThat(hours[0].tempCelsius).isEqualTo(9.6)
+        assertThat(hours[0].feelsLikeCelsius).isEqualTo(9.1)
+        assertThat(hours[0].windKph).isEqualTo(5.8)
+        assertThat(hours[0].humidity).isEqualTo(78)
+        assertThat(hours[0].visibilityKm).isEqualTo(10.0)
+        assertThat(hours[0].precipitationMm).isEqualTo(0.0)
+        assertThat(hours[0].condition.text).isEqualTo("Cloudy")
+        assertThat(hours[1].tempCelsius).isEqualTo(9.1)
+        assertThat(hours[1].feelsLikeCelsius).isEqualTo(8.3)
+        assertThat(hours[1].windKph).isEqualTo(6.5)
+        assertThat(hours[1].humidity).isEqualTo(80)
+        assertThat(hours[1].visibilityKm).isEqualTo(9.0)
+        assertThat(hours[1].precipitationMm).isEqualTo(5.0)
+        assertThat(hours[1].condition.text).isEqualTo("Partly cloudy")
+        assertThat(hours[2].tempCelsius).isEqualTo(9.0)
+        assertThat(hours[2].feelsLikeCelsius).isEqualTo(8.7)
+        assertThat(hours[2].windKph).isEqualTo(5.0)
+        assertThat(hours[2].humidity).isEqualTo(79)
+        assertThat(hours[2].visibilityKm).isEqualTo(10.0)
+        assertThat(hours[2].precipitationMm).isEqualTo(7.5)
+        assertThat(hours[2].condition.text).isEqualTo("Clear")
         val astro = weather.forecast.forecastDay.first().astro
-        Truth.assertThat(astro.sunrise).isEqualTo("05:40 AM")
-        Truth.assertThat(astro.sunset).isEqualTo("08:39 PM")
+        assertThat(astro.sunrise).isEqualTo("05:40 AM")
+        assertThat(astro.sunset).isEqualTo("08:39 PM")
     }
 
     @Test
@@ -146,6 +150,6 @@ internal class WeatherRepositoryImplTest {
             countryCode = "CA",
         )
         val response = repository.getForecast(location = location)
-        Truth.assertThat(response).isInstanceOf(Either.Failure::class.java)
+        assertThat(response).isInstanceOf<Either.Failure>()
     }
 }

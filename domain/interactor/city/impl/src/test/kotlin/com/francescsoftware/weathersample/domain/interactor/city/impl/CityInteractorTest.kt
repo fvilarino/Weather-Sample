@@ -1,21 +1,26 @@
 package com.francescsoftware.weathersample.domain.interactor.city.impl
 
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
+import assertk.assertions.isNotNull
+import assertk.assertions.isTrue
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.isFailure
 import com.francescsoftware.weathersample.core.type.either.isSuccess
 import com.francescsoftware.weathersample.core.type.either.throwableOrNull
 import com.francescsoftware.weathersample.core.type.either.valueOrNull
-import com.francescsoftware.weathersample.data.repository.city.api.CitiesException
 import com.francescsoftware.weathersample.data.repository.city.api.CityRepository
 import com.francescsoftware.weathersample.data.repository.city.api.model.City
 import com.francescsoftware.weathersample.data.repository.city.api.model.CitySearchResponse
 import com.francescsoftware.weathersample.data.repository.city.api.model.Coordinates
 import com.francescsoftware.weathersample.data.repository.city.api.model.Metadata
+import com.francescsoftware.weathersample.domain.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
-import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import com.francescsoftware.weathersample.data.repository.city.api.CitiesException as RepoException
 
 private const val CityName = "Vancouver"
 private const val CityRegion = "British Columbia"
@@ -64,7 +69,7 @@ class CityInteractorTest {
 
         override suspend fun getCities(prefix: String, limit: Int): Either<CitySearchResponse> {
             return if (isNetworkError) {
-                Either.Failure(CitiesException(message = "Failed to load cities"))
+                Either.Failure(RepoException(message = "Failed to load cities"))
             } else {
                 Either.Success(
                     CitySearchResponse(
@@ -87,8 +92,8 @@ class CityInteractorTest {
         val response = interactor(query)
 
         // the response has been converted to the interactor type
-        Truth.assertThat(response.isSuccess).isTrue()
-        Truth.assertThat(response.valueOrNull()?.cities).isEqualTo(listOf(successCity))
+        assertThat(response.isSuccess).isTrue()
+        assertThat(response.valueOrNull()?.cities).isEqualTo(listOf(successCity))
     }
 
     @Test
@@ -101,8 +106,7 @@ class CityInteractorTest {
         val response = interactor(query)
 
         // the response has been converted to the interactor type
-        Truth.assertThat(response.isFailure).isTrue()
-        Truth.assertThat(response.throwableOrNull())
-            .isInstanceOf(com.francescsoftware.weathersample.domain.interactor.city.api.CitiesException::class.java)
+        assertThat(response.isFailure).isTrue()
+        assertThat(response.throwableOrNull()).isNotNull().isInstanceOf<CitiesException>()
     }
 }

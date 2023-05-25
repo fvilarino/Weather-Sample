@@ -2,9 +2,10 @@ package com.francescsoftware.weathersample.core.time.impl
 
 import com.francescsoftware.weathersample.core.time.api.Iso8601Date
 import com.francescsoftware.weathersample.core.time.api.Iso8601DateTime
-import com.google.common.truth.Truth
 import org.junit.jupiter.api.Test
 import java.util.Calendar
+import assertk.assertThat
+import assertk.assertions.isEqualTo
 
 internal class TimeParserTest {
 
@@ -19,9 +20,9 @@ internal class TimeParserTest {
         val isoDate = Iso8601Date(date)
         val parsed = parser.parseDate(isoDate)
         val calendar = Calendar.getInstance().apply { time = parsed }
-        Truth.assertThat(calendar.get(Calendar.YEAR)).isEqualTo(year.toInt())
-        Truth.assertThat(calendar.get(Calendar.MONTH) + 1).isEqualTo(month.toInt())
-        Truth.assertThat(calendar.get(Calendar.DAY_OF_MONTH)).isEqualTo(day.toInt())
+        assertThat(calendar.get(Calendar.YEAR)).isEqualTo(year.toInt())
+        assertThat(calendar.get(Calendar.MONTH) + 1).isEqualTo(month.toInt())
+        assertThat(calendar.get(Calendar.DAY_OF_MONTH)).isEqualTo(day.toInt())
     }
 
     @Test
@@ -35,10 +36,10 @@ internal class TimeParserTest {
         val isoDate = Iso8601DateTime(date)
         val parsed = parser.parseDate(isoDate)
         val calendar = Calendar.getInstance().apply { time = parsed }
-        Truth.assertThat(calendar.get(Calendar.YEAR)).isEqualTo(year.toInt())
-        Truth.assertThat(calendar.get(Calendar.MONTH) + 1).isEqualTo(month.toInt())
-        Truth.assertThat(calendar.get(Calendar.DAY_OF_MONTH)).isEqualTo(day.toInt())
-        Truth.assertThat(calendar.get(Calendar.HOUR_OF_DAY)).isEqualTo(hour.toInt())
-        Truth.assertThat(calendar.get(Calendar.MINUTE)).isEqualTo(minute.toInt())
+        assertThat(calendar.get(Calendar.YEAR)).isEqualTo(year.toInt())
+        assertThat(calendar.get(Calendar.MONTH) + 1).isEqualTo(month.toInt())
+        assertThat(calendar.get(Calendar.DAY_OF_MONTH)).isEqualTo(day.toInt())
+        assertThat(calendar.get(Calendar.HOUR_OF_DAY)).isEqualTo(hour.toInt())
+        assertThat(calendar.get(Calendar.MINUTE)).isEqualTo(minute.toInt())
     }
 }
