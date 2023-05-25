@@ -53,9 +53,10 @@ internal fun FavoritePager(
     Box(
         modifier = modifier,
     ) {
-        val pagerState = rememberPagerState()
+        val pagerState = rememberPagerState(
+            pageCount = { state.pages.size }
+        )
         HorizontalPager(
-            pageCount = state.pages.size,
             pageSize = pageSize,
             pageSpacing = MarginDouble,
             contentPadding = contentPadding,
