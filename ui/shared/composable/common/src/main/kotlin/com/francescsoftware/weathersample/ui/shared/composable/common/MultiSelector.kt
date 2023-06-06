@@ -65,8 +65,8 @@ interface MultiSelectorState {
     /**
      * Sets the option at index [index] as selected
      *
-     * @param scope - [CoroutineScope] to run the select animation on
-     * @param index - positional index of option to select
+     * @param scope [CoroutineScope] to run the select animation on
+     * @param index positional index of option to select
      */
     suspend fun selectOption(scope: CoroutineScope, index: Int)
 }
@@ -174,10 +174,10 @@ internal class MultiSelectorStateImpl(
 /**
  * Factory method for the [MultiSelectorState]
  *
- * @param options - list of labels to display as options
- * @param selectedOption - label currently selected
- * @param selectedColor - color for selected option
- * @param unSelectedColor - color for unselected options
+ * @param options list of labels to display as options
+ * @param selectedOption label currently selected
+ * @param selectedColor color for selected option
+ * @param unSelectedColor color for unselected options
  * @return an instance of [MultiSelectorState]
  */
 @Composable
@@ -209,15 +209,15 @@ internal enum class MultiSelectorOption {
 /**
  * Selector with mutually exclusive selectable options, similar to a RadioButton
  *
- * @param options - list of labels for the options
- * @param selectedOption - currently selected label
- * @param onOptionSelect - called when tapping on an option
- * @param modifier - the [Modifier] to apply to this composable
- * @param selectedColor - text color for the selected option
- * @param unselectedColor - text color for the unselected option
- * @param selectedBackgroundColor - background color for the selected option
- * @param unselectedBackgroundColor - background color for the unselected option
- * @param state - the state holder for the [MultiSelector]
+ * @param options list of labels for the options
+ * @param selectedOption currently selected label
+ * @param onOptionSelect called when tapping on an option
+ * @param modifier the [Modifier] to apply to this composable
+ * @param selectedColor text color for the selected option
+ * @param unselectedColor text color for the unselected option
+ * @param selectedBackgroundColor background color for the selected option
+ * @param unselectedBackgroundColor background color for the unselected option
+ * @param state the state holder for the [MultiSelector]
  */
 @Composable
 fun MultiSelector(

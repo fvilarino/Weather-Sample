@@ -10,8 +10,8 @@ abstract class Middleware<S : State, A : Action> {
     /**
      * Processes the [Action]. This method should return quickly and queue any async work to run on a background thread.
      *
-     * @param state - the current [State]
-     * @param action - the [Action] to process
+     * @param state the current [State]
+     * @param action the [Action] to process
      */
     abstract fun process(state: S, action: A)
 

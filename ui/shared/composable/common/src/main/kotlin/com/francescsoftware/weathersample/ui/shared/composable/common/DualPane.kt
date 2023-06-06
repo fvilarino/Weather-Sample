@@ -24,10 +24,10 @@ private const val HorizontalPanesRatio = 1f / 3f
 /**
  * A composable displaying 2 children either horizontally or vertically based on available space
  *
- * @param paneOne - left or top pane content
- * @param paneTwo - right or bottom pane content
- * @param deviceClass - [DeviceClass] to determine layout to choose
- * @param modifier - the [Modifier] to apply to this composable
+ * @param paneOne left or top pane content
+ * @param paneTwo right or bottom pane content
+ * @param deviceClass [DeviceClass] to determine layout to choose
+ * @param modifier the [Modifier] to apply to this composable
  */
 @Composable
 fun DualPane(

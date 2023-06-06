@@ -18,7 +18,7 @@ interface NavigationDestination {
     @get: Composable
     val icon: ImageVector?
 
-    /** Content description for hte [icon] */
+    /** Content description for the [icon] */
     @get: Composable
     val iconContentDescription: String?
 
@@ -33,7 +33,7 @@ interface NavigationDestination {
     /**
      * Checks whether the [route] represents this destination
      *
-     * @param route - the route to match
+     * @param route the route to match
      * @return true if the route matches this destination, false otherwise
      */
     fun isRoute(route: String?): Boolean

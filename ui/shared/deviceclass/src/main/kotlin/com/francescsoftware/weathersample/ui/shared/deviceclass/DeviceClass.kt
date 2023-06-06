@@ -14,7 +14,7 @@ enum class DeviceClass {
         /**
          * Maps a [WindowSizeClass] object into a [DeviceClass] object.
          *
-         * @param windowSizeClass - the [WindowSizeClass] to map to a [DeviceClass]
+         * @param windowSizeClass the [WindowSizeClass] to map to a [DeviceClass]
          * @return the [DeviceClass] mapping to the [windowSizeClass]
          */
         @Composable

@@ -47,7 +47,7 @@ internal object WeatherDestination : NavigationDestination {
     /**
      * Gets the weather screen route for a [SelectedCity]
      *
-     * @param selectedCity - the city to get the weather from
+     * @param selectedCity the city to get the weather from
      * @return the route to navigate to
      */
     fun getRoute(selectedCity: SelectedCity): String =
@@ -56,7 +56,7 @@ internal object WeatherDestination : NavigationDestination {
     /**
      * Retrieves the [SelectedCity] from the route payload
      *
-     * @param savedStateHandle - the [SavedStateHandle] to load the [SelectedCity] from
+     * @param savedStateHandle the [SavedStateHandle] to load the [SelectedCity] from
      * @return the [SelectedCity] from the [SavedStateHandle]
      */
     fun getCity(savedStateHandle: SavedStateHandle): SelectedCity = SelectedCity(
