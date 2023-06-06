@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.ui.feature.home
 
-import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -17,67 +16,53 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesRootDestination
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.addFavoritesNavGraph
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
 import com.francescsoftware.weathersample.ui.feature.search.navigation.addSearchNavGraph
 import com.francescsoftware.weathersample.ui.shared.composable.common.AppBar
-import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
 
-private val navGraphDestinations = persistentListOf(
+internal val navGraphDestinations = persistentListOf(
     SearchRootDestination,
     FavoritesRootDestination,
 )
 
 @Composable
-internal fun WeatherApp() {
+internal fun WeatherApp(
+    state: AppState = rememberAppState()
+) {
     WeatherSampleTheme {
-        val navController = rememberNavController()
-        val windowSizeClass = calculateWindowSizeClass(LocalContext.current as Activity)
-        val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        val currentDestination = navGraphDestinations.firstNotNullOfOrNull { navGraph ->
-            navGraph.getDestination(currentRoute)
-        } ?: navGraphDestinations.first().rootDestination
         Scaffold(
             contentWindowInsets = WindowInsets.statusBars,
             topBar = {
                 AppBar(
-                    title = currentDestination.title,
-                    icon = currentDestination.icon,
-                    iconContentDescription = currentDestination.iconContentDescription,
-                    onIconClick = navController::popBackStack,
-                    actions = { currentDestination.TopBarActions() },
+                    title = state.currentDestination.title,
+                    icon = state.currentDestination.icon,
+                    iconContentDescription = state.currentDestination.iconContentDescription,
+                    onIconClick = state::popBackstack,
+                    actions = { state.currentDestination.TopBarActions() },
                 )
             },
-            bottomBar = if (deviceClass.hasBottomNavBar) {
+            bottomBar = if (state.hasBottomNavBar) {
                 {
                     AnimatedVisibility(
-                        visible = currentDestination.showBottomBar,
+                        visible = state.showBottomNavBar,
                         enter = slideInVertically { it } + fadeIn(),
                         exit = slideOutVertically { it } + fadeOut(),
                     ) {
                         BottomNavBar(
                             items = navGraphDestinations,
-                            currentDestination = navBackStackEntry?.destination,
+                            currentDestination = state.navBackEntryDestination,
                             onClick = { destination ->
-                                navController.navigateToBottomNavDestination(destination)
+                                state.navigateToTopDestination(destination)
                             },
                             modifier = Modifier.fillMaxWidth(),
                         )
@@ -91,31 +76,31 @@ internal fun WeatherApp() {
                 Row(
                     modifier = Modifier.padding(paddingValues),
                 ) {
-                    if (deviceClass == DeviceClass.Expanded) {
+                    if (state.hasNavRail) {
                         NavRail(
                             items = navGraphDestinations,
-                            currentDestination = navBackStackEntry?.destination,
+                            currentDestination = state.navBackEntryDestination,
                             onClick = { destination ->
-                                navController.navigateToBottomNavDestination(destination)
+                                state.navigateToTopDestination(destination)
                             },
                         )
                     }
                     NavHost(
-                        navController,
+                        state.navHostController,
                         startDestination = navGraphDestinations.first().navGraphRoute,
                         modifier = Modifier.weight(1f),
                     ) {
                         addSearchNavGraph(
-                            deviceClass = deviceClass,
+                            deviceClass = state.deviceClass,
                         ) { route ->
-                            navController.navigate(route)
+                            state.navigate(route)
                         }
                         addFavoritesNavGraph(
-                            deviceClass = deviceClass,
+                            deviceClass = state.deviceClass,
                         )
                     }
                 }
-                if (deviceClass.hasBottomNavBar && !currentDestination.showBottomBar) {
+                if (state.showBottomOverlay) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -135,18 +120,3 @@ internal fun WeatherApp() {
         }
     }
 }
-
-private fun NavHostController.navigateToBottomNavDestination(
-    destination: String,
-) {
-    navigate(destination) {
-        popUpTo(graph.findStartDestination().id) {
-            saveState = true
-        }
-        launchSingleTop = true
-        restoreState = true
-    }
-}
-
-private val DeviceClass.hasBottomNavBar: Boolean
-    get() = this != DeviceClass.Expanded
