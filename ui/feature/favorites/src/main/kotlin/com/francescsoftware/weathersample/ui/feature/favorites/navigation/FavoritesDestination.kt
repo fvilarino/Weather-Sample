@@ -13,7 +13,7 @@ import com.francescsoftware.weathersample.ui.shared.route.DeeplinkScheme
 
 private const val DeeplinkHost = "favorite"
 
-/** Favorites screen Destination */
+/** Favorites screen destination */
 internal object FavoritesDestination : BottomNavigationDestination {
 
     /** @{inheritDoc} */
@@ -35,7 +35,7 @@ internal object FavoritesDestination : BottomNavigationDestination {
     override val bottomNavContent = BottomNavContent(
         labelId = R.string.favorite_bottom_nav,
         icon = Icons.Default.FavoriteBorder,
-        contentDescriptionId = R.string.content_description_search_bottom_nav,
+        contentDescriptionId = R.string.content_description_favorite_bottom_nav,
     )
 
     /** @{inheritDoc} */

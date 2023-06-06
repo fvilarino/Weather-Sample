@@ -30,7 +30,7 @@ internal object CitySearchDestination : BottomNavigationDestination {
     /**
      * The selected actions
      *
-     * @property about - when true the About action was clicked
+     * @property about when true the About action was clicked
      */
     data class ActionsState(
         val about: Boolean = false,
@@ -100,7 +100,7 @@ internal object CitySearchDestination : BottomNavigationDestination {
     /**
      * Consumes the action event
      *
-     * @param action - the [Actions] to consume
+     * @param action the [Actions] to consume
      */
     fun consume(
         action: Actions

@@ -85,14 +85,14 @@ private const val FadeAnimationDurationMillis = 600
 /**
  * A button that displays a loading indicator when busy.
  *
- * @param onClick - called when the button is clicked
- * @param modifier - the [Modifier] to apply to this button
- * @param enabled - if true the button is enabled, if false it is disabled
- * @param loading - if true the loading indicator will display, otherwise the content will display
- * @param animationType - [AnimationType] to use for the loading state
- * @param colors - [ButtonColors] to to use for the button
- * @param indicatorSpacing - space, in [Dp], between the loading indicators
- * @param content - the button content when not animating
+ * @param onClick called when the button is clicked
+ * @param modifier the [Modifier] to apply to this button
+ * @param enabled if true the button is enabled, if false it is disabled
+ * @param loading if true the loading indicator will display, otherwise the content will display
+ * @param animationType [AnimationType] to use for the loading state
+ * @param colors [ButtonColors] to to use for the button
+ * @param indicatorSpacing space, in [Dp], between the loading indicators
+ * @param content the button content when not animating
  */
 @Composable
 fun LoadingButton(
@@ -183,7 +183,7 @@ interface LoadingIndicatorState {
     /**
      * The animation value for an animated dot.
      *
-     * @param index - the index of the animated dot to get the animated value from
+     * @param index the index of the animated dot to get the animated value from
      * @return the animated value for the dot at [index] position
      */
     operator fun get(index: Int): Float
@@ -247,7 +247,7 @@ internal class LoadingIndicatorStateImpl(
 /**
  * Factory method for the [LoadingButton] [LoadingIndicator]
  *
- * @param animationType - [AnimationType] for the indicator animation.
+ * @param animationType [AnimationType] for the indicator animation.
  * @return an instance of [LoadingIndicatorState]
  */
 @Composable

@@ -49,10 +49,10 @@ sealed interface ActionMenuItem {
         /**
          * [ActionMenuItem] that is always displayed on the [TopAppBar]
          *
-         * @property title - title for the action menu option
-         * @property contentDescription - accessibility label for the action menu option
-         * @property onClick - called when the user clicks on this menu option
-         * @property icon - icon to display on the [TopAppBar]
+         * @property title title for the action menu option
+         * @property contentDescription accessibility label for the action menu option
+         * @property onClick called when the user clicks on this menu option
+         * @property icon icon to display on the [TopAppBar]
          */
         data class AlwaysShown(
             override val title: String,
@@ -64,10 +64,10 @@ sealed interface ActionMenuItem {
         /**
          * [ActionMenuItem] that is displayed on the [TopAppBar] if there is enough room
          *
-         * @property title - title for the action menu option
-         * @property contentDescription - accessibility label for the action menu option
-         * @property onClick - called when the user clicks on this menu option
-         * @property icon - icon to display on the [TopAppBar]
+         * @property title title for the action menu option
+         * @property contentDescription accessibility label for the action menu option
+         * @property onClick called when the user clicks on this menu option
+         * @property icon icon to display on the [TopAppBar]
          */
         data class ShownIfRoom(
             override val title: String,
@@ -80,8 +80,8 @@ sealed interface ActionMenuItem {
     /**
      * [ActionMenuItem] that is displayed in the overflow drop down menu
      *
-     * @property title - title for the action menu option
-     * @property onClick - called when the user clicks on this menu option
+     * @property title title for the action menu option
+     * @property onClick called when the user clicks on this menu option
      */
     data class NeverShown(
         override val title: String,
@@ -92,11 +92,11 @@ sealed interface ActionMenuItem {
 /**
  * Displays an actions menu.
  *
- * @param items - options menu items to display
- * @param isOpen - if true the dropdown is open, if false it's closed
- * @param onToggleOverflow - called when tapping on the overflow button
- * @param modifier - the [Modifier] to apply to this actions menu
- * @param maxVisibleItems - maximum number of items to display as icons
+ * @param items options menu items to display
+ * @param isOpen if true the dropdown is open, if false it's closed
+ * @param onToggleOverflow called when tapping on the overflow button
+ * @param modifier the [Modifier] to apply to this actions menu
+ * @param maxVisibleItems maximum number of items to display as icons
  */
 @Composable
 fun ActionsMenu(

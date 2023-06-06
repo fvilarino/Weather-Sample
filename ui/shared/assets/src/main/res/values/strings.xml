@@ -4,6 +4,7 @@
     <string name="search_bottom_nav">Search</string>
     <string name="favorite_bottom_nav">Favorites</string>
     <string name="content_description_search_bottom_nav">Search</string>
+    <string name="content_description_favorite_bottom_nav">Search</string>
     <string name="content_description_back">Back</string>
     <string name="action_item_about">About</string>
     <string name="about_dialog_text">A sample weather app built with Jetpack Compose and Material principles.</string>

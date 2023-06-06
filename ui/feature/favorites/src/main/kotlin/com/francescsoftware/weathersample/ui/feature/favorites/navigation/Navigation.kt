@@ -13,7 +13,7 @@ import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 /**
  * Add Favorites destination to Nav Graph
  *
- * @param deviceClass - The [DeviceClass] the composable is running on
+ * @param deviceClass the [DeviceClass] the composable is running on
  * @receiver The [NavGraphBuilder] this destination should be added to.
  */
 fun NavGraphBuilder.addFavoritesNavGraph(
