@@ -16,6 +16,7 @@ import com.francescsoftware.weathersample.core.type.weather.UvIndex
  * @property temperature the temperature in Celsius
  * @property feelsLike the feels like temperature in Celsius
  * @property wind the wind speed
+ * @property gust the gusts speed
  * @property humidity the humidity percentage
  * @property pressure the atmospheric pressure in millibars
  * @property precipitation the precipitation in mm
@@ -29,6 +30,7 @@ data class Current(
     val temperature: Temperature,
     val feelsLike: Temperature,
     val wind: Speed,
+    val gust: Speed,
     val humidity: Humidity,
     val pressure: Pressure,
     val precipitation: Precipitation,

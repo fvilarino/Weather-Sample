@@ -50,6 +50,7 @@ private const val Sunset = "09:11 PM"
 private const val CurrentTemperature = 17.4
 private const val CurrentFeelsLike = 15.1
 private const val CurrentWind = 3.4
+private const val CurrentGust = 6.3
 private const val CurrentHumidity = 62
 private const val CurrentPressure = 1024.0
 private const val CurrentPrecipitation = 1.8
@@ -219,7 +220,7 @@ internal class ForecastWeatherInteractorTest {
         windDegree = 0,
         windKph = CurrentWind,
         windMph = 0.0,
-        gustKph = 0.0,
+        gustKph = CurrentGust,
         gustMph = 0.0,
         cloud = 0,
         visibilityKm = CurrentVisibility,
@@ -290,6 +291,7 @@ internal class ForecastWeatherInteractorTest {
                 temperature = Temperature.fromCelsius(CurrentTemperature),
                 feelsLike = Temperature.fromCelsius(CurrentFeelsLike),
                 wind = Speed.fromKph(CurrentWind),
+                gust  = Speed.fromKph(CurrentGust),
                 humidity = Humidity(CurrentHumidity),
                 pressure = Pressure.fromMillibars(CurrentPressure),
                 precipitation = Precipitation.fromMillimeters(CurrentPrecipitation),

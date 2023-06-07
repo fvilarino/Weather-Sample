@@ -6,6 +6,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Thermostat
+import androidx.compose.material.icons.filled.WaterDrop
+import androidx.compose.material.icons.filled.WindPower
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +37,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
 
 private val WeatherIconHeight = 80.dp
+private val InfoIconSize = 20.dp
 private const val SideColumnWeight = 1f
 private const val CentralColumnWeight = 1.7f * SideColumnWeight
 
@@ -85,25 +91,31 @@ fun CurrentWeather(
                     modifier = Modifier.weight(SideColumnWeight),
                 ) {
                     InfoLabels {
-                        WeatherItemLabel(
-                            label = stringResource(id = R.string.temperature_label),
-                        )
-                        WeatherItemContent(
-                            label = state.temperature.format(),
-                            modifier = Modifier.padding(start = MarginSingle),
-                        )
-                        WeatherItemLabel(
-                            label = stringResource(id = R.string.feels_like_label),
+                        Icon(
+                            imageVector = Icons.Default.Thermostat,
+                            modifier = Modifier.size(InfoIconSize),
+                            contentDescription = null,
                         )
                         WeatherItemContent(
                             label = state.feelsLikeTemperature.format(),
                             modifier = Modifier.padding(start = MarginSingle),
                         )
-                        WeatherItemLabel(
-                            label = stringResource(id = R.string.precipitation_label),
+                        Icon(
+                            imageVector = Icons.Default.WaterDrop,
+                            modifier = Modifier.size(InfoIconSize),
+                            contentDescription = null,
                         )
                         WeatherItemContent(
                             label = state.precipitation.format(),
+                            modifier = Modifier.padding(start = MarginSingle),
+                        )
+                        Icon(
+                            imageVector = Icons.Default.WindPower,
+                            modifier = Modifier.size(InfoIconSize),
+                            contentDescription = null,
+                        )
+                        WeatherItemContent(
+                            label = state.windSpeed.format(),
                             modifier = Modifier.padding(start = MarginSingle),
                         )
                     }
@@ -116,10 +128,10 @@ fun CurrentWeather(
                         .padding(horizontal = MarginTreble)
                 ) {
                     WeatherItemLabel(
-                        label = stringResource(id = R.string.wind_speed_label),
+                        label = stringResource(id = R.string.gust_speed_label),
                     )
                     WeatherItemContent(
-                        label = state.windSpeed.format(),
+                        label = state.gustSpeed.format(),
                         modifier = Modifier.padding(start = MarginSingle),
                     )
                     WeatherItemLabel(
@@ -170,6 +182,7 @@ private fun PreviewTodayWeatherCard() {
                 description = "Partly cloudy",
                 iconId = com.francescsoftware.weathersample.ui.shared.assets.R.drawable.ic_partly_cloudy,
                 windSpeed = Speed.fromKph(4.3),
+                gustSpeed = Speed.fromKph(7.5),
                 humidity = Humidity(54),
                 pressure = Pressure.fromMillibars(1024.0),
                 visibility = AverageVisibility.fromKm(10.0),
