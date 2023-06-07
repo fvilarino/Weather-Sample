@@ -1,13 +1,10 @@
 package com.francescsoftware.weathersample.ui.shared.composable.common
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
  * App bar for all screens
@@ -22,23 +19,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 @Composable
 fun AppBar(
     title: String,
-    icon: ImageVector?,
-    iconContentDescription: String?,
-    onIconClick: () -> Unit,
     modifier: Modifier = Modifier,
+    navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
-        navigationIcon = {
-            if (icon != null) {
-                IconButton(onClick = onIconClick) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = iconContentDescription,
-                    )
-                }
-            }
-        },
+        navigationIcon = navigationIcon,
         title = {
             Text(
                 text = title,

@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
+import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestination
 import com.francescsoftware.weathersample.ui.shared.route.NavigationDestination
 
 internal class AppState(
@@ -27,6 +28,10 @@ internal class AppState(
         get() = navGraphDestinations.firstNotNullOfOrNull { navGraph ->
             navGraph.getDestination(currentRoute)
         } ?: navGraphDestinations.first().rootDestination
+
+    val hasBackButton: Boolean
+        @Composable
+        get() = currentDestination !is BottomNavigationDestination
 
     val hasBottomNavBar: Boolean
         get() = deviceClass.hasBottomNavBar

@@ -14,6 +14,10 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -21,11 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesRootDestination
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.addFavoritesNavGraph
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
 import com.francescsoftware.weathersample.ui.feature.search.navigation.addSearchNavGraph
+import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.composable.common.AppBar
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -45,9 +51,13 @@ internal fun WeatherApp(
             topBar = {
                 AppBar(
                     title = state.currentDestination.title,
-                    icon = state.currentDestination.icon,
-                    iconContentDescription = state.currentDestination.iconContentDescription,
-                    onIconClick = state::popBackstack,
+                    navigationIcon = if (state.hasBackButton) {
+                        {
+                            NavigationIcon(onClick = state::popBackstack)
+                        }
+                    } else {
+                        {}
+                    },
                     actions = { state.currentDestination.TopBarActions() },
                 )
             },
@@ -118,5 +128,21 @@ internal fun WeatherApp(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun NavigationIcon(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier,
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = stringResource(id = R.string.content_description_back),
+        )
     }
 }

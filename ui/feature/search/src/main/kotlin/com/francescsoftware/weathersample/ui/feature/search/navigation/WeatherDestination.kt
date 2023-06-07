@@ -1,9 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.search.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.navDeepLink
@@ -22,16 +19,6 @@ internal object WeatherDestination : NavigationDestination {
     override val title: String
         @Composable
         get() = stringResource(id = R.string.weather_label)
-
-    /** @{inheritDoc} */
-    override val icon: ImageVector
-        @Composable
-        get() = Icons.Default.ArrowBack
-
-    /** @{inheritDoc} */
-    override val iconContentDescription: String
-        @Composable
-        get() = stringResource(id = R.string.content_description_back)
 
     /** The route for the Weather screen */
     override val route: String = "$RouteRoot/{$CityNameArg}/{$CountryCodeArg}"
