@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.composable.common.ActionMenuItem
@@ -40,16 +39,6 @@ internal object CitySearchDestination : BottomNavigationDestination {
     override val title: String
         @Composable
         get() = stringResource(id = R.string.app_name)
-
-    /** @{inheritDoc} */
-    override val icon: ImageVector?
-        @Composable
-        get() = null
-
-    /** @{inheritDoc} */
-    override val iconContentDescription: String?
-        @Composable
-        get() = null
 
     /** @{inheritDoc} */
     override val bottomNavContent = BottomNavContent(
