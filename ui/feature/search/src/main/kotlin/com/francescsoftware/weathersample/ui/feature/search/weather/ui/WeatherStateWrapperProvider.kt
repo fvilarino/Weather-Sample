@@ -49,6 +49,7 @@ private val todayState = WeatherState(
         description = "Partly cloudy",
         iconId = R.drawable.ic_partly_cloudy,
         windSpeed = Speed.fromKph(5.8),
+        gustSpeed = Speed.fromKph(7.5),
         humidity = Humidity(54),
         pressure = Pressure.fromMillibars(1024.0),
         visibility = AverageVisibility.fromKm(7.3),

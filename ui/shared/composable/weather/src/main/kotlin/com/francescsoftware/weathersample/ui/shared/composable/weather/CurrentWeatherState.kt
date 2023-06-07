@@ -13,16 +13,17 @@ import com.francescsoftware.weathersample.core.type.weather.UvIndex
 /**
  * Current weather state
  *
- * @property temperature the current temperature in celsius
- * @property feelsLikeTemperature the feels like temperature in celsius
- * @property precipitation the precipitation in mm
+ * @property temperature the current temperature
+ * @property feelsLikeTemperature the feels like temperature
+ * @property precipitation the precipitation
  * @property uvIndex the UV index
  * @property description the weather description
  * @property iconId the icon associated with the weather
- * @property windSpeed the wind speed in km/h
+ * @property windSpeed the wind speed
+ * @property gustSpeed the gust speed
  * @property humidity the humidity
- * @property pressure the pressure in millibars
- * @property visibility the visibility in km
+ * @property pressure the atmospheric pressure
+ * @property visibility the visibility
  */
 @Immutable
 data class CurrentWeatherState(
@@ -33,6 +34,7 @@ data class CurrentWeatherState(
     val description: String = "",
     @DrawableRes val iconId: Int = 0,
     val windSpeed: Speed = Speed.fromKph(0.0),
+    val gustSpeed: Speed = Speed.fromKph(0.0),
     val humidity: Humidity = Humidity(0),
     val pressure: Pressure = Pressure.fromMillibars(0.0),
     val visibility: AverageVisibility = AverageVisibility.fromKm(0.0),

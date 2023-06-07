@@ -63,6 +63,7 @@ internal fun RepoCurrent.toCurrent(): Current = Current(
     temperature = Temperature.fromCelsius(tempCelsius),
     feelsLike = Temperature.fromCelsius(feelsLikeCelsius),
     wind = Speed.fromKph(windKph),
+    gust = Speed.fromKph(gustKph),
     humidity = Humidity(humidity),
     pressure = Pressure.fromMillibars(pressureMb),
     precipitation = Precipitation.fromMillimeters(precipitationMm),

@@ -13,6 +13,7 @@ internal fun TodayWeather.toWeatherCardState() =
         uvIndex = main.uvIndex,
         description = main.formatDescription(),
         windSpeed = wind.speed,
+        gustSpeed = wind.gust,
         humidity = main.humidity,
         pressure = main.pressure,
         visibility = visibility,

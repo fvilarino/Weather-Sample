@@ -27,6 +27,7 @@ internal fun Current.toWeatherCardState() =
         uvIndex = uvIndex,
         description = description.formatDescription(),
         windSpeed = wind,
+        gustSpeed = gust,
         humidity = humidity,
         pressure = pressure,
         visibility = visibility,
