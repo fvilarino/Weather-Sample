@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.ui.feature.search.city.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
+import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
 
 internal val VancouverCityModel = CityResultModel(
     id = 1L,
@@ -9,7 +10,7 @@ internal val VancouverCityModel = CityResultModel(
     name = "Vancouver",
     country = "Canada",
     countryCode = "CA",
-    coordinates = "Lat: 49.26, Lon: -123.11",
+    coordinates = Coordinates(latitude = 49.26f, longitude = -123.11f),
 )
 
 internal val BarcelonaCityModel = CityResultModel(
@@ -18,7 +19,7 @@ internal val BarcelonaCityModel = CityResultModel(
     name = "Barcelona",
     country = "Spain",
     countryCode = "ES",
-    coordinates = "Lat: 41.39, Lon: 2.17",
+    coordinates = Coordinates(latitude = 41.39f, longitude = 2.17f),
 )
 
 internal val LondonCityModel = CityResultModel(
@@ -27,7 +28,7 @@ internal val LondonCityModel = CityResultModel(
     name = "London",
     country = "England",
     countryCode = "UK",
-    coordinates = "Lat: 123.45, Lon: 1.23",
+    coordinates = Coordinates(latitude = 51.51f, longitude = -0.12f),
 )
 
 internal class CityStateProvider : PreviewParameterProvider<CityResultModel> {
