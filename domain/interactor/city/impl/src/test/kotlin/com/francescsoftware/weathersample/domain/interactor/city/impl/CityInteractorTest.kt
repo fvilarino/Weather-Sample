@@ -21,6 +21,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import com.francescsoftware.weathersample.data.repository.city.api.CitiesException as RepoException
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.City as DomainCity
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates as DomainCoordinates
 
 private const val CityName = "Vancouver"
 private const val CityRegion = "British Columbia"
@@ -50,14 +52,14 @@ class CityInteractorTest {
     )
 
     private val successCity =
-        com.francescsoftware.weathersample.domain.interactor.city.api.model.City(
+        DomainCity(
             id = 1,
             name = CityName,
             region = CityRegion,
             regionCode = CityRegionCode,
             country = CityCountry,
             countryCode = CityCountryCode,
-            coordinates = com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates(
+            coordinates = DomainCoordinates(
                 latitude = CityLatitude,
                 longitude = CityLongitude
             )

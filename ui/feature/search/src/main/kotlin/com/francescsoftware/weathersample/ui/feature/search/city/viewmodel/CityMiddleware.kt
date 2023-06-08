@@ -27,11 +27,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-private val DebounceMillis = 400L.toDuration(DurationUnit.MILLISECONDS)
+private val DebounceDelay = 400L.toDuration(DurationUnit.MILLISECONDS)
 private const val MinCityLengthForSearch = 3
 private const val NoFavorite = -1
 
@@ -43,9 +44,12 @@ internal class CityMiddleware @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ) : Middleware<CityState, CityAction>() {
 
+    @VisibleForTesting
+    internal var debounceDelay = DebounceDelay
+
     private val searchFlow = MutableSharedFlow<String>(
         extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        onBufferOverflow = BufferOverflow.DROP_LATEST,
     )
     private var job: Job? = null
 
@@ -64,8 +68,8 @@ internal class CityMiddleware @Inject constructor(
     private fun onStart() {
         job?.cancel()
         val searchCities = searchFlow
+            .debounce(debounceDelay)
             .distinctUntilChanged()
-            .debounce(DebounceMillis)
             .onEach { dispatch(CityAction.Loading) }
             .map { prefix ->
                 getCitiesInteractor(prefix = prefix)
