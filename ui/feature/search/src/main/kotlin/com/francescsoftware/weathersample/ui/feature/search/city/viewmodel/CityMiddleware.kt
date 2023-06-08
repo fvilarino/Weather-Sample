@@ -11,9 +11,8 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.GetFavorite
 import com.francescsoftware.weathersample.domain.interactor.city.api.InsertFavoriteCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.FavoriteCity
-import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
-import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
+import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
@@ -42,7 +41,6 @@ internal class CityMiddleware @Inject constructor(
     private val insertFavoriteCityInteractor: InsertFavoriteCityInteractor,
     private val deleteFavoriteCityInteractor: DeleteFavoriteCityInteractor,
     private val dispatcherProvider: DispatcherProvider,
-    private val stringLookup: StringLookup,
 ) : Middleware<CityState, CityAction>() {
 
     private val searchFlow = MutableSharedFlow<String>(
@@ -138,11 +136,10 @@ internal class CityMiddleware @Inject constructor(
         name = name,
         country = country,
         countryCode = countryCode,
-        coordinates = stringLookup.getString(
-            R.string.coordinates_lat_lon,
-            coordinates.latitude.toFloat(),
-            coordinates.longitude.toFloat(),
-        ),
+        coordinates = Coordinates(
+            latitude = coordinates.latitude.toFloat(),
+            longitude = coordinates.longitude.toFloat(),
+        )
     )
 
     private fun CityResultModel.toFavoriteCity(): FavoriteCity = FavoriteCity(

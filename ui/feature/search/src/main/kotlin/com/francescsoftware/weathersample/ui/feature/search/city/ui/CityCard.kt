@@ -65,7 +65,11 @@ internal fun CityCard(
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = city.coordinates,
+                    text = stringResource(
+                        id = R.string.coordinates_lat_lon,
+                        city.coordinates.latitude,
+                        city.coordinates.longitude,
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = MarginSingle),
                 )
