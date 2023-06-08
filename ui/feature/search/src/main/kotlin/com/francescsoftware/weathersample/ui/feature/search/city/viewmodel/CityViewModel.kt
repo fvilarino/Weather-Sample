@@ -5,6 +5,7 @@ import com.francescsoftware.weathersample.core.coroutines.CloseableCoroutineScop
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
+import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import com.francescsoftware.weathersample.ui.shared.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,12 +14,11 @@ import javax.inject.Inject
 internal class CityViewModel @Inject constructor(
     closeableScope: CloseableCoroutineScope,
     reducer: CityReducer,
-    cityMiddleware: CityMiddleware,
-    recentCitiesMiddleware: RecentCitiesMiddleware,
+    middlewares: Set<@JvmSuppressWildcards Middleware<CityState, CityAction>>,
 ) : MviViewModel<CityState, CityAction>(
     closeableScope = closeableScope,
     reducer = reducer,
-    middlewares = listOf(cityMiddleware, recentCitiesMiddleware),
+    middlewares = middlewares.toList(),
     initialState = CityState.initial,
 ) {
 

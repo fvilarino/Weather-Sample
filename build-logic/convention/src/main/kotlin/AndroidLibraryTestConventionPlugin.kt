@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.project
 
 class AndroidLibraryTestConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -18,6 +19,7 @@ class AndroidLibraryTestConventionPlugin : Plugin<Project> {
                     add("testImplementation", kotlin("test"))
                     add("testImplementation", libs.findBundle("test").get())
                     add("androidTestImplementation", libs.findBundle("android.test").get())
+                    add("testImplementation", (project(":testing:fake")))
                 }
 
                 testOptions {

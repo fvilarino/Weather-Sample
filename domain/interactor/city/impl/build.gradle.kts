@@ -16,5 +16,4 @@ dependencies {
     implementation(project(":data:repository:favorite:api"))
     implementation(project(":data:repository:recents:api"))
     implementation(project(":domain:interactor:city:api"))
-    testImplementation(project(":testing:fake"))
 }

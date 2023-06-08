@@ -17,5 +17,4 @@ dependencies {
     implementation(project(":domain:interactor:weather:api"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
-    testImplementation(project(":testing:fake"))
 }

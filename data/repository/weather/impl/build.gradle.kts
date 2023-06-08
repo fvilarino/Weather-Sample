@@ -35,7 +35,6 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:type:either"))
     implementation(project(":data:repository:weather:api"))
-    testImplementation(project(":testing:fake"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.bundles.okhttp)
