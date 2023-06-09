@@ -13,7 +13,6 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.City
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.FavoriteCardState
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.FavoritePagerState
-import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Job
@@ -31,7 +30,6 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
     private val getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
     private val getForecastInteractor: GetForecastInteractor,
     private val timeFormatter: TimeFormatter,
-    private val stringLookup: StringLookup,
 ) : Middleware<FavoriteState, FavoriteAction>() {
     private var favoritesJob: Job? = null
 
@@ -93,7 +91,6 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
                             ),
                             current = current.toWeatherCardState(),
                             forecast = forecastInfo.forecast.toForecastItems(
-                                stringLookup,
                                 timeFormatter,
                             ).toPersistentList()
                         )

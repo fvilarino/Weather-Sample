@@ -33,8 +33,13 @@ fun ForecastHeader(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        val headerLabel = when (state.date) {
+            ForecastDate.Today -> stringResource(id = R.string.today)
+            ForecastDate.Tomorrow -> stringResource(id = R.string.tomorrow)
+            is ForecastDate.Day -> state.date.date
+        }
         Text(
-            text = state.date,
+            text = headerLabel,
             style = MaterialTheme.typography.titleLarge,
         )
         Row(horizontalArrangement = Arrangement.SpaceEvenly) {
@@ -75,7 +80,7 @@ private fun ForecastHeaderPreview() {
             ForecastHeader(
                 state = ForecastHeaderState(
                     id = "header",
-                    date = "Sun April 18",
+                    date = ForecastDate.Day("Sun April 18"),
                     sunrise = "06:23",
                     sunset = "20:01",
                 ),

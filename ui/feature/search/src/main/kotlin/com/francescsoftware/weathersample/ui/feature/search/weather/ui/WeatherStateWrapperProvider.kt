@@ -10,13 +10,15 @@ import com.francescsoftware.weathersample.core.type.weather.Pressure
 import com.francescsoftware.weathersample.core.type.weather.Speed
 import com.francescsoftware.weathersample.core.type.weather.Temperature
 import com.francescsoftware.weathersample.core.type.weather.UvIndex
+import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.ForecastDayState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
-import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastDate
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import kotlinx.collections.immutable.persistentListOf
+import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
 internal data class WeatherStateWrapper(
     val state: WeatherState,
@@ -30,7 +32,7 @@ internal class WeatherStateWrapperProvider : PreviewParameterProvider<WeatherSta
         WeatherStateWrapper(
             state = todayState.copy(
                 loadState = WeatherLoadState.Error,
-                errorMessage = "Failed to load weather data",
+                errorMessage = R.string.failed_to_load_weather_data,
             ),
             option = SelectedWeatherOption.Today
         ),
@@ -47,7 +49,7 @@ private val todayState = WeatherState(
         precipitation = Precipitation.fromMillimeters(10.0),
         uvIndex = UvIndex(5),
         description = "Partly cloudy",
-        iconId = R.drawable.ic_partly_cloudy,
+        iconId = assetsR.drawable.ic_partly_cloudy,
         windSpeed = Speed.fromKph(5.8),
         gustSpeed = Speed.fromKph(7.5),
         humidity = Humidity(54),
@@ -58,7 +60,7 @@ private val todayState = WeatherState(
         ForecastDayState(
             header = ForecastHeaderState(
                 id = "header",
-                date = "Aug 18, 2022",
+                date = ForecastDate.Day("Aug 18, 2022"),
                 sunrise = "5:44am",
                 sunset = "8:51pm",
             ),
@@ -71,5 +73,5 @@ private val todayState = WeatherState(
             ),
         )
     ),
-    errorMessage = "",
+    errorMessage = 0,
 )

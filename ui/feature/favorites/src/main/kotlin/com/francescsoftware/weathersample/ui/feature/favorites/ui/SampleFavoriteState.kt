@@ -11,6 +11,7 @@ import com.francescsoftware.weathersample.core.type.weather.Temperature
 import com.francescsoftware.weathersample.core.type.weather.UvIndex
 import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastDate
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
 import kotlinx.collections.immutable.persistentListOf
@@ -108,7 +109,7 @@ internal val VancouverFavoriteCardState = FavoriteCardState(
         ForecastDayState(
             header = ForecastHeaderState(
                 id = "header",
-                date = "Aug 18, 2022",
+                date = ForecastDate.Day("Aug 18, 2022"),
                 sunrise = "5:44am",
                 sunset = "8:51pm",
             ),

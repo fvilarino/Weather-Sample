@@ -7,12 +7,11 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Cu
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Forecast
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastEntry
-import com.francescsoftware.weathersample.ui.feature.favorites.R
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.ForecastDayState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastDate
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
-import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
 import com.francescsoftware.weathersample.ui.shared.weathericon.drawableId
 import com.francescsoftware.weathersample.ui.shared.weathericon.weatherIconFromCode
 import kotlinx.collections.immutable.toImmutableList
@@ -40,11 +39,10 @@ internal fun String.formatDescription(): String =
     }
 
 internal fun Forecast.toForecastItems(
-    stringLookup: StringLookup,
-    timeFormatter: TimeFormatter,
+    timeFormatter: TimeFormatter
 ): List<ForecastDayState> = items.map { forecastDay ->
     ForecastDayState(
-        header = forecastDay.toForecastHeaderState(stringLookup, timeFormatter),
+        header = forecastDay.toForecastHeaderState(timeFormatter),
         forecast = forecastDay
             .entries.map { entry ->
                 entry.toForecastCardState(timeFormatter)
@@ -54,23 +52,21 @@ internal fun Forecast.toForecastItems(
 }
 
 private fun ForecastDay.toForecastHeaderState(
-    stringLookup: StringLookup,
     timeFormatter: TimeFormatter,
 ): ForecastHeaderState =
     ForecastHeaderState(
         id = "header_${date.time}",
-        date = date.toHeaderLabel(stringLookup, timeFormatter),
+        date = date.toHeaderLabel(timeFormatter),
         sunrise = sunrise,
         sunset = sunset,
     )
 
 private fun Date.toHeaderLabel(
-    stringLookup: StringLookup,
     timeFormatter: TimeFormatter,
-): String = when {
-    isToday -> stringLookup.getString(R.string.today)
-    isTomorrow -> stringLookup.getString(R.string.tomorrow)
-    else -> timeFormatter.formatDayWithDayOfWeek(this)
+): ForecastDate = when {
+    isToday -> ForecastDate.Today
+    isTomorrow -> ForecastDate.Tomorrow
+    else -> ForecastDate.Day(timeFormatter.formatDayWithDayOfWeek(this))
 }
 
 private fun ForecastEntry.toForecastCardState(

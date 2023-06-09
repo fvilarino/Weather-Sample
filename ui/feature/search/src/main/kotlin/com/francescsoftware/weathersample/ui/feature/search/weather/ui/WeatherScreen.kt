@@ -81,6 +81,7 @@ private fun WeatherScreen(
             }
 
             WeatherLoadState.Error -> WeatherError(
+                message = state.errorMessage,
                 modifier = Modifier.fillMaxSize(),
                 retry = onRetry,
             )

@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel
 
+import androidx.annotation.StringRes
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.mvi.Action
 import com.francescsoftware.weathersample.ui.shared.mvi.State
@@ -22,7 +23,7 @@ internal data class WeatherState(
     val cityCountryCode: String,
     val todayState: CurrentWeatherState,
     val forecastItems: ImmutableList<ForecastDayState>,
-    val errorMessage: String,
+    @StringRes val errorMessage: Int,
 ) : State {
 
     companion object {
@@ -32,7 +33,7 @@ internal data class WeatherState(
             cityCountryCode = "",
             todayState = CurrentWeatherState(),
             forecastItems = persistentListOf(),
-            errorMessage = "",
+            errorMessage = 0,
         )
     }
 }
@@ -66,7 +67,7 @@ internal sealed interface WeatherAction : Action {
     ) : WeatherAction
 
     data class LoadError(
-        val message: String,
+        @StringRes val message: Int,
     ) : WeatherAction
 
     data class Retry(

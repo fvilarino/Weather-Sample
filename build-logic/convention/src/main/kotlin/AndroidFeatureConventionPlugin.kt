@@ -26,7 +26,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", (project(":ui:shared:assets")))
                 add("implementation", (project(":ui:shared:composable:common")))
                 add("implementation", (project(":ui:shared:deviceclass")))
-                add("implementation", (project(":ui:shared:lookup:api")))
                 add("implementation", (project(":ui:shared:mvi")))
                 add("implementation", (project(":ui:shared:route")))
                 add("implementation", (project(":ui:shared:styles")))
