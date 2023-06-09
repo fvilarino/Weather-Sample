@@ -4,14 +4,12 @@ import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.domain.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.ui.feature.search.R
-import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class TodayMiddleware @Inject constructor(
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
-    private val stringLookup: StringLookup,
 ) : Middleware<WeatherState, WeatherAction>() {
 
     override fun process(
@@ -52,7 +50,7 @@ internal class TodayMiddleware @Inject constructor(
             onFailure = {
                 dispatch(
                     WeatherAction.LoadError(
-                        message = stringLookup.getString(R.string.failed_to_load_weather_data)
+                        message = R.string.failed_to_load_weather_data,
                     )
                 )
             }

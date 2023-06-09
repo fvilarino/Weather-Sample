@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
     <string name="temperature_label">Temp:</string>
     <string name="feels_like_label">Feels:</string>
     <string name="precipitation_label">Prep:</string>

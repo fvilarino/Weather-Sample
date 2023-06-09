@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.search.weather.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +25,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 @Composable
 internal fun WeatherError(
     modifier: Modifier = Modifier,
+    @StringRes message: Int = 0,
     retry: () -> Unit = {},
 ) {
     Box(
@@ -33,8 +35,11 @@ internal fun WeatherError(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            val label = stringResource(
+                id = message.takeIf { it != 0 } ?: R.string.weather_error_loading
+            )
             Text(
-                text = stringResource(id = R.string.weather_error_loading),
+                text = label,
                 style = MaterialTheme.typography.titleLarge,
             )
             Spacer(modifier = Modifier.height(MarginDouble))

@@ -11,9 +11,9 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastEntry
 import com.francescsoftware.weathersample.ui.feature.search.R
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastDate
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
-import com.francescsoftware.weathersample.ui.shared.lookup.api.StringLookup
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import com.francescsoftware.weathersample.ui.shared.weathericon.drawableId
 import com.francescsoftware.weathersample.ui.shared.weathericon.weatherIconFromCode
@@ -31,7 +31,6 @@ internal class WeatherMiddleware @Inject constructor(
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
     private val getForecastInteractor: GetForecastInteractor,
     private val timeFormatter: TimeFormatter,
-    private val stringLookup: StringLookup,
 ) : Middleware<WeatherState, WeatherAction>() {
 
     override fun process(
@@ -81,7 +80,7 @@ internal class WeatherMiddleware @Inject constructor(
             } else {
                 dispatch(
                     WeatherAction.LoadError(
-                        message = stringLookup.getString(R.string.failed_to_load_weather_data)
+                        message = R.string.failed_to_load_weather_data,
                     )
                 )
             }
@@ -107,10 +106,10 @@ internal class WeatherMiddleware @Inject constructor(
             sunset = sunset,
         )
 
-    private fun Date.toHeaderLabel(): String = when {
-        isToday -> stringLookup.getString(R.string.today)
-        isTomorrow -> stringLookup.getString(R.string.tomorrow)
-        else -> timeFormatter.formatDayWithDayOfWeek(this)
+    private fun Date.toHeaderLabel(): ForecastDate = when {
+        isToday -> ForecastDate.Today
+        isTomorrow -> ForecastDate.Tomorrow
+        else -> ForecastDate.Day(timeFormatter.formatDayWithDayOfWeek(this))
     }
 
     private fun ForecastEntry.toForecastCardState(): ForecastHourState =
