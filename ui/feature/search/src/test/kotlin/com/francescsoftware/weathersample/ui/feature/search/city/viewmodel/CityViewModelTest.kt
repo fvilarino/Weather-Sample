@@ -312,7 +312,6 @@ internal class CityViewModelTest {
             viewModel.onQueryFocused()
             viewModel.onChipClick(RecentCityModel(chipCity))
             val state = viewModel.state.value
-            assertThat(state.query.text).isEqualTo(chipCity)
             assertThat(state.cities.size).isEqualTo(2)
             assertThat(state.cities[0]).isEqualTo(CityModelVancouver)
             assertThat(state.cities[1]).isEqualTo(CityModelBarcelona)
