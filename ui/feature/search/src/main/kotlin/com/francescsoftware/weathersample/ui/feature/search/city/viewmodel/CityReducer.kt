@@ -11,7 +11,6 @@ internal class CityReducer @Inject constructor() : Reducer<CityState, CityAction
         action: CityAction,
     ): CityState = when (action) {
         is CityAction.QueryUpdated -> state.copy(
-            query = action.query,
             loadState = if (action.query.text.isEmpty()) LoadState.Idle else state.loadState,
         )
 

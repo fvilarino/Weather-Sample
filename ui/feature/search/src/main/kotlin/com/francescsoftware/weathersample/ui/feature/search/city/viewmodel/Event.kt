@@ -20,7 +20,6 @@ internal enum class LoadState {
 @Immutable
 internal data class CityState(
     val loadState: LoadState,
-    val query: TextFieldValue,
     val cities: ImmutableList<CityResultModel>,
     val recentCities: ImmutableList<RecentCityModel>,
     val showRecentCities: Boolean,
@@ -31,7 +30,6 @@ internal data class CityState(
     companion object {
         val initial = CityState(
             loadState = LoadState.Idle,
-            query = TextFieldValue(),
             cities = persistentListOf(),
             recentCities = persistentListOf(),
             showRecentCities = false,

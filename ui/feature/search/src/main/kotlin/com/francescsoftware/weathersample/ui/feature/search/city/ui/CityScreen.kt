@@ -14,9 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -230,25 +228,22 @@ private fun PreviewCityScreen() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            var state by remember {
-                mutableStateOf(
-                    CityState(
-                        loadState = LoadState.Loaded,
-                        query = TextFieldValue(),
-                        cities = persistentListOf(
-                            VancouverCityModel,
-                            BarcelonaCityModel,
-                            LondonCityModel,
-                        ),
-                        recentCities = persistentListOf(
-                            RecentCityModel("Vancouver"),
-                            RecentCityModel("Barcelona"),
-                            RecentCityModel("London"),
-                            RecentCityModel("Tokyo"),
-                            RecentCityModel("Jakarta"),
-                        ),
-                        showRecentCities = true,
-                    )
+            val state = remember {
+                CityState(
+                    loadState = LoadState.Loaded,
+                    cities = persistentListOf(
+                        VancouverCityModel,
+                        BarcelonaCityModel,
+                        LondonCityModel,
+                    ),
+                    recentCities = persistentListOf(
+                        RecentCityModel("Vancouver"),
+                        RecentCityModel("Barcelona"),
+                        RecentCityModel("London"),
+                        RecentCityModel("Tokyo"),
+                        RecentCityModel("Jakarta"),
+                    ),
+                    showRecentCities = true,
                 )
             }
             CityScreen(
@@ -257,9 +252,7 @@ private fun PreviewCityScreen() {
                 deviceClass = DeviceClass.Compact,
                 onCityClick = { },
                 onFavoriteClick = { },
-                onQueryChange = { query ->
-                    state = state.copy(query = query)
-                },
+                onQueryChange = { },
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
