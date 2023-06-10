@@ -116,7 +116,7 @@ internal fun FavoritePage(
             }
             state.forecast.forEach { dayForecast ->
                 item(
-                    key = dayForecast.header.date,
+                    key = dayForecast.header.date.toString(),
                 ) {
                     ForecastHeader(
                         state = dayForecast.header,
