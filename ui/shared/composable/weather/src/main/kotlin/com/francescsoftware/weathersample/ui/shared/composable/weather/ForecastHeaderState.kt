@@ -3,10 +3,14 @@ package com.francescsoftware.weathersample.ui.shared.composable.weather
 /** Forecast header types */
 sealed interface ForecastDate {
     /** Today header */
-    object Today : ForecastDate
+    object Today : ForecastDate {
+        override fun toString() = "ForecastDate.Today"
+    }
 
     /** Tomorrow header */
-    object Tomorrow : ForecastDate
+    object Tomorrow : ForecastDate {
+        override fun toString() = "ForecastDate.Tomorrow"
+    }
 
     /**
      * Forecast header other than today or tomorrow

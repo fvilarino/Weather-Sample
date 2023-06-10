@@ -178,10 +178,11 @@ private fun PreviewPagerIndicator() {
             val pages = remember {
                 List(10) { "Page #$it" }
             }
-            val pagerState = rememberPagerState()
+            val pagerState = rememberPagerState {
+                pages.size
+            }
             Column {
                 HorizontalPager(
-                    pageCount = pages.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
