@@ -37,6 +37,10 @@ gradlePlugin {
             id = "weathersample.android.library.test"
             implementationClass = "AndroidLibraryTestConventionPlugin"
         }
+        register("androidLibraryComposeTest") {
+            id = "weathersample.android.library.compose.test"
+            implementationClass = "AndroidLibraryComposeTestConventionPlugin"
+        }
         register("androidTest") {
             id = "weathersample.android.test"
             implementationClass = "AndroidTestConventionPlugin"

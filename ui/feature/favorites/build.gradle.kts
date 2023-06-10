@@ -20,8 +20,4 @@ dependencies {
     implementation(project(":domain:interactor:weather:api"))
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:weathericon"))
-
-    // compose
-    implementation(libs.androidx.navigation.navigation.compose)
-    implementation(libs.androidx.hilt.hilt.navigation.compose)
 }

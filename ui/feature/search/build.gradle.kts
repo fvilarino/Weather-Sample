@@ -3,6 +3,7 @@ plugins {
     id("weathersample.android.library.compose")
     id("weathersample.android.hilt")
     id("weathersample.android.library.test")
+    id("weathersample.android.library.compose.test")
 }
 
 android {
@@ -24,8 +25,4 @@ dependencies {
     implementation(project(":domain:interactor:weather:api"))
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:weathericon"))
-
-    implementation(libs.androidx.lifecycle.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.hilt.hilt.navigation.compose)
-    implementation(libs.androidx.navigation.navigation.compose)
 }
