@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -195,7 +196,7 @@ interface LoadingIndicatorState {
 internal class LoadingIndicatorStateImpl(
     private val animationType: AnimationType,
 ) : LoadingIndicatorState {
-    private val animatedValues = List(NumIndicators) { mutableStateOf(0f) }
+    private val animatedValues = List(NumIndicators) { mutableFloatStateOf(0f) }
 
     override fun get(index: Int): Float = animatedValues[index].value
 
