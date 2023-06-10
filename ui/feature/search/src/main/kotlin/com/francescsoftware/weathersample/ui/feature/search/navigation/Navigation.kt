@@ -70,7 +70,7 @@ private fun NavGraphBuilder.addSearchDestination(
         CityScreen(
             viewModel = cityViewModel,
             deviceClass = deviceClass,
-            onCityClick = { selectedCity -> onNavigate(WeatherDestination.getRoute(selectedCity)) },
+            navigateToCityWeather = { selectedCity -> onNavigate(WeatherDestination.getRoute(selectedCity)) },
             modifier = Modifier.fillMaxSize(),
         )
     }

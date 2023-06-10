@@ -7,6 +7,7 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.GetRecentCi
 import com.francescsoftware.weathersample.domain.interactor.city.api.InsertRecentCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.RecentCity
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
+import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineScope
@@ -33,7 +34,7 @@ internal class RecentCitiesMiddleware @Inject constructor(
     ) {
         when (action) {
             CityAction.QueryFocused -> loadRecentCities()
-            is CityAction.OnCityClick -> scope.saveCity(action.cityModel)
+            is CityAction.OnCityClick -> scope.saveCity(action.selectedCity)
             is CityAction.OnChipClick -> onChipClick(action.recentCityModel)
             is CityAction.OnDeleteChipClick -> scope.onDeleteChip(action.recentCityModel)
             else -> {}
@@ -61,8 +62,8 @@ internal class RecentCitiesMiddleware @Inject constructor(
         }
     }
 
-    private fun CoroutineScope.saveCity(recentCityModel: RecentCityModel) = launch {
-        insertRecentCitiesInteractor(RecentCity(name = recentCityModel.name))
+    private fun CoroutineScope.saveCity(selectedCity: SelectedCity) = launch {
+        insertRecentCitiesInteractor(RecentCity(name = selectedCity.name))
     }
 
     private fun onChipClick(recentCityModel: RecentCityModel) {

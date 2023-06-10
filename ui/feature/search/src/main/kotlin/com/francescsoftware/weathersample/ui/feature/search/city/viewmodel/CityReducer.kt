@@ -24,10 +24,15 @@ internal class CityReducer @Inject constructor() : Reducer<CityState, CityAction
             showRecentCities = true,
         )
 
+        is CityAction.OnCityClick -> state.copy(
+            navigateToCityWeather = action.selectedCity,
+        )
+
         CityAction.HideRecentCities -> state.copy(showRecentCities = false)
         CityAction.LoadError -> state.copy(loadState = LoadState.Error)
         CityAction.NoResults -> state.copy(loadState = LoadState.NoResults)
         CityAction.Loading -> state.copy(loadState = LoadState.Loading)
+        CityAction.OnNavigated -> state.copy(navigateToCityWeather = null)
         else -> state
     }
 }
