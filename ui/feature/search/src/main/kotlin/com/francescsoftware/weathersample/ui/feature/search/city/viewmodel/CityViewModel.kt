@@ -35,7 +35,7 @@ internal class CityViewModel @Inject constructor(
     }
 
     fun onCityClick(selectedCity: SelectedCity) {
-        handleAction(CityAction.OnCityClick(RecentCityModel(name = selectedCity.name)))
+        handleAction(CityAction.OnCityClick(selectedCity))
     }
 
     fun onFavoriteClick(cityResultModel: CityResultModel) {
@@ -48,5 +48,9 @@ internal class CityViewModel @Inject constructor(
 
     fun onDeleteChip(recent: RecentCityModel) {
         handleAction(CityAction.OnDeleteChipClick(recent))
+    }
+
+    fun onNavigated() {
+        handleAction(CityAction.OnNavigated)
     }
 }

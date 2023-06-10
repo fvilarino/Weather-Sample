@@ -53,7 +53,7 @@ internal val MinColumnWidth = 300.dp
 internal fun CityScreen(
     viewModel: CityViewModel,
     deviceClass: DeviceClass,
-    onCityClick: (SelectedCity) -> Unit,
+    navigateToCityWeather: (SelectedCity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -65,13 +65,14 @@ internal fun CityScreen(
         deviceClass = deviceClass,
         onCityClick = { selectedCity ->
             viewModel.onCityClick(selectedCity)
-            onCityClick(selectedCity)
         },
         onFavoriteClick = viewModel::onFavoriteClick,
         onQueryChange = viewModel::onQueryChange,
         onQueryFocused = viewModel::onQueryFocused,
         onChipClick = viewModel::onChipClick,
         onDeleteChip = viewModel::onDeleteChip,
+        onNavigateToCityWeather = navigateToCityWeather,
+        onNavigated = viewModel::onNavigated,
         modifier = modifier,
     )
 }
@@ -87,6 +88,8 @@ internal fun CityScreen(
     onQueryFocused: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
+    onNavigateToCityWeather: (SelectedCity) -> Unit,
+    onNavigated: () -> Unit,
     modifier: Modifier = Modifier,
     stateHolder: CityScreenStateHolder = rememberCityScreenStateHolder(),
 ) {
@@ -96,6 +99,13 @@ internal fun CityScreen(
         snapshotFlow { stateHolder.query }
             .onEach(onQueryChange)
             .launchIn(this)
+    }
+
+    if (state.navigateToCityWeather != null) {
+        LaunchedEffect(key1 = state.navigateToCityWeather) {
+            onNavigated()
+            onNavigateToCityWeather(state.navigateToCityWeather)
+        }
     }
 
     DualPane(
@@ -263,6 +273,7 @@ private fun PreviewCityScreen() {
                         RecentCityModel("Jakarta"),
                     ),
                     showRecentCities = true,
+                    navigateToCityWeather = null,
                 )
             }
             CityScreen(
@@ -275,6 +286,8 @@ private fun PreviewCityScreen() {
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
+                onNavigateToCityWeather = { },
+                onNavigated = { },
             )
         }
     }

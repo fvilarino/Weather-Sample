@@ -50,6 +50,8 @@ internal class CityScreenTest {
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
+                onNavigateToCityWeather = { },
+                onNavigated = { },
             )
         }
 
@@ -78,6 +80,8 @@ internal class CityScreenTest {
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
+                onNavigateToCityWeather = { },
+                onNavigated = { },
             )
         }
 
@@ -104,6 +108,8 @@ internal class CityScreenTest {
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
+                onNavigateToCityWeather = { },
+                onNavigated = { },
             )
         }
 
@@ -129,6 +135,8 @@ internal class CityScreenTest {
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
+                onNavigateToCityWeather = { },
+                onNavigated = { },
             )
         }
 
@@ -156,6 +164,8 @@ internal class CityScreenTest {
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
+                onNavigateToCityWeather = { },
+                onNavigated = { },
             )
         }
 
@@ -191,6 +201,8 @@ internal class CityScreenTest {
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
+                onNavigateToCityWeather = { },
+                onNavigated = { },
             )
         }
 
