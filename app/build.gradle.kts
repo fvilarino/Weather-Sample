@@ -101,6 +101,7 @@ dependencies {
     implementation(project(":ui:shared:weathericon"))
 
     implementation(libs.com.jakewharton.timber)
+    androidTestImplementation(libs.androidx.test.runner)
 }
 
 afterEvaluate {

@@ -20,8 +20,8 @@ internal fun Project.configureDetekt(
             toolVersion = version
             allRules = true
             buildUponDefaultConfig = true
-            source = files("$projectDir")
-            config = files("$rootDir/analysis/detekt/detekt.yml")
+            source.from(files("$projectDir"))
+            config.from(files("$rootDir/analysis/detekt/detekt.yml"))
             reportsDir = file("${rootProject.buildDir}/reports/detekt/")
             parallel = true
         }

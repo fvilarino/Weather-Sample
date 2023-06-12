@@ -10,5 +10,6 @@ internal fun configureAndroidApplication(
             versionName = Config.Build.VersionName
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
+        configureAndroidTest(this)
     }
 }
