@@ -1,6 +1,8 @@
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.LibraryExtension
 import com.francescsoftware.weathersample.buildconvention.configureAndroidLint
 import com.francescsoftware.weathersample.buildconvention.configureKotlinAndroid
+import com.francescsoftware.weathersample.buildconvention.disableUnnecessaryAndroidTests
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -20,6 +22,9 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
                 configureAndroidLint(this)
+            }
+            extensions.configure<LibraryAndroidComponentsExtension> {
+                disableUnnecessaryAndroidTests(target)
             }
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
