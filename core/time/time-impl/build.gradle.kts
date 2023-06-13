@@ -7,7 +7,6 @@ plugins {
 android {
     namespace = "com.francescsoftware.weathersample.core.time.impl"
 }
-
 dependencies {
-    implementation(project(":core:time:api"))
+    implementation(project(":core:time:time-api"))
 }

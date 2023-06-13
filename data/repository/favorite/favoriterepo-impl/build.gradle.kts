@@ -5,16 +5,16 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.data.repository.recents.impl"
+    namespace = "com.francescsoftware.weathersample.data.repository.favorite.impl"
 }
 
 ksp {
-    arg(RecentsRoomSchemaArgProvider(File(projectDir, "schemas")))
+    arg(RoomSchemaArgProvider(File(projectDir, "schemas")))
 }
 
 dependencies {
-    implementation(project(":data:repository:recents:api"))
 
+    implementation(project(":data:repository:favorite:favoriterepo-api"))
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
     implementation(libs.androidx.room.room.ktx)
     implementation(libs.androidx.room.room.runtime)
@@ -25,7 +25,7 @@ dependencies {
     testImplementation(libs.org.robolectric.robolectric)
 }
 
-internal class RecentsRoomSchemaArgProvider(
+internal class RoomSchemaArgProvider(
     @get:InputDirectory
     @get:PathSensitive(PathSensitivity.RELATIVE)
     val schemaDir: File,
