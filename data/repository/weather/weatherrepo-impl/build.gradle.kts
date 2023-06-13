@@ -7,13 +7,17 @@ plugins {
 }
 
 android {
-    namespace = "com.francescsoftware.weathersample.data.repository.city.impl"
+    namespace = "com.francescsoftware.weathersample.data.repository.weather.impl"
     val rapidApiKey = ConfigKeys.rapidApiKey
     buildTypes {
         all {
-            buildConfigField("String", "CITY_SERVICE_BASE_URL", "\"https://wft-geo-db.p.rapidapi.com/\"")
+            buildConfigField(
+                "String",
+                "WEATHER_SERVICE_BASE_URL",
+                "\"https://community-open-weather-map.p.rapidapi.com/\""
+            )
             buildConfigField("String", "RAPID_SERVICE_KEY", "\"$rapidApiKey\"")
-            buildConfigField("String", "RAPID_SERVICE_CITY_HOST", "\"wft-geo-db.p.rapidapi.com\"")
+            buildConfigField("String", "RAPID_SERVICE_WEATHER_HOST", "\"weatherapi-com.p.rapidapi.com\"")
         }
     }
 
@@ -30,7 +34,7 @@ dependencies {
     implementation(project(":core:dispatcher"))
     implementation(project(":core:network"))
     implementation(project(":core:type:either"))
-    implementation(project(":data:repository:city:api"))
+    implementation(project(":data:repository:weather:weatherrepo-api"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.bundles.okhttp)

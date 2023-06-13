@@ -14,10 +14,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:time:api"))
+    implementation(project(":core:time:time-api"))
     implementation(project(":core:type:weather"))
-    implementation(project(":domain:interactor:city:api"))
-    implementation(project(":domain:interactor:weather:api"))
+    implementation(project(":domain:interactor:city:cityinteractor-api"))
+    implementation(project(":domain:interactor:weather:weatherinteractor-api"))
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:weathericon"))
 }

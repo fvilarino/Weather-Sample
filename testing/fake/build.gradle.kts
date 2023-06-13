@@ -9,7 +9,7 @@ android {
 
 dependencies {
     implementation(project(":core:dispatcher"))
-    implementation(project(":core:time:api"))
+    implementation(project(":core:time:time-api"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }
