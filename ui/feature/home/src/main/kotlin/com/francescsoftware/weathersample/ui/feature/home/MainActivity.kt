@@ -7,12 +7,17 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /** {@inheritDoc} */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    internal lateinit var connectivityMonitor: ConnectivityMonitor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -28,7 +33,9 @@ class MainActivity : AppCompatActivity() {
                 onDispose {}
             }
 
-            WeatherApp()
+            WeatherApp(
+                connectivityMonitor = connectivityMonitor,
+            )
         }
     }
 }

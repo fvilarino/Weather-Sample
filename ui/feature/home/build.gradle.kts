@@ -16,11 +16,10 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":core:connectivity:connectivity-api"))
     implementation(project(":ui:feature:favorites"))
     implementation(project(":ui:feature:search"))
 
-    // compose
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.app.compat)
     implementation(libs.androidx.compose.material3.window.sizeclass)

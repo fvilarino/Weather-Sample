@@ -67,6 +67,8 @@ fun loadSigningProperties(file: File) =
     }
 
 dependencies {
+    implementation(project(":core:connectivity:connectivity-api"))
+    implementation(project(":core:connectivity:connectivity-impl"))
     implementation(project(":core:dispatcher"))
     implementation(project(":core:network"))
     implementation(project(":core:time:time-api"))
