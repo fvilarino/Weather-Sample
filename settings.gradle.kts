@@ -18,6 +18,8 @@ dependencyResolutionManagement {
 rootProject.name = "Weather Sample"
 include(":analysis")
 include(":app")
+include(":core:connectivity:connectivity-api")
+include(":core:connectivity:connectivity-impl")
 include(":core:coroutines")
 include(":core:dispatcher")
 include(":core:network")

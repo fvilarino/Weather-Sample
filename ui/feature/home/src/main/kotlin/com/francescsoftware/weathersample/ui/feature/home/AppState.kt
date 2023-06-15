@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
@@ -11,13 +12,24 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
+import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityStatus
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestination
 import com.francescsoftware.weathersample.ui.shared.route.NavigationDestination
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+
+private const val ConnectivityGracePeriodMillis = 5_000L
 
 internal class AppState(
     val navHostController: NavHostController,
     val deviceClass: DeviceClass,
+    val connectivityMonitor: ConnectivityMonitor,
+    val scope: CoroutineScope,
 ) {
     val navBackEntryDestination: NavDestination?
         @Composable
@@ -46,6 +58,14 @@ internal class AppState(
     val showBottomOverlay: Boolean
         @Composable
         get() = hasBottomNavBar && !currentDestination.showBottomBar
+
+    val isConnected: StateFlow<Boolean> = connectivityMonitor.connectedStatus
+        .map { state -> state == ConnectivityStatus.Connected }
+        .stateIn(
+            scope = scope,
+            started = SharingStarted.WhileSubscribed(ConnectivityGracePeriodMillis),
+            initialValue = true,
+        )
 
     private val navBackStackEntry: NavBackStackEntry?
         @Composable
@@ -85,7 +105,9 @@ internal class AppState(
 
 @Composable
 internal fun rememberAppState(
+    connectivityMonitor: ConnectivityMonitor,
     navHostController: NavHostController = rememberNavController(),
+    scope: CoroutineScope = rememberCoroutineScope(),
 ): AppState {
     val windowSizeClass = calculateWindowSizeClass(LocalContext.current as Activity)
     val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
@@ -93,6 +115,8 @@ internal fun rememberAppState(
         AppState(
             navHostController = navHostController,
             deviceClass = deviceClass,
+            connectivityMonitor = connectivityMonitor,
+            scope = scope,
         )
     }
 }

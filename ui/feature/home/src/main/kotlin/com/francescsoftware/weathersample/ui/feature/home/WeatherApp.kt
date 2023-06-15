@@ -20,21 +20,29 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
+import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesRootDestination
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.addFavoritesNavGraph
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
 import com.francescsoftware.weathersample.ui.feature.search.navigation.addSearchNavGraph
-import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.composable.common.AppBar
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
+import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
 internal val navGraphDestinations = persistentListOf(
     SearchRootDestination,
@@ -43,11 +51,26 @@ internal val navGraphDestinations = persistentListOf(
 
 @Composable
 internal fun WeatherApp(
-    state: AppState = rememberAppState()
+    connectivityMonitor: ConnectivityMonitor,
+    state: AppState = rememberAppState(
+        connectivityMonitor = connectivityMonitor,
+    )
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val isConnected by state.isConnected.collectAsStateWithLifecycle()
+    val networkLostMessage = stringResource(id = R.string.network_connection_lost)
+    LaunchedEffect(key1 = isConnected) {
+        if (!isConnected) {
+            snackbarHostState.showSnackbar(
+                message = networkLostMessage,
+                duration = SnackbarDuration.Indefinite,
+            )
+        }
+    }
     WeatherSampleTheme {
         Scaffold(
             contentWindowInsets = WindowInsets.statusBars,
+            snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
                 AppBar(
                     title = state.currentDestination.title,
@@ -142,7 +165,7 @@ private fun NavigationIcon(
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
-            contentDescription = stringResource(id = R.string.content_description_back),
+            contentDescription = stringResource(id = assetsR.string.content_description_back),
         )
     }
 }
