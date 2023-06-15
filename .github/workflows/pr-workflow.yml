@@ -60,6 +60,16 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Clean Managed Devices
+        run: ./gradlew cleanManagedDevices --unused-only
+        env:
+          alias: ${{ secrets.alias }}
+          keyPass: ${{ secrets.keyPass }}
+          store: ${{ secrets.store }}
+          storePass: ${{ secrets.storePass }}
+          rapid_api_key: ${{ secrets.rapid_api_key }}
+          buildNumber: 1
+
       - name: Run instrumented tests
         run: ./gradlew ciGroupDebugAndroidTest -Dorg.gradle.workers.max=1 -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
         env:
