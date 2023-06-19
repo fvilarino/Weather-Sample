@@ -13,6 +13,6 @@ value class Precipitation private constructor(private val value: Double) {
 
     companion object {
         fun fromMillimeters(value: Double) = Precipitation(value)
-        fun fromInches(value: Double) = Precipitation(value / InchesToMillimeters)
+        fun fromInches(value: Double) = Precipitation(value * InchesToMillimeters)
     }
 }
