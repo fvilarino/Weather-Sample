@@ -18,7 +18,6 @@ androidx-test-runner-version = "1.5.2"
 androidx-test-uiautomator-uiautomator-version = "2.2.0"
 app-cash-turbine-turbine-version = "1.0.0"
 app-compat-version = "1.7.0-alpha02"
-catalog-plugin-version = "0.8.0"
 com-android-tools-build-gradle-version = "8.2.0-alpha09"
 com-google-android-material-version = "1.9.0"
 com-google-accompanist-accompanist-systemuicontroller-version = "0.31.2-alpha"
@@ -163,4 +162,3 @@ test = [
 com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version.ref = "versions-plugin-version" }
 com-google-devtools-ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp-plugin-version" }
 io-gitlab-arturbosch-detekt-plugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt-version" }
-nl-littlerobots-version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "catalog-plugin-version" }
