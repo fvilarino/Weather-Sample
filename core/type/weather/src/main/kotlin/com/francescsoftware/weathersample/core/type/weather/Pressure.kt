@@ -9,11 +9,11 @@ value class Pressure private constructor(private val value: Double) {
         get() = value
 
     val hgInches: Double
-        get() = value * MbToInchesFactor
+        get() = value / MbToInchesFactor
 
     companion object {
         fun fromMillibars(value: Double) = Pressure(value)
-        fun fromHgInches(value: Double) = Pressure(value / MbToInchesFactor)
+        fun fromHgInches(value: Double) = Pressure(value * MbToInchesFactor)
     }
 }
 
