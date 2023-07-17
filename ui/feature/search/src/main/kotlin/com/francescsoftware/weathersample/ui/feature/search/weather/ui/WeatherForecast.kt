@@ -27,13 +27,14 @@ import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 internal fun WeatherForecast(
     state: WeatherState,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(
             minSize = WeatherCardWidth,
         ),
         modifier = modifier,
-        contentPadding = PaddingValues(all = MarginDouble),
+        contentPadding = contentPadding,
         horizontalArrangement = Arrangement.spacedBy(MarginDouble),
         verticalArrangement = Arrangement.spacedBy(MarginDouble),
     ) {

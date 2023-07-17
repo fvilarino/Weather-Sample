@@ -1,7 +1,10 @@
 package com.francescsoftware.weathersample.ui.feature.search.weather.ui
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,11 +12,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.common.MultiSelector
@@ -24,6 +37,9 @@ import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
 
 private val OptionSelectorHeight = 40.dp
+private const val GradientStart = 0f
+private const val GradientEnd = 1f
+private const val GradientMidPoint = (GradientEnd - GradientStart) / 2f
 
 @Composable
 internal fun SinglePaneWeatherContent(
@@ -32,43 +48,71 @@ internal fun SinglePaneWeatherContent(
     modifier: Modifier = Modifier,
     stateHolder: WeatherStateHolder = rememberWeatherStateHolder(),
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+    var offset by remember {
+        mutableStateOf(0.dp)
+    }
+    val density = LocalDensity.current
+    Box(
+        modifier = modifier
     ) {
-        val todayLabel = stringResource(id = R.string.today_weather_button_label)
-        val forecastLabel = stringResource(id = R.string.forecast_weather_button_label)
-        CityLabel(
-            cityName = state.cityName,
-            countryCode = state.cityCountryCode,
-        )
-        MultiSelector(
-            options = persistentListOf(
-                todayLabel,
-                forecastLabel,
-            ),
-            selectedOption = when (stateHolder.option) {
-                SelectedWeatherOption.Today -> todayLabel
-                SelectedWeatherOption.Forecast -> forecastLabel
-            },
-            selectedColor = MaterialTheme.colorScheme.onSecondary,
-            selectedBackgroundColor = MaterialTheme.colorScheme.secondary,
-            onOptionSelect = { option ->
-                if (option == todayLabel) {
-                    stateHolder.onOptionSelect(SelectedWeatherOption.Today)
-                } else {
-                    stateHolder.onOptionSelect(SelectedWeatherOption.Forecast)
-                }
-            },
+        Box(
             modifier = Modifier
-                .padding(top = MarginQuad)
-                .height(OptionSelectorHeight),
+                .zIndex(1f)
+                .fillMaxWidth()
+                .height(offset)
+                .background(
+                    brush = Brush.verticalGradient(
+                        GradientStart to MaterialTheme.colorScheme.surface,
+                        GradientMidPoint to MaterialTheme.colorScheme.surface,
+                        GradientEnd to Color.Transparent,
+                    )
+                )
         )
+        Column(
+            modifier = Modifier
+                .zIndex(2f)
+                .fillMaxWidth()
+                .padding(bottom = MarginDouble)
+                .onGloballyPositioned { layoutCoordinates ->
+                    offset = with(density) { layoutCoordinates.size.height.toDp() }
+                },
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            val todayLabel = stringResource(id = R.string.today_weather_button_label)
+            val forecastLabel = stringResource(id = R.string.forecast_weather_button_label)
+            CityLabel(
+                cityName = state.cityName,
+                countryCode = state.cityCountryCode,
+            )
+            MultiSelector(
+                options = persistentListOf(
+                    todayLabel,
+                    forecastLabel,
+                ),
+                selectedOption = when (stateHolder.option) {
+                    SelectedWeatherOption.Today -> todayLabel
+                    SelectedWeatherOption.Forecast -> forecastLabel
+                },
+                unselectedBackgroundColor = lerp(
+                    start = MaterialTheme.colorScheme.primary,
+                    stop = MaterialTheme.colorScheme.surface,
+                    fraction = .8f,
+                ),
+                onOptionSelect = { option ->
+                    if (option == todayLabel) {
+                        stateHolder.onOptionSelect(SelectedWeatherOption.Today)
+                    } else {
+                        stateHolder.onOptionSelect(SelectedWeatherOption.Forecast)
+                    }
+                },
+                modifier = Modifier
+                    .padding(top = MarginQuad)
+                    .height(OptionSelectorHeight),
+            )
+        }
         Crossfade(
             targetState = stateHolder.option,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+            modifier = Modifier.fillMaxSize(),
             label = "option",
         ) { option ->
             when (option) {
@@ -77,7 +121,7 @@ internal fun SinglePaneWeatherContent(
                     todayRefreshCallback = todayRefreshCallback,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = MarginQuad),
+                        .padding(top = offset + MarginQuad),
                 )
 
                 SelectedWeatherOption.Forecast -> WeatherForecast(
@@ -85,6 +129,12 @@ internal fun SinglePaneWeatherContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(top = MarginDouble),
+                    contentPadding = PaddingValues(
+                        start = MarginDouble,
+                        end = MarginDouble,
+                        top = offset,
+                        bottom = MarginDouble
+                    )
                 )
             }
         }
@@ -106,7 +156,11 @@ private fun PreviewPhoneWeatherContent(
                 todayRefreshCallback = {},
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = MarginDouble),
+                    .padding(
+                        top = MarginDouble,
+                        start = MarginDouble,
+                        end = MarginDouble,
+                    ),
                 stateHolder = stateHolder,
             )
         }
