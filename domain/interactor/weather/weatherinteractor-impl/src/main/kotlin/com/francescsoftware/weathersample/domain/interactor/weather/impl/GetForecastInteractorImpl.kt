@@ -5,23 +5,26 @@ import com.francescsoftware.weathersample.core.time.api.Iso8601DateTime
 import com.francescsoftware.weathersample.core.time.api.TimeFormatter
 import com.francescsoftware.weathersample.core.time.api.TimeParser
 import com.francescsoftware.weathersample.core.time.api.TimeParsingException
+import com.francescsoftware.weathersample.core.time.api.TimeProvider
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRepository
-import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.ForecastDay
 import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.ForecastResponse
 import com.francescsoftware.weathersample.domain.interactor.weather.api.GetForecastInteractor
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Forecast
+import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
+import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.ForecastDay as RepoForecastDay
 
 private class ForecastParseException : RuntimeException()
 internal class GetForecastInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val dispatcherProvider: DispatcherProvider,
+    private val timeProvider: TimeProvider,
     private val timeFormatter: TimeFormatter,
     private val timerParser: TimeParser,
 ) : GetForecastInteractor {
@@ -57,7 +60,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
         data: ForecastResponse,
     ): Forecast = withContext(dispatcherProvider.default) {
         // aggregate the forecast by days
-        val days: Map<Date, ForecastDay> = data.forecast.forecastDay
+        val days: Map<Date, RepoForecastDay> = data.forecast.forecastDay
             .associateBy { item ->
                 val time = item.hour.firstOrNull()?.time ?: throw ForecastParseException()
                 timeFormatter.setToMidnight(
@@ -65,22 +68,25 @@ internal class GetForecastInteractorImpl @Inject constructor(
                 )
             }
 
-        // convert to forecast days
-        val forecastDays: List<com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay> =
-            days
-                .mapValues { entry ->
-                    com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay(
-                        date = entry.key,
-                        sunrise = entry.value.astro.sunrise,
-                        sunset = entry.value.astro.sunset,
-                        entries = entry.value.hour.map { hour -> hour.toForecastEntry(timerParser) }
-                    )
-                }
-                .map { entry ->
-                    entry.value.copy(
-                        entries = entry.value.entries.sortedBy { it.date }
-                    )
-                }
+        // convert to forecast days, filtering out hourly forecasts in the past
+        val now = timeProvider.epoch.inWholeSeconds
+        val forecastDays = days
+            .mapValues { entry ->
+                ForecastDay(
+                    date = entry.key,
+                    sunrise = entry.value.astro.sunrise,
+                    sunset = entry.value.astro.sunset,
+                    entries = entry.value.hour
+                        .filter { forecastHour -> forecastHour.timeEpoch >= now }
+                        .map { hour -> hour.toForecastEntry(timerParser) }
+                )
+            }
+            .filter { mapEntry -> mapEntry.value.entries.isNotEmpty() }
+            .map { entry ->
+                entry.value.copy(
+                    entries = entry.value.entries.sortedBy { it.date }
+                )
+            }
         Forecast(
             current = data.current.toCurrent(),
             forecastDays.sortedBy { forecastDay -> forecastDay.date }
