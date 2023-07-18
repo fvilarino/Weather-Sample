@@ -13,6 +13,7 @@ comments:
     ignoreAnnotated:
       - 'Preview'
       - 'PhonePreviews'
+      - 'LandscapePhonePreviews'
       - 'TabletPreviews'
       - 'WidgetPreviews'
   UndocumentedPublicProperty:
@@ -57,6 +58,7 @@ style:
     ignoreAnnotated:
       - 'Preview'
       - 'PhonePreviews'
+      - 'LandscapePhonePreviews'
       - 'TabletPreviews'
       - 'WidgetPreviews'
   UnusedPrivateMember:
@@ -64,5 +66,6 @@ style:
     ignoreAnnotated:
       - 'Preview'
       - 'PhonePreviews'
+      - 'LandscapePhonePreviews'
       - 'TabletPreviews'
       - 'WidgetPreviews'

@@ -1,10 +1,13 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.ui
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -18,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -36,8 +40,10 @@ import com.francescsoftware.weathersample.ui.feature.search.navigation.CitySearc
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.composable.common.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.GenericMessage
+import com.francescsoftware.weathersample.ui.shared.composable.common.PanesOrientation
 import com.francescsoftware.weathersample.ui.shared.composable.common.ProgressIndicator
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
+import com.francescsoftware.weathersample.ui.shared.styles.LandscapePhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
@@ -48,6 +54,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 internal val MinColumnWidth = 300.dp
+private const val CityPaneWeight = 3f
 
 @Composable
 internal fun CityScreen(
@@ -94,6 +101,7 @@ internal fun CityScreen(
     stateHolder: CityScreenStateHolder = rememberCityScreenStateHolder(),
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val orientation = LocalConfiguration.current.orientation
 
     LaunchedEffect(key1 = Unit) {
         snapshotFlow { stateHolder.query }
@@ -108,8 +116,8 @@ internal fun CityScreen(
         }
     }
 
-    DualPane(
-        paneOne = {
+    if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+        Column(modifier = modifier) {
             CityPane(
                 state = state,
                 stateHolder = stateHolder,
@@ -123,20 +131,57 @@ internal fun CityScreen(
                     .fillMaxWidth()
                     .padding(horizontal = MarginDouble),
             )
-        },
-        paneTwo = {
             Cities(
                 state = state,
                 onCityClick = onCityClick,
                 onFavoriteClick = onFavoriteClick,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .weight(1f)
                     .padding(top = MarginDouble),
             )
-        },
-        deviceClass = deviceClass,
-        modifier = modifier,
-    )
+        }
+    } else {
+        DualPane(
+            panesOrientation = PanesOrientation.horizontal(
+                aspectRatio = if (deviceClass == DeviceClass.Expanded) .33f else .5f
+            ),
+            paneOne = {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Spacer(
+                        modifier = if (deviceClass == DeviceClass.Compact) {
+                            Modifier.height(MarginQuad)
+                        } else {
+                            Modifier.weight(1f)
+                        }
+                    )
+                    CityPane(
+                        state = state,
+                        stateHolder = stateHolder,
+                        onQueryFocused = onQueryFocused,
+                        onChipClick = { recentCityModel ->
+                            keyboardController?.hide()
+                            onChipClick(recentCityModel)
+                        },
+                        onDeleteChip = onDeleteChip,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(CityPaneWeight)
+                            .padding(horizontal = MarginDouble),
+                    )
+                }
+            },
+            paneTwo = {
+                Cities(
+                    state = state,
+                    onCityClick = onCityClick,
+                    onFavoriteClick = onFavoriteClick,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            },
+            modifier = modifier,
+        )
+    }
     if (actions.about) {
         AboutDialog(
             onDismiss = {
@@ -250,6 +295,7 @@ private fun Cities(
 }
 
 @PhonePreviews
+@LandscapePhonePreviews
 @TabletPreviews
 @Composable
 private fun PreviewCityScreen() {
