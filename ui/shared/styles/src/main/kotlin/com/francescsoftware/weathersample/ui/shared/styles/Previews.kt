@@ -19,6 +19,18 @@ annotation class WidgetPreviews
 )
 annotation class PhonePreviews
 
+/** Preview configuration for a phone in landscape */
+@Preview(
+    device = "spec: width=411dp, height=891dp, dpi=420, isRound=false, chinSize=0dp, orientation=landscape",
+    group = "Phone",
+)
+@Preview(
+    device = "spec: width=411dp, height=891dp, dpi=420, isRound=false, chinSize=0dp, orientation=landscape",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    group = "Phone",
+)
+annotation class LandscapePhonePreviews
+
 /** Preview configuration for a tablet */
 @Preview(device = Devices.PIXEL_C, showBackground = true, group = "Tablet")
 @Preview(device = Devices.PIXEL_C, uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true, group = "Tablet")

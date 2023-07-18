@@ -28,8 +28,8 @@ fun NavGraphBuilder.addSearchNavGraph(
         startDestination = SearchRootDestination.rootDestination.route,
         route = SearchRootDestination.navGraphRoute,
     ) {
-        addSearchDestination(deviceClass, onNavigate)
-        addWeatherDestination(deviceClass)
+        addSearchDestination(deviceClass = deviceClass, onNavigate = onNavigate)
+        addWeatherDestination(deviceClass = deviceClass)
     }
 }
 
@@ -76,7 +76,9 @@ private fun NavGraphBuilder.addSearchDestination(
     }
 }
 
-private fun NavGraphBuilder.addWeatherDestination(deviceClass: DeviceClass) {
+private fun NavGraphBuilder.addWeatherDestination(
+    deviceClass: DeviceClass,
+) {
     composable(
         route = WeatherDestination.route,
         deepLinks = WeatherDestination.deeplinks,

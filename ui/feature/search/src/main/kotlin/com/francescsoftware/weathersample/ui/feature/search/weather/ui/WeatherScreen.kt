@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.search.weather.ui
 
+import android.content.res.Configuration
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherLoadState
@@ -61,13 +63,14 @@ private fun WeatherScreen(
 
             WeatherLoadState.Loaded,
             WeatherLoadState.Refreshing -> {
-                if (deviceClass.isDualPane) {
+                if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     DualPaneWeatherContent(
                         state = state,
+                        deviceClass = deviceClass,
                         todayRefreshCallback = onRefreshTodayWeather,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(start = MarginDouble, end = MarginDouble, top = MarginDouble),
+                            .padding(horizontal = MarginDouble),
                     )
                 } else {
                     SinglePaneWeatherContent(
@@ -75,7 +78,7 @@ private fun WeatherScreen(
                         todayRefreshCallback = onRefreshTodayWeather,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(start = MarginDouble, end = MarginDouble, top = MarginDouble),
+                            .padding(horizontal = MarginDouble),
                     )
                 }
             }
