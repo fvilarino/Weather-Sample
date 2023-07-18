@@ -23,6 +23,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
@@ -59,6 +62,7 @@ internal fun WeatherApp(
     val snackbarHostState = remember { SnackbarHostState() }
     val isConnected by state.isConnected.collectAsStateWithLifecycle()
     val networkLostMessage = stringResource(id = R.string.network_connection_lost)
+    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     LaunchedEffect(key1 = isConnected) {
         if (!isConnected) {
             snackbarHostState.showSnackbar(
@@ -69,6 +73,7 @@ internal fun WeatherApp(
     }
     WeatherSampleTheme {
         Scaffold(
+            modifier = Modifier.nestedScroll(connection = scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.statusBars,
             snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
@@ -82,6 +87,7 @@ internal fun WeatherApp(
                         {}
                     },
                     actions = { state.currentDestination.TopBarActions() },
+                    scrollBehavior = scrollBehavior,
                 )
             },
             bottomBar = if (state.hasBottomNavBar) {
