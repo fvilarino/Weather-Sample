@@ -32,9 +32,9 @@ internal data class FavoriteState(
 }
 
 internal sealed interface FavoriteAction : Action {
-    object Load : FavoriteAction
-    object NoFavorites : FavoriteAction
-    object LoadError : FavoriteAction
+    data object Load : FavoriteAction
+    data object NoFavorites : FavoriteAction
+    data object LoadError : FavoriteAction
     data class Loaded(val state: FavoritePagerState) : FavoriteAction
     data class DeleteFavorite(val city: City) : FavoriteAction
 }
