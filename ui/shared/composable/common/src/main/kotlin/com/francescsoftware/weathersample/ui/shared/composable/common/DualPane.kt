@@ -26,20 +26,22 @@ class PanesOrientation private constructor(
      *
      * @property aspectRatio the relative aspect ratio between panes
      */
-    internal sealed class Orientation(val aspectRatio: Float) {
+    internal sealed interface Orientation {
+        val aspectRatio: Float
+
         /**
          * Align the panes horizontally
          *
          * @property aspectRatio the relative aspect ratio between panes
          */
-        class Horizontal(aspectRatio: Float) : Orientation(aspectRatio)
+        data class Horizontal(override val aspectRatio: Float) : Orientation
 
         /**
          * Align the panes vertically
          *
          * @property aspectRatio the relative aspect ratio between panes
          */
-        class Vertical(aspectRatio: Float) : Orientation(aspectRatio)
+        data class Vertical(override val aspectRatio: Float) : Orientation
     }
 
     companion object {
@@ -119,7 +121,7 @@ fun DualPane(
         val paneTwoPlaceable = measurables[1].measure(secondPaneConstraints)
         layout(
             width = constraints.maxWidth,
-            height = constraints.maxHeight
+            height = constraints.maxHeight,
         ) {
             paneOnePlaceable.placeRelative(
                 x = 0,
@@ -139,7 +141,7 @@ fun DualPane(
     }
 }
 
-@Preview(device = Devices.PIXEL_3A_XL, showBackground = true, group = "Phone")
+@Preview(device = Devices.PIXEL_3A_XL, group = "Phone")
 @Composable
 private fun PreviewHorizontalDualPane() {
     WeatherSampleTheme {
@@ -156,7 +158,7 @@ private fun PreviewHorizontalDualPane() {
     }
 }
 
-@Preview(device = Devices.PIXEL_3A_XL, showBackground = true, group = "Phone")
+@Preview(device = Devices.PIXEL_3A_XL, group = "Phone")
 @Composable
 private fun PreviewVerticalDualPane() {
     WeatherSampleTheme {
