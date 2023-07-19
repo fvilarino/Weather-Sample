@@ -48,11 +48,11 @@ internal sealed interface CityAction : Action {
     data class OnFavoriteClick(val city: CityResultModel) : CityAction
     data class OnChipClick(val recentCityModel: RecentCityModel) : CityAction
     data class OnDeleteChipClick(val recentCityModel: RecentCityModel) : CityAction
-    object Start : CityAction
-    object Loading : CityAction
-    object NoResults : CityAction
-    object LoadError : CityAction
-    object QueryFocused : CityAction
-    object HideRecentCities : CityAction
-    object OnNavigated : CityAction
+    data object Start : CityAction
+    data object Loading : CityAction
+    data object NoResults : CityAction
+    data object LoadError : CityAction
+    data object QueryFocused : CityAction
+    data object HideRecentCities : CityAction
+    data object OnNavigated : CityAction
 }
