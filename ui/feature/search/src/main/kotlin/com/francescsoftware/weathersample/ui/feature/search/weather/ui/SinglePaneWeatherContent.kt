@@ -72,10 +72,10 @@ internal fun SinglePaneWeatherContent(
             modifier = Modifier
                 .zIndex(2f)
                 .fillMaxWidth()
-                .padding(bottom = MarginDouble)
                 .onGloballyPositioned { layoutCoordinates ->
                     offset = with(density) { layoutCoordinates.size.height.toDp() }
-                },
+                }
+                .padding(bottom = MarginDouble),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val todayLabel = stringResource(id = R.string.today_weather_button_label)
@@ -126,14 +126,12 @@ internal fun SinglePaneWeatherContent(
 
                 SelectedWeatherOption.Forecast -> WeatherForecast(
                     state = state,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = MarginDouble),
+                    modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(
                         start = MarginDouble,
                         end = MarginDouble,
                         top = offset,
-                        bottom = MarginDouble
+                        bottom = MarginDouble,
                     )
                 )
             }
