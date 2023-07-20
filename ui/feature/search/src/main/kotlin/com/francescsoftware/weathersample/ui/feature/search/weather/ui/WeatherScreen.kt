@@ -78,14 +78,14 @@ private fun WeatherScreen(
                         todayRefreshCallback = onRefreshTodayWeather,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = MarginDouble),
+                            .padding(top = MarginDouble, start = MarginDouble, end = MarginDouble),
                     )
                 }
             }
 
             WeatherLoadState.Error -> WeatherError(
                 message = state.errorMessage,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().padding(all = MarginDouble),
                 retry = onRetry,
             )
         }
