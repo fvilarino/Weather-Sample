@@ -1,9 +1,12 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,7 +17,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeader
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
@@ -27,6 +40,10 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.ImmutableList
+
+private const val GradientStart = 0f
+private const val GradientEnd = 1f
+private const val GradientMidPoint = (GradientEnd - GradientStart) / 2f
 
 @Immutable
 internal data class FavoriteCardState(
@@ -54,7 +71,11 @@ internal fun FavoritePage(
     onDeleteClick: (City) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    var offset by remember {
+        mutableStateOf(0.dp)
+    }
+    val density = LocalDensity.current
+    Box(
         modifier = modifier,
     ) {
         CityNameLabel(
@@ -63,14 +84,25 @@ internal fun FavoritePage(
             onDeleteClick = {
                 onDeleteClick(state.city)
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .onGloballyPositioned {
+                    offset = with(density) { it.size.height.toDp() }
+                }
+                .zIndex(1f)
+                .fillMaxWidth()
+                .background(
+                    brush = Brush.verticalGradient(
+                        GradientStart to MaterialTheme.colorScheme.surface,
+                        GradientMidPoint to MaterialTheme.colorScheme.surface,
+                        GradientEnd to Color.Transparent,
+                    )
+                )
+                .padding(bottom = MarginQuad),
         )
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(MarginDouble),
-            contentPadding = PaddingValues(vertical = MarginDouble),
+            contentPadding = PaddingValues(top = offset, bottom = MarginDouble),
         ) {
             item(
                 key = "divider1"
