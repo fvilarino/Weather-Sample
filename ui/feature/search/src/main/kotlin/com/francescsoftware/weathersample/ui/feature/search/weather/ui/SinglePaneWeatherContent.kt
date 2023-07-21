@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -72,7 +72,7 @@ internal fun SinglePaneWeatherContent(
             modifier = Modifier
                 .zIndex(2f)
                 .fillMaxWidth()
-                .onGloballyPositioned { layoutCoordinates ->
+                .onPlaced { layoutCoordinates ->
                     offset = with(density) { layoutCoordinates.size.height.toDp() }
                 }
                 .padding(bottom = MarginDouble),
