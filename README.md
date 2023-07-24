@@ -41,6 +41,24 @@ This can be exercised with this ADB command (note that the package name for debu
 $ adb shell am start -W -a android.intent.action.VIEW -d "weatherapp://weather/vancouver/ca" com.francescsoftware.weathersample
 ```
 
+## Architecture
+The app is split into 4 layers:
+
+* [UI](./ui) - This is the feature Layer that the user interacts with. This layer is split into 2 sections, a [Feature](./ui/feature/) layer that contains each app feature, and a [Shared](./ui/shared/) layer containing a set of ui specific utilities to be used by the features.
+
+* [Domain](./domain) - This is the business logic layer that is shared by all features.
+
+* [Data](./data) - This layer contains the repositories providing the data to the app. This layer only contains repositories, on a more complex app we would also include a 2nd `Data Source` layer that feeds the repositories, but that additional complexity is not warranted in such a small app.
+
+* [Core](./core) - This layer contains foundational components that ar that support all other modules in the app.
+
+The dependencies on these layers must always point down - the `UI` modules depend only on `Domain` modules; `Domain` modules depend only on `Data` modules or other `Domain` modules, `Core`, being a foundational layer, can have no external dependencies, while all other layers (`UI`, `Domain`, `Data`) can deend on `Core`.
+
+Within a layer modules are split into a public API module and a private implementation module. Only the API module is visible to other modules; this helps avoid cyclic dependencies that would be incurred if implementation modules depended on other implementation modules. At the same time, this split between `Api` and `Impl` improves build performance as changes to implementation details do not affect any other modules.
+
+![System Architecture](./docs/architecture/Architecture.png "Architecture Diagram")
+
+
 ## Tech stack:
 
 * Kotlin
