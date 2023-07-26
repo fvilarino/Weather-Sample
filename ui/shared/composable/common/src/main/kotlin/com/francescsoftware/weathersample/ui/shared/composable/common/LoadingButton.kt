@@ -198,7 +198,7 @@ internal class LoadingIndicatorStateImpl(
 ) : LoadingIndicatorState {
     private val animatedValues = List(NumIndicators) { mutableFloatStateOf(0f) }
 
-    override fun get(index: Int): Float = animatedValues[index].value
+    override fun get(index: Int): Float = animatedValues[index].floatValue
 
     override suspend fun start() {
         coroutineScope {
@@ -212,7 +212,7 @@ internal class LoadingIndicatorStateImpl(
                             repeatMode = RepeatMode.Reverse,
                             initialStartOffset = StartOffset(animationType.animationDelay * index)
                         ),
-                    ) { value, _ -> animatedValues[index].value = value }
+                    ) { value, _ -> animatedValues[index].floatValue = value }
                 }
             }
         }
