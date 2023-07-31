@@ -62,7 +62,7 @@ private fun WeatherScreen(
             )
 
             WeatherLoadState.Loaded,
-            WeatherLoadState.Refreshing -> {
+            WeatherLoadState.Refreshing ->
                 if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     DualPaneWeatherContent(
                         state = state,
@@ -81,11 +81,12 @@ private fun WeatherScreen(
                             .padding(top = MarginDouble, start = MarginDouble, end = MarginDouble),
                     )
                 }
-            }
 
             WeatherLoadState.Error -> WeatherError(
                 message = state.errorMessage,
-                modifier = Modifier.fillMaxSize().padding(all = MarginDouble),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(all = MarginDouble),
                 retry = onRetry,
             )
         }
