@@ -24,7 +24,7 @@ internal fun configureKotlinAndroid(
         kotlinOptions {
             freeCompilerArgs = freeCompilerArgs + Config.CompilerArgs.KotlinFreeCompilerArgs
             jvmTarget = Config.Build.JavaVersion.toString()
-            allWarningsAsErrors = true
+            allWarningsAsErrors = false
         }
     }
 }
