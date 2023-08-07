@@ -23,34 +23,34 @@ internal class CityViewModel @Inject constructor(
 ) {
 
     init {
-        handleAction(CityAction.Start)
+        dispatch(CityAction.Start)
     }
 
     fun onQueryChange(query: TextFieldValue) {
-        handleAction(CityAction.QueryUpdated(query))
+        dispatch(CityAction.QueryUpdated(query))
     }
 
     fun onQueryFocused() {
-        handleAction(CityAction.QueryFocused)
+        dispatch(CityAction.QueryFocused)
     }
 
     fun onCityClick(selectedCity: SelectedCity) {
-        handleAction(CityAction.OnCityClick(selectedCity))
+        dispatch(CityAction.OnCityClick(selectedCity))
     }
 
     fun onFavoriteClick(cityResultModel: CityResultModel) {
-        handleAction(CityAction.OnFavoriteClick(city = cityResultModel))
+        dispatch(CityAction.OnFavoriteClick(city = cityResultModel))
     }
 
     fun onChipClick(recent: RecentCityModel) {
-        handleAction(CityAction.OnChipClick(recent))
+        dispatch(CityAction.OnChipClick(recent))
     }
 
     fun onDeleteChip(recent: RecentCityModel) {
-        handleAction(CityAction.OnDeleteChipClick(recent))
+        dispatch(CityAction.OnDeleteChipClick(recent))
     }
 
     fun onNavigated() {
-        handleAction(CityAction.OnNavigated)
+        dispatch(CityAction.OnNavigated)
     }
 }

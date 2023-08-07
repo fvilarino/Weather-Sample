@@ -63,11 +63,10 @@ internal fun CityScreen(
     navigateToCityWeather: (SelectedCity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
     val actions by CitySearchDestination.actionsState.collectAsStateWithLifecycle()
 
     CityScreen(
-        state = state,
+        state = viewModel.state,
         actions = actions,
         deviceClass = deviceClass,
         onCityClick = { selectedCity ->

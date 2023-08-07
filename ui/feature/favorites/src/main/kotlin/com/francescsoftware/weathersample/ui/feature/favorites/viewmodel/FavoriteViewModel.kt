@@ -52,10 +52,10 @@ internal class FavoriteViewModel @Inject constructor(
     initialState = FavoriteState.initial,
 ) {
     init {
-        handleAction(FavoriteAction.Load)
+        dispatch(FavoriteAction.Load)
     }
 
     fun onDeleteClick(city: City) {
-        handleAction(FavoriteAction.DeleteFavorite(city))
+        dispatch(FavoriteAction.DeleteFavorite(city))
     }
 }
