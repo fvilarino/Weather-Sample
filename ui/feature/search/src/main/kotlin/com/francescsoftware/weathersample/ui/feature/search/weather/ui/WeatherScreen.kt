@@ -8,11 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherViewModel
@@ -29,10 +27,8 @@ internal fun WeatherScreen(
     deviceClass: DeviceClass,
     modifier: Modifier = Modifier,
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
     WeatherScreen(
-        state = state,
+        state = viewModel.state,
         deviceClass = deviceClass,
         onRefreshTodayWeather = viewModel::refreshTodayWeather,
         onRetry = viewModel::retry,

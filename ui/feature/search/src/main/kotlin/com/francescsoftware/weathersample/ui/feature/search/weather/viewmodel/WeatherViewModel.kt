@@ -25,13 +25,13 @@ internal class WeatherViewModel @Inject constructor(
     private val selectedCity: SelectedCity = WeatherDestination.getCity(savedStateHandle)
 
     init {
-        handleAction(
+        dispatch(
             WeatherAction.CityUpdated(
                 cityName = selectedCity.name,
                 countryCode = selectedCity.countryCode,
             )
         )
-        handleAction(
+        dispatch(
             WeatherAction.Load(
                 cityName = selectedCity.name,
                 countryCode = selectedCity.countryCode,
@@ -40,7 +40,7 @@ internal class WeatherViewModel @Inject constructor(
     }
 
     fun refreshTodayWeather() {
-        handleAction(
+        dispatch(
             WeatherAction.RefreshTodayWeather(
                 cityName = selectedCity.name,
                 countryCode = selectedCity.countryCode,
@@ -49,7 +49,7 @@ internal class WeatherViewModel @Inject constructor(
     }
 
     fun retry() {
-        handleAction(
+        dispatch(
             WeatherAction.Retry(
                 cityName = selectedCity.name,
                 countryCode = selectedCity.countryCode,

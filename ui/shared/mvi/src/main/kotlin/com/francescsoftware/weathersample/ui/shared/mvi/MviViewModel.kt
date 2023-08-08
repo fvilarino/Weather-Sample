@@ -1,39 +1,60 @@
 package com.francescsoftware.weathersample.ui.shared.mvi
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.util.fastForEach
 import androidx.lifecycle.ViewModel
 import com.francescsoftware.weathersample.core.coroutines.CloseableCoroutineScope
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+
+private const val BufferSize = 64
 
 /**
- * Base class for all [ViewModel]s following MVI design pattern.
+ * Base class for all [ViewModel]s adhering to the MVI framework
  *
  * @param S - The [State] managed by this [ViewModel]
  * @param A - the [Action]s this [ViewModel] handles
  * @param closeableScope - a [CloseableCoroutineScope] to launch coroutines on
- * @param reducer - the [Reducer] that generates new state from the [State] and [Action]s
+ * @param reducer - the [Reducer] that generates new state from the current [State] and [Action]s
  * @param middlewares - a list of [Middleware] to handle [Action]s
- * @param initialState - the initial [State]]
+ * @param initialState - the initial [State]
  */
 open class MviViewModel<S : State, A : Action>(
-    closeableScope: CloseableCoroutineScope,
-    reducer: Reducer<S, A>,
-    middlewares: List<Middleware<S, A>> = emptyList(),
+    private val closeableScope: CloseableCoroutineScope,
+    private val reducer: Reducer<S, A>,
+    private val middlewares: List<Middleware<S, A>> = emptyList(),
     initialState: S,
-) : ViewModel(closeableScope) {
+) : ViewModel(closeableScope), Dispatcher<A> {
 
-    private val stateReducer: StateReducerFlow<S, A> = stateReducerFlow(
-        initialState = initialState,
-        scope = closeableScope,
-        reducer = reducer,
-        middleware = middlewares,
-    )
+    private val actions = MutableSharedFlow<A>(extraBufferCapacity = BufferSize)
 
-    /** The [State] managed by this [MviViewModel], as a [StateFlow] */
-    val state: StateFlow<S> = stateReducer
+    /** The [State] managed by this [MviViewModel] */
+    var state: S by mutableStateOf(initialState)
+        private set
 
     init {
-        middlewares.forEach { middleware -> middleware.setup(closeableScope, stateReducer) }
+        middlewares.fastForEach { middleware -> middleware.setup(closeableScope, this) }
+        closeableScope.launch {
+            actions
+                .onEach { action ->
+                    middlewares.fastForEach { middleware -> middleware.process(state, action) }
+                }
+                .map { action ->
+                    reducer.reduce(state, action)
+                }
+                .collect { state ->
+                    this@MviViewModel.state = state
+                }
+        }
     }
 
-    protected fun handleAction(action: A) = stateReducer.dispatch(action)
+    override fun dispatch(action: A) {
+        closeableScope.launch {
+            actions.emit(action)
+        }
+    }
 }

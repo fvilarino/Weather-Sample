@@ -236,7 +236,7 @@ internal class CityViewModelTest {
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
             viewModel.onQueryChange(query = TextFieldValue(query))
-            val state = viewModel.state.value
+            val state = viewModel.state
             assertThat(state.loadState).isEqualTo(LoadState.Loaded)
             assertThat(state.cities.size).isEqualTo(2)
             assertThat(state.cities[0]).isEqualTo(CityModelVancouver)
@@ -256,7 +256,7 @@ internal class CityViewModelTest {
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
             viewModel.onQueryChange(query = TextFieldValue(query))
-            val state = viewModel.state.value
+            val state = viewModel.state
             assertThat(state.loadState).isEqualTo(LoadState.Error)
             assertThat(state.cities.isEmpty()).isTrue()
         }
@@ -277,7 +277,7 @@ internal class CityViewModelTest {
                 middlewares = setOf(getCityMiddleware(), recentCitiesMiddleware),
             )
             viewModel.onQueryFocused()
-            val state = viewModel.state.value
+            val state = viewModel.state
             assertThat(state.recentCities.size).isEqualTo(RecentCities.size)
             assertk.assertAll {
                 state.recentCities.forEachIndexed { index, recent ->
@@ -311,7 +311,7 @@ internal class CityViewModelTest {
             )
             viewModel.onQueryFocused()
             viewModel.onChipClick(RecentCityModel(chipCity))
-            val state = viewModel.state.value
+            val state = viewModel.state
             assertThat(state.cities.size).isEqualTo(2)
             assertThat(state.cities[0]).isEqualTo(CityModelVancouver)
             assertThat(state.cities[1]).isEqualTo(CityModelBarcelona)
@@ -401,7 +401,7 @@ internal class CityViewModelTest {
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
             viewModel.onQueryChange(query = TextFieldValue(query))
-            val state = viewModel.state.value
+            val state = viewModel.state
             assertThat(state.cities.size).isEqualTo(2)
             assertThat(state.cities[0].isFavorite).isTrue()
             assertThat(state.cities[1].isFavorite).isFalse()
