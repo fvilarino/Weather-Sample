@@ -5,30 +5,30 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.GetToday
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class TodayMiddleware @Inject constructor(
     private val getTodayWeatherInteractor: GetTodayWeatherInteractor,
 ) : Middleware<WeatherState, WeatherAction>() {
 
-    override fun process(
+    override suspend fun process(
         state: WeatherState,
         action: WeatherAction,
     ) {
         when (action) {
-            is WeatherAction.RefreshTodayWeather -> {
-                dispatch(WeatherAction.Refreshing)
-                scope.launch {
-                    loadTodayWeather(
-                        action.cityName,
-                        action.countryCode,
-                    )
-                }
-            }
-
+            is WeatherAction.RefreshTodayWeather -> refreshWeather(action)
             else -> {}
         }
+    }
+
+    private suspend fun refreshWeather(
+        action: WeatherAction.RefreshTodayWeather
+    ) {
+        dispatch(WeatherAction.Refreshing)
+        loadTodayWeather(
+            action.cityName,
+            action.countryCode,
+        )
     }
 
     private suspend fun loadTodayWeather(

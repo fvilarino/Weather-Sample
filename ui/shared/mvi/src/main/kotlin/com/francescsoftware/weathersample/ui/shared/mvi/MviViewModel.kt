@@ -37,11 +37,15 @@ open class MviViewModel<S : State, A : Action>(
         private set
 
     init {
-        middlewares.fastForEach { middleware -> middleware.setup(closeableScope, this) }
+        middlewares.fastForEach { middleware -> middleware.setDispatcher(this) }
         closeableScope.launch {
             actions
                 .onEach { action ->
-                    middlewares.fastForEach { middleware -> middleware.process(state, action) }
+                    middlewares.fastForEach { middleware ->
+                        closeableScope.launch {
+                            middleware.process(state, action)
+                        }
+                    }
                 }
                 .map { action ->
                     reducer.reduce(state, action)
@@ -56,5 +60,10 @@ open class MviViewModel<S : State, A : Action>(
         closeableScope.launch {
             actions.emit(action)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        middlewares.fastForEach { middleware -> middleware.onCleared() }
     }
 }

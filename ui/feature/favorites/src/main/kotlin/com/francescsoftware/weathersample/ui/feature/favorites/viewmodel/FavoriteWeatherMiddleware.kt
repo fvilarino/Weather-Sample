@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.viewmodel
 
+import com.francescsoftware.weathersample.core.coroutines.CloseableCoroutineScope
 import com.francescsoftware.weathersample.core.time.api.TimeFormatter
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.isFailure
@@ -30,10 +31,13 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
     private val getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
     private val getForecastInteractor: GetForecastInteractor,
     private val timeFormatter: TimeFormatter,
-) : Middleware<FavoriteState, FavoriteAction>() {
+    private val scope: CloseableCoroutineScope,
+) : Middleware<FavoriteState, FavoriteAction>(
+    closeables = arrayOf(scope),
+) {
     private var favoritesJob: Job? = null
 
-    override fun process(state: FavoriteState, action: FavoriteAction) {
+    override suspend fun process(state: FavoriteState, action: FavoriteAction) {
         when (action) {
             FavoriteAction.Load -> load()
             else -> {}

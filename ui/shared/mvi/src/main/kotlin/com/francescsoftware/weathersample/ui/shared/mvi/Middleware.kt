@@ -1,27 +1,43 @@
 package com.francescsoftware.weathersample.ui.shared.mvi
 
-import kotlinx.coroutines.CoroutineScope
+import timber.log.Timber
+import java.io.Closeable
+import java.io.IOException
 
-/** Handles asynchronous [Action] processing in the MVI framework */
-abstract class Middleware<S : State, A : Action> {
+/**
+ * Handles asynchronous [Action] processing in the MVI framework
+ *
+ * @param closeables A vararg of [Closeable] objects that will be closed when this [Middleware] is destroyed.
+ */
+abstract class Middleware<S : State, A : Action>(
+    vararg closeables: Closeable
+) {
     private lateinit var dispatcher: Dispatcher<A>
-    protected lateinit var scope: CoroutineScope
+    private val closeables: Set<Closeable> = setOf(*closeables)
 
     /**
-     * Processes the [Action]. This method should return quickly and queue any async work to run on a background thread.
+     * Processes the [Action].
      *
      * @param state the current [State]
      * @param action the [Action] to process
      */
-    abstract fun process(state: S, action: A)
+    abstract suspend fun process(state: S, action: A)
 
     protected fun dispatch(action: A) = dispatcher.dispatch(action)
 
-    internal fun setup(
-        scope: CoroutineScope,
+    internal fun setDispatcher(
         dispatcher: Dispatcher<A>,
     ) {
         this.dispatcher = dispatcher
-        this.scope = scope
+    }
+
+    internal fun onCleared() {
+        closeables.forEach { closeable ->
+            try {
+                closeable.close()
+            } catch (ex: IOException) {
+                Timber.e(ex, "Exception closing closeable")
+            }
+        }
     }
 }
