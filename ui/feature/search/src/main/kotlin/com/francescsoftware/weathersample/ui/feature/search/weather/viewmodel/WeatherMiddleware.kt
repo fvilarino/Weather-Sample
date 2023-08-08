@@ -19,10 +19,8 @@ import com.francescsoftware.weathersample.ui.shared.weathericon.drawableId
 import com.francescsoftware.weathersample.ui.shared.weathericon.weatherIconFromCode
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
@@ -33,28 +31,26 @@ internal class WeatherMiddleware @Inject constructor(
     private val timeFormatter: TimeFormatter,
 ) : Middleware<WeatherState, WeatherAction>() {
 
-    override fun process(
+    override suspend fun process(
         state: WeatherState,
         action: WeatherAction,
     ) {
         when (action) {
-            is WeatherAction.Retry -> scope.onLoad(action.cityName, action.countryCode)
-            is WeatherAction.Load -> scope.onLoad(action.cityName, action.countryCode)
+            is WeatherAction.Retry -> onLoad(action.cityName, action.countryCode)
+            is WeatherAction.Load -> onLoad(action.cityName, action.countryCode)
             else -> {}
         }
     }
 
-    private fun CoroutineScope.onLoad(
+    private suspend fun onLoad(
         cityName: String,
         countryCode: String,
     ) {
-        launch {
-            load(
-                name = cityName,
-                countryCode = countryCode,
-            )
-        }
         dispatch(WeatherAction.Loading)
+        load(
+            name = cityName,
+            countryCode = countryCode,
+        )
     }
 
     private suspend fun load(

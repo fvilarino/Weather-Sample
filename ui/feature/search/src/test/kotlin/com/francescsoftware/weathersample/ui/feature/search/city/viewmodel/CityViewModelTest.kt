@@ -25,7 +25,6 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResul
 import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
-import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -58,20 +57,8 @@ private const val FavoriteCityVancouverId = 1
 private const val FavoriteCityVancouverName = "Vancouver"
 private const val FavoriteCityVancouverCode = "CA"
 
-private const val FavoriteCityBarcelonaId = 2
-private const val FavoriteCityBarcelonaName = "Barcelona"
-private const val FavoriteCityBarcelonaCode = "ES"
-
 private const val RecentCityVancouver = "Vancouver"
 private const val RecentCityBarcelona = "Barcelona"
-
-private class MonitoringMiddleware : Middleware<CityState, CityAction>() {
-    var action: CityAction? = null
-
-    override fun process(state: CityState, action: CityAction) {
-        this.action = action
-    }
-}
 
 private class FakeGetCitiesInteractor : GetCitiesInteractor {
     var prefix: String = ""
@@ -228,8 +215,11 @@ internal class CityViewModelTest {
             }
             val cityMiddleware = getCityMiddleware(
                 getCitiesInteractor = citiesInteractor,
+                scope = scope,
             )
-            val recentCitiesMiddleware = getRecentCitiesMiddleware()
+            val recentCitiesMiddleware = getRecentCitiesMiddleware(
+                scope = scope,
+            )
             val viewModel = CityViewModel(
                 closeableScope = scope,
                 reducer = CityReducer(),
@@ -248,8 +238,12 @@ internal class CityViewModelTest {
     fun `viewmodel reports error when failing to load cities`() = runTest {
         CloseableCoroutineScope(UnconfinedTestDispatcher()).use { scope ->
             val query = "query"
-            val cityMiddleware = getCityMiddleware()
-            val recentCitiesMiddleware = getRecentCitiesMiddleware()
+            val cityMiddleware = getCityMiddleware(
+                scope = scope,
+            )
+            val recentCitiesMiddleware = getRecentCitiesMiddleware(
+                scope = scope,
+            )
             val viewModel = CityViewModel(
                 closeableScope = scope,
                 reducer = CityReducer(),
@@ -270,11 +264,15 @@ internal class CityViewModelTest {
             }
             val recentCitiesMiddleware = getRecentCitiesMiddleware(
                 getRecentCitiesInteractor = recentsInteractor,
+                scope = scope,
             )
             val viewModel = CityViewModel(
                 closeableScope = scope,
                 reducer = CityReducer(),
-                middlewares = setOf(getCityMiddleware(), recentCitiesMiddleware),
+                middlewares = setOf(
+                    getCityMiddleware(scope = scope),
+                    recentCitiesMiddleware,
+                ),
             )
             viewModel.onQueryFocused()
             val state = viewModel.state
@@ -297,12 +295,14 @@ internal class CityViewModelTest {
             }
             val cityMiddleware = getCityMiddleware(
                 getCitiesInteractor = citiesInteractor,
+                scope = scope,
             )
             val recentsInteractor = FakeGetRecentCitiesInteractor().apply {
                 cities = RecentCities
             }
             val recentCitiesMiddleware = getRecentCitiesMiddleware(
                 getRecentCitiesInteractor = recentsInteractor,
+                scope = scope,
             )
             val viewModel = CityViewModel(
                 closeableScope = scope,
@@ -329,9 +329,11 @@ internal class CityViewModelTest {
             val insertRecentCitiesInteractor = FakeInsertRecentCityInterator()
             val cityMiddleware = getCityMiddleware(
                 getCitiesInteractor = citiesInteractor,
+                scope = scope,
             )
             val recentCitiesMiddleware = getRecentCitiesMiddleware(
                 insertRecentCitiesInteractor = insertRecentCitiesInteractor,
+                scope = scope,
             )
             val viewModel = CityViewModel(
                 closeableScope = scope,
@@ -360,6 +362,7 @@ internal class CityViewModelTest {
             val deleteRecentCityInteractor = FakeDeleteRecentCityInteractor()
             val cityMiddleware = getCityMiddleware(
                 getCitiesInteractor = citiesInteractor,
+                scope = scope,
             )
             val recentsInteractor = FakeGetRecentCitiesInteractor().apply {
                 cities = RecentCities
@@ -367,6 +370,7 @@ internal class CityViewModelTest {
             val recentCitiesMiddleware = getRecentCitiesMiddleware(
                 getRecentCitiesInteractor = recentsInteractor,
                 deleteRecentCityInteractor = deleteRecentCityInteractor,
+                scope = scope,
             )
             val viewModel = CityViewModel(
                 closeableScope = scope,
@@ -393,8 +397,11 @@ internal class CityViewModelTest {
             val cityMiddleware = getCityMiddleware(
                 getCitiesInteractor = citiesInteractor,
                 getFavoriteCitiesInteractor = favoriteCityInteractor,
+                scope = scope,
             )
-            val recentCitiesMiddleware = getRecentCitiesMiddleware()
+            val recentCitiesMiddleware = getRecentCitiesMiddleware(
+                scope = scope,
+            )
             val viewModel = CityViewModel(
                 closeableScope = scope,
                 reducer = CityReducer(),
@@ -420,11 +427,17 @@ internal class CityViewModelTest {
             val cityMiddleware = getCityMiddleware(
                 getCitiesInteractor = citiesInteractor,
                 insertFavoriteCityInteractor = insertFavoriteCityInteractor,
+                scope = scope,
             )
             val viewModel = CityViewModel(
                 closeableScope = scope,
                 reducer = CityReducer(),
-                middlewares = setOf(cityMiddleware, getRecentCitiesMiddleware()),
+                middlewares = setOf(
+                    cityMiddleware,
+                    getRecentCitiesMiddleware(
+                        scope = scope,
+                    )
+                ),
             )
             viewModel.onQueryChange(query = TextFieldValue(query))
             viewModel.onFavoriteClick(cityResultModel = CityModelVancouver)
@@ -448,11 +461,17 @@ internal class CityViewModelTest {
                 getCitiesInteractor = citiesInteractor,
                 getFavoriteCitiesInteractor = favoriteCityInteractor,
                 deleteFavoriteCityInteractor = deleteFavoriteCityInteractor,
+                scope = scope,
             )
             val viewModel = CityViewModel(
                 closeableScope = scope,
                 reducer = CityReducer(),
-                middlewares = setOf(cityMiddleware, getRecentCitiesMiddleware()),
+                middlewares = setOf(
+                    cityMiddleware,
+                    getRecentCitiesMiddleware(
+                        scope = scope,
+                    )
+                ),
             )
             viewModel.onQueryChange(query = TextFieldValue(query))
             viewModel.onFavoriteClick(cityResultModel = CityModelVancouver.copy(favoriteId = FavoriteCityVancouverId))
@@ -465,21 +484,25 @@ internal class CityViewModelTest {
         getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor = FakeGetFavoriteCitiesInteractor(),
         insertFavoriteCityInteractor: InsertFavoriteCityInteractor = FakeInsertFavoriteCityInteractor(),
         deleteFavoriteCityInteractor: DeleteFavoriteCityInteractor = FakeDeleteFavoriteCityInteractor(),
+        scope: CloseableCoroutineScope,
     ): CityMiddleware = CityMiddleware(
         getCitiesInteractor = getCitiesInteractor,
         getFavoriteCitiesInteractor = getFavoriteCitiesInteractor,
         insertFavoriteCityInteractor = insertFavoriteCityInteractor,
         deleteFavoriteCityInteractor = deleteFavoriteCityInteractor,
         dispatcherProvider = TestDispatcherProvider(),
+        scope = scope,
     ).apply { debounceDelay = Duration.ZERO }
 
     private fun getRecentCitiesMiddleware(
         getRecentCitiesInteractor: GetRecentCitiesInteractor = FakeGetRecentCitiesInteractor(),
         insertRecentCitiesInteractor: InsertRecentCityInteractor = FakeInsertRecentCityInterator(),
         deleteRecentCityInteractor: DeleteRecentCityInteractor = FakeDeleteRecentCityInteractor(),
+        scope: CloseableCoroutineScope,
     ) = RecentCitiesMiddleware(
         getRecentCitiesInteractor = getRecentCitiesInteractor,
         insertRecentCitiesInteractor = insertRecentCitiesInteractor,
         deleteRecentCityInteractor = deleteRecentCityInteractor,
+        scope = scope,
     )
 }

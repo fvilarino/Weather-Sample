@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
+import com.francescsoftware.weathersample.core.coroutines.CloseableCoroutineScope
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
@@ -15,7 +16,6 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResul
 import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -42,7 +42,10 @@ internal class CityMiddleware @Inject constructor(
     private val insertFavoriteCityInteractor: InsertFavoriteCityInteractor,
     private val deleteFavoriteCityInteractor: DeleteFavoriteCityInteractor,
     private val dispatcherProvider: DispatcherProvider,
-) : Middleware<CityState, CityAction>() {
+    private val scope: CloseableCoroutineScope,
+) : Middleware<CityState, CityAction>(
+    closeables = arrayOf(scope),
+) {
 
     @VisibleForTesting
     internal var debounceDelay = DebounceDelay
@@ -53,14 +56,14 @@ internal class CityMiddleware @Inject constructor(
     )
     private var job: Job? = null
 
-    override fun process(
+    override suspend fun process(
         state: CityState,
         action: CityAction,
     ) {
         when (action) {
             CityAction.Start -> onStart()
             is CityAction.QueryUpdated -> onQueryUpdated(action.query)
-            is CityAction.OnFavoriteClick -> scope.onFavoriteClick(action.city)
+            is CityAction.OnFavoriteClick -> onFavoriteClick(action.city)
             else -> {}
         }
     }
@@ -126,7 +129,7 @@ internal class CityMiddleware @Inject constructor(
         )
     }
 
-    private fun CoroutineScope.onFavoriteClick(city: CityResultModel) = launch {
+    private suspend fun onFavoriteClick(city: CityResultModel) {
         if (city.isFavorite) {
             deleteFavoriteCityInteractor(city.toFavoriteCity())
         } else {
