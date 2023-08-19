@@ -22,11 +22,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 import kotlin.time.DurationUnit
@@ -88,7 +88,6 @@ internal class CityMiddleware @Inject constructor(
                 favorites,
             )
         }
-            .flowOn(dispatcherProvider.default)
             .launchIn(scope)
     }
 
@@ -102,10 +101,10 @@ internal class CityMiddleware @Inject constructor(
         }
     }
 
-    private fun onCitiesLoaded(
+    private suspend fun onCitiesLoaded(
         cities: Either<List<City>>,
         favorites: List<FavoriteCity>,
-    ) {
+    ) = withContext(dispatcherProvider.default) {
         cities.fold(
             onSuccess = { list ->
                 if (list.isEmpty()) {
