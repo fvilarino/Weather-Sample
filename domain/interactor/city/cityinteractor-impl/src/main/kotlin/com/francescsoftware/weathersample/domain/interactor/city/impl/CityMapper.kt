@@ -42,7 +42,6 @@ internal fun RepoFavoriteCity.toFavoriteCity(): FavoriteCity = FavoriteCity(
     id = id,
     name = name,
     countryCode = countryCode,
-
 )
 
 internal fun FavoriteCity.toRepoFavoriteCity(): RepoFavoriteCity = RepoFavoriteCity(

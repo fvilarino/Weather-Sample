@@ -7,6 +7,7 @@ import androidx.compose.ui.util.fastForEach
 import androidx.lifecycle.ViewModel
 import com.francescsoftware.weathersample.core.coroutines.CloseableCoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -30,7 +31,12 @@ open class MviViewModel<S : State, A : Action>(
     initialState: S,
 ) : ViewModel(closeableScope), Dispatcher<A> {
 
-    private val actions = MutableSharedFlow<A>(extraBufferCapacity = BufferSize)
+    private data class ActionImpl<S : State, A : Action>(
+        val state: S,
+        val action: A,
+    )
+
+    private val actions = MutableSharedFlow<ActionImpl<S, A>>(extraBufferCapacity = BufferSize)
 
     /** The [State] managed by this [MviViewModel] */
     var state: S by mutableStateOf(initialState)
@@ -38,27 +44,24 @@ open class MviViewModel<S : State, A : Action>(
 
     init {
         middlewares.fastForEach { middleware -> middleware.setDispatcher(this) }
-        closeableScope.launch {
-            actions
-                .onEach { action ->
-                    middlewares.fastForEach { middleware ->
-                        closeableScope.launch {
-                            middleware.process(state, action)
-                        }
-                    }
+        actions
+            .onEach { actionImpl ->
+                middlewares.fastForEach { middleware ->
+                    middleware.process(actionImpl.state, actionImpl.action)
                 }
-                .map { action ->
-                    reducer.reduce(state, action)
-                }
-                .collect { state ->
-                    this@MviViewModel.state = state
-                }
-        }
+            }
+            .launchIn(closeableScope)
+        actions
+            .map { actionImpl ->
+                reducer.reduce(actionImpl.state, actionImpl.action)
+            }
+            .onEach { newState -> state = newState }
+            .launchIn(closeableScope)
     }
 
     override fun dispatch(action: A) {
         closeableScope.launch {
-            actions.emit(action)
+            actions.emit(ActionImpl(state, action))
         }
     }
 
