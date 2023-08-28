@@ -6,6 +6,7 @@ import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedC
 import com.francescsoftware.weathersample.ui.feature.search.navigation.WeatherDestination
 import com.francescsoftware.weathersample.ui.shared.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,18 +26,20 @@ internal class WeatherViewModel @Inject constructor(
     private val selectedCity: SelectedCity = WeatherDestination.getCity(savedStateHandle)
 
     init {
-        dispatch(
-            WeatherAction.CityUpdated(
-                cityName = selectedCity.name,
-                countryCode = selectedCity.countryCode,
+        closeableScope.launch {
+            dispatch(
+                WeatherAction.CityUpdated(
+                    cityName = selectedCity.name,
+                    countryCode = selectedCity.countryCode,
+                )
             )
-        )
-        dispatch(
-            WeatherAction.Load(
-                cityName = selectedCity.name,
-                countryCode = selectedCity.countryCode,
+            dispatch(
+                WeatherAction.Load(
+                    cityName = selectedCity.name,
+                    countryCode = selectedCity.countryCode,
+                )
             )
-        )
+        }
     }
 
     fun refreshTodayWeather() {
