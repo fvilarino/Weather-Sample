@@ -13,9 +13,12 @@ import javax.inject.Inject
 import javax.inject.Qualifier
 import kotlin.coroutines.CoroutineContext
 
-/** [CoroutineScope] implementing [Closeable] that cancels the scope on closure. */
+/**
+ * [CoroutineScope] implementing [Closeable] that cancels the scope on
+ * closure.
+ */
 class CloseableCoroutineScope @Inject constructor(
-    @MainImmediateCoroutineContext context: CoroutineContext,
+    @MainCoroutineContext context: CoroutineContext,
 ) : Closeable, CoroutineScope {
     /** @{inheritDoc} */
     override val coroutineContext: CoroutineContext = context
@@ -28,12 +31,12 @@ class CloseableCoroutineScope @Inject constructor(
 @InstallIn(SingletonComponent::class)
 internal object CoroutineModule {
     @Provides
-    @MainImmediateCoroutineContext
+    @MainCoroutineContext
     fun provideCoroutineContext(
         dispatcherProvider: DispatcherProvider
-    ): CoroutineContext = SupervisorJob() + dispatcherProvider.mainImmediate
+    ): CoroutineContext = SupervisorJob() + dispatcherProvider.main
 }
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-internal annotation class MainImmediateCoroutineContext
+internal annotation class MainCoroutineContext
