@@ -503,6 +503,7 @@ internal class CityViewModelTest {
         getRecentCitiesInteractor = getRecentCitiesInteractor,
         insertRecentCitiesInteractor = insertRecentCitiesInteractor,
         deleteRecentCityInteractor = deleteRecentCityInteractor,
+        dispatcherProvider = TestDispatcherProvider(),
         scope = scope,
     )
 }

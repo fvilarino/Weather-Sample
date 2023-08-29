@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.ui.feature.search.city.viewmodel
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.core.coroutines.CloseableCoroutineScope
+import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteRecentCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.GetRecentCitiesInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.InsertRecentCityInteractor
@@ -12,9 +13,9 @@ import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedC
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 private const val MaxRecentCities = 10
@@ -23,6 +24,7 @@ internal class RecentCitiesMiddleware @Inject constructor(
     private val getRecentCitiesInteractor: GetRecentCitiesInteractor,
     private val insertRecentCitiesInteractor: InsertRecentCityInteractor,
     private val deleteRecentCityInteractor: DeleteRecentCityInteractor,
+    private val dispatcherProvider: DispatcherProvider,
     private val scope: CloseableCoroutineScope,
 ) : Middleware<CityState, CityAction>(
     closeables = arrayOf(scope),
@@ -45,23 +47,30 @@ internal class RecentCitiesMiddleware @Inject constructor(
 
     private fun loadRecentCities() {
         if (recentsJob == null) {
-            recentsJob = getRecentCitiesInteractor(limit = MaxRecentCities)
-                .map { cities ->
-                    cities.map { city -> RecentCityModel(name = city.name) }.toPersistentList()
-                }
-                .onEach { recentCities ->
-                    if (recentCities.isEmpty()) {
-                        dispatch(
-                            CityAction.HideRecentCities
-                        )
-                    } else {
-                        dispatch(
-                            CityAction.RecentCitiesLoaded(recentCities = recentCities)
-                        )
+            recentsJob = scope.launch {
+                getRecentCitiesInteractor(limit = MaxRecentCities)
+                    .map { cities ->
+                        parseCities(cities)
                     }
-                }
-                .launchIn(scope)
+                    .collect { recentCities ->
+                        if (recentCities.isEmpty()) {
+                            dispatch(
+                                CityAction.HideRecentCities
+                            )
+                        } else {
+                            dispatch(
+                                CityAction.RecentCitiesLoaded(recentCities = recentCities)
+                            )
+                        }
+                    }
+            }
         }
+    }
+
+    private suspend fun parseCities(cities: List<RecentCity>) = withContext(dispatcherProvider.default) {
+        cities.map { city ->
+            RecentCityModel(name = city.name)
+        }.toPersistentList()
     }
 
     private suspend fun saveCity(selectedCity: SelectedCity) {

@@ -17,9 +17,9 @@ import com.francescsoftware.weathersample.ui.feature.favorites.ui.FavoritePagerS
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private data class ForecastInfo(
@@ -46,14 +46,14 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
 
     private fun load() {
         favoritesJob?.cancel()
-        favoritesJob = getFavoriteCitiesInteractor()
-            .map { cities ->
-                fetchForecast(cities)
-            }
-            .onEach { forecasts ->
-                parseForecast(forecasts)
-            }
-            .launchIn(scope)
+        favoritesJob = scope.launch {
+            getFavoriteCitiesInteractor()
+                .map { cities ->
+                    val forecast = fetchForecast(cities)
+                    parseForecast(forecast)
+                }
+                .collectLatest { action -> dispatch(action) }
+        }
     }
 
     private suspend fun fetchForecast(
@@ -76,10 +76,10 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
         }
     }
 
-    private fun parseForecast(forecasts: List<Either<ForecastInfo>>) {
-        when {
-            forecasts.isEmpty() -> dispatch(FavoriteAction.NoFavorites)
-            forecasts.any { forecast -> forecast.isFailure } -> dispatch(FavoriteAction.LoadError)
+    private fun parseForecast(forecasts: List<Either<ForecastInfo>>): FavoriteAction {
+        return when {
+            forecasts.isEmpty() -> FavoriteAction.NoFavorites
+            forecasts.any { forecast -> forecast.isFailure } -> FavoriteAction.LoadError
             else -> {
                 val data = forecasts.map { result ->
                     result.valueOrThrow()
@@ -100,7 +100,7 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
                         )
                     }.toPersistentList()
                 )
-                dispatch(FavoriteAction.Loaded(state))
+                FavoriteAction.Loaded(state)
             }
         }
     }
