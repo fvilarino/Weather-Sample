@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -77,18 +76,21 @@ internal class CityMiddleware @Inject constructor(
             .map { prefix ->
                 getCitiesInteractor(prefix = prefix)
             }
-        job = combine(
-            searchCities,
-            getFavoriteCitiesInteractor(),
-        ) { cities, favorites ->
-            onCitiesLoaded(
-                cities.map { response ->
-                    response.cities
-                },
-                favorites,
-            )
+        job = scope.launch {
+            combine(
+                searchCities,
+                getFavoriteCitiesInteractor(),
+            ) { cities, favorites ->
+                parseCities(
+                    cities.map { response ->
+                        response.cities
+                    },
+                    favorites,
+                )
+            }.collect { action ->
+                dispatch(action)
+            }
         }
-            .launchIn(scope)
     }
 
     private fun onQueryUpdated(
@@ -101,29 +103,27 @@ internal class CityMiddleware @Inject constructor(
         }
     }
 
-    private suspend fun onCitiesLoaded(
+    private suspend fun parseCities(
         cities: Either<List<City>>,
         favorites: List<FavoriteCity>,
-    ) = withContext(dispatcherProvider.default) {
+    ): CityAction = withContext(dispatcherProvider.default) {
         cities.fold(
             onSuccess = { list ->
                 if (list.isEmpty()) {
-                    dispatch(CityAction.NoResults)
+                    CityAction.NoResults
                 } else {
-                    dispatch(
-                        CityAction.CitiesLoaded(
-                            list.map { city ->
-                                val favoriteCity = favorites.firstOrNull { favorite ->
-                                    favorite.name == city.name && favorite.countryCode == city.countryCode
-                                }
-                                city.toCityResultModel(favoriteCity?.id ?: NoFavorite)
-                            }.toPersistentList()
-                        )
+                    CityAction.CitiesLoaded(
+                        list.map { city ->
+                            val favoriteCity = favorites.firstOrNull { favorite ->
+                                favorite.name == city.name && favorite.countryCode == city.countryCode
+                            }
+                            city.toCityResultModel(favoriteCity?.id ?: NoFavorite)
+                        }.toPersistentList()
                     )
                 }
             },
             onFailure = {
-                dispatch(CityAction.LoadError)
+                CityAction.LoadError
             }
         )
     }
