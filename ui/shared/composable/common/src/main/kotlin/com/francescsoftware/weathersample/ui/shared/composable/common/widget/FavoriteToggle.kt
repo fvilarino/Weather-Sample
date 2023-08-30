@@ -1,6 +1,6 @@
 @file:Suppress("MatchingDeclarationName")
 
-package com.francescsoftware.weathersample.ui.shared.composable.common
+package com.francescsoftware.weathersample.ui.shared.composable.common.widget
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
+import com.francescsoftware.weathersample.ui.shared.composable.common.R
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
 

@@ -26,7 +26,7 @@ import com.francescsoftware.weathersample.core.type.weather.Precipitation
 import com.francescsoftware.weathersample.core.type.weather.Speed
 import com.francescsoftware.weathersample.core.type.weather.Temperature
 import com.francescsoftware.weathersample.core.type.weather.UvIndex
-import com.francescsoftware.weathersample.ui.shared.composable.common.InfoLabels
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.InfoLabels
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
@@ -54,9 +54,7 @@ fun ForecastWeather(
             Icon(
                 painter = painterResource(id = state.iconId),
                 contentDescription = null,
-                modifier = Modifier
-                    .padding(start = MarginDouble)
-                    .size(HeaderIconSize)
+                modifier = Modifier.size(HeaderIconSize)
             )
             Text(
                 text = state.description,
@@ -78,9 +76,7 @@ fun ForecastWeather(
             )
         }
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = MarginDouble)
+            modifier = Modifier.fillMaxWidth()
         ) {
             InfoLabels(
                 modifier = Modifier

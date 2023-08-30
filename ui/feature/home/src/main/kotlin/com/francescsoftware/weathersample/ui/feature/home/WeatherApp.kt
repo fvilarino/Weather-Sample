@@ -7,8 +7,10 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -42,7 +44,7 @@ import com.francescsoftware.weathersample.ui.feature.favorites.navigation.Favori
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.addFavoritesNavGraph
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
 import com.francescsoftware.weathersample.ui.feature.search.navigation.addSearchNavGraph
-import com.francescsoftware.weathersample.ui.shared.composable.common.AppBar
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.AppBar
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
@@ -52,6 +54,7 @@ internal val navGraphDestinations = persistentListOf(
     FavoritesRootDestination,
 )
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun WeatherApp(
     connectivityMonitor: ConnectivityMonitor,
@@ -113,7 +116,9 @@ internal fun WeatherApp(
         ) { paddingValues ->
             Box {
                 Row(
-                    modifier = Modifier.padding(paddingValues),
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .consumeWindowInsets(paddingValues),
                 ) {
                     if (state.hasNavRail) {
                         NavRail(

@@ -9,8 +9,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.francescsoftware.weathersample.ui.shared.assets.R
-import com.francescsoftware.weathersample.ui.shared.composable.common.ActionMenuItem
-import com.francescsoftware.weathersample.ui.shared.composable.common.ActionsMenu
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionMenuItem
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionsMenu
 import com.francescsoftware.weathersample.ui.shared.route.BottomNavContent
 import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestination
 import kotlinx.collections.immutable.persistentListOf

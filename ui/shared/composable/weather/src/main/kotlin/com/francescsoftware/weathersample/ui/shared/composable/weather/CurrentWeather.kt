@@ -30,7 +30,7 @@ import com.francescsoftware.weathersample.core.type.weather.Pressure
 import com.francescsoftware.weathersample.core.type.weather.Speed
 import com.francescsoftware.weathersample.core.type.weather.Temperature
 import com.francescsoftware.weathersample.core.type.weather.UvIndex
-import com.francescsoftware.weathersample.ui.shared.composable.common.InfoLabels
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.InfoLabels
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.MarginTreble
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme

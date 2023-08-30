@@ -12,8 +12,8 @@ import com.francescsoftware.weathersample.ui.feature.favorites.R
 import com.francescsoftware.weathersample.ui.feature.favorites.viewmodel.FavoriteState
 import com.francescsoftware.weathersample.ui.feature.favorites.viewmodel.FavoriteViewModel
 import com.francescsoftware.weathersample.ui.feature.favorites.viewmodel.LoadState
-import com.francescsoftware.weathersample.ui.shared.composable.common.GenericMessage
-import com.francescsoftware.weathersample.ui.shared.composable.common.ProgressIndicator
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.GenericMessage
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ProgressIndicator
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 

@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.ui.shared.composable.common
+package com.francescsoftware.weathersample.ui.shared.composable.common.widget
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing

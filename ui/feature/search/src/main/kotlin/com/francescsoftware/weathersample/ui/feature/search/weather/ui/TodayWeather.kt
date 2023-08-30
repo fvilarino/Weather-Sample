@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
-import com.francescsoftware.weathersample.ui.shared.composable.common.LoadingButton
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.LoadingButton
 import com.francescsoftware.weathersample.ui.shared.composable.weather.TodayWeatherCard
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
