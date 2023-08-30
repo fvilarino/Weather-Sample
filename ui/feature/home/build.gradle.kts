@@ -25,5 +25,4 @@ dependencies {
     implementation(libs.androidx.compose.material3.window.sizeclass)
     implementation(libs.androidx.core.core.splashscreen)
     implementation(libs.androidx.navigation.navigation.compose)
-    implementation(libs.com.google.accompanist.accompanist.systemuicontroller)
 }
