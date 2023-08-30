@@ -14,7 +14,10 @@ import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMoni
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@Suppress("MagicNumber")
 private val lightScrim = Color.argb(0xE6, 0xFF, 0xFF, 0xFF)
+
+@Suppress("MagicNumber")
 private val darkScrim = Color.argb(0x80, 0x1B, 0x1B, 0x1B)
 
 /** {@inheritDoc} */
