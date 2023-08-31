@@ -9,14 +9,12 @@ class AndroidHiltConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("dagger.hilt.android.plugin")
-                apply("org.jetbrains.kotlin.kapt")
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
                 add("implementation", libs.findLibrary("com.google.dagger.hilt.android").get())
-                add("kapt", libs.findLibrary("com.google.dagger.hilt.android.compiler").get())
-                add("kaptAndroidTest", libs.findLibrary("com.google.dagger.hilt.android.compiler").get())
+                add("ksp", libs.findLibrary("com.google.dagger.hilt.android.compiler").get())
             }
         }
     }
