@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
-import com.francescsoftware.weathersample.ui.shared.composable.common.DualPane
-import com.francescsoftware.weathersample.ui.shared.composable.common.PanesOrientation
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PanesOrientation
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.LandscapePhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble

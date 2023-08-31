@@ -1,6 +1,6 @@
 @file:Suppress("MatchingDeclarationName")
 
-package com.francescsoftware.weathersample.ui.shared.composable.common
+package com.francescsoftware.weathersample.ui.shared.composable.common.widget
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

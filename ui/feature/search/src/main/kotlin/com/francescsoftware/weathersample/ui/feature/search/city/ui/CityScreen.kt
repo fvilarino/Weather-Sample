@@ -38,10 +38,10 @@ import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.CityV
 import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.LoadState
 import com.francescsoftware.weathersample.ui.feature.search.navigation.CitySearchDestination
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
-import com.francescsoftware.weathersample.ui.shared.composable.common.DualPane
-import com.francescsoftware.weathersample.ui.shared.composable.common.GenericMessage
-import com.francescsoftware.weathersample.ui.shared.composable.common.PanesOrientation
-import com.francescsoftware.weathersample.ui.shared.composable.common.ProgressIndicator
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.GenericMessage
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PanesOrientation
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ProgressIndicator
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.LandscapePhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
@@ -136,8 +136,7 @@ internal fun CityScreen(
                 onFavoriteClick = onFavoriteClick,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
-                    .padding(top = MarginDouble),
+                    .weight(1f),
             )
         }
     } else {
@@ -272,7 +271,8 @@ private fun Cities(
                 onFavoriteClick = onFavoriteClick,
                 modifier = Modifier
                     .semantics { contentDescription = citiesResults }
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .padding(horizontal = MarginDouble),
             )
 
             LoadState.NoResults -> GenericMessage(

@@ -1,6 +1,6 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction", "UndocumentedPublicProperty", "MagicNumber")
 
-package com.francescsoftware.weathersample.ui.shared.composable.common
+package com.francescsoftware.weathersample.ui.shared.composable.common.widget
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState

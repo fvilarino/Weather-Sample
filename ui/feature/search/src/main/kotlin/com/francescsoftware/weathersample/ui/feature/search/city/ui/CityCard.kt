@@ -14,8 +14,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
-import com.francescsoftware.weathersample.ui.shared.composable.common.FavoriteToggle
-import com.francescsoftware.weathersample.ui.shared.composable.common.InfoLabels
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.FavoriteToggle
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.InfoLabels
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme

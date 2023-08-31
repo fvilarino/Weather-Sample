@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.ui.shared.composable.common
+package com.francescsoftware.weathersample.ui.shared.composable.common.widget
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme

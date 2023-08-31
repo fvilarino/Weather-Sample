@@ -5,10 +5,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -29,7 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
-import com.francescsoftware.weathersample.ui.shared.composable.common.MultiSelector
+import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.MultiSelector
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
@@ -53,7 +57,7 @@ internal fun SinglePaneWeatherContent(
     }
     val density = LocalDensity.current
     Box(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Box(
             modifier = Modifier
@@ -126,13 +130,11 @@ internal fun SinglePaneWeatherContent(
 
                 SelectedWeatherOption.Forecast -> WeatherForecast(
                     state = state,
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(
-                        start = MarginDouble,
-                        end = MarginDouble,
-                        top = offset,
-                        bottom = MarginDouble,
-                    )
+                    contentPadding = WindowInsets.safeDrawing.asPaddingValues() +
+                        PaddingValues(top = offset),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = MarginDouble),
                 )
             }
         }

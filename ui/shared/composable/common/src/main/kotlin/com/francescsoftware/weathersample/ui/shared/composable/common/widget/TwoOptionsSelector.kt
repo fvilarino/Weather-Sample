@@ -1,6 +1,6 @@
 @file:Suppress("MatchingDeclarationName")
 
-package com.francescsoftware.weathersample.ui.shared.composable.common
+package com.francescsoftware.weathersample.ui.shared.composable.common.widget
 
 import android.content.res.Configuration
 import androidx.compose.animation.animateColor
