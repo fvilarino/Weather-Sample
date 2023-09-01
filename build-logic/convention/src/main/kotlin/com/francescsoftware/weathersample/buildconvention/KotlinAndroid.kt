@@ -2,10 +2,11 @@ package com.francescsoftware.weathersample.buildconvention
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
+import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
-internal fun configureKotlinAndroid(
+internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension<*, *, *, *, *>,
 ) {
     commonExtension.apply {
@@ -18,12 +19,12 @@ internal fun configureKotlinAndroid(
             targetSdk = Config.Build.TargetSdk
         }
         compileOptions {
-            sourceCompatibility = Config.Build.JavaVersion
-            targetCompatibility = Config.Build.JavaVersion
+            sourceCompatibility = javaVersion
+            targetCompatibility = javaVersion
         }
         kotlinOptions {
             freeCompilerArgs = freeCompilerArgs + Config.CompilerArgs.KotlinFreeCompilerArgs
-            jvmTarget = Config.Build.JavaVersion.toString()
+            jvmTarget = javaVersion.toString()
             allWarningsAsErrors = true
         }
     }
