@@ -7,8 +7,6 @@ object Config {
         const val MinSdk = 23
         const val CompileSdk = 34
         const val TargetSdk = 34
-
-        val JavaVersion = org.gradle.api.JavaVersion.VERSION_17
     }
 
     object CompilerArgs {
