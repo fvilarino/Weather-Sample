@@ -5,8 +5,10 @@ plugins {
 group = "com.francescsoftware.weathersample.keys"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        val jdkVersion = libs.versions.jdk.version.get().toInt()
+        languageVersion.set(JavaLanguageVersion.of(jdkVersion))
+    }
 }
 
 dependencies {
