@@ -16,13 +16,14 @@ internal fun Project.configureAndroidCompose(
         }
         kotlinOptions {
             if (project.findProperty("enableComposeCompilerReports") == "true") {
+                val composeReportsDir = "compose_reports"
                 freeCompilerArgs += listOf(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-                        project.buildDir.absolutePath + "/compose_metrics",
+                        project.layout.buildDirectory.get().dir(composeReportsDir).asFile.absolutePath,
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-                        project.buildDir.absolutePath + "/compose_metrics",
+                        project.layout.buildDirectory.get().dir(composeReportsDir).asFile.absolutePath,
                 )
             }
         }
