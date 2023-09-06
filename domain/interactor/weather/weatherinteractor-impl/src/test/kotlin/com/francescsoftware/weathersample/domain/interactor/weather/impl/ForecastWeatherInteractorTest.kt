@@ -6,8 +6,6 @@ import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
 import assertk.assertions.isTrue
 import com.francescsoftware.weathersample.core.time.api.Iso8601DateTime
-import com.francescsoftware.weathersample.core.time.api.TimeFormatter
-import com.francescsoftware.weathersample.core.time.api.TimeParser
 import com.francescsoftware.weathersample.core.time.api.TimeProvider
 import com.francescsoftware.weathersample.core.type.either.isFailure
 import com.francescsoftware.weathersample.core.type.either.isSuccess
@@ -35,14 +33,13 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastEntry
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
-import com.francescsoftware.weathersample.testing.fake.time.FakeTimeFormatter
-import com.francescsoftware.weathersample.testing.fake.time.FakeTimeParser
 import com.francescsoftware.weathersample.testing.fake.time.FakeTimeProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
-import java.util.Date
-import kotlin.time.Duration.Companion.milliseconds
+import java.time.Instant
+import java.time.ZoneId
+import kotlin.time.Duration.Companion.seconds
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation as RepoWeatherLocation
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Current as RepoCurrent
 import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.Forecast as RepoForecast
@@ -54,7 +51,7 @@ private const val CityLatitude = 49.24
 private const val CityLongitude = -123.11
 
 private const val Date = "2022-07-30"
-private const val DateEpoch = 1659132000
+private const val DateEpoch = 1659078000
 private const val Sunrise = "06:44 AM"
 private const val Sunset = "09:11 PM"
 
@@ -68,7 +65,7 @@ private const val CurrentPrecipitation = 1.8
 private const val CurrentUvIndex = 7
 private const val CurrentVisibility = 10.0
 
-private val ForecastTimes = listOf("2022-07-29 16:00", "2022-07-29 17:00")
+private val ForecastTimes = listOf("2022-07-29 15:00", "2022-07-29 16:00")
 private val Temperatures = listOf(11.5, 13.7)
 private val FeelsLikeTemperatures = listOf(9.5, 11.5)
 private val IconCodes = listOf(1000, 1240)
@@ -82,15 +79,13 @@ private val WindSpeeds = listOf(4.5, 3.8)
 @ExperimentalCoroutinesApi
 internal class ForecastWeatherInteractorTest {
 
-    private val timeFormatter = FakeTimeFormatter()
-    private val timeParser = FakeTimeParser()
     private val timeProvider = FakeTimeProvider()
 
     private val forecastIsoTime = ForecastTimes.map { Iso8601DateTime(it) }
     private val forecastHour1 = ForecastHour(
         isDay = 1,
         time = forecastIsoTime[0].date,
-        timeEpoch = (timeParser.parseDate(forecastIsoTime[0]).time / 1000L).toInt(),
+        timeEpoch = forecastIsoTime[0].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)).toEpochSecond().toInt(),
         tempCelsius = Temperatures[0],
         tempFahrenheit = 0.0,
         feelsLikeCelsius = FeelsLikeTemperatures[0],
@@ -130,7 +125,7 @@ internal class ForecastWeatherInteractorTest {
     private val forecastHour2 = ForecastHour(
         isDay = 1,
         time = forecastIsoTime[1].date,
-        timeEpoch = (timeParser.parseDate(forecastIsoTime[1]).time / 1000L).toInt(),
+        timeEpoch = forecastIsoTime[1].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)).toEpochSecond().toInt(),
         tempCelsius = Temperatures[1],
         feelsLikeCelsius = FeelsLikeTemperatures[1],
         precipitationMm = Precipitations[1],
@@ -259,7 +254,7 @@ internal class ForecastWeatherInteractorTest {
     )
 
     private val successfulForecast1Entry1 = ForecastEntry(
-        date = timeParser.parseDate(forecastIsoTime[0]),
+        zonedDateTime = forecastIsoTime[0].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)),
         description = WeatherDescriptions[0],
         iconCode = IconCodes[0],
         temperature = Temperature.fromCelsius(Temperatures[0]),
@@ -272,7 +267,7 @@ internal class ForecastWeatherInteractorTest {
     )
 
     private val successfulForecast1Entry2 = ForecastEntry(
-        date = timeParser.parseDate(forecastIsoTime[1]),
+        zonedDateTime = forecastIsoTime[1].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)),
         description = WeatherDescriptions[1],
         iconCode = IconCodes[1],
         temperature = Temperature.fromCelsius(Temperatures[1]),
@@ -286,7 +281,7 @@ internal class ForecastWeatherInteractorTest {
 
     private val successfulForecastDay1 =
         ForecastDay(
-            date = timeFormatter.setToMidnight(Date(DateEpoch * 1000L)),
+            date = Instant.ofEpochSecond(DateEpoch.toLong()).atZone(ZoneId.of(ZoneId.systemDefault().id)),
             sunrise = Sunrise,
             sunset = Sunset,
             entries = listOf(
@@ -391,7 +386,7 @@ internal class ForecastWeatherInteractorTest {
             forecastResponse = forecastWeatherResponse
         }
         // set the current time to the 2nd entry's time (so we should drop the 1st one)
-        val now = timeParser.parseDate(forecastIsoTime[1]).time.milliseconds
+        val now = forecastIsoTime[1].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)).toInstant()
         val timeProvider = FakeTimeProvider().apply {
             setCurrentEpoch(now)
         }
@@ -410,13 +405,9 @@ internal class ForecastWeatherInteractorTest {
         repository: WeatherRepository,
         dispatcherProvider: TestDispatcherProvider = TestDispatcherProvider(),
         timeProvider: TimeProvider = this@ForecastWeatherInteractorTest.timeProvider,
-        timeFormatter: TimeFormatter = this@ForecastWeatherInteractorTest.timeFormatter,
-        timeParser: TimeParser = this@ForecastWeatherInteractorTest.timeParser,
     ): GetForecastInteractor = GetForecastInteractorImpl(
         repository,
         dispatcherProvider,
         timeProvider,
-        timeFormatter,
-        timeParser,
     )
 }

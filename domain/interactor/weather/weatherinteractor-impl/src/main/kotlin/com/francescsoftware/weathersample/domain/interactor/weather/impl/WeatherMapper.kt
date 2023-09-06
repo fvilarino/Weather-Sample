@@ -1,7 +1,6 @@
 package com.francescsoftware.weathersample.domain.interactor.weather.impl
 
 import com.francescsoftware.weathersample.core.time.api.Iso8601DateTime
-import com.francescsoftware.weathersample.core.time.api.TimeParser
 import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
 import com.francescsoftware.weathersample.core.type.weather.Humidity
 import com.francescsoftware.weathersample.core.type.weather.Precipitation
@@ -72,10 +71,8 @@ internal fun RepoCurrent.toCurrent(): Current = Current(
     iconCode = condition.code,
 )
 
-internal fun ForecastHour.toForecastEntry(
-    timerParser: TimeParser,
-) = ForecastEntry(
-    date = this.time.let { date -> timerParser.parseDate(Iso8601DateTime(date)) },
+internal fun ForecastHour.toForecastEntry() = ForecastEntry(
+    zonedDateTime = this.time.let { date -> Iso8601DateTime(date).toZonedDateTime() },
     description = condition.text,
     iconCode = condition.code,
     temperature = Temperature.fromCelsius(tempCelsius),

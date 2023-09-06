@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.domain.interactor.weather.api.model
 
-import java.util.Date
+import java.time.ZonedDateTime
 
 /**
  * Weather forecast for a day
@@ -11,7 +11,7 @@ import java.util.Date
  * @property entries - a [List] of [ForecastEntry] for this day
  */
 data class ForecastDay(
-    val date: Date,
+    val date: ZonedDateTime,
     val sunrise: String,
     val sunset: String,
     val entries: List<ForecastEntry>,

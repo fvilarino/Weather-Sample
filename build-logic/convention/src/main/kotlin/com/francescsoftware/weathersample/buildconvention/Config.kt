@@ -4,7 +4,7 @@ object Config {
     object Build {
         const val VersionName = "1.0.0"
 
-        const val MinSdk = 23
+        const val MinSdk = 26
         const val CompileSdk = 34
         const val TargetSdk = 34
     }

@@ -1,9 +1,9 @@
 package com.francescsoftware.weathersample.core.time.api
 
-import kotlin.time.Duration
+import java.time.Instant
 
 /** Provides the current system time */
 interface TimeProvider {
     /** Elapsed time since the Unix epoch */
-    val epoch: Duration
+    val epoch: Instant
 }

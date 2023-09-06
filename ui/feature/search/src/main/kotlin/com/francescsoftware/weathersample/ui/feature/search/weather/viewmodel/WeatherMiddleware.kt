@@ -21,7 +21,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import java.util.Date
+import java.time.ZonedDateTime
 import java.util.Locale
 import javax.inject.Inject
 
@@ -96,13 +96,13 @@ internal class WeatherMiddleware @Inject constructor(
 
     private fun ForecastDay.toForecastHeaderState(): ForecastHeaderState =
         ForecastHeaderState(
-            id = "header_${date.time}",
+            id = "header_$date",
             date = date.toHeaderLabel(),
             sunrise = sunrise,
             sunset = sunset,
         )
 
-    private fun Date.toHeaderLabel(): ForecastDate = when {
+    private fun ZonedDateTime.toHeaderLabel(): ForecastDate = when {
         isToday -> ForecastDate.Today
         isTomorrow -> ForecastDate.Tomorrow
         else -> ForecastDate.Day(timeFormatter.formatDayWithDayOfWeek(this))
@@ -110,8 +110,8 @@ internal class WeatherMiddleware @Inject constructor(
 
     private fun ForecastEntry.toForecastCardState(): ForecastHourState =
         ForecastHourState(
-            id = date.time,
-            time = timeFormatter.formatHour(date),
+            id = zonedDateTime.toEpochSecond(),
+            time = timeFormatter.formatHour(zonedDateTime),
             description = description.replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
             },
