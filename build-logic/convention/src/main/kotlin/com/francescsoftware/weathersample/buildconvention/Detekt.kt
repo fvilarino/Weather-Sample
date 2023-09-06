@@ -22,7 +22,7 @@ internal fun Project.configureDetekt(
             buildUponDefaultConfig = true
             source.from(files("$projectDir"))
             config.from(files("$rootDir/analysis/detekt/detekt.yml"))
-            reportsDir = file("${rootProject.buildDir}/reports/detekt/")
+            reportsDir = project.layout.buildDirectory.get().dir("reports/detekt").asFile
             parallel = true
         }
         dependencies.add("detektPlugins", libs.findLibrary("io.gitlab.arturbosch.detekt.detekt.formatting").get())

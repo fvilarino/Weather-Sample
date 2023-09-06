@@ -22,7 +22,7 @@ internal fun Project.configureAndroidLint(
                 ignoreTestSources = true
                 warningsAsErrors = true
                 lintConfig = file("${rootDir}/analysis/lint/lint-config.xml")
-                htmlOutput = file("${project.buildDir}/reports/lint/lint.html")
+                htmlOutput = project.layout.buildDirectory.get().dir("reports/lint/lint.html").asFile
             }
         }
     }
