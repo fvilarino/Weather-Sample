@@ -66,13 +66,10 @@ androidx-compose-ui-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-core-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-core-ktx-version" }
 androidx-core-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-core-splashscreen-version" }
 androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt-hilt-navigation-compose-version" }
-androidx-lifecycle-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "androidx-lifecycle-lifecycle-version" }
 androidx-lifecycle-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-lifecycle-version" }
 androidx-lifecycle-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-lifecycle-version" }
 androidx-lifecycle-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle-lifecycle-version" }
 androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation-version" }
-androidx-navigation-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation-version" }
-androidx-navigation-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation-version" }
 androidx-room-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room-version" }
 androidx-room-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room-version" }
 androidx-room-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room-version" }
