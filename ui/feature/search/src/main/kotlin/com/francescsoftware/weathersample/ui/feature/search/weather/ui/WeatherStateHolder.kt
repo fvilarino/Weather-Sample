@@ -13,7 +13,7 @@ internal enum class SelectedWeatherOption(val value: Int) {
     Forecast(1);
 
     companion object {
-        fun fromValue(value: Int) = values().firstOrNull { option -> option.value == value } ?: Today
+        fun fromValue(value: Int) = entries.firstOrNull { option -> option.value == value } ?: Today
     }
 }
 

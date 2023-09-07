@@ -3,31 +3,29 @@
 ## Introduction
 Weather Sample is a simple weather app showcasing some of the material principles.
 
-The app is multimodule, written in Kotlin using Jetpack Compose for the UI. The app consists of 3 screens, a city search screen, a weather screen for a specific city split into current weather and forecast, and a carousel of favorite cities displaying current weather and forecast for each city.
+The app is multi-module, written in Kotlin using Jetpack Compose for the UI. The app consists of 3 screens, a city search screen, a weather screen for a specific city split into current weather and forecast, and a carousel of favorite cities displaying current weather and forecast for each city.
 
 ## Getting set up
 1. Clone the project
-```
-$ git clone git@github.com:fvilarino/Weather-Sample.git
-```
+    ```
+    $ git clone git@github.com:fvilarino/Weather-Sample.git
+    ```
 2. Obtain a key from [RapidApi](https://rapidapi.com/) for both the [Geo Cities](https://rapidapi.com/wirefreethought/api/geodb-cities) and the [Open Weather Map](https://rapidapi.com/community/api/open-weather-map)
 3. Create a file named `keys.properties` inside the `certs` folder with your key, following this format
-
-
-```
-rapid_api_key=<your key here>
-```
+    ```
+    rapid_api_key=<your key here>
+    ```
 4. Create a file named `release.properties` inside the `certs` folder with the release signing credentials, following this format
-```
-store=./certs/release.keystore.jks (use your own release keystore here)
-alias=<you alias>
-storePass=<your store password>
-keyPass=<your key password>
-```
+    ```
+    store=./certs/release.keystore.jks (use your own release keystore here)
+    alias=<you alias>
+    storePass=<your store password>
+    keyPass=<your key password>
+    ```
 5. Build the project, using the following command
-```
-$ ./gradlew assembleDebug -PbuildNumber=1
-```
+    ```
+    $ ./gradlew assembleDebug -PbuildNumber=1
+    ```
 
 ## Deeplinks
 The app can be opened to the weather and favorite screens via deeplinks, using these schemas
@@ -37,14 +35,14 @@ The app can be opened to the weather and favorite screens via deeplinks, using t
 
 This can be exercised with this ADB command (note that the package name for debug builds ends in `.dev`):
 
-```
-$ adb shell am start -W -a android.intent.action.VIEW -d "weatherapp://weather/vancouver/ca" com.francescsoftware.weathersample
-```
+    ```
+    $ adb shell am start -W -a android.intent.action.VIEW -d "weatherapp://weather/vancouver/ca" com.francescsoftware.weathersample
+    ```
 
 ## Architecture
 The app is split into 4 layers:
 
-* [UI](./ui) - This is the feature Layer that the user interacts with. This layer is split into 2 sections, a [Feature](./ui/feature/) layer that contains each app feature, and a [Shared](./ui/shared/) layer containing a set of ui specific utilities to be used by the features.
+* [UI](./ui) - This is the feature Layer that the user interacts with. This layer is split into 2 sections, a [Feature](./ui/feature) layer that contains each app feature, and a [Shared](./ui/shared) layer containing a set of ui specific utilities to be used by the features.
 
 * [Domain](./domain) - This is the business logic layer that is shared by all features.
 

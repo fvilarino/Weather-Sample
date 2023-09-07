@@ -40,7 +40,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import java.time.Instant
 import java.time.ZoneId
-import kotlin.time.Duration.Companion.seconds
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation as RepoWeatherLocation
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Current as RepoCurrent
 import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.Forecast as RepoForecast
