@@ -3,7 +3,13 @@ name: PR Workflow
 on:
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - '*.md'
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
   build:
