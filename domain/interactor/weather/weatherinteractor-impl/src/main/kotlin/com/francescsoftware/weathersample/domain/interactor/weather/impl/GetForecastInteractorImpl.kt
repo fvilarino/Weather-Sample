@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.domain.interactor.weather.impl
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.core.time.api.TimeParsingException
 import com.francescsoftware.weathersample.core.time.api.TimeProvider
+import com.francescsoftware.weathersample.core.time.api.ZoneIdProvider
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRepository
@@ -14,7 +15,6 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import kotlinx.coroutines.withContext
 import java.time.Instant
-import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
@@ -25,6 +25,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val timeProvider: TimeProvider,
+    private val zoneIdProvider: ZoneIdProvider,
 ) : GetForecastInteractor {
 
     override suspend operator fun invoke(location: WeatherLocation): Either<Forecast> {
@@ -64,7 +65,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
                     .hour
                     .firstOrNull()?.timeEpoch ?: throw ForecastParseException()
                 val instant = Instant.ofEpochSecond(epochSeconds.toLong())
-                instant.atZone(ZoneId.systemDefault())
+                instant.atZone(zoneIdProvider.zoneId)
                     .truncatedTo(ChronoUnit.DAYS)
             }
 
@@ -78,7 +79,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
                     sunset = entry.value.astro.sunset,
                     entries = entry.value.hour
                         .filter { forecastHour -> forecastHour.timeEpoch >= now }
-                        .map { hour -> hour.toForecastEntry() }
+                        .map { hour -> hour.toForecastEntry(zoneIdProvider.zoneId) }
                 )
             }
             .filter { mapEntry -> mapEntry.value.entries.isNotEmpty() }

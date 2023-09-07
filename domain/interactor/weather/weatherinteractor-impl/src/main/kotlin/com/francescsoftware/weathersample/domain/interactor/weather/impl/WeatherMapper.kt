@@ -16,6 +16,7 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayClouds
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayMain
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayWind
+import java.time.ZoneId
 import kotlin.math.roundToInt
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation as RepositoryLocation
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Current as RepoCurrent
@@ -71,8 +72,8 @@ internal fun RepoCurrent.toCurrent(): Current = Current(
     iconCode = condition.code,
 )
 
-internal fun ForecastHour.toForecastEntry() = ForecastEntry(
-    zonedDateTime = this.time.let { date -> Iso8601DateTime(date).toZonedDateTime() },
+internal fun ForecastHour.toForecastEntry(zoneId: ZoneId) = ForecastEntry(
+    zonedDateTime = this.time.let { date -> Iso8601DateTime(date).toZonedDateTime(zoneId = zoneId) },
     description = condition.text,
     iconCode = condition.code,
     temperature = Temperature.fromCelsius(tempCelsius),

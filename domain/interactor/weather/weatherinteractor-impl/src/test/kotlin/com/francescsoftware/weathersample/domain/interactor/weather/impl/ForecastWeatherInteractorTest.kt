@@ -34,6 +34,7 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastEntry
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.testing.fake.time.FakeTimeProvider
+import com.francescsoftware.weathersample.testing.fake.time.FakeZoneIdProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -51,7 +52,7 @@ private const val CityLatitude = 49.24
 private const val CityLongitude = -123.11
 
 private const val Date = "2022-07-30"
-private const val DateEpoch = 1659078000
+private const val DateEpoch = 1659052800
 private const val Sunrise = "06:44 AM"
 private const val Sunset = "09:11 PM"
 
@@ -76,16 +77,19 @@ private val VisibilityKilometers = listOf(3.4, 4.7)
 private val WeatherDescriptions = listOf("sunny", "partly cloudy")
 private val WindSpeeds = listOf(4.5, 3.8)
 
+private val UtcZoneId = ZoneId.of("UTC")
+
 @ExperimentalCoroutinesApi
 internal class ForecastWeatherInteractorTest {
 
     private val timeProvider = FakeTimeProvider()
+    private val zoneIdProvider = FakeZoneIdProvider().apply { currentZoneId = UtcZoneId }
 
     private val forecastIsoTime = ForecastTimes.map { Iso8601DateTime(it) }
     private val forecastHour1 = ForecastHour(
         isDay = 1,
         time = forecastIsoTime[0].date,
-        timeEpoch = forecastIsoTime[0].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)).toEpochSecond().toInt(),
+        timeEpoch = forecastIsoTime[0].toZonedDateTime(zoneId = UtcZoneId).toEpochSecond().toInt(),
         tempCelsius = Temperatures[0],
         tempFahrenheit = 0.0,
         feelsLikeCelsius = FeelsLikeTemperatures[0],
@@ -125,7 +129,7 @@ internal class ForecastWeatherInteractorTest {
     private val forecastHour2 = ForecastHour(
         isDay = 1,
         time = forecastIsoTime[1].date,
-        timeEpoch = forecastIsoTime[1].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)).toEpochSecond().toInt(),
+        timeEpoch = forecastIsoTime[1].toZonedDateTime(zoneId = UtcZoneId).toEpochSecond().toInt(),
         tempCelsius = Temperatures[1],
         feelsLikeCelsius = FeelsLikeTemperatures[1],
         precipitationMm = Precipitations[1],
@@ -254,7 +258,7 @@ internal class ForecastWeatherInteractorTest {
     )
 
     private val successfulForecast1Entry1 = ForecastEntry(
-        zonedDateTime = forecastIsoTime[0].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)),
+        zonedDateTime = forecastIsoTime[0].toZonedDateTime(zoneId = UtcZoneId),
         description = WeatherDescriptions[0],
         iconCode = IconCodes[0],
         temperature = Temperature.fromCelsius(Temperatures[0]),
@@ -267,7 +271,7 @@ internal class ForecastWeatherInteractorTest {
     )
 
     private val successfulForecast1Entry2 = ForecastEntry(
-        zonedDateTime = forecastIsoTime[1].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)),
+        zonedDateTime = forecastIsoTime[1].toZonedDateTime(zoneId = UtcZoneId),
         description = WeatherDescriptions[1],
         iconCode = IconCodes[1],
         temperature = Temperature.fromCelsius(Temperatures[1]),
@@ -281,7 +285,7 @@ internal class ForecastWeatherInteractorTest {
 
     private val successfulForecastDay1 =
         ForecastDay(
-            date = Instant.ofEpochSecond(DateEpoch.toLong()).atZone(ZoneId.of(ZoneId.systemDefault().id)),
+            date = Instant.ofEpochSecond(DateEpoch.toLong()).atZone(UtcZoneId),
             sunrise = Sunrise,
             sunset = Sunset,
             entries = listOf(
@@ -386,7 +390,7 @@ internal class ForecastWeatherInteractorTest {
             forecastResponse = forecastWeatherResponse
         }
         // set the current time to the 2nd entry's time (so we should drop the 1st one)
-        val now = forecastIsoTime[1].toZonedDateTime(zoneId = ZoneId.of(ZoneId.systemDefault().id)).toInstant()
+        val now = forecastIsoTime[1].toZonedDateTime(zoneId = UtcZoneId).toInstant()
         val timeProvider = FakeTimeProvider().apply {
             setCurrentEpoch(now)
         }
@@ -405,9 +409,11 @@ internal class ForecastWeatherInteractorTest {
         repository: WeatherRepository,
         dispatcherProvider: TestDispatcherProvider = TestDispatcherProvider(),
         timeProvider: TimeProvider = this@ForecastWeatherInteractorTest.timeProvider,
+        zoneIdProvider: FakeZoneIdProvider = this@ForecastWeatherInteractorTest.zoneIdProvider,
     ): GetForecastInteractor = GetForecastInteractorImpl(
-        repository,
-        dispatcherProvider,
-        timeProvider,
+        weatherRepository = repository,
+        dispatcherProvider = dispatcherProvider,
+        timeProvider = timeProvider,
+        zoneIdProvider = zoneIdProvider,
     )
 }

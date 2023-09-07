@@ -5,8 +5,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 /**
- * Represents a date in the ISO8601 format, consisting of year, month, day,
- * 24h and minutes
+ * Represents a date in the ISO8601 format, consisting of year, month, day, 24h and minutes
  *
  * @property date the string representation of the date
  */
@@ -21,7 +20,7 @@ value class Iso8601DateTime private constructor(
      * @return a [ZonedDateTime] representing this [Iso8601DateTime]
      */
     fun toZonedDateTime(
-        zoneId: ZoneId = ZoneId.of(ZoneId.systemDefault().id)
+        zoneId: ZoneId,
     ): ZonedDateTime {
         val matchResult = requireNotNull(Matcher.matchEntire(date))
         return ZonedDateTime.of(
@@ -63,10 +62,7 @@ value class Iso8601DateTime private constructor(
         private val HourRange = 0..23
         private val MinuteRange = 0..59
 
-        /**
-         * Constructs a [Iso8601DateTime] from the incoming string if valid, throw
-         * TimeParsingException otherwise
-         */
+        /** Constructs a [Iso8601DateTime] from the incoming string if valid, throw TimeParsingException otherwise */
         operator fun invoke(date: String): Iso8601DateTime {
             val matchResult = Matcher.matchEntire(date)
             return if (matchResult != null) {
