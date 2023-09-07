@@ -42,7 +42,7 @@ class EitherTest {
         val callback: (Int) -> Unit = mockk(relaxed = true)
         either.fold(
             onSuccess = callback,
-            onFailure = { }
+            onFailure = { },
         )
         verify(exactly = 1) { callback.invoke(result) }
     }
@@ -54,7 +54,7 @@ class EitherTest {
         val callback: (Throwable) -> Unit = mockk(relaxed = true)
         either.fold(
             onSuccess = { },
-            onFailure = callback
+            onFailure = callback,
         )
         verify(exactly = 1) { callback.invoke(throwable) }
     }

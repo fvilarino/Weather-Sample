@@ -96,7 +96,7 @@ internal class TodayWeatherInteractorTest {
             cloud = Clouds,
             visibilityKm = VisibilityKilometers,
             visibilityMiles = 0.0,
-        )
+        ),
     )
 
     private val successfulTodayWeather = TodayWeather(

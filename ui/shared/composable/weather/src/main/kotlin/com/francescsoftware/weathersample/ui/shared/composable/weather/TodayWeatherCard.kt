@@ -42,7 +42,7 @@ fun TodayWeatherCard(
     ) {
         CurrentWeather(
             state = state,
-            modifier = Modifier.padding(all = MarginSingle)
+            modifier = Modifier.padding(all = MarginSingle),
         )
     }
 }

@@ -14,7 +14,7 @@ inline fun <R, T> Either<T>.fold(
 }
 
 inline fun <T, R> Either<T>.map(
-    mapper: (value: T) -> R
+    mapper: (value: T) -> R,
 ): Either<R> {
     return when (this) {
         is Either.Success -> Either.Success(mapper(value))

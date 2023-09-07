@@ -132,8 +132,8 @@ fun PagerIndicator(
                                 }
                             } else {
                                 Modifier
-                            }
-                        )
+                            },
+                        ),
                 )
             }
         }
@@ -186,7 +186,7 @@ private fun PreviewPagerIndicator() {
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f)
+                        .weight(1f),
                 ) {
                     Box(
                         modifier = Modifier.fillMaxSize(),

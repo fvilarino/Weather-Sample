@@ -7,7 +7,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 /** Wraps a retrofit call and returns an [Either] with the response or error code. */
 suspend fun <T : Any> safeApiCall(
-    block: suspend () -> retrofit2.Response<T>
+    block: suspend () -> retrofit2.Response<T>,
 ): Either<T> = try {
     val response = block()
     if (response.isSuccessful) {

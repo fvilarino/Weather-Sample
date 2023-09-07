@@ -25,7 +25,7 @@ internal object WeatherDestination : NavigationDestination {
 
     /** @{inheritDoc} */
     override val deeplinks = listOf(
-        navDeepLink { uriPattern = "$DeeplinkScheme://$DeeplinkHost/{$CityNameArg}/{$CountryCodeArg}" }
+        navDeepLink { uriPattern = "$DeeplinkScheme://$DeeplinkHost/{$CityNameArg}/{$CountryCodeArg}" },
     )
 
     /** @{inheritDoc} */

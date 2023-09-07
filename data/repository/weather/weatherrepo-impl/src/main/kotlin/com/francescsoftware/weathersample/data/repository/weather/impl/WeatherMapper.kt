@@ -79,7 +79,7 @@ internal fun ForecastModel.toForecastResponse(): ForecastResponse = ForecastResp
 )
 
 internal fun ForecastDaysModel.toForecast(): Forecast = Forecast(
-    forecastDay = requireNotNull(forecastDay).toForecast()
+    forecastDay = requireNotNull(forecastDay).toForecast(),
 )
 
 internal fun List<ForecastDayModel>.toForecast(): List<ForecastDay> = map { forecast ->

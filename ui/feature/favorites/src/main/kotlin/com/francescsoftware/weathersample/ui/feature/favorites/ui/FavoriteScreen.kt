@@ -60,7 +60,7 @@ internal fun FavoriteScreen(
                 message = stringResource(id = R.string.no_favorites_available),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(all = MarginDouble)
+                    .padding(all = MarginDouble),
             )
 
             LoadState.Error -> GenericMessage(
@@ -68,7 +68,7 @@ internal fun FavoriteScreen(
                 icon = Icons.Default.Warning,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(all = MarginDouble)
+                    .padding(all = MarginDouble),
             )
         }
     }

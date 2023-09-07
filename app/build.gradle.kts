@@ -49,7 +49,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
                 "retrofit2.pro",
-                "kotlin-serialization.pro"
+                "kotlin-serialization.pro",
             )
             signingConfig = signingConfigs.getByName("release")
         }

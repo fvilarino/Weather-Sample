@@ -58,7 +58,8 @@ private fun WeatherScreen(
             )
 
             WeatherLoadState.Loaded,
-            WeatherLoadState.Refreshing ->
+            WeatherLoadState.Refreshing,
+            ->
                 if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     DualPaneWeatherContent(
                         state = state,

@@ -29,7 +29,7 @@ internal fun CityChips(
     modifier: Modifier = Modifier,
 ) {
     val cityChipsContainerContentDescription = stringResource(
-        id = R.string.content_description_city_chips_container
+        id = R.string.content_description_city_chips_container,
     )
     Box(
         modifier = modifier,
@@ -61,7 +61,7 @@ internal fun CityChips(
 private fun PreviewCityChips() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             CityChips(
                 cities = persistentListOf(

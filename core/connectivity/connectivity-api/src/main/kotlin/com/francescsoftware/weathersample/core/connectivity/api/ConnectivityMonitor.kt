@@ -14,8 +14,6 @@ enum class ConnectivityStatus {
 /** Monitors and broadcasts network connectivity status */
 interface ConnectivityMonitor {
 
-    /**
-     * Flow to broadcast network connectivity status
-     */
+    /** Flow to broadcast network connectivity status */
     val connectedStatus: Flow<ConnectivityStatus>
 }

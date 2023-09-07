@@ -60,7 +60,7 @@ internal fun WeatherApp(
     connectivityMonitor: ConnectivityMonitor,
     state: AppState = rememberAppState(
         connectivityMonitor = connectivityMonitor,
-    )
+    ),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val isConnected by state.isConnected.collectAsStateWithLifecycle()
@@ -155,9 +155,9 @@ internal fun WeatherApp(
                                     colors = listOf(
                                         Color.Transparent,
                                         MaterialTheme.colorScheme.background,
-                                    )
-                                )
-                            )
+                                    ),
+                                ),
+                            ),
                     )
                 }
             }

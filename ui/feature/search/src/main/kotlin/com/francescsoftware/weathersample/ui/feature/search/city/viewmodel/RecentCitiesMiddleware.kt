@@ -55,11 +55,11 @@ internal class RecentCitiesMiddleware @Inject constructor(
                     .collect { recentCities ->
                         if (recentCities.isEmpty()) {
                             dispatch(
-                                CityAction.HideRecentCities
+                                CityAction.HideRecentCities,
                             )
                         } else {
                             dispatch(
-                                CityAction.RecentCitiesLoaded(recentCities = recentCities)
+                                CityAction.RecentCitiesLoaded(recentCities = recentCities),
                             )
                         }
                     }
@@ -89,8 +89,8 @@ internal class RecentCitiesMiddleware @Inject constructor(
                     selection = TextRange(
                         recentCityModel.name.length,
                     ),
-                )
-            )
+                ),
+            ),
         )
     }
 }

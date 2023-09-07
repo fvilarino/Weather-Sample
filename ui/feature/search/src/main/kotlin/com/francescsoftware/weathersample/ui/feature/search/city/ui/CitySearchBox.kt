@@ -60,7 +60,7 @@ internal fun CitiesSearchBox(
                     contentDescription = stringResource(id = R.string.content_description_clear),
                 )
             }
-        }
+        },
     )
 }
 
@@ -79,7 +79,7 @@ private fun PreviewCitiesSearchBox() {
                 onQueryChange = { query = it },
                 onClearQuery = { query = TextFieldValue() },
                 onQueryFocused = {},
-                modifier = Modifier.padding(all = MarginDouble)
+                modifier = Modifier.padding(all = MarginDouble),
             )
         }
     }

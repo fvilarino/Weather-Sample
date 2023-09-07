@@ -19,7 +19,7 @@ internal fun BottomNavBar(
     items: ImmutableList<RootNavigationDestination>,
     currentDestination: NavDestination?,
     onClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavigationBar(
         contentColor = NavigationColors.navigationContentColor(),

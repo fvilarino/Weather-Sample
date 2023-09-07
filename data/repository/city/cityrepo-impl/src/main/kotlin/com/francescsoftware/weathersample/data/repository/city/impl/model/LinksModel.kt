@@ -10,5 +10,5 @@ internal data class LinksModel(
     val rel: String? = null,
 
     @SerialName("href")
-    val href: String? = null
+    val href: String? = null,
 )

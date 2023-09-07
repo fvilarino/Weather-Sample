@@ -10,7 +10,7 @@ import java.io.IOException
  * @param closeables A vararg of [Closeable] objects that will be closed when this [Middleware] is destroyed.
  */
 abstract class Middleware<S : State, A : Action>(
-    vararg closeables: Closeable
+    vararg closeables: Closeable,
 ) {
     private lateinit var dispatcher: Dispatcher<A>
     private val closeables: Set<Closeable> = setOf(*closeables)

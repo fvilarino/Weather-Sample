@@ -37,7 +37,7 @@ internal fun WeatherForecast(
         state.forecastItems.forEach { dayForecast ->
             item(
                 key = dayForecast.header.id,
-                span = { GridItemSpan(maxLineSpan) }
+                span = { GridItemSpan(maxLineSpan) },
             ) {
                 ForecastHeader(
                     state = dayForecast.header,
@@ -48,7 +48,7 @@ internal fun WeatherForecast(
             }
             items(
                 items = dayForecast.forecast,
-                key = { hourForecast -> hourForecast.id }
+                key = { hourForecast -> hourForecast.id },
             ) { hourForecast ->
                 ForecastWeatherCard(
                     state = hourForecast,

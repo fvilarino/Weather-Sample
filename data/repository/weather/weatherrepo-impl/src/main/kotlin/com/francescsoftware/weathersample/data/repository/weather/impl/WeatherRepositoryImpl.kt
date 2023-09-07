@@ -18,7 +18,7 @@ internal class WeatherRepositoryImpl @Inject constructor(
 ) : WeatherRepository {
 
     override suspend fun getTodayWeather(
-        location: WeatherLocation
+        location: WeatherLocation,
     ): Either<TodayWeatherResponse> {
         val response = safeApiCall {
             weatherService.getTodayWeather(
@@ -35,7 +35,7 @@ internal class WeatherRepositoryImpl @Inject constructor(
                     Either.Failure(
                         WeatherException(
                             message = "Failed to load today weather",
-                        )
+                        ),
                     )
                 }
             },
@@ -44,9 +44,9 @@ internal class WeatherRepositoryImpl @Inject constructor(
                     WeatherException(
                         message = throwable.message ?: "Failed to load today weather",
                         cause = throwable,
-                    )
+                    ),
                 )
-            }
+            },
         )
     }
 
@@ -70,7 +70,7 @@ internal class WeatherRepositoryImpl @Inject constructor(
                     Either.Failure(
                         WeatherException(
                             message = "Failed to load weather forecast",
-                        )
+                        ),
                     )
                 }
             },
@@ -79,9 +79,9 @@ internal class WeatherRepositoryImpl @Inject constructor(
                     WeatherException(
                         message = throwable.message ?: "Failed to load weather forecast",
                         cause = throwable,
-                    )
+                    ),
                 )
-            }
+            },
         )
     }
 

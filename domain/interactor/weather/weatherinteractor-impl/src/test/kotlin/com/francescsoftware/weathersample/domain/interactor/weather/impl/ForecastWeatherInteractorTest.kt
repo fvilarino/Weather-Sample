@@ -253,7 +253,7 @@ internal class ForecastWeatherInteractorTest {
         location = emptyLocation,
         forecast = RepoForecast(
             forecastDay = listOf(todayForecast1),
-        )
+        ),
     )
 
     private val successfulForecast1Entry1 = ForecastEntry(
@@ -290,7 +290,7 @@ internal class ForecastWeatherInteractorTest {
             entries = listOf(
                 successfulForecast1Entry1,
                 successfulForecast1Entry2,
-            )
+            ),
         )
 
     private val forecastSuccessfulResponse =
@@ -311,7 +311,7 @@ internal class ForecastWeatherInteractorTest {
             ),
             items = listOf(
                 successfulForecastDay1,
-            )
+            ),
         )
 
     private val incomingCity = WeatherLocation.City(
@@ -331,7 +331,7 @@ internal class ForecastWeatherInteractorTest {
         }
 
         val interactor = getInteractor(
-            repository = repository
+            repository = repository,
         )
         interactor(incomingCity)
         assertThat((repository.lastLocation as RepoWeatherLocation.City).name)
@@ -347,7 +347,7 @@ internal class ForecastWeatherInteractorTest {
         }
 
         val interactor = getInteractor(
-            repository = repository
+            repository = repository,
         )
         interactor(incomingCoordinates)
 
@@ -363,7 +363,7 @@ internal class ForecastWeatherInteractorTest {
             forecastResponse = forecastWeatherResponse
         }
         val interactor = getInteractor(
-            repository = repository
+            repository = repository,
         )
         val response = interactor(incomingCity)
 
@@ -375,7 +375,7 @@ internal class ForecastWeatherInteractorTest {
     fun `interactor maps network error to interactor error`() = runTest {
         val repository = FakeWeatherRepository().apply { networkError = true }
         val interactor = getInteractor(
-            repository = repository
+            repository = repository,
         )
         val response = interactor(incomingCity)
 

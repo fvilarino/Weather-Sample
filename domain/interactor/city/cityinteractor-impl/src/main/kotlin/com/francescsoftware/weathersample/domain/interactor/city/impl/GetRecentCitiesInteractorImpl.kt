@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class GetRecentCitiesInteractorImpl @Inject constructor(
-    private val recentsRepository: RecentsRepository
+    private val recentsRepository: RecentsRepository,
 ) : GetRecentCitiesInteractor {
 
     override operator fun invoke(limit: Int): Flow<List<RecentCity>> = recentsRepository

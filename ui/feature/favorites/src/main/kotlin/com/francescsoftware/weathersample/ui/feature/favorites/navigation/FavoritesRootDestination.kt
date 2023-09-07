@@ -16,7 +16,7 @@ object FavoritesRootDestination : RootNavigationDestination {
 
     /** @{inheritDoc} */
     override val destinations: ImmutableList<NavigationDestination> = persistentListOf(
-        FavoritesDestination
+        FavoritesDestination,
     )
 
     /** @{inheritDoc} */

@@ -13,10 +13,7 @@ import javax.inject.Inject
 import javax.inject.Qualifier
 import kotlin.coroutines.CoroutineContext
 
-/**
- * [CoroutineScope] implementing [Closeable] that cancels the scope on
- * closure.
- */
+/** [CoroutineScope] implementing [Closeable] that cancels the scope on closure. */
 class CloseableCoroutineScope @Inject constructor(
     @MainCoroutineContext context: CoroutineContext,
 ) : Closeable, CoroutineScope {
@@ -33,7 +30,7 @@ internal object CoroutineModule {
     @Provides
     @MainCoroutineContext
     fun provideCoroutineContext(
-        dispatcherProvider: DispatcherProvider
+        dispatcherProvider: DispatcherProvider,
     ): CoroutineContext = SupervisorJob() + dispatcherProvider.main
 }
 

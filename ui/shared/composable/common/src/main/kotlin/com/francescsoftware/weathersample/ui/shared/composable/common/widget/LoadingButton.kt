@@ -130,7 +130,7 @@ fun LoadingButton(
                 indicatorSpacing = indicatorSpacing,
             )
             Box(
-                modifier = Modifier.graphicsLayer { alpha = contentAlpha }
+                modifier = Modifier.graphicsLayer { alpha = contentAlpha },
             ) {
                 content()
             }
@@ -142,7 +142,8 @@ fun LoadingButton(
 private val AnimationType.animationSpec: DurationBasedAnimationSpec<Float>
     get() = when (this) {
         AnimationType.Bounce,
-        AnimationType.Fade -> tween(durationMillis = animationDuration)
+        AnimationType.Fade,
+        -> tween(durationMillis = animationDuration)
 
         AnimationType.LazyBounce -> keyframes {
             durationMillis = animationDuration
@@ -156,7 +157,8 @@ private val AnimationType.animationSpec: DurationBasedAnimationSpec<Float>
 private val AnimationType.animationDuration: Int
     get() = when (this) {
         AnimationType.Bounce,
-        AnimationType.LazyBounce -> BounceAnimationDurationMillis
+        AnimationType.LazyBounce,
+        -> BounceAnimationDurationMillis
 
         AnimationType.Fade -> FadeAnimationDurationMillis
     }
@@ -210,7 +212,7 @@ internal class LoadingIndicatorStateImpl(
                         animationSpec = infiniteRepeatable(
                             animation = animationType.animationSpec,
                             repeatMode = RepeatMode.Reverse,
-                            initialStartOffset = StartOffset(animationType.animationDelay * index)
+                            initialStartOffset = StartOffset(animationType.animationDelay * index),
                         ),
                     ) { value, _ -> animatedValues[index].floatValue = value }
                 }
@@ -240,7 +242,7 @@ internal class LoadingIndicatorStateImpl(
                 LoadingIndicatorStateImpl(
                     animationType = args[0] as AnimationType,
                 )
-            }
+            },
         )
     }
 }
@@ -287,14 +289,15 @@ private fun LoadingIndicator(
                     .then(
                         when (animationType) {
                             AnimationType.Bounce,
-                            AnimationType.LazyBounce -> Modifier.offset(
+                            AnimationType.LazyBounce,
+                            -> Modifier.offset(
                                 y = state[index].coerceAtMost(
-                                    IndicatorSize / 2f
-                                ).dp
+                                    IndicatorSize / 2f,
+                                ).dp,
                             )
 
                             AnimationType.Fade -> Modifier.graphicsLayer { alpha = state[index] }
-                        }
+                        },
                     ),
                 color = color,
             )
@@ -310,7 +313,7 @@ private fun LoadingDot(
     Box(
         modifier = modifier
             .clip(shape = CircleShape)
-            .background(color = color)
+            .background(color = color),
     )
 }
 
@@ -328,7 +331,7 @@ private fun PreviewLoadingButton() {
             mutableStateOf(false)
         }
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly,
@@ -341,7 +344,7 @@ private fun PreviewLoadingButton() {
                     loading = loading1,
                 ) {
                     Text(
-                        text = "Refresh"
+                        text = "Refresh",
                     )
                 }
                 LoadingButton(
@@ -353,7 +356,7 @@ private fun PreviewLoadingButton() {
                     loading = loading2,
                 ) {
                     Text(
-                        text = "Refresh"
+                        text = "Refresh",
                     )
                 }
                 LoadingButton(
@@ -365,7 +368,7 @@ private fun PreviewLoadingButton() {
                     loading = loading3,
                 ) {
                     Text(
-                        text = "Refresh"
+                        text = "Refresh",
                     )
                 }
             }

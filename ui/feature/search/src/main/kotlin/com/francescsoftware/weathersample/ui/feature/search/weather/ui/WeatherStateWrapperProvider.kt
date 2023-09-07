@@ -34,7 +34,7 @@ internal class WeatherStateWrapperProvider : PreviewParameterProvider<WeatherSta
                 loadState = WeatherLoadState.Error,
                 errorMessage = R.string.failed_to_load_weather_data,
             ),
-            option = SelectedWeatherOption.Today
+            option = SelectedWeatherOption.Today,
         ),
     )
 }
@@ -71,7 +71,7 @@ private val todayState = WeatherState(
                 SnowHourForecast,
                 LightRainHourForecast,
             ),
-        )
+        ),
     ),
     errorMessage = 0,
 )

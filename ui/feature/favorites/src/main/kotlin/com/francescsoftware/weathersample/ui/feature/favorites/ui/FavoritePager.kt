@@ -42,7 +42,7 @@ internal fun FavoritePager(
     deviceClass: DeviceClass,
     onDeleteClick: (City) -> Unit,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(horizontal = MarginDouble)
+    contentPadding: PaddingValues = PaddingValues(horizontal = MarginDouble),
 ) {
     val isPortrait = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
     val pageSize = if (deviceClass == DeviceClass.Compact && isPortrait) {
@@ -54,14 +54,14 @@ internal fun FavoritePager(
         modifier = modifier,
     ) {
         val pagerState = rememberPagerState(
-            pageCount = { state.pages.size }
+            pageCount = { state.pages.size },
         )
         HorizontalPager(
             pageSize = pageSize,
             pageSpacing = MarginDouble,
             contentPadding = contentPadding,
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) { index ->
             FavoritePage(
                 state = state.pages[index],
@@ -71,7 +71,7 @@ internal fun FavoritePager(
                     .pagerEffect(
                         pagerState = pagerState,
                         index = index,
-                        deviceClass = deviceClass
+                        deviceClass = deviceClass,
                     ),
             )
         }
@@ -86,11 +86,11 @@ internal fun FavoritePager(
                             colors = listOf(
                                 Color.Transparent,
                                 MaterialTheme.colorScheme.surface,
-                            )
-                        )
+                            ),
+                        ),
                     )
                     .padding(vertical = MarginSingle)
-                    .align(Alignment.BottomCenter)
+                    .align(Alignment.BottomCenter),
             )
         }
     }
@@ -120,7 +120,7 @@ private fun Modifier.pagerEffect(
         }
     } else {
         Modifier
-    }
+    },
 )
 
 @PhonePreviews
@@ -136,7 +136,7 @@ private fun PreviewPhoneFavoriteCard() {
                         VancouverFavoriteCardState,
                         BarcelonaFavoriteCardState,
                         LondonFavoriteCardState,
-                    )
+                    ),
                 ),
                 deviceClass = DeviceClass.Compact,
                 onDeleteClick = { },
@@ -159,7 +159,7 @@ private fun PreviewTabletFavoriteCard() {
                         VancouverFavoriteCardState,
                         BarcelonaFavoriteCardState,
                         LondonFavoriteCardState,
-                    )
+                    ),
                 ),
                 deviceClass = DeviceClass.Expanded,
                 onDeleteClick = { },

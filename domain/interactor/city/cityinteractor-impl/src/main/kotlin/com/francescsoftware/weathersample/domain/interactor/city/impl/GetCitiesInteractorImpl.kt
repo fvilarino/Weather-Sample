@@ -29,9 +29,9 @@ internal class GetCitiesInteractorImpl @Inject constructor(
                     CitiesException(
                         message = response.message ?: "Error fetching cities",
                         cause = response.cause,
-                    )
+                    ),
                 )
-            }
+            },
         )
     }
 }

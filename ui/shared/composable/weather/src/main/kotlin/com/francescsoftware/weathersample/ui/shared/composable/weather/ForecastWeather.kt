@@ -54,7 +54,7 @@ fun ForecastWeather(
             Icon(
                 painter = painterResource(id = state.iconId),
                 contentDescription = null,
-                modifier = Modifier.size(HeaderIconSize)
+                modifier = Modifier.size(HeaderIconSize),
             )
             Text(
                 text = state.description,
@@ -76,12 +76,12 @@ fun ForecastWeather(
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             InfoLabels(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = MarginSingle)
+                    .padding(start = MarginSingle),
             ) {
                 WeatherItemLabel(
                     label = stringResource(id = R.string.temperature_label),
@@ -108,7 +108,7 @@ fun ForecastWeather(
             InfoLabels(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = MarginSingle)
+                    .padding(end = MarginSingle),
             ) {
                 WeatherItemLabel(
                     label = stringResource(id = R.string.wind_speed_label),

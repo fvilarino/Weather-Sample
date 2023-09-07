@@ -69,8 +69,9 @@ fun FavoriteToggle(
             )
 
             FavoriteAnimation.RotateX,
-            FavoriteAnimation.RotateY -> tween()
-        }
+            FavoriteAnimation.RotateY,
+            -> tween()
+        },
     )
     Box(
         modifier = modifier
@@ -103,7 +104,8 @@ fun FavoriteToggle(
             tint = color,
             modifier = when (animationType) {
                 FavoriteAnimation.Scale,
-                FavoriteAnimation.RotateY -> Modifier
+                FavoriteAnimation.RotateY,
+                -> Modifier
 
                 FavoriteAnimation.RotateX -> Modifier.graphicsLayer {
                     rotationX = if (animation >= SwapThreshold) {
@@ -118,8 +120,8 @@ fun FavoriteToggle(
                     R.string.content_description_remove_favorite
                 } else {
                     R.string.content_description_make_favorite
-                }
-            )
+                },
+            ),
         )
     }
 }

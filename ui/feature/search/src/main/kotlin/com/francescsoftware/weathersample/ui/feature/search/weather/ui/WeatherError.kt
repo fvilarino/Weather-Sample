@@ -30,13 +30,13 @@ internal fun WeatherError(
 ) {
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val label = stringResource(
-                id = message.takeIf { it != 0 } ?: R.string.weather_error_loading
+                id = message.takeIf { it != 0 } ?: R.string.weather_error_loading,
             )
             Text(
                 text = label,
@@ -65,7 +65,7 @@ private fun WeatherErrorPreview() {
             WeatherError(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = MarginDouble)
+                    .padding(all = MarginDouble),
             )
         }
     }

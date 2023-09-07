@@ -12,5 +12,5 @@ internal data class TodayWeatherModel(
     val current: CurrentModel? = null,
 
     @SerialName("location")
-    val location: LocationModel? = null
+    val location: LocationModel? = null,
 )

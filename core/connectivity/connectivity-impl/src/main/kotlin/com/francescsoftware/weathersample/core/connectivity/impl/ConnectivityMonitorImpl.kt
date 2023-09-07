@@ -33,7 +33,7 @@ private class NetworkCallback(
                 ConnectivityStatus.Disconnected
             } else {
                 ConnectivityStatus.Connected
-            }
+            },
         )
     }
 }

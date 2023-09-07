@@ -24,7 +24,7 @@ internal class FakeWeatherRepository : WeatherRepository {
 
     override suspend fun getForecast(
         location: WeatherLocation,
-        days: Int
+        days: Int,
     ): Either<ForecastResponse> {
         lastLocation = location
         return if (networkError) {

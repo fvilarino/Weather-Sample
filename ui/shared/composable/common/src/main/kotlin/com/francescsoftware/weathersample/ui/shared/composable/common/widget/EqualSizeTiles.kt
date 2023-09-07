@@ -37,7 +37,7 @@ fun EqualSizeTiles(
     ) { measurables, constraints ->
         layoutTiles(
             measurables,
-            constraints
+            constraints,
         )
     }
 }
@@ -75,13 +75,13 @@ private fun EqualSizeTilesPreview() {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.Yellow)
+                .background(color = Color.Yellow),
         ) {
             EqualSizeTiles(
                 modifier = Modifier
                     .height(64.dp)
                     .background(color = Color.Green)
-                    .padding(all = 8.dp)
+                    .padding(all = 8.dp),
             ) {
                 Text(
                     text = "Left",

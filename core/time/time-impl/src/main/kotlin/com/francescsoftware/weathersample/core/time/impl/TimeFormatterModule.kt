@@ -15,18 +15,18 @@ internal interface TimeFormatterModule {
     @Binds
     @Reusable
     fun bindTimeFormatter(
-        timeFormatterImpl: TimeFormatterImpl
+        timeFormatterImpl: TimeFormatterImpl,
     ): TimeFormatter
 
     @Binds
     @Reusable
     fun bindTimeProvider(
-        timeProviderImpl: TimeProviderImpl
+        timeProviderImpl: TimeProviderImpl,
     ): TimeProvider
 
     @Binds
     @Reusable
     fun bindZoneIdProvider(
-        zoneIdProviderImpl: ZoneIdProviderImpl
+        zoneIdProviderImpl: ZoneIdProviderImpl,
     ): ZoneIdProvider
 }

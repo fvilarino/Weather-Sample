@@ -17,5 +17,5 @@ data class BottomNavContent(
     val icon: ImageVector,
 
     @get: StringRes
-    val contentDescriptionId: Int
+    val contentDescriptionId: Int,
 )

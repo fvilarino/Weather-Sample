@@ -15,5 +15,5 @@ internal data class ForecastModel(
     val location: LocationModel? = null,
 
     @SerialName("forecast")
-    val forecast: ForecastDaysModel? = null
+    val forecast: ForecastDaysModel? = null,
 )

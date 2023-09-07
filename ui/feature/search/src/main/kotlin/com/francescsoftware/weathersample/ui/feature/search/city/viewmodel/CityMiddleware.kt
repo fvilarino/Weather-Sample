@@ -118,13 +118,13 @@ internal class CityMiddleware @Inject constructor(
                                 favorite.name == city.name && favorite.countryCode == city.countryCode
                             }
                             city.toCityResultModel(favoriteCity?.id ?: NoFavorite)
-                        }.toPersistentList()
+                        }.toPersistentList(),
                     )
                 }
             },
             onFailure = {
                 CityAction.LoadError
-            }
+            },
         )
     }
 
@@ -145,7 +145,7 @@ internal class CityMiddleware @Inject constructor(
         coordinates = Coordinates(
             latitude = coordinates.latitude.toFloat(),
             longitude = coordinates.longitude.toFloat(),
-        )
+        ),
     )
 
     private fun CityResultModel.toFavoriteCity(): FavoriteCity = FavoriteCity(

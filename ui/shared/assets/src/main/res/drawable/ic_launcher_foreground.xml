@@ -9,34 +9,34 @@
         android:translateX="8.8"
         android:translateY="8.8">
         <path
-            android:strokeWidth="1"
+            android:fillColor="#ffffff"
             android:pathData="M4,14H2c-0.6,0 -1,-0.4 -1,-1s0.4,-1 1,-1h2c0.6,0 1,0.4 1,1S4.6,14 4,14z"
-            android:fillColor="#ffffff"
+            android:strokeWidth="1"
             android:strokeColor="#ffffff" />
         <path
-            android:strokeWidth="1"
+            android:fillColor="#ffffff"
             android:pathData="M19.4,7.6c-0.3,0 -0.5,-0.1 -0.7,-0.3c-0.4,-0.4 -0.4,-1 0,-1.4l1.4,-1.4c0.4,-0.4 1,-0.4 1.4,0s0.4,1 0,1.4l-1.4,1.4C19.9,7.5 19.6,7.6 19.4,7.6z"
-            android:fillColor="#ffffff"
+            android:strokeWidth="1"
             android:strokeColor="#ffffff" />
         <path
-            android:strokeWidth="1"
+            android:fillColor="#ffffff"
             android:pathData="M13,5c-0.6,0 -1,-0.4 -1,-1V2c0,-0.6 0.4,-1 1,-1s1,0.4 1,1v2C14,4.6 13.6,5 13,5z"
-            android:fillColor="#ffffff"
+            android:strokeWidth="1"
             android:strokeColor="#ffffff" />
         <path
-            android:strokeWidth="1"
+            android:fillColor="#ffffff"
             android:pathData="M6.6,7.6c-0.3,0 -0.5,-0.1 -0.7,-0.3L4.5,5.9c-0.4,-0.4 -0.4,-1 0,-1.4s1,-0.4 1.4,0l1.4,1.4c0.4,0.4 0.4,1 0,1.4C7.1,7.5 6.9,7.6 6.6,7.6z"
-            android:fillColor="#ffffff"
+            android:strokeWidth="1"
             android:strokeColor="#ffffff" />
         <path
-            android:strokeWidth="1"
+            android:fillColor="#ffffff"
             android:pathData="M21.1,30h-8.3C9.6,30 7,27.4 7,24.1c0,-3.2 2.5,-5.8 5.7,-5.9c1.2,-3.7 4.5,-6.2 8.4,-6.2c4.9,0 8.9,4 8.9,9S26,30 21.1,30z"
-            android:fillColor="#ffffff"
+            android:strokeWidth="1"
             android:strokeColor="#ffffff" />
         <path
-            android:strokeWidth="1"
-            android:pathData="M11.3,16.4c1.5,-3.3 4.6,-5.7 8.1,-6.2C18.3,7.7 15.8,6 13,6c-3.9,0 -7,3.1 -7,7c0,1.9 0.8,3.6 2,4.9C9,17.2 10.1,16.6 11.3,16.4z"
             android:fillColor="#ffffff"
+            android:pathData="M11.3,16.4c1.5,-3.3 4.6,-5.7 8.1,-6.2C18.3,7.7 15.8,6 13,6c-3.9,0 -7,3.1 -7,7c0,1.9 0.8,3.6 2,4.9C9,17.2 10.1,16.6 11.3,16.4z"
+            android:strokeWidth="1"
             android:strokeColor="#ffffff" />
     </group>
 </vector>

@@ -125,7 +125,7 @@ fun CurrentWeather(
                 InfoLabels(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(horizontal = MarginTreble)
+                        .padding(horizontal = MarginTreble),
                 ) {
                     WeatherItemLabel(
                         label = stringResource(id = R.string.gust_speed_label),
@@ -145,7 +145,7 @@ fun CurrentWeather(
                 InfoLabels(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(horizontal = MarginTreble)
+                        .padding(horizontal = MarginTreble),
                 ) {
                     WeatherItemLabel(
                         label = stringResource(id = R.string.pressure_label),

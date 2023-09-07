@@ -31,13 +31,13 @@ internal class WeatherViewModel @Inject constructor(
                 WeatherAction.CityUpdated(
                     cityName = selectedCity.name,
                     countryCode = selectedCity.countryCode,
-                )
+                ),
             )
             dispatch(
                 WeatherAction.Load(
                     cityName = selectedCity.name,
                     countryCode = selectedCity.countryCode,
-                )
+                ),
             )
         }
     }
@@ -47,7 +47,7 @@ internal class WeatherViewModel @Inject constructor(
             WeatherAction.RefreshTodayWeather(
                 cityName = selectedCity.name,
                 countryCode = selectedCity.countryCode,
-            )
+            ),
         )
     }
 
@@ -56,7 +56,7 @@ internal class WeatherViewModel @Inject constructor(
             WeatherAction.Retry(
                 cityName = selectedCity.name,
                 countryCode = selectedCity.countryCode,
-            )
+            ),
         )
     }
 }

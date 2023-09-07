@@ -21,7 +21,7 @@ val Typography = Typography(
         fontSize = 96.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 117.sp,
-        letterSpacing = (-1.5).sp
+        letterSpacing = (-1.5).sp,
     ),
     displayMedium = TextStyle(
         fontFamily = Montserrat,
@@ -40,46 +40,46 @@ val Typography = Typography(
         fontSize = 60.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 73.sp,
-        letterSpacing = (-0.5).sp
+        letterSpacing = (-0.5).sp,
     ),
     headlineMedium = TextStyle(
         fontFamily = Montserrat,
         fontSize = 48.sp,
         fontWeight = FontWeight.Medium,
-        lineHeight = 59.sp
+        lineHeight = 59.sp,
     ),
     headlineSmall = TextStyle(
         fontFamily = Montserrat,
         fontSize = 30.sp,
         fontWeight = FontWeight.Medium,
-        lineHeight = 36.sp
+        lineHeight = 36.sp,
     ),
     titleLarge = TextStyle(
         fontFamily = Montserrat,
         fontSize = 24.sp,
         fontWeight = FontWeight.Medium,
-        lineHeight = 29.sp
+        lineHeight = 29.sp,
     ),
     titleMedium = TextStyle(
         fontFamily = Montserrat,
         fontSize = 20.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 20.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.5.sp,
     ),
     titleSmall = TextStyle(
         fontFamily = Montserrat,
         fontSize = 14.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 17.sp,
-        letterSpacing = 0.1.sp
+        letterSpacing = 0.1.sp,
     ),
     bodyLarge = TextStyle(
         fontFamily = Montserrat,
         fontSize = 15.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 20.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.15.sp,
     ),
     bodyMedium = TextStyle(
         fontFamily = Montserrat,
@@ -92,27 +92,27 @@ val Typography = Typography(
         fontSize = 12.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 16.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
     ),
     labelLarge = TextStyle(
         fontFamily = Montserrat,
         fontSize = 14.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = 16.sp,
-        letterSpacing = 1.25.sp
+        letterSpacing = 1.25.sp,
     ),
     labelMedium = TextStyle(
         fontFamily = Montserrat,
         fontSize = 11.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 16.sp,
-        letterSpacing = 1.sp
+        letterSpacing = 1.sp,
     ),
     labelSmall = TextStyle(
         fontFamily = Montserrat,
         fontSize = 10.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = 14.sp,
-        letterSpacing = 1.sp
+        letterSpacing = 1.sp,
     ),
 )

@@ -53,7 +53,7 @@ internal object WeatherRepositoryModule {
     @Provides
     @Singleton
     fun provideWeatherService(
-        @WeatherRetrofit retrofit: Retrofit
+        @WeatherRetrofit retrofit: Retrofit,
     ): WeatherService = retrofit.create(WeatherService::class.java)
 }
 
@@ -64,7 +64,7 @@ internal interface WeatherRepositoryModuleBinds {
     @Binds
     @Singleton
     fun bindWeatherRepository(
-        weatherRepositoryImpl: WeatherRepositoryImpl
+        weatherRepositoryImpl: WeatherRepositoryImpl,
     ): WeatherRepository
 }
 

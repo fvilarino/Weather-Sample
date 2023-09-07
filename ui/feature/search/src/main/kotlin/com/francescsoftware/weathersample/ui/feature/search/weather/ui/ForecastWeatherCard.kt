@@ -33,7 +33,7 @@ internal fun ForecastWeatherCard(
             state = state,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(MarginSingle)
+                .padding(MarginSingle),
         )
     }
 }

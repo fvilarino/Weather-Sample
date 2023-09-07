@@ -32,7 +32,7 @@ private fun PreviewWeatherLabel() {
         ) {
             WeatherLabel(
                 label = "Current Weather",
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

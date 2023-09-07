@@ -29,7 +29,7 @@ internal object FavoritesDestination : BottomNavigationDestination {
 
     /** @{inheritDoc} */
     override val deeplinks = listOf(
-        navDeepLink { uriPattern = "$DeeplinkScheme://$DeeplinkHost" }
+        navDeepLink { uriPattern = "$DeeplinkScheme://$DeeplinkHost" },
     )
 
     /** The deeplink route for the city screen */
