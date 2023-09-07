@@ -21,15 +21,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
@@ -75,10 +74,11 @@ internal fun FavoritePage(
     onDeleteClick: (City) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var offset by remember {
-        mutableStateOf(0.dp)
-    }
     val density = LocalDensity.current
+    var offset by rememberSaveable {
+        mutableIntStateOf(0)
+    }
+    val offsetDp = with(density) { offset.toDp() }
     Box(
         modifier = modifier,
     ) {
@@ -90,7 +90,7 @@ internal fun FavoritePage(
             },
             modifier = Modifier
                 .onPlaced {
-                    offset = with(density) { it.size.height.toDp() }
+                    offset = it.size.height
                 }
                 .zIndex(1f)
                 .fillMaxWidth()
@@ -108,7 +108,7 @@ internal fun FavoritePage(
             verticalArrangement = Arrangement.spacedBy(MarginDouble),
             contentPadding = WindowInsets.safeDrawing.only(
                 WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal
-            ).asPaddingValues() + PaddingValues(top = offset, bottom = MarginDouble),
+            ).asPaddingValues() + PaddingValues(top = offsetDp, bottom = MarginDouble),
         ) {
             item(
                 key = "divider1"
