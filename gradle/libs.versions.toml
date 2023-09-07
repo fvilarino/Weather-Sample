@@ -158,6 +158,5 @@ test = [
 ]
 
 [plugins]
-com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version.ref = "versions-plugin-version" }
 com-google-devtools-ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp-plugin-version" }
 io-gitlab-arturbosch-detekt-plugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt-version" }
