@@ -15,7 +15,7 @@ import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastH
 import com.francescsoftware.weathersample.ui.shared.weathericon.drawableId
 import com.francescsoftware.weathersample.ui.shared.weathericon.weatherIconFromCode
 import kotlinx.collections.immutable.toImmutableList
-import java.util.Date
+import java.time.ZonedDateTime
 import java.util.Locale
 
 internal fun Current.toWeatherCardState() =
@@ -55,13 +55,13 @@ private fun ForecastDay.toForecastHeaderState(
     timeFormatter: TimeFormatter,
 ): ForecastHeaderState =
     ForecastHeaderState(
-        id = "header_${date.time}",
+        id = "header_$date",
         date = date.toHeaderLabel(timeFormatter),
         sunrise = sunrise,
         sunset = sunset,
     )
 
-private fun Date.toHeaderLabel(
+private fun ZonedDateTime.toHeaderLabel(
     timeFormatter: TimeFormatter,
 ): ForecastDate = when {
     isToday -> ForecastDate.Today
@@ -73,8 +73,8 @@ private fun ForecastEntry.toForecastCardState(
     timeFormatter: TimeFormatter,
 ): ForecastHourState =
     ForecastHourState(
-        id = date.time,
-        time = timeFormatter.formatHour(date),
+        id = zonedDateTime.toEpochSecond(),
+        time = timeFormatter.formatHour(zonedDateTime),
         description = description.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
         },

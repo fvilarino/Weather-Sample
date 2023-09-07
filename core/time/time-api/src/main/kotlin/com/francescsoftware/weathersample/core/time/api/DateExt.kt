@@ -1,28 +1,17 @@
 package com.francescsoftware.weathersample.core.time.api
 
-import java.util.Calendar
-import java.util.Date
+import java.time.ZonedDateTime
 
-/**
- * Checks if this [Date] is today
- */
-val Date.isToday: Boolean
+/** Checks if this [ZonedDateTime] is today */
+val ZonedDateTime.isToday: Boolean
     get() {
-        val now = Calendar.getInstance()
-        val date = Calendar.getInstance().apply { time = this@isToday }
-        return now.get(Calendar.YEAR) == date.get(Calendar.YEAR) &&
-            now.get(Calendar.MONTH) == date.get(Calendar.MONTH) &&
-            now.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH)
+        val now = ZonedDateTime.now()
+        return year == now.year && dayOfYear == now.dayOfYear
     }
 
-/**
- * Checks if this [Date] is tomorrow
- */
-val Date.isTomorrow: Boolean
+/** Checks if this [ZonedDateTime] is tomorrow */
+val ZonedDateTime.isTomorrow: Boolean
     get() {
-        val date = Calendar.getInstance().apply {
-            time = this@isTomorrow
-            add(Calendar.DAY_OF_MONTH, -1)
-        }.time
-        return date.isToday
+        val tomorrow = ZonedDateTime.now().plusDays(1)
+        return year == tomorrow.year && dayOfYear == tomorrow.dayOfYear
     }

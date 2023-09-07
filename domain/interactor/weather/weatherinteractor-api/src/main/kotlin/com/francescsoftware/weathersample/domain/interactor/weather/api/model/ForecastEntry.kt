@@ -6,12 +6,12 @@ import com.francescsoftware.weathersample.core.type.weather.Precipitation
 import com.francescsoftware.weathersample.core.type.weather.Speed
 import com.francescsoftware.weathersample.core.type.weather.Temperature
 import com.francescsoftware.weathersample.core.type.weather.UvIndex
-import java.util.Date
+import java.time.ZonedDateTime
 
 /**
  * A weather forecast
  *
- * @property date - the [Date] this forecast is for
+ * @property zonedDateTime - the [ZonedDateTime] this forecast is for
  * @property description - forecast description
  * @property iconCode - the code for the icon representing this forecast
  * @property temperature - the temperature
@@ -23,7 +23,7 @@ import java.util.Date
  * @property visibility - the visibility in meters
  */
 data class ForecastEntry(
-    val date: Date,
+    val zonedDateTime: ZonedDateTime,
     val description: String,
     val iconCode: Int,
     val temperature: Temperature,

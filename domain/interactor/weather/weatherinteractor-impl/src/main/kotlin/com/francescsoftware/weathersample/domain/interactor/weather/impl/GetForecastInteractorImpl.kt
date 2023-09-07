@@ -1,11 +1,9 @@
 package com.francescsoftware.weathersample.domain.interactor.weather.impl
 
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
-import com.francescsoftware.weathersample.core.time.api.Iso8601DateTime
-import com.francescsoftware.weathersample.core.time.api.TimeFormatter
-import com.francescsoftware.weathersample.core.time.api.TimeParser
 import com.francescsoftware.weathersample.core.time.api.TimeParsingException
 import com.francescsoftware.weathersample.core.time.api.TimeProvider
+import com.francescsoftware.weathersample.core.time.api.ZoneIdProvider
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRepository
@@ -16,7 +14,9 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherL
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Forecast
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import kotlinx.coroutines.withContext
-import java.util.Date
+import java.time.Instant
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.ForecastDay as RepoForecastDay
 
@@ -25,8 +25,7 @@ internal class GetForecastInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val timeProvider: TimeProvider,
-    private val timeFormatter: TimeFormatter,
-    private val timerParser: TimeParser,
+    private val zoneIdProvider: ZoneIdProvider,
 ) : GetForecastInteractor {
 
     override suspend operator fun invoke(location: WeatherLocation): Either<Forecast> {
@@ -60,16 +59,18 @@ internal class GetForecastInteractorImpl @Inject constructor(
         data: ForecastResponse,
     ): Forecast = withContext(dispatcherProvider.default) {
         // aggregate the forecast by days
-        val days: Map<Date, RepoForecastDay> = data.forecast.forecastDay
+        val days: Map<ZonedDateTime, RepoForecastDay> = data.forecast.forecastDay
             .associateBy { item ->
-                val time = item.hour.firstOrNull()?.time ?: throw ForecastParseException()
-                timeFormatter.setToMidnight(
-                    timerParser.parseDate(Iso8601DateTime(time))
-                )
+                val epochSeconds = item
+                    .hour
+                    .firstOrNull()?.timeEpoch ?: throw ForecastParseException()
+                val instant = Instant.ofEpochSecond(epochSeconds.toLong())
+                instant.atZone(zoneIdProvider.zoneId)
+                    .truncatedTo(ChronoUnit.DAYS)
             }
 
         // convert to forecast days, filtering out hourly forecasts in the past
-        val now = timeProvider.epoch.inWholeSeconds
+        val now = timeProvider.epoch.epochSecond
         val forecastDays = days
             .mapValues { entry ->
                 ForecastDay(
@@ -78,13 +79,13 @@ internal class GetForecastInteractorImpl @Inject constructor(
                     sunset = entry.value.astro.sunset,
                     entries = entry.value.hour
                         .filter { forecastHour -> forecastHour.timeEpoch >= now }
-                        .map { hour -> hour.toForecastEntry(timerParser) }
+                        .map { hour -> hour.toForecastEntry(zoneIdProvider.zoneId) }
                 )
             }
             .filter { mapEntry -> mapEntry.value.entries.isNotEmpty() }
             .map { entry ->
                 entry.value.copy(
-                    entries = entry.value.entries.sortedBy { it.date }
+                    entries = entry.value.entries.sortedBy { it.zonedDateTime }
                 )
             }
         Forecast(

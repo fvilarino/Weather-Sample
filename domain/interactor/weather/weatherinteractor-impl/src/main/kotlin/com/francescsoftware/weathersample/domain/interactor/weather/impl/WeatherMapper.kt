@@ -1,7 +1,6 @@
 package com.francescsoftware.weathersample.domain.interactor.weather.impl
 
 import com.francescsoftware.weathersample.core.time.api.Iso8601DateTime
-import com.francescsoftware.weathersample.core.time.api.TimeParser
 import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
 import com.francescsoftware.weathersample.core.type.weather.Humidity
 import com.francescsoftware.weathersample.core.type.weather.Precipitation
@@ -17,6 +16,7 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayClouds
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayMain
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayWind
+import java.time.ZoneId
 import kotlin.math.roundToInt
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation as RepositoryLocation
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Current as RepoCurrent
@@ -72,10 +72,8 @@ internal fun RepoCurrent.toCurrent(): Current = Current(
     iconCode = condition.code,
 )
 
-internal fun ForecastHour.toForecastEntry(
-    timerParser: TimeParser,
-) = ForecastEntry(
-    date = this.time.let { date -> timerParser.parseDate(Iso8601DateTime(date)) },
+internal fun ForecastHour.toForecastEntry(zoneId: ZoneId) = ForecastEntry(
+    zonedDateTime = this.time.let { date -> Iso8601DateTime(date).toZonedDateTime(zoneId = zoneId) },
     description = condition.text,
     iconCode = condition.code,
     temperature = Temperature.fromCelsius(tempCelsius),
