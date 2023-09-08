@@ -24,7 +24,7 @@ internal class FavoriteCityMiddleware @Inject constructor(
                 id = city.favoriteId,
                 name = city.name,
                 countryCode = city.countryCode,
-            )
+            ),
         )
     }
 }

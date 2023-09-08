@@ -10,8 +10,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
  * Adds 2 [PaddingValues] objects.
  *
  * @param other the [PaddingValues] to add to this [PaddingValues]
- * @return a [PaddingValues] aggregating the paddings of both
- *     [PaddingValues]
+ * @return a [PaddingValues] aggregating the paddings of both [PaddingValues]
  */
 @Composable
 operator fun PaddingValues.plus(other: PaddingValues): PaddingValues {

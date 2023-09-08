@@ -38,7 +38,7 @@ internal fun Humidity.format() = AnnotatedString(
     text = stringResource(
         id = R.string.formatted_humidity,
         value,
-    )
+    ),
 )
 
 @Composable
@@ -67,7 +67,7 @@ internal fun Pressure.format(): AnnotatedString = format(
 @Composable
 internal fun Speed.format(): AnnotatedString = format(
     label = ((kph * 10.0).toInt() / 10f).toString(),
-    units = stringResource(id = R.string.wind_speed)
+    units = stringResource(id = R.string.wind_speed),
 )
 
 /**

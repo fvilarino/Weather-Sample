@@ -31,7 +31,7 @@ internal class FavoriteRepositoryImpl @Inject constructor(
             id = 0,
             name = favoriteCity.name,
             countryCode = favoriteCity.countryCode,
-        )
+        ),
     )
 
     override suspend fun deleteFavoriteCity(favoriteCity: FavoriteCity) = dao.deleteFavoriteCity(
@@ -39,6 +39,6 @@ internal class FavoriteRepositoryImpl @Inject constructor(
             id = favoriteCity.id,
             name = favoriteCity.name,
             countryCode = favoriteCity.countryCode,
-        )
+        ),
     )
 }

@@ -70,14 +70,14 @@ internal class WeatherMiddleware @Inject constructor(
                 dispatch(
                     WeatherAction.Loaded(
                         currentWeather = current.toWeatherCardState(),
-                        forecastItems = forecast.toForecastItems()
-                    )
+                        forecastItems = forecast.toForecastItems(),
+                    ),
                 )
             } else {
                 dispatch(
                     WeatherAction.LoadError(
                         message = R.string.failed_to_load_weather_data,
-                    )
+                    ),
                 )
             }
         }
@@ -90,7 +90,7 @@ internal class WeatherMiddleware @Inject constructor(
                 .entries.map { entry ->
                     entry.toForecastCardState()
                 }
-                .toImmutableList()
+                .toImmutableList(),
         )
     }.toImmutableList()
 

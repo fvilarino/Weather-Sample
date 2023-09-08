@@ -37,5 +37,5 @@ internal data class CityModel(
     val region: String? = null,
 
     @SerialName("longitude")
-    val longitude: Double? = null
+    val longitude: Double? = null,
 )

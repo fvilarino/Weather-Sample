@@ -142,7 +142,7 @@ internal fun CityScreen(
     } else {
         DualPane(
             panesOrientation = PanesOrientation.horizontal(
-                aspectRatio = if (deviceClass == DeviceClass.Expanded) .33f else .5f
+                aspectRatio = if (deviceClass == DeviceClass.Expanded) .33f else .5f,
             ),
             paneOne = {
                 Column(modifier = Modifier.fillMaxSize()) {
@@ -151,7 +151,7 @@ internal fun CityScreen(
                             Modifier.height(MarginQuad)
                         } else {
                             Modifier.weight(1f)
-                        }
+                        },
                     )
                     CityPane(
                         state = state,
@@ -184,7 +184,7 @@ internal fun CityScreen(
         AboutDialog(
             onDismiss = {
                 CitySearchDestination.consume(CitySearchDestination.Actions.About)
-            }
+            },
         )
     }
 }
@@ -213,7 +213,7 @@ private fun CityPane(
             onQueryFocused = onQueryFocused,
             modifier = Modifier
                 .width(MinColumnWidth)
-                .padding(top = MarginQuad)
+                .padding(top = MarginQuad),
         )
         AnimatedVisibility(
             visible = state.showRecentCities,
@@ -225,7 +225,7 @@ private fun CityPane(
                         TextFieldValue(
                             cityModel.name,
                             TextRange(cityModel.name.length),
-                        )
+                        ),
                     )
                     onChipClick(cityModel)
                 },
@@ -233,7 +233,7 @@ private fun CityPane(
                 modifier = Modifier
                     .semantics { contentDescription = cityChipsContentDescription }
                     .fillMaxWidth()
-                    .padding(top = MarginDouble)
+                    .padding(top = MarginDouble),
             )
         }
     }
@@ -300,7 +300,7 @@ private fun Cities(
 private fun PreviewCityScreen() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             val state = remember {
                 CityState(

@@ -48,7 +48,7 @@ private class WeatherStateHolderImpl(
             },
             restore = { state ->
                 WeatherStateHolderImpl(SelectedWeatherOption.fromValue(state[0] as Int))
-            }
+            },
         )
     }
 }

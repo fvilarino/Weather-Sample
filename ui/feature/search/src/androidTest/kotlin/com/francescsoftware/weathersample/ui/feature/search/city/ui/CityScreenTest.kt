@@ -208,7 +208,7 @@ internal class CityScreenTest {
 
         composeTestRule
             .onNodeWithContentDescription(
-                recentCities.first().name
+                recentCities.first().name,
             )
             .performClick()
 

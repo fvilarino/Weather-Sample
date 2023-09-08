@@ -22,7 +22,7 @@ internal class TodayMiddleware @Inject constructor(
     }
 
     private suspend fun refreshWeather(
-        action: WeatherAction.RefreshTodayWeather
+        action: WeatherAction.RefreshTodayWeather,
     ) {
         dispatch(WeatherAction.Refreshing)
         loadTodayWeather(
@@ -44,16 +44,16 @@ internal class TodayMiddleware @Inject constructor(
                 dispatch(
                     WeatherAction.TodayLoaded(
                         currentWeather = todayWeather.toWeatherCardState(),
-                    )
+                    ),
                 )
             },
             onFailure = {
                 dispatch(
                     WeatherAction.LoadError(
                         message = R.string.failed_to_load_weather_data,
-                    )
+                    ),
                 )
-            }
+            },
         )
     }
 }

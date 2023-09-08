@@ -82,7 +82,7 @@ fun TwoOptionsSelector(
                     bottomStartPercent = 50,
                     topEndPercent = 50,
                     bottomEndPercent = 50,
-                )
+                ),
             )
             .border(
                 width = BorderWidth,
@@ -92,8 +92,8 @@ fun TwoOptionsSelector(
                     bottomStartPercent = 50,
                     topEndPercent = 50,
                     bottomEndPercent = 50,
-                )
-            )
+                ),
+            ),
     ) {
         Box(
             modifier = Modifier
@@ -157,7 +157,7 @@ private fun twoOptionsSelectorTransitionData(
     val transition = updateTransition(selectedOption, label = "selectorColor")
     val leftBackgroundColor = transition.animateColor(
         transitionSpec = { tween(durationMillis = SelectorTransitionDurationMillis) },
-        label = "leftColorSpec"
+        label = "leftColorSpec",
     ) { state ->
         when (state) {
             TwoOptionsSelectorOptions.Left -> selectedColor
@@ -166,7 +166,7 @@ private fun twoOptionsSelectorTransitionData(
     }
     val rightTextColor = transition.animateColor(
         transitionSpec = { tween(durationMillis = SelectorTransitionDurationMillis) },
-        label = "leftTextColorSpec"
+        label = "leftTextColorSpec",
     ) { state ->
         when (state) {
             TwoOptionsSelectorOptions.Left -> contentColorFor(backgroundColor = deselectedColor)
@@ -175,7 +175,7 @@ private fun twoOptionsSelectorTransitionData(
     }
     val rightBackgroundColor = transition.animateColor(
         transitionSpec = { tween(durationMillis = SelectorTransitionDurationMillis) },
-        label = "rightColorSpec"
+        label = "rightColorSpec",
     ) { state ->
         when (state) {
             TwoOptionsSelectorOptions.Left -> deselectedColor
@@ -184,7 +184,7 @@ private fun twoOptionsSelectorTransitionData(
     }
     val leftTextColor = transition.animateColor(
         transitionSpec = { tween(durationMillis = SelectorTransitionDurationMillis) },
-        label = "rightTextColorSpec"
+        label = "rightTextColorSpec",
     ) { state ->
         when (state) {
             TwoOptionsSelectorOptions.Left -> contentColorFor(backgroundColor = selectedColor)
@@ -196,7 +196,7 @@ private fun twoOptionsSelectorTransitionData(
             leftBackgroundColor = leftBackgroundColor,
             rightBackgroundColor = rightBackgroundColor,
             leftTextColor = leftTextColor,
-            rightTextColor = rightTextColor
+            rightTextColor = rightTextColor,
         )
     }
 }

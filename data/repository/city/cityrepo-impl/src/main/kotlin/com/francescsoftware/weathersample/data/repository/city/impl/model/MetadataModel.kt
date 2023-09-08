@@ -10,5 +10,5 @@ internal data class MetadataModel(
     val currentOffset: Int? = null,
 
     @SerialName("totalCount")
-    val totalCount: Int? = null
+    val totalCount: Int? = null,
 )

@@ -114,7 +114,7 @@ fun ActionsMenu(
     }
 
     Row(
-        modifier = modifier
+        modifier = modifier,
     ) {
         menuItems.alwaysShownItems.forEach { item ->
             IconButton(onClick = item.onClick) {
@@ -141,7 +141,7 @@ fun ActionsMenu(
                         text = {
                             Text(item.title)
                         },
-                        onClick = item.onClick
+                        onClick = item.onClick,
                     )
                 }
             }
@@ -183,7 +183,7 @@ private fun splitMenuItems(
 @WidgetPreviews
 @Composable
 private fun PreviewActionMenu(
-    @PreviewParameter(ActionMenuParameterProvider::class) items: ImmutableList<ActionMenuItem>
+    @PreviewParameter(ActionMenuParameterProvider::class) items: ImmutableList<ActionMenuItem>,
 ) {
     WeatherSampleTheme {
         var menuOpen by remember {
@@ -201,9 +201,9 @@ private fun PreviewActionMenu(
                     items = items,
                     isOpen = menuOpen,
                     onToggleOverflow = { menuOpen = !menuOpen },
-                    maxVisibleItems = 3
+                    maxVisibleItems = 3,
                 )
-            }
+            },
         )
     }
 }

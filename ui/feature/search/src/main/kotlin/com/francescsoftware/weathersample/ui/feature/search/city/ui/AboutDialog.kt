@@ -23,22 +23,22 @@ internal fun AboutDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = stringResource(id = R.string.app_name)
+                text = stringResource(id = R.string.app_name),
             )
         },
         text = {
             Text(
                 text = stringResource(
-                    id = R.string.about_dialog_text
-                )
+                    id = R.string.about_dialog_text,
+                ),
             )
         },
         confirmButton = {
             OutlinedButton(
-                onClick = onDismiss
+                onClick = onDismiss,
             ) {
                 Text(
-                    text = stringResource(id = android.R.string.ok)
+                    text = stringResource(id = android.R.string.ok),
                 )
             }
         },
@@ -51,11 +51,11 @@ internal fun AboutDialog(
 private fun PreviewAboutDialog() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             AboutDialog(
                 onDismiss = {},
-                modifier = Modifier.padding(all = MarginDouble)
+                modifier = Modifier.padding(all = MarginDouble),
             )
         }
     }

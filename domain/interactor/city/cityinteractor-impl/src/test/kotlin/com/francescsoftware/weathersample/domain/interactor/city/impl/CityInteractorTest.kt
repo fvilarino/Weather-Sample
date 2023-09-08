@@ -47,8 +47,8 @@ class CityInteractorTest {
             coordinates = Coordinates(
                 latitude = CityLatitude,
                 longitude = CityLongitude,
-            )
-        )
+            ),
+        ),
     )
 
     private val successCity =
@@ -61,8 +61,8 @@ class CityInteractorTest {
             countryCode = CityCountryCode,
             coordinates = DomainCoordinates(
                 latitude = CityLatitude,
-                longitude = CityLongitude
-            )
+                longitude = CityLongitude,
+            ),
         )
 
     private class FakeCityRepository : CityRepository {
@@ -77,7 +77,7 @@ class CityInteractorTest {
                     CitySearchResponse(
                         metadata = Metadata(0, 0),
                         cities = cities,
-                    )
+                    ),
                 )
             }
         }

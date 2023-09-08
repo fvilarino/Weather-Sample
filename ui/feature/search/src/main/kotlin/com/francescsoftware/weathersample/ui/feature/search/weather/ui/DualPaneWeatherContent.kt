@@ -33,7 +33,7 @@ internal fun DualPaneWeatherContent(
 ) {
     DualPane(
         panesOrientation = PanesOrientation.horizontal(
-            aspectRatio = if (deviceClass == DeviceClass.Expanded) .33f else .5f
+            aspectRatio = if (deviceClass == DeviceClass.Expanded) .33f else .5f,
         ),
         paneOne = {
             Box(

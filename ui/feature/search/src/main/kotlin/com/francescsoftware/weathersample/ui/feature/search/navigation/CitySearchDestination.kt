@@ -69,7 +69,7 @@ internal object CitySearchDestination : BottomNavigationDestination {
             items = persistentListOf(
                 ActionMenuItem.NeverShown(
                     title = stringResource(
-                        id = R.string.action_item_about
+                        id = R.string.action_item_about,
                     ),
                     onClick = {
                         menuExpanded = false
@@ -78,8 +78,8 @@ internal object CitySearchDestination : BottomNavigationDestination {
                                 about = true,
                             )
                         }
-                    }
-                )
+                    },
+                ),
             ),
             isOpen = menuExpanded,
             onToggleOverflow = { menuExpanded = !menuExpanded },
@@ -92,7 +92,7 @@ internal object CitySearchDestination : BottomNavigationDestination {
      * @param action the [Actions] to consume
      */
     fun consume(
-        action: Actions
+        action: Actions,
     ) {
         _actionsState.update { state ->
             when (action) {

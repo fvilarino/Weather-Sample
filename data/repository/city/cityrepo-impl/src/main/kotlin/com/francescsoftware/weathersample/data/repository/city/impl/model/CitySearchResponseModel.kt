@@ -13,5 +13,5 @@ internal data class CitySearchResponseModel(
     val data: List<CityModel>? = null,
 
     @SerialName("links")
-    val links: List<LinksModel>? = null
+    val links: List<LinksModel>? = null,
 )

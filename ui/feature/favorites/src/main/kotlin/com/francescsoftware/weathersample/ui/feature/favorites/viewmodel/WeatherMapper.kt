@@ -39,7 +39,7 @@ internal fun String.formatDescription(): String =
     }
 
 internal fun Forecast.toForecastItems(
-    timeFormatter: TimeFormatter
+    timeFormatter: TimeFormatter,
 ): List<ForecastDayState> = items.map { forecastDay ->
     ForecastDayState(
         header = forecastDay.toForecastHeaderState(timeFormatter),
@@ -47,7 +47,7 @@ internal fun Forecast.toForecastItems(
             .entries.map { entry ->
                 entry.toForecastCardState(timeFormatter)
             }
-            .toImmutableList()
+            .toImmutableList(),
     )
 }
 

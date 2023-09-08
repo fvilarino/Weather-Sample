@@ -29,7 +29,7 @@ internal class RecentsRepositoryImpl @Inject constructor(
             RecentCityEntity(
                 name = recentCity.name,
                 lastUsed = System.currentTimeMillis(),
-            )
+            ),
         )
     }
 

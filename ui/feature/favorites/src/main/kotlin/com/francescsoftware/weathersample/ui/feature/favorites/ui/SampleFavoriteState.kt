@@ -129,7 +129,7 @@ internal val BarcelonaFavoriteCardState = VancouverFavoriteCardState.copy(
         favoriteId = 2,
         name = "Barcelona",
         countryCode = "ES",
-    )
+    ),
 )
 
 internal val LondonFavoriteCardState = VancouverFavoriteCardState.copy(
@@ -137,5 +137,5 @@ internal val LondonFavoriteCardState = VancouverFavoriteCardState.copy(
         favoriteId = 3,
         name = "London",
         countryCode = "GB",
-    )
+    ),
 )

@@ -42,8 +42,8 @@ private class CityScreenStateHolderImpl(
             selection = TextRange(
                 start = selectionStart,
                 end = selectionEnd,
-            )
-        )
+            ),
+        ),
     )
         private set
 
@@ -70,7 +70,7 @@ private class CityScreenStateHolderImpl(
                     selectionStart = args[1] as Int,
                     selectionEnd = args[2] as Int,
                 )
-            }
+            },
         )
     }
 }

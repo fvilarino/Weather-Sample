@@ -65,7 +65,7 @@ private fun PreviewWeatherItemContent() {
             color = MaterialTheme.colorScheme.background,
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(MarginSingle)
+                verticalArrangement = Arrangement.spacedBy(MarginSingle),
             ) {
                 WeatherItemContent(
                     label = "Just a weather label",

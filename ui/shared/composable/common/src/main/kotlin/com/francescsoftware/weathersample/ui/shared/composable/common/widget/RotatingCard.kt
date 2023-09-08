@@ -82,7 +82,7 @@ fun RotatingCard(
     ) {
         if (rotation.value <= HalfRotationDegrees) {
             Box(
-                Modifier.fillMaxSize()
+                Modifier.fillMaxSize(),
             ) {
                 front()
             }

@@ -38,7 +38,7 @@ internal fun CityCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             InfoLabels(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 Text(
                     text = stringResource(R.string.city_result_label),

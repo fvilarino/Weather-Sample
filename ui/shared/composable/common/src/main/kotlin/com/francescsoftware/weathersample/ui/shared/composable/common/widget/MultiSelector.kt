@@ -95,14 +95,14 @@ internal class MultiSelectorStateImpl(
             EdgeCornerPercent
         } else {
             DefaultCornerPercent
-        }
+        },
     )
     private val _endCornerPercent = Animatable(
         if (options.last() == selectedOption) {
             EdgeCornerPercent
         } else {
             DefaultCornerPercent
-        }
+        },
     )
 
     private val _textColors: State<List<Color>> = derivedStateOf {
@@ -110,7 +110,7 @@ internal class MultiSelectorStateImpl(
             lerp(
                 start = unselectedColor,
                 stop = selectedColor,
-                fraction = 1f - (((selectedIndex - index.toFloat()).absoluteValue).coerceAtMost(1f))
+                fraction = 1f - (((selectedIndex - index.toFloat()).absoluteValue).coerceAtMost(1f)),
             )
         }
     }
@@ -244,7 +244,7 @@ fun MultiSelector(
     Layout(
         modifier = modifier
             .clip(
-                shape = RoundedCornerShape(percent = 50)
+                shape = RoundedCornerShape(percent = 50),
             )
             .background(unselectedBackgroundColor),
         content = {
@@ -275,11 +275,11 @@ fun MultiSelector(
                             bottomStartPercent = state.startCornerPercent,
                             topEndPercent = state.endCornerPercent,
                             bottomEndPercent = state.endCornerPercent,
-                        )
+                        ),
                     )
                     .background(selectedBackgroundColor),
             )
-        }
+        },
     ) { measurables, constraints ->
         val optionWidth = measurables.maxOf { measurable -> measurable.maxIntrinsicWidth(constraints.maxHeight) }
             .coerceAtMost(constraints.maxWidth / options.size)
@@ -341,7 +341,7 @@ fun PreviewMultiSelector() {
                     modifier = Modifier
                         .padding(all = MarginDouble)
                         .fillMaxWidth()
-                        .height(56.dp)
+                        .height(56.dp),
                 )
 
                 MultiSelector(
@@ -353,7 +353,7 @@ fun PreviewMultiSelector() {
                     modifier = Modifier
                         .padding(all = MarginDouble)
                         .fillMaxWidth()
-                        .height(56.dp)
+                        .height(56.dp),
                 )
             }
         }

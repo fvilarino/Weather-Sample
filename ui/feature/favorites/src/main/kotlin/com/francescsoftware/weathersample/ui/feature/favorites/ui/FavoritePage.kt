@@ -99,7 +99,7 @@ internal fun FavoritePage(
                         GradientStart to MaterialTheme.colorScheme.surface,
                         GradientMidPoint to MaterialTheme.colorScheme.surface,
                         GradientEnd to Color.Transparent,
-                    )
+                    ),
                 )
                 .padding(bottom = MarginQuad),
         )
@@ -107,11 +107,11 @@ internal fun FavoritePage(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(MarginDouble),
             contentPadding = WindowInsets.safeDrawing.only(
-                WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal
+                WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal,
             ).asPaddingValues() + PaddingValues(top = offsetDp, bottom = MarginDouble),
         ) {
             item(
-                key = "divider1"
+                key = "divider1",
             ) {
                 Divider(
                     modifier = Modifier
@@ -120,7 +120,7 @@ internal fun FavoritePage(
                 )
             }
             item(
-                key = "current_label"
+                key = "current_label",
             ) {
                 WeatherLabel(
                     label = "Current Weather",
@@ -128,7 +128,7 @@ internal fun FavoritePage(
                 )
             }
             item(
-                key = "current"
+                key = "current",
             ) {
                 TodayWeatherCard(
                     state = state.current,
@@ -136,7 +136,7 @@ internal fun FavoritePage(
                 )
             }
             item(
-                key = "divider2"
+                key = "divider2",
             ) {
                 Divider(
                     modifier = Modifier
@@ -145,7 +145,7 @@ internal fun FavoritePage(
                 )
             }
             item(
-                key = "forecast_label"
+                key = "forecast_label",
             ) {
                 WeatherLabel(
                     label = "Forecast",

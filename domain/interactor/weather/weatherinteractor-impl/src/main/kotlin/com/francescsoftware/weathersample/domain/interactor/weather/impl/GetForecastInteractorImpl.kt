@@ -49,9 +49,9 @@ internal class GetForecastInteractorImpl @Inject constructor(
                     WeatherException(
                         throwable.message ?: "Error fetching forecast",
                         throwable,
-                    )
+                    ),
                 )
-            }
+            },
         )
     }
 
@@ -79,18 +79,18 @@ internal class GetForecastInteractorImpl @Inject constructor(
                     sunset = entry.value.astro.sunset,
                     entries = entry.value.hour
                         .filter { forecastHour -> forecastHour.timeEpoch >= now }
-                        .map { hour -> hour.toForecastEntry(zoneIdProvider.zoneId) }
+                        .map { hour -> hour.toForecastEntry(zoneIdProvider.zoneId) },
                 )
             }
             .filter { mapEntry -> mapEntry.value.entries.isNotEmpty() }
             .map { entry ->
                 entry.value.copy(
-                    entries = entry.value.entries.sortedBy { it.zonedDateTime }
+                    entries = entry.value.entries.sortedBy { it.zonedDateTime },
                 )
             }
         Forecast(
             current = data.current.toCurrent(),
-            forecastDays.sortedBy { forecastDay -> forecastDay.date }
+            forecastDays.sortedBy { forecastDay -> forecastDay.date },
         )
     }
 }

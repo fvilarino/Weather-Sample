@@ -98,24 +98,24 @@ fun DualPane(
         val firstPaneConstraints = when (panesOrientation.orientation) {
             is PanesOrientation.Orientation.Horizontal -> Constraints.fixed(
                 width = (constraints.maxWidth * panesOrientation.orientation.aspectRatio).roundToInt(),
-                height = constraints.maxHeight
+                height = constraints.maxHeight,
             )
 
             is PanesOrientation.Orientation.Vertical -> Constraints.fixed(
                 width = constraints.maxWidth,
-                height = (constraints.maxHeight * panesOrientation.orientation.aspectRatio).roundToInt()
+                height = (constraints.maxHeight * panesOrientation.orientation.aspectRatio).roundToInt(),
             )
         }
         val paneOnePlaceable = measurables[0].measure(firstPaneConstraints)
         val secondPaneConstraints = when (panesOrientation.orientation) {
             is PanesOrientation.Orientation.Horizontal -> Constraints.fixed(
                 width = (constraints.maxWidth * (1f - panesOrientation.orientation.aspectRatio)).roundToInt(),
-                height = constraints.maxHeight
+                height = constraints.maxHeight,
             )
 
             is PanesOrientation.Orientation.Vertical -> Constraints.fixed(
                 width = constraints.maxWidth,
-                height = (constraints.maxHeight * (1f - panesOrientation.orientation.aspectRatio)).roundToInt()
+                height = (constraints.maxHeight * (1f - panesOrientation.orientation.aspectRatio)).roundToInt(),
             )
         }
         val paneTwoPlaceable = measurables[1].measure(secondPaneConstraints)
@@ -146,13 +146,13 @@ fun DualPane(
 private fun PreviewHorizontalDualPane() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             DualPane(
                 panesOrientation = PanesOrientation.horizontal(aspectRatio = .5f),
                 paneOne = { Box(modifier = Modifier.background(Color.Red)) },
                 paneTwo = { Box(modifier = Modifier.background(Color.Blue)) },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             )
         }
     }
@@ -163,13 +163,13 @@ private fun PreviewHorizontalDualPane() {
 private fun PreviewVerticalDualPane() {
     WeatherSampleTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             DualPane(
                 panesOrientation = PanesOrientation.vertical(aspectRatio = .33f),
                 paneOne = { Box(modifier = Modifier.background(Color.Red)) },
                 paneTwo = { Box(modifier = Modifier.background(Color.Blue)) },
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             )
         }
     }

@@ -27,7 +27,7 @@ fun WeatherItemLabel(
     modifier: Modifier = Modifier,
 ) {
     CompositionLocalProvider(
-        LocalContentColor provides LocalContentColor.current.copy(alpha = MediumEmphasisAlpha)
+        LocalContentColor provides LocalContentColor.current.copy(alpha = MediumEmphasisAlpha),
     ) {
         Text(
             text = label,

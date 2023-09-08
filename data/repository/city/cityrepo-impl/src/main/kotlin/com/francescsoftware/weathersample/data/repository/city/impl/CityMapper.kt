@@ -10,7 +10,7 @@ import com.francescsoftware.weathersample.data.repository.city.impl.model.Metada
 
 internal fun CitySearchResponseModel.toCityResponse(): CitySearchResponse = CitySearchResponse(
     metadata = metadata?.toCityMetadata() ?: Metadata(0, 0),
-    cities = data?.toCities().orEmpty()
+    cities = data?.toCities().orEmpty(),
 )
 
 internal fun MetadataModel.toCityMetadata(): Metadata = Metadata(
@@ -31,5 +31,5 @@ internal fun CityModel.toCity(): City = City(
     coordinates = Coordinates(
         longitude = longitude ?: 0.0,
         latitude = latitude ?: 0.0,
-    )
+    ),
 )

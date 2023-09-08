@@ -54,7 +54,7 @@ internal object CityRepositoryModule {
     @Provides
     @Singleton
     fun provideCityService(
-        @CityRetrofit retrofit: Retrofit
+        @CityRetrofit retrofit: Retrofit,
     ): CityService = retrofit.create(CityService::class.java)
 }
 
@@ -64,7 +64,7 @@ internal interface CityRepositoryModuleBinds {
     @Binds
     @Singleton
     fun bindCityRepository(
-        cityRepositoryImpl: CityRepositoryImpl
+        cityRepositoryImpl: CityRepositoryImpl,
     ): CityRepository
 }
 

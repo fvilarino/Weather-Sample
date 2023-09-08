@@ -30,13 +30,13 @@ internal class CityRepositoryImpl @Inject constructor(
                     }
                 } else {
                     Either.Failure(
-                        CitiesException("Invalid data received")
+                        CitiesException("Invalid data received"),
                     )
                 }
             },
             onFailure = { throwable ->
                 Either.Failure(CitiesException(cause = throwable))
-            }
+            },
         )
     }
 }

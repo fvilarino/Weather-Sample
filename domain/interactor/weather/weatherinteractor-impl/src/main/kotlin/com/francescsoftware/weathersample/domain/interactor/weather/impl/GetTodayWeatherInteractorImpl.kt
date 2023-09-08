@@ -35,8 +35,8 @@ internal class GetTodayWeatherInteractorImpl @Inject constructor(
                 Either.Failure(
                     WeatherException(
                         throwable.message ?: "Error fetching today weather",
-                        throwable
-                    )
+                        throwable,
+                    ),
                 )
             },
         )

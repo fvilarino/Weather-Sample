@@ -26,7 +26,7 @@ internal data class FavoriteState(
             loadState = LoadState.Loading,
             pagerState = FavoritePagerState(
                 pages = persistentListOf(),
-            )
+            ),
         )
     }
 }

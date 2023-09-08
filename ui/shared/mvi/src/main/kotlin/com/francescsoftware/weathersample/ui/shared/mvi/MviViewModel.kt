@@ -19,8 +19,7 @@ private const val BufferSize = 64
  * @param S - The [State] managed by this [ViewModel]
  * @param A - the [Action]s this [ViewModel] handles
  * @param closeableScope - a [CloseableCoroutineScope] to launch coroutines on
- * @param reducer - the [Reducer] that generates new state from the current
- *     [State] and [Action]s
+ * @param reducer - the [Reducer] that generates new state from the current [State] and [Action]s
  * @param middlewares - a list of [Middleware] to handle [Action]s
  * @param initialState - the initial [State]
  */

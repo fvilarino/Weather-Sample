@@ -72,10 +72,10 @@ private class FakeGetCitiesInteractor : GetCitiesInteractor {
                 Cities(
                     metadata = Metadata(
                         offset = 0,
-                        totalCount = cities!!.size
+                        totalCount = cities!!.size,
                     ),
                     cities = cities!!,
-                )
+                ),
             )
         } else {
             Either.Success(
@@ -85,7 +85,7 @@ private class FakeGetCitiesInteractor : GetCitiesInteractor {
                         totalCount = 0,
                     ),
                     cities = emptyList(),
-                )
+                ),
             )
         }
     }
@@ -146,8 +146,8 @@ private val DomainCityVancouver = City(
     countryCode = VancouverCityCountryCode,
     coordinates = DomainCoordinates(
         latitude = VancouverCityLatitude,
-        longitude = VancouverCityLongitude
-    )
+        longitude = VancouverCityLongitude,
+    ),
 )
 
 private val DomainCityBarcelona = City(
@@ -159,8 +159,8 @@ private val DomainCityBarcelona = City(
     countryCode = BarcelonaCityCountryCode,
     coordinates = DomainCoordinates(
         latitude = BarcelonaCityLatitude,
-        longitude = BarcelonaCityLongitude
-    )
+        longitude = BarcelonaCityLongitude,
+    ),
 )
 
 private val CityModelVancouver = CityResultModel(
@@ -195,10 +195,10 @@ private val FavoriteCityVancouver = FavoriteCity(
 
 private val RecentCities = listOf(
     RecentCity(
-        RecentCityVancouver
+        RecentCityVancouver,
     ),
     RecentCity(
-        RecentCityBarcelona
+        RecentCityBarcelona,
     ),
 )
 
@@ -345,7 +345,7 @@ internal class CityViewModelTest {
                 SelectedCity(
                     name = DomainCityVancouver.name,
                     countryCode = DomainCityVancouver.countryCode,
-                )
+                ),
             )
             assertThat(insertRecentCitiesInteractor.lastCity?.name).isNotNull().isEqualTo(RecentCityVancouver)
         }
@@ -436,7 +436,7 @@ internal class CityViewModelTest {
                     cityMiddleware,
                     getRecentCitiesMiddleware(
                         scope = scope,
-                    )
+                    ),
                 ),
             )
             viewModel.onQueryChange(query = TextFieldValue(query))
@@ -470,7 +470,7 @@ internal class CityViewModelTest {
                     cityMiddleware,
                     getRecentCitiesMiddleware(
                         scope = scope,
-                    )
+                    ),
                 ),
             )
             viewModel.onQueryChange(query = TextFieldValue(query))

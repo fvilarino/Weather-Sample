@@ -69,8 +69,8 @@ internal fun SinglePaneWeatherContent(
                         GradientStart to MaterialTheme.colorScheme.surface,
                         GradientMidPoint to MaterialTheme.colorScheme.surface,
                         GradientEnd to Color.Transparent,
-                    )
-                )
+                    ),
+                ),
         )
         Column(
             modifier = Modifier

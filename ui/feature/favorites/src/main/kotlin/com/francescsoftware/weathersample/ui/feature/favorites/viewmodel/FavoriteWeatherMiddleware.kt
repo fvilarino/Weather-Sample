@@ -57,7 +57,7 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
     }
 
     private suspend fun fetchForecast(
-        cities: List<FavoriteCity>
+        cities: List<FavoriteCity>,
     ) = if (cities.isEmpty()) {
         emptyList()
     } else {
@@ -66,7 +66,7 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
                 location = WeatherLocation.City(
                     name = city.name,
                     countryCode = city.countryCode,
-                )
+                ),
             ).map { forecast ->
                 ForecastInfo(
                     city = city,
@@ -96,9 +96,9 @@ internal class FavoriteWeatherMiddleware @Inject constructor(
                             current = current.toWeatherCardState(),
                             forecast = forecastInfo.forecast.toForecastItems(
                                 timeFormatter,
-                            ).toPersistentList()
+                            ).toPersistentList(),
                         )
-                    }.toPersistentList()
+                    }.toPersistentList(),
                 )
                 FavoriteAction.Loaded(state)
             }

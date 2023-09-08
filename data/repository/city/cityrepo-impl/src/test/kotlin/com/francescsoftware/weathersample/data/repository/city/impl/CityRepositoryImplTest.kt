@@ -60,8 +60,9 @@ private val ExpectedCities = listOf(
             latitude = 36.4056,
             longitude = -77.2322,
         ),
-    )
+    ),
 )
+
 internal class CityRepositoryImplTest {
 
     private val json = Json { ignoreUnknownKeys = true }

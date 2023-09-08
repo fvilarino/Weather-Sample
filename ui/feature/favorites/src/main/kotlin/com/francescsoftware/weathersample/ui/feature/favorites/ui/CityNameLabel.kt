@@ -46,7 +46,7 @@ internal fun CityNameLabel(
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = stringResource(id = R.string.content_description_delete_favorite)
+                contentDescription = stringResource(id = R.string.content_description_delete_favorite),
             )
         }
     }

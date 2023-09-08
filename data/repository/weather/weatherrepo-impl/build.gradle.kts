@@ -14,7 +14,7 @@ android {
             buildConfigField(
                 "String",
                 "WEATHER_SERVICE_BASE_URL",
-                "\"https://community-open-weather-map.p.rapidapi.com/\""
+                "\"https://community-open-weather-map.p.rapidapi.com/\"",
             )
             buildConfigField("String", "RAPID_SERVICE_KEY", "\"$rapidApiKey\"")
             buildConfigField("String", "RAPID_SERVICE_WEATHER_HOST", "\"weatherapi-com.p.rapidapi.com\"")
