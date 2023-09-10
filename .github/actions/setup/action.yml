@@ -17,6 +17,7 @@ runs:
     - uses: gradle/gradle-build-action@v2
       with:
           cache-read-only: false
+          cache-overwrite-existing: true
           gradle-home-cache-cleanup: true
 
     - name: Setup Android SDK
@@ -25,3 +26,4 @@ runs:
     - name: Accept licenses
       run: yes | "$ANDROID_HOME"/cmdline-tools/latest/bin/sdkmanager --licenses || true
       shell: bash
+
