@@ -9,7 +9,7 @@ internal fun Project.configureAndroidComposeTest(
 ) {
     commonExtension.apply {
         dependencies {
-            val bom = catalog.findLibrary("androidx-compose-compose-bom").get()
+            val bom = catalog.findLibrary("androidx.compose.compose.bom").get()
             add("androidTestImplementation", platform(bom))
             add("androidTestImplementation", catalog.findLibrary("androidx.compose.ui.ui.test.junit4").get())
         }
