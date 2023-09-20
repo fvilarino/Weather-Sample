@@ -30,12 +30,7 @@ open class MviViewModel<S : State, A : Action>(
     initialState: S,
 ) : ViewModel(closeableScope), Dispatcher<A> {
 
-    private data class ActionImpl<S : State, A : Action>(
-        val state: S,
-        val action: A,
-    )
-
-    private val actions = MutableSharedFlow<ActionImpl<S, A>>(extraBufferCapacity = BufferSize)
+    private val actions = MutableSharedFlow<A>(extraBufferCapacity = BufferSize)
 
     /** The [State] managed by this [MviViewModel] */
     var state: S by mutableStateOf(initialState)
@@ -45,23 +40,23 @@ open class MviViewModel<S : State, A : Action>(
         middlewares.fastForEach { middleware -> middleware.setDispatcher(this) }
         closeableScope.launch {
             actions
-                .onEach { actionImpl ->
+                .onEach { action ->
                     middlewares.fastForEach { middleware ->
-                        middleware.process(actionImpl.state, actionImpl.action)
+                        middleware.process(state, action)
                     }
                 }
                 .collect()
         }
         closeableScope.launch {
-            actions.collect {
-                state = reducer.reduce(state, it.action)
+            actions.collect { action ->
+                state = reducer.reduce(state, action)
             }
         }
     }
 
     override fun dispatch(action: A) {
         closeableScope.launch {
-            actions.emit(ActionImpl(state, action))
+            actions.emit(action)
         }
     }
 

@@ -51,7 +51,7 @@ internal class FavoriteViewModel @Inject constructor(
     middlewares = listOf(favoriteWeatherMiddleware, favoriteCityMiddleware),
     initialState = FavoriteState.initial,
 ) {
-    init {
+    fun onStart() {
         dispatch(FavoriteAction.Load)
     }
 

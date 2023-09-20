@@ -53,7 +53,7 @@ internal class CityMiddleware @Inject constructor(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_LATEST,
     )
-    private var job: Job? = null
+    private var searchJob: Job? = null
 
     override suspend fun process(
         state: CityState,
@@ -61,6 +61,7 @@ internal class CityMiddleware @Inject constructor(
     ) {
         when (action) {
             CityAction.Start -> onStart()
+            CityAction.Stop -> onStop()
             is CityAction.QueryUpdated -> onQueryUpdated(action.query)
             is CityAction.OnFavoriteClick -> onFavoriteClick(action.city)
             else -> {}
@@ -68,7 +69,7 @@ internal class CityMiddleware @Inject constructor(
     }
 
     private fun onStart() {
-        job?.cancel()
+        searchJob?.cancel()
         val searchCities = searchFlow
             .debounce(debounceDelay)
             .distinctUntilChanged()
@@ -76,7 +77,7 @@ internal class CityMiddleware @Inject constructor(
             .map { prefix ->
                 getCitiesInteractor(prefix = prefix)
             }
-        job = scope.launch {
+        searchJob = scope.launch {
             combine(
                 searchCities,
                 getFavoriteCitiesInteractor(),
@@ -91,6 +92,11 @@ internal class CityMiddleware @Inject constructor(
                 dispatch(action)
             }
         }
+    }
+
+    private fun onStop() {
+        searchJob?.cancel()
+        searchJob = null
     }
 
     private fun onQueryUpdated(

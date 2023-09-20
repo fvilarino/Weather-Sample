@@ -22,8 +22,12 @@ internal class CityViewModel @Inject constructor(
     initialState = CityState.initial,
 ) {
 
-    init {
+    fun onStart() {
         dispatch(CityAction.Start)
+    }
+
+    fun onStop() {
+        dispatch(CityAction.Stop)
     }
 
     fun onQueryChange(query: TextFieldValue) {
