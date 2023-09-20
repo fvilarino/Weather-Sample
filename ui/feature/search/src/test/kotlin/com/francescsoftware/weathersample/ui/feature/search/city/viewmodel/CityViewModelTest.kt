@@ -225,6 +225,7 @@ internal class CityViewModelTest {
                 reducer = CityReducer(),
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
+            viewModel.onStart()
             viewModel.onQueryChange(query = TextFieldValue(query))
             val state = viewModel.state
             assertThat(state.loadState).isEqualTo(LoadState.Loaded)
@@ -249,6 +250,7 @@ internal class CityViewModelTest {
                 reducer = CityReducer(),
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
+            viewModel.onStart()
             viewModel.onQueryChange(query = TextFieldValue(query))
             val state = viewModel.state
             assertThat(state.loadState).isEqualTo(LoadState.Error)
@@ -274,6 +276,7 @@ internal class CityViewModelTest {
                     recentCitiesMiddleware,
                 ),
             )
+            viewModel.onStart()
             viewModel.onQueryFocused()
             val state = viewModel.state
             assertThat(state.recentCities.size).isEqualTo(RecentCities.size)
@@ -309,6 +312,7 @@ internal class CityViewModelTest {
                 reducer = CityReducer(),
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
+            viewModel.onStart()
             viewModel.onQueryFocused()
             viewModel.onChipClick(RecentCityModel(chipCity))
             val state = viewModel.state
@@ -340,6 +344,7 @@ internal class CityViewModelTest {
                 reducer = CityReducer(),
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
+            viewModel.onStart()
             viewModel.onQueryFocused()
             viewModel.onCityClick(
                 SelectedCity(
@@ -377,6 +382,7 @@ internal class CityViewModelTest {
                 reducer = CityReducer(),
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
+            viewModel.onStart()
             viewModel.onQueryFocused()
             viewModel.onDeleteChip(RecentCityModel(chipCity))
             assertThat(deleteRecentCityInteractor.lastCity?.name).isNotNull().isEqualTo(RecentCityVancouver)
@@ -407,6 +413,7 @@ internal class CityViewModelTest {
                 reducer = CityReducer(),
                 middlewares = setOf(cityMiddleware, recentCitiesMiddleware),
             )
+            viewModel.onStart()
             viewModel.onQueryChange(query = TextFieldValue(query))
             val state = viewModel.state
             assertThat(state.cities.size).isEqualTo(2)
@@ -439,6 +446,7 @@ internal class CityViewModelTest {
                     ),
                 ),
             )
+            viewModel.onStart()
             viewModel.onQueryChange(query = TextFieldValue(query))
             viewModel.onFavoriteClick(cityResultModel = CityModelVancouver)
             assertThat(insertFavoriteCityInteractor.lastCity).isNotNull().isEqualTo(FavoriteCityVancouver.copy(id = 0))
@@ -473,6 +481,7 @@ internal class CityViewModelTest {
                     ),
                 ),
             )
+            viewModel.onStart()
             viewModel.onQueryChange(query = TextFieldValue(query))
             viewModel.onFavoriteClick(cityResultModel = CityModelVancouver.copy(favoriteId = FavoriteCityVancouverId))
             assertThat(deleteFavoriteCityInteractor.lastCity).isNotNull().isEqualTo(FavoriteCityVancouver)

@@ -8,9 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherLoadState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherViewModel
@@ -27,6 +33,20 @@ internal fun WeatherScreen(
     deviceClass: DeviceClass,
     modifier: Modifier = Modifier,
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val onStart by rememberUpdatedState(newValue = viewModel::onStart)
+    DisposableEffect(key1 = lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) {
+                onStart()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     WeatherScreen(
         state = viewModel.state,
         deviceClass = deviceClass,
