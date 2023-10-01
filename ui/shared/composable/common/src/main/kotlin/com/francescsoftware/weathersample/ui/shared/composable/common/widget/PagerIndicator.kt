@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.shared.composable.common.widget
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -140,6 +141,7 @@ fun PagerIndicator(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 private fun PagerState.isLeftEdge(
     itemCount: Int,
     index: Int,
@@ -151,6 +153,7 @@ private fun PagerState.isLeftEdge(
         index < itemCount - indicatorCount + 1
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 private fun PagerState.isRightEdge(
     itemCount: Int,
     index: Int,
