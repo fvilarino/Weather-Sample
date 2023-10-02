@@ -9,11 +9,12 @@ plugins {
 android {
     namespace = "com.francescsoftware.weathersample.ui.feature.search"
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs +
-            "-opt-in=kotlinx.coroutines.FlowPreview" +
-            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api" +
-            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi" +
-            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-opt-in=kotlinx.coroutines.FlowPreview",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+        )
     }
 }
 

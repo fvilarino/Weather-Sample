@@ -8,7 +8,9 @@ android {
     namespace = "com.francescsoftware.weathersample.ui.shared.composable.weather"
 
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+        )
     }
 }
 

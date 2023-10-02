@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -105,6 +106,7 @@ internal fun CityScreen(
 }
 
 @Composable
+@OptIn(ExperimentalComposeUiApi::class)
 internal fun CityScreen(
     state: CityState,
     actions: CitySearchDestination.ActionsState,

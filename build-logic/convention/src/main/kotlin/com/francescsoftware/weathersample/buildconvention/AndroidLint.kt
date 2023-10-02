@@ -19,6 +19,7 @@ internal fun Project.configureAndroidLint(
                 ignoreTestSources = true
                 warningsAsErrors = true
                 lintConfig = file("${rootDir}/analysis/lint/lint-config.xml")
+                baseline = file("${rootDir}/analysis/lint/lint-baseline.xml")
                 htmlOutput = project.layout.buildDirectory.get().dir("reports/lint/lint.html").asFile
             }
         }
