@@ -9,9 +9,10 @@ android {
     namespace = "com.francescsoftware.weathersample.ui.feature.home"
 
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs +
-            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api" +
-            "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi",
+        )
     }
 }
 

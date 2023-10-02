@@ -9,7 +9,9 @@ android {
     namespace = "com.francescsoftware.weathersample.ui.feature.favorites"
 
     kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+        )
     }
 }
 

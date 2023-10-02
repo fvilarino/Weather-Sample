@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.ui
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -37,6 +38,7 @@ private const val MinPageAlpha = .5f
 private const val MinPageScale = .85f
 
 @Composable
+@OptIn(ExperimentalFoundationApi::class)
 internal fun FavoritePager(
     state: FavoritePagerState,
     deviceClass: DeviceClass,
