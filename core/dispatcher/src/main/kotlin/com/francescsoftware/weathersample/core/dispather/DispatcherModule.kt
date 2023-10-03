@@ -1,16 +1,16 @@
 package com.francescsoftware.weathersample.core.dispather
 
+import com.francescsoftware.weathersample.core.injection.AppScope
+import com.francescsoftware.weathersample.core.injection.SingleIn
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@ContributesTo(AppScope::class)
 internal object DispatcherModule {
 
     @Provides
-    @Singleton
+    @SingleIn(AppScope::class)
     fun provideDispatcherProvider(): DispatcherProvider = DispatcherProviderInstance
 }

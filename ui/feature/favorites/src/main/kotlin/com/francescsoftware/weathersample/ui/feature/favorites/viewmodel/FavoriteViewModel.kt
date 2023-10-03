@@ -6,7 +6,6 @@ import com.francescsoftware.weathersample.ui.feature.favorites.ui.FavoritePagerS
 import com.francescsoftware.weathersample.ui.shared.mvi.Action
 import com.francescsoftware.weathersample.ui.shared.mvi.MviViewModel
 import com.francescsoftware.weathersample.ui.shared.mvi.State
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import javax.inject.Inject
 
@@ -39,7 +38,6 @@ internal sealed interface FavoriteAction : Action {
     data class DeleteFavorite(val city: City) : FavoriteAction
 }
 
-@HiltViewModel
 internal class FavoriteViewModel @Inject constructor(
     closeableScope: CloseableCoroutineScope,
     favoriteWeatherMiddleware: FavoriteWeatherMiddleware,

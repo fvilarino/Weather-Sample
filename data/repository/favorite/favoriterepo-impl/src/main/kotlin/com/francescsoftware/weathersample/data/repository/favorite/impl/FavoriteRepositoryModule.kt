@@ -2,31 +2,19 @@ package com.francescsoftware.weathersample.data.repository.favorite.impl
 
 import android.content.Context
 import androidx.room.Room.databaseBuilder
+import com.francescsoftware.weathersample.core.injection.AppScope
+import com.francescsoftware.weathersample.core.injection.ApplicationContext
+import com.francescsoftware.weathersample.core.injection.SingleIn
 import com.francescsoftware.weathersample.data.repository.favorite.impl.dao.FavoriteCitiesDatabase
-import com.francescsoftware.weathersample.data.repository.favorites.api.FavoriteRepository
-import dagger.Binds
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-internal interface FavoriteRepositoryModule {
-    @Binds
-    @Singleton
-    fun bindFavoriteRepository(
-        favoriteRepositoryImpl: FavoriteRepositoryImpl,
-    ): FavoriteRepository
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
+@ContributesTo(AppScope::class)
 internal object FavoriteDatabaseModule {
     @Provides
-    @Singleton
+    @SingleIn(AppScope::class)
     fun provideCitiesDatabase(
         @ApplicationContext context: Context,
     ): FavoriteCitiesDatabase =

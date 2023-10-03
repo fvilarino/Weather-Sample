@@ -33,7 +33,6 @@ internal fun Project.configureAndroidCompose(
             add("implementation", platform(bom))
             add("implementation", catalog.findBundle("compose").get())
             add("implementation", catalog.findLibrary("androidx.lifecycle.lifecycle.viewmodel.ktx").get())
-            add("implementation", catalog.findLibrary("androidx.hilt.hilt.navigation.compose").get())
             add("implementation", catalog.findLibrary("androidx.navigation.navigation.compose").get())
             add("implementation", catalog.findLibrary("androidx.compose.ui.ui.tooling.preview").get())
             add("debugImplementation", catalog.findLibrary("androidx.compose.ui.ui.tooling").get())

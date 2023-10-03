@@ -1,7 +1,10 @@
 package com.francescsoftware.weathersample.data.repository.weather.impl
 
+import com.francescsoftware.weathersample.core.injection.AppScope
+import com.francescsoftware.weathersample.core.injection.SingleIn
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -14,7 +17,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
 import javax.inject.Qualifier
-import javax.inject.Singleton
 
 private val MediaType = "application/json".toMediaType()
 private val json = Json { ignoreUnknownKeys = true }
@@ -22,11 +24,11 @@ private const val HeaderKey = "x-rapidapi-key"
 private const val HeaderHost = "x-rapidapi-host"
 
 @Module
-@InstallIn(SingletonComponent::class)
+@ContributesTo(AppScope::class)
 internal object WeatherRepositoryModule {
 
     @Provides
-    @Singleton
+    @SingleIn(AppScope::class)
     @WeatherAuthorizationInterceptor
     fun provideWeatherAuthorizationInterceptor(): Interceptor = Interceptor { chain ->
         val original: Request = chain.request()
@@ -39,7 +41,7 @@ internal object WeatherRepositoryModule {
     }
 
     @Provides
-    @Singleton
+    @SingleIn(AppScope::class)
     @WeatherRetrofit
     fun provideWeatherRetrofit(
         okHttpClientBuilder: OkHttpClient.Builder,
@@ -51,21 +53,10 @@ internal object WeatherRepositoryModule {
         .build()
 
     @Provides
-    @Singleton
+    @SingleIn(AppScope::class)
     fun provideWeatherService(
         @WeatherRetrofit retrofit: Retrofit,
     ): WeatherService = retrofit.create(WeatherService::class.java)
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-internal interface WeatherRepositoryModuleBinds {
-
-    @Binds
-    @Singleton
-    fun bindWeatherRepository(
-        weatherRepositoryImpl: WeatherRepositoryImpl,
-    ): WeatherRepository
 }
 
 @Qualifier

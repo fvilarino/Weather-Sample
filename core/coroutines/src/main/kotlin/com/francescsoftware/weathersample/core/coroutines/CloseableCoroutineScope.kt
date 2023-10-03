@@ -1,10 +1,10 @@
 package com.francescsoftware.weathersample.core.coroutines
 
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
+import com.francescsoftware.weathersample.core.injection.AppScope
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -25,7 +25,7 @@ class CloseableCoroutineScope @Inject constructor(
 }
 
 @Module
-@InstallIn(SingletonComponent::class)
+@ContributesTo(AppScope::class)
 internal object CoroutineModule {
     @Provides
     @MainCoroutineContext

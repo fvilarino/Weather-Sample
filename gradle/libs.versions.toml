@@ -7,7 +7,6 @@ androidx-compose-bom-version = "2023.09.02"
 androidx-compose-compiler-version = "1.5.3"
 androidx-core-core-ktx-version = "1.12.0"
 androidx-core-core-splashscreen-version = "1.0.1"
-androidx-hilt-hilt-navigation-compose-version = "1.1.0-alpha01"
 androidx-lifecycle-lifecycle-version = "2.6.2"
 androidx-navigation-version = "2.7.3"
 androidx-room-version = "2.5.2"
@@ -65,7 +64,6 @@ androidx-compose-ui-ui-tooling-preview = { module = "androidx.compose.ui:ui-tool
 androidx-compose-ui-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-core-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-core-ktx-version" }
 androidx-core-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-core-splashscreen-version" }
-androidx-hilt-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt-hilt-navigation-compose-version" }
 androidx-lifecycle-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-lifecycle-version" }
 androidx-lifecycle-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-lifecycle-version" }
 androidx-lifecycle-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle-lifecycle-version" }
@@ -84,9 +82,6 @@ com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", ve
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "com-google-android-material-version" }
 com-google-dagger-dagger = { module = "com.google.dagger:dagger", version.ref = "com-google-dagger-version" }
 com-google-dagger-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "com-google-dagger-version" }
-com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger-version" }
-com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger-version" }
-com-google-dagger-hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger-version" }
 com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", version.ref = "com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter-version" }
 com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter-version" }
 com-jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "com-jakewharton-timber-version" }

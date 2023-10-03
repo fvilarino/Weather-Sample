@@ -8,7 +8,7 @@ import android.net.NetworkRequest
 import androidx.core.content.getSystemService
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityStatus
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.francescsoftware.weathersample.core.injection.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate

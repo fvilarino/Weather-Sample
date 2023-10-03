@@ -5,10 +5,8 @@ import com.francescsoftware.weathersample.core.coroutines.CloseableCoroutineScop
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
 import com.francescsoftware.weathersample.ui.feature.search.navigation.WeatherDestination
 import com.francescsoftware.weathersample.ui.shared.mvi.MviViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
 internal class WeatherViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     closeableScope: CloseableCoroutineScope,

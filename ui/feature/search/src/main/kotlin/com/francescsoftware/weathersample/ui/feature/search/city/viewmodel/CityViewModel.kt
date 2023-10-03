@@ -7,10 +7,8 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCit
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
 import com.francescsoftware.weathersample.ui.shared.mvi.MviViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
 internal class CityViewModel @Inject constructor(
     closeableScope: CloseableCoroutineScope,
     reducer: CityReducer,

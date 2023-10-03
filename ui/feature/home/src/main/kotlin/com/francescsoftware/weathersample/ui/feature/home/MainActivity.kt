@@ -11,7 +11,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
-import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @Suppress("MagicNumber")
@@ -21,7 +20,6 @@ private val lightScrim = Color.argb(0xE6, 0xFF, 0xFF, 0xFF)
 private val darkScrim = Color.argb(0x80, 0x1B, 0x1B, 0x1B)
 
 /** {@inheritDoc} */
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     @Inject
