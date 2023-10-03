@@ -25,7 +25,9 @@ com-google-devtools-ksp-plugin-version = "1.9.10-1.0.13"
 com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter-version = "0.9.2"
 com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter-version = "1.0.0"
 com-jakewharton-timber-version = "5.0.1"
+com-slack-circuit-circuit-version = "0.15.0"
 com-slack-lint-compose-compose-lint-checks-version = "1.2.0"
+com-squareup-anvil-version = "2.4.8-1-8"
 com-squareup-okhttp3-version = "5.0.0-alpha.11"
 com-squareup-okio-version = "3.6.0"
 com-squareup-retrofit2-retrofit-version = "2.9.0"
@@ -80,13 +82,26 @@ androidx-test-uiautomator-uiautomator = { module = "androidx.test.uiautomator:ui
 app-cash-turbine-turbine = { module = "app.cash.turbine:turbine", version.ref = "app-cash-turbine-turbine-version" }
 com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "com-android-tools-build-gradle-version" }
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "com-google-android-material-version" }
+com-google-dagger-dagger = { module = "com.google.dagger:dagger", version.ref = "com-google-dagger-version" }
+com-google-dagger-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "com-google-dagger-version" }
 com-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "com-google-dagger-version" }
 com-google-dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "com-google-dagger-version" }
 com-google-dagger-hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "com-google-dagger-version" }
 com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", version.ref = "com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter-version" }
 com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "com-jakewharton-retrofit-retrofit2-kotlinx-serialization-converter-version" }
 com-jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "com-jakewharton-timber-version" }
+com-slack-circuit-circuit-backstack = { module = "com.slack.circuit:circuit-backstack", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-codegenAnnotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-overlay = { module = "com.slack.circuit:circuit-overlay", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-runtime = { module = "com.slack.circuit:circuit-runtime", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-runtime-presenter = { module = "com.slack.circuit:circuit-runtime-presenter", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-runtime-ui = { module = "com.slack.circuit:circuit-runtime-ui", version.ref = "com-slack-circuit-circuit-version" }
+com-slack-circuit-circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "com-slack-circuit-circuit-version" }
 com-slack-lint-compose-compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "com-slack-lint-compose-compose-lint-checks-version" }
+com-squareup-anvil-annotations = { module = "com.squareup.anvil:annotations", version.ref = "com-squareup-anvil-version" }
 com-squareup-okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "com-squareup-okhttp3-version" }
 com-squareup-okhttp3-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "com-squareup-okhttp3-version" }
 com-squareup-okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "com-squareup-okhttp3-version" }
@@ -118,6 +133,16 @@ android-test = [
     "androidx-test-ext-junit-ktx",
     "androidx-test-runner",
 ]
+circuit = [
+    "com-slack-circuit-circuit-backstack",
+    "com-slack-circuit-circuit-codegenAnnotations",
+    "com-slack-circuit-circuit-foundation",
+    "com-slack-circuit-circuit-overlay",
+    "com-slack-circuit-circuit-retained",
+    "com-slack-circuit-circuit-runtime",
+    "com-slack-circuit-circuit-runtime-presenter",
+    "com-slack-circuit-circuit-runtime-ui",
+]
 compose = [
     "androidx-compose-material-material-icons-extended",
     "androidx-compose-material3-material3",
@@ -143,6 +168,7 @@ retrofit = [
 ]
 test = [
     "app-cash-turbine-turbine",
+    "com-slack-circuit-circuit-test",
     "com-willowtreeapps-assertk-assertk",
     "io-mockk",
     "junit-junit",
@@ -154,4 +180,5 @@ test = [
 
 [plugins]
 com-google-devtools-ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp-plugin-version" }
+com-squareup-anvil = { id = "com.squareup.anvil", version.ref = "com-squareup-anvil-version" }
 io-gitlab-arturbosch-detekt-plugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt-version" }

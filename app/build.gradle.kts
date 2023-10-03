@@ -3,7 +3,7 @@ import java.util.Properties
 
 plugins {
     id("weathersample.android.application")
-    id("weathersample.android.hilt")
+    id("weathersample.android.di")
     id("weathersample.android.buildnumber")
 }
 

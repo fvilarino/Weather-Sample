@@ -59,9 +59,9 @@ gradlePlugin {
             id = "weathersample.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
-        register("androidHilt") {
-            id = "weathersample.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
+        register("androidDi") {
+            id = "weathersample.android.di"
+            implementationClass = "AndroidDiConventionPlugin"
         }
         register("kotlinLibrary") {
             id = "weathersample.kotlin.library"

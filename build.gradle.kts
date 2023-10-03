@@ -15,6 +15,7 @@ buildscript {
 
 plugins {
     alias(libs.plugins.com.google.devtools.ksp.plugin)
+    alias(libs.plugins.com.squareup.anvil)
     alias(libs.plugins.io.gitlab.arturbosch.detekt.plugin)
 }
 

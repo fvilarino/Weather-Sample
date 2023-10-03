@@ -3,16 +3,17 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 
-class AndroidHiltConventionPlugin : Plugin<Project> {
+class AndroidDiConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
-                apply("dagger.hilt.android.plugin")
+                apply("com.squareup.anvil")
+                apply("org.jetbrains.kotlin.kapt")
             }
 
             dependencies {
-                add("implementation", catalog.findLibrary("com.google.dagger.hilt.android").get())
-                add("ksp", catalog.findLibrary("com.google.dagger.hilt.android.compiler").get())
+                add("implementation", catalog.findLibrary("com.google.dagger.dagger").get())
+                add("kapt", catalog.findLibrary("com.google.dagger.dagger.compiler").get())
             }
         }
     }
