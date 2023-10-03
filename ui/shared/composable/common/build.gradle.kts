@@ -21,4 +21,5 @@ dependencies {
     implementation(project(":ui:shared:styles"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.collections.immutable)
+    implementation(libs.androidx.compose.material3.window.sizeclass)
 }

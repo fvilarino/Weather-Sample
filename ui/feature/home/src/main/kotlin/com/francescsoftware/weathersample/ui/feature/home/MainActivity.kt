@@ -7,13 +7,19 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponent
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponentFactoryProvider
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.overlay.ContentWithOverlays
+import com.slack.circuit.overlay.rememberOverlayHost
 import javax.inject.Inject
 
 @Suppress("MagicNumber")
@@ -57,9 +63,20 @@ class MainActivity : AppCompatActivity() {
                 )
                 onDispose {}
             }
-            WeatherApp(
-                connectivityMonitor = connectivityMonitor,
-            )
+            CompositionLocalProvider(
+                LocalWindowSizeClass provides calculateWindowSizeClass(this),
+            ) {
+                CircuitCompositionLocals(circuit) {
+                    val overlayHost = rememberOverlayHost()
+                    ContentWithOverlays(
+                        overlayHost = overlayHost,
+                    ) {
+                        WeatherApp(
+                            connectivityMonitor = connectivityMonitor,
+                        )
+                    }
+                }
+            }
         }
     }
 }
