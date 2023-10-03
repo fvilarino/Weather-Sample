@@ -8,7 +8,9 @@ import android.net.NetworkRequest
 import androidx.core.content.getSystemService
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityStatus
+import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.ApplicationContext
+import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
@@ -38,7 +40,8 @@ private class NetworkCallback(
     }
 }
 
-internal class ConnectivityMonitorImpl @Inject constructor(
+@ContributesBinding(AppScope::class)
+class ConnectivityMonitorImpl @Inject constructor(
     @ApplicationContext context: Context,
 ) : ConnectivityMonitor {
 

@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ForecastModel(
+data class ForecastModel(
 
     @SerialName("current")
     val current: CurrentModel? = null,

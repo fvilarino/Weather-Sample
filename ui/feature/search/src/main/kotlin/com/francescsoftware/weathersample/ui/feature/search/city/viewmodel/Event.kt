@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.viewmodel
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
@@ -8,7 +9,6 @@ import com.francescsoftware.weathersample.ui.shared.mvi.Action
 import com.francescsoftware.weathersample.ui.shared.mvi.State
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import javax.annotation.concurrent.Immutable
 
 internal enum class LoadState {
     Idle,

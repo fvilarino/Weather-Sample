@@ -20,7 +20,7 @@ private const val HeaderHost = "x-rapidapi-host"
 
 @Module
 @ContributesTo(AppScope::class)
-internal object CityRepositoryModule {
+object CityRepositoryModule {
 
     private val json = Json { ignoreUnknownKeys = true }
 
@@ -51,7 +51,7 @@ internal object CityRepositoryModule {
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideCityService(
+    internal fun provideCityService(
         @CityRetrofit retrofit: Retrofit,
     ): CityService = retrofit.create(CityService::class.java)
 }

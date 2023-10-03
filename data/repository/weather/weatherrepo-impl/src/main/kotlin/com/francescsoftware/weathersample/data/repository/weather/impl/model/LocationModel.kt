@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class LocationModel(
+data class LocationModel(
 
     @SerialName("localtime")
     val localtime: String? = null,

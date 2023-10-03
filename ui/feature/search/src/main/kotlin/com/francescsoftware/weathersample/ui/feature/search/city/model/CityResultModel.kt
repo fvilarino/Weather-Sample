@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.model
 
-import javax.annotation.concurrent.Immutable
+import androidx.compose.runtime.Immutable
 
 @Immutable
 internal data class Coordinates(

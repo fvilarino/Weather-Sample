@@ -16,4 +16,5 @@ dependencies {
     implementation(project(":data:repository:favorite:favoriterepo-api"))
     implementation(project(":data:repository:recents:recentsrepo-api"))
     implementation(project(":domain:interactor:city:cityinteractor-api"))
+    implementation(libs.bundles.coroutines)
 }

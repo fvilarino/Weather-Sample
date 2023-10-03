@@ -38,12 +38,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.NavHost
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesRootDestination
-import com.francescsoftware.weathersample.ui.feature.favorites.navigation.addFavoritesNavGraph
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
-import com.francescsoftware.weathersample.ui.feature.search.navigation.addSearchNavGraph
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.AppBar
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -129,6 +126,7 @@ internal fun WeatherApp(
                             },
                         )
                     }
+/*
                     NavHost(
                         state.navHostController,
                         startDestination = navGraphDestinations.first().navGraphRoute,
@@ -143,6 +141,7 @@ internal fun WeatherApp(
                             deviceClass = state.deviceClass,
                         )
                     }
+*/
                 }
                 if (state.showBottomOverlay) {
                     Box(

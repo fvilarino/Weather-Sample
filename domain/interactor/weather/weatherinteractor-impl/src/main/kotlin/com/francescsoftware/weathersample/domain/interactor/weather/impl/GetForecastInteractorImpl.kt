@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.domain.interactor.weather.impl
 
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
+import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.time.api.TimeParsingException
 import com.francescsoftware.weathersample.core.time.api.TimeProvider
 import com.francescsoftware.weathersample.core.time.api.ZoneIdProvider
@@ -13,6 +14,7 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherE
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Forecast
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
+import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.ZonedDateTime
@@ -21,7 +23,9 @@ import javax.inject.Inject
 import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.ForecastDay as RepoForecastDay
 
 private class ForecastParseException : RuntimeException()
-internal class GetForecastInteractorImpl @Inject constructor(
+
+@ContributesBinding(AppScope::class)
+class GetForecastInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val dispatcherProvider: DispatcherProvider,
     private val timeProvider: TimeProvider,

@@ -22,7 +22,7 @@ private const val CacheSize = 10L * 1024L * 1024L
 
 @Module
 @ContributesTo(AppScope::class)
-internal object NetworkModule {
+object NetworkModule {
 
     @Provides
     @SingleIn(AppScope::class)

@@ -8,7 +8,7 @@ import dagger.Provides
 
 @Module
 @ContributesTo(AppScope::class)
-internal object DispatcherModule {
+object DispatcherModule {
 
     @Provides
     @SingleIn(AppScope::class)

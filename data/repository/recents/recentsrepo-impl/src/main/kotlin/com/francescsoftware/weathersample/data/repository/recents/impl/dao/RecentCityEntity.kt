@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-internal data class RecentCityEntity(
+data class RecentCityEntity(
     @PrimaryKey val name: String,
     @ColumnInfo("last_used") val lastUsed: Long,
 )

@@ -8,4 +8,5 @@ android {
 }
 dependencies {
     implementation(project(":core:connectivity:connectivity-api"))
+    implementation(libs.bundles.coroutines)
 }

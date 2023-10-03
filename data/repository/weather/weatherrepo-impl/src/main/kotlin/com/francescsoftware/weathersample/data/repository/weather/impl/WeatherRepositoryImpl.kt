@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.data.repository.weather.impl
 
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
+import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.network.safeApiCall
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
@@ -9,10 +10,12 @@ import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLoc
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRepository
 import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.ForecastResponse
 import com.francescsoftware.weathersample.data.repository.weather.api.model.today.TodayWeatherResponse
+import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class WeatherRepositoryImpl @Inject constructor(
+@ContributesBinding(AppScope::class)
+class WeatherRepositoryImpl @Inject constructor(
     private val weatherService: WeatherService,
     private val dispatcherProvider: DispatcherProvider,
 ) : WeatherRepository {

@@ -1,10 +1,10 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.viewmodel
 
+import androidx.compose.runtime.Immutable
 import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteFavoriteCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.FavoriteCity
 import com.francescsoftware.weathersample.ui.feature.favorites.ui.City
 import com.francescsoftware.weathersample.ui.shared.mvi.Middleware
-import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 @Immutable

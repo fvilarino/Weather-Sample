@@ -26,7 +26,7 @@ class CloseableCoroutineScope @Inject constructor(
 
 @Module
 @ContributesTo(AppScope::class)
-internal object CoroutineModule {
+object CoroutineModule {
     @Provides
     @MainCoroutineContext
     fun provideCoroutineContext(

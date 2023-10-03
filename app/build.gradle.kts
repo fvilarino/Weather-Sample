@@ -101,7 +101,11 @@ dependencies {
     implementation(project(":ui:shared:styles"))
     implementation(project(":ui:shared:weathericon"))
 
+    implementation(libs.androidx.activity.activity.compose)
+    implementation(libs.androidx.app.compat)
     implementation(libs.com.jakewharton.timber)
+    implementation(libs.bundles.okhttp)
+    implementation(libs.bundles.retrofit)
     androidTestImplementation(libs.androidx.test.runner)
 }
 

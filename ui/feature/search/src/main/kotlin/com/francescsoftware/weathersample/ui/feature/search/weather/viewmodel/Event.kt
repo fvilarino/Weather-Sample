@@ -1,12 +1,12 @@
 package com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Immutable
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.mvi.Action
 import com.francescsoftware.weathersample.ui.shared.mvi.State
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import javax.annotation.concurrent.Immutable
 
 internal enum class WeatherLoadState {
     Idle,

@@ -8,7 +8,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-internal interface FavoriteCitiesDao {
+interface FavoriteCitiesDao {
     @Query("SELECT * FROM FavoriteCityEntity ORDER BY name ASC")
     fun getFavoriteCities(): Flow<List<FavoriteCityEntity>>
 

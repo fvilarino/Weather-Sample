@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class CitySearchResponseModel(
+data class CitySearchResponseModel(
 
     @SerialName("metadata")
     val metadata: MetadataModel? = null,

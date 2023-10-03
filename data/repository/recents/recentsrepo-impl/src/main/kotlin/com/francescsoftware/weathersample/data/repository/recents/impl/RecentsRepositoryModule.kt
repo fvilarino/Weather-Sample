@@ -12,10 +12,10 @@ import dagger.Provides
 
 @Module
 @ContributesTo(AppScope::class)
-internal object CitiesDatabaseModule {
+object CitiesDatabaseModule {
     @Provides
     @SingleIn(AppScope::class)
-    fun provideCitiesDatabase(
+    internal fun provideCitiesDatabase(
         @ApplicationContext context: Context,
     ): RecentCitiesDatabase =
         Room.databaseBuilder(

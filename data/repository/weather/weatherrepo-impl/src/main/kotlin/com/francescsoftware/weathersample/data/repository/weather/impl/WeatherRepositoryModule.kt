@@ -2,14 +2,10 @@ package com.francescsoftware.weathersample.data.repository.weather.impl
 
 import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.SingleIn
-import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.squareup.anvil.annotations.ContributesTo
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -25,7 +21,7 @@ private const val HeaderHost = "x-rapidapi-host"
 
 @Module
 @ContributesTo(AppScope::class)
-internal object WeatherRepositoryModule {
+object WeatherRepositoryModule {
 
     @Provides
     @SingleIn(AppScope::class)
@@ -54,7 +50,7 @@ internal object WeatherRepositoryModule {
 
     @Provides
     @SingleIn(AppScope::class)
-    fun provideWeatherService(
+    internal fun provideWeatherService(
         @WeatherRetrofit retrofit: Retrofit,
     ): WeatherService = retrofit.create(WeatherService::class.java)
 }

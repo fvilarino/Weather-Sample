@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ForecastDayModel(
+data class ForecastDayModel(
 
     @SerialName("date")
     val date: String? = null,

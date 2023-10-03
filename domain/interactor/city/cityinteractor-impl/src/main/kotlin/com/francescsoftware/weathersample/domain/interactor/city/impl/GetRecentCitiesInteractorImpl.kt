@@ -1,13 +1,16 @@
 package com.francescsoftware.weathersample.domain.interactor.city.impl
 
+import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.data.repository.recents.api.RecentsRepository
 import com.francescsoftware.weathersample.domain.interactor.city.api.GetRecentCitiesInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.RecentCity
+import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class GetRecentCitiesInteractorImpl @Inject constructor(
+@ContributesBinding(AppScope::class)
+class GetRecentCitiesInteractorImpl @Inject constructor(
     private val recentsRepository: RecentsRepository,
 ) : GetRecentCitiesInteractor {
 
