@@ -35,15 +35,19 @@ internal class AppState(
         @Composable
         get() = navBackStackEntry?.destination
 
+/*
     val currentDestination: NavigationDestination
         @Composable
-        get() = navGraphDestinations.firstNotNullOfOrNull { navGraph ->
+        get() = navigationDestinations.firstNotNullOfOrNull { navGraph ->
             navGraph.getDestination(currentRoute)
-        } ?: navGraphDestinations.first().rootDestination
+        } ?: navigationDestinations.first().rootDestination
+*/
+/*
 
     val hasBackButton: Boolean
         @Composable
         get() = currentDestination !is BottomNavigationDestination
+*/
 
     val hasBottomNavBar: Boolean
         get() = deviceClass.hasBottomNavBar
@@ -51,6 +55,7 @@ internal class AppState(
     val hasNavRail: Boolean
         get() = !hasBottomNavBar
 
+/*
     val showBottomNavBar: Boolean
         @Composable
         get() = hasBottomNavBar && currentDestination.showBottomBar
@@ -58,6 +63,7 @@ internal class AppState(
     val showBottomOverlay: Boolean
         @Composable
         get() = hasBottomNavBar && !currentDestination.showBottomBar
+*/
 
     val isConnected: StateFlow<Boolean> = connectivityMonitor.connectedStatus
         .map { state -> state == ConnectivityStatus.Connected }

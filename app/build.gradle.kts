@@ -105,7 +105,6 @@ dependencies {
     implementation(libs.androidx.app.compat)
     implementation(libs.com.jakewharton.timber)
     implementation(libs.bundles.circuit)
-    implementation(libs.bundles.compose)
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.retrofit)
     androidTestImplementation(libs.androidx.test.runner)

@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.ui.feature.search.city.ui
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -36,13 +38,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
+import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.CityState
 import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.CityViewModel
 import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.LoadState
 import com.francescsoftware.weathersample.ui.feature.search.navigation.CitySearchDestination
+import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.GenericMessage
@@ -55,12 +60,29 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.TabletPreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import com.slack.circuit.codegen.annotations.CircuitInject
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 internal val MinColumnWidth = 300.dp
 private const val CityPaneWeight = 3f
+
+@CircuitInject(SearchScreen::class, ActivityScope::class)
+@Composable
+fun Search(
+    state: SearchScreen.State,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = "Search screen, loading: ${state.loading}"
+        )
+    }
+}
 
 @Composable
 internal fun CityScreen(

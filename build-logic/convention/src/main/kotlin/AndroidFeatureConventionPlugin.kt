@@ -27,6 +27,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":ui:shared:mvi"))
                 add("implementation", project(":ui:shared:route"))
                 add("implementation", project(":ui:shared:styles"))
+                add("ksp", catalog.findLibrary("com.slack.circuit.circuit.codegen").get())
+                add("implementation", catalog.findBundle("circuit").get())
                 add("implementation", catalog.findLibrary("org.jetbrains.kotlinx.kotlinx.collections.immutable").get())
             }
         }

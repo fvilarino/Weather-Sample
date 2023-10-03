@@ -8,35 +8,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import com.francescsoftware.weathersample.ui.shared.route.RootNavigationDestination
-import kotlinx.collections.immutable.ImmutableList
+import com.slack.circuit.runtime.screen.Screen
 
 @Composable
 internal fun NavRail(
-    items: ImmutableList<RootNavigationDestination>,
-    currentDestination: NavDestination?,
-    onClick: (String) -> Unit,
+    selectedScreen: Screen,
+    onClick: (Screen) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavigationRail(
         contentColor = NavigationColors.navigationContentColor(),
         modifier = modifier,
     ) {
-        items.forEach { destination ->
-            val content = destination.rootDestination.bottomNavContent
+        navigationDestinations.forEach { destination ->
+            val selected = selectedScreen == destination.screen
             NavigationRailItem(
-                selected = currentDestination?.hierarchy?.any { navDestination ->
-                    navDestination.route == destination.navGraphRoute
-                } == true,
+                selected = selected,
                 icon = {
                     Icon(
-                        imageVector = content.icon,
-                        contentDescription = stringResource(id = content.contentDescriptionId),
+                        imageVector = destination.icon,
+                        contentDescription = stringResource(id = destination.resourceId),
                     )
                 },
-                label = { Text(text = stringResource(id = content.labelId)) },
+                label = { Text(text = stringResource(id = destination.resourceId)) },
                 colors = NavigationRailItemDefaults.colors(
                     indicatorColor = NavigationColors.navigationIndicatorColor(),
                     selectedIconColor = NavigationColors.navigationSelectedItemColor(),
@@ -44,7 +38,7 @@ internal fun NavRail(
                     unselectedIconColor = NavigationColors.navigationContentColor(),
                     unselectedTextColor = NavigationColors.navigationContentColor(),
                 ),
-                onClick = { onClick(destination.navGraphRoute) },
+                onClick = { onClick(destination.screen) },
             )
         }
     }
