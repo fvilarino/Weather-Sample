@@ -11,6 +11,8 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
+import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponent
+import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponentFactoryProvider
 import javax.inject.Inject
 
 @Suppress("MagicNumber")
@@ -25,7 +27,12 @@ class MainActivity : AppCompatActivity() {
     @Inject
     internal lateinit var connectivityMonitor: ConnectivityMonitor
 
+    private lateinit var activityComponent: ActivityComponent
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val factory = (applicationContext as ActivityComponentFactoryProvider).getActivityComponentFactory()
+        activityComponent = factory.create(this)
+        activityComponent.inject(this)
         installSplashScreen()
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)

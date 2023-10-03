@@ -5,7 +5,7 @@ import android.content.Context
 import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.ApplicationContext
 import com.francescsoftware.weathersample.core.injection.SingleIn
-import com.francescsoftware.weathersample.ui.feature.home.MainActivity
+import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponent
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.Binds
@@ -16,10 +16,7 @@ import dagger.Module
 @MergeComponent(AppScope::class)
 @SingleIn(AppScope::class)
 interface ApplicationComponent {
-
-    fun inject(application: WeatherSampleApp)
-
-    fun inject(mainActivity: MainActivity)
+    fun getActivityComponentFactory(): ActivityComponent.Factory
 
     @Component.Factory
     fun interface Factory {
