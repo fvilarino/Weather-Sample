@@ -19,14 +19,14 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 }
             }
             dependencies {
-                add("implementation", (project(":core:coroutines")))
-                add("implementation", (project(":core:type:either")))
-                add("implementation", (project(":ui:shared:assets")))
-                add("implementation", (project(":ui:shared:composable:common")))
-                add("implementation", (project(":ui:shared:deviceclass")))
-                add("implementation", (project(":ui:shared:mvi")))
-                add("implementation", (project(":ui:shared:route")))
-                add("implementation", (project(":ui:shared:styles")))
+                add("implementation", project(":core:coroutines"))
+                add("implementation", project(":core:type:either"))
+                add("implementation", project(":ui:shared:assets"))
+                add("implementation", project(":ui:shared:composable:common"))
+                add("implementation", project(":ui:shared:deviceclass"))
+                add("implementation", project(":ui:shared:mvi"))
+                add("implementation", project(":ui:shared:route"))
+                add("implementation", project(":ui:shared:styles"))
                 add("implementation", catalog.findLibrary("org.jetbrains.kotlinx.kotlinx.collections.immutable").get())
             }
         }
