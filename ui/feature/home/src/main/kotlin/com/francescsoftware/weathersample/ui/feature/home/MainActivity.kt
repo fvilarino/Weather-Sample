@@ -13,6 +13,7 @@ import androidx.core.view.WindowCompat
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponent
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponentFactoryProvider
+import com.slack.circuit.foundation.Circuit
 import javax.inject.Inject
 
 @Suppress("MagicNumber")
@@ -26,6 +27,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     internal lateinit var connectivityMonitor: ConnectivityMonitor
+
+    @Inject
+    internal lateinit var circuit: Circuit
 
     private lateinit var activityComponent: ActivityComponent
 
