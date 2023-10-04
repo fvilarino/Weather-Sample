@@ -16,19 +16,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
-import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.CityState
-import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.LoadState
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.TabletPreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun CitiesList(
-    state: CityState,
+    cities: ImmutableList<CityResultModel>,
     onCityClick: (SelectedCity) -> Unit,
     onFavoriteClick: (CityResultModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -42,7 +41,7 @@ internal fun CitiesList(
         verticalArrangement = Arrangement.spacedBy(MarginDouble),
         contentPadding = WindowInsets.safeDrawing.asPaddingValues(),
     ) {
-        items(state.cities) { city ->
+        items(cities) { city ->
             CityCard(
                 city = city,
                 onClick = { model -> onCityClick(model.toSelectedCity()) },
@@ -68,13 +67,10 @@ private fun PreviewCitiesList() {
             color = MaterialTheme.colorScheme.background,
         ) {
             CitiesList(
-                state = CityState.initial.copy(
-                    loadState = LoadState.Loaded,
-                    cities = persistentListOf(
-                        VancouverCityModel,
-                        BarcelonaCityModel,
-                        LondonCityModel,
-                    ),
+                cities = persistentListOf(
+                    VancouverCityModel,
+                    BarcelonaCityModel,
+                    LondonCityModel,
                 ),
                 onCityClick = { },
                 onFavoriteClick = { },

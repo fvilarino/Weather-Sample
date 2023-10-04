@@ -2,8 +2,6 @@ package com.francescsoftware.weathersample.ui.feature.search.city.ui
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,19 +13,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -35,20 +28,14 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
-import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.CityState
-import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.CityViewModel
-import com.francescsoftware.weathersample.ui.feature.search.city.viewmodel.LoadState
-import com.francescsoftware.weathersample.ui.feature.search.navigation.CitySearchDestination
-import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.Crossfade
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.GenericMessage
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PanesOrientation
@@ -70,59 +57,23 @@ private const val CityPaneWeight = 3f
 
 @CircuitInject(SearchScreen::class, ActivityScope::class)
 @Composable
-fun Search(
+internal fun Search(
     state: SearchScreen.State,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = "Search screen, loading: ${state.loading}"
-        )
-    }
-}
-
-@Composable
-internal fun CityScreen(
-    viewModel: CityViewModel,
-    deviceClass: DeviceClass,
-    navigateToCityWeather: (SelectedCity) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val actions by CitySearchDestination.actionsState.collectAsStateWithLifecycle()
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val onStart by rememberUpdatedState(newValue = viewModel::onStart)
-    val onStop by rememberUpdatedState(newValue = viewModel::onStop)
-    DisposableEffect(key1 = lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) {
-                onStart()
-            } else if (event == Lifecycle.Event.ON_STOP) {
-                onStop()
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
+    val windowSizeClass = LocalWindowSizeClass.current
+    val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
 
     CityScreen(
-        state = viewModel.state,
-        actions = actions,
+        state = state,
         deviceClass = deviceClass,
         onCityClick = { selectedCity ->
-            viewModel.onCityClick(selectedCity)
         },
-        onFavoriteClick = viewModel::onFavoriteClick,
-        onQueryChange = viewModel::onQueryChange,
-        onQueryFocused = viewModel::onQueryFocused,
-        onChipClick = viewModel::onChipClick,
-        onDeleteChip = viewModel::onDeleteChip,
-        onNavigateToCityWeather = navigateToCityWeather,
-        onNavigated = viewModel::onNavigated,
+        onFavoriteClick = { state.eventSink(SearchScreen.Event.FavoriteClick(it)) },
+        onQueryChange = { state.eventSink(SearchScreen.Event.QueryUpdated(it)) },
+        onQueryFocused = { state.eventSink(SearchScreen.Event.QueryFocused) },
+        onChipClick = { state.eventSink(SearchScreen.Event.ChipClick(it)) },
+        onDeleteChip = { state.eventSink(SearchScreen.Event.DeleteChipClick(it)) },
         modifier = modifier,
     )
 }
@@ -130,8 +81,7 @@ internal fun CityScreen(
 @Composable
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun CityScreen(
-    state: CityState,
-    actions: CitySearchDestination.ActionsState,
+    state: SearchScreen.State,
     deviceClass: DeviceClass,
     onCityClick: (SelectedCity) -> Unit,
     onFavoriteClick: (CityResultModel) -> Unit,
@@ -139,8 +89,6 @@ internal fun CityScreen(
     onQueryFocused: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
-    onNavigateToCityWeather: (SelectedCity) -> Unit,
-    onNavigated: () -> Unit,
     modifier: Modifier = Modifier,
     stateHolder: CityScreenStateHolder = rememberCityScreenStateHolder(),
 ) {
@@ -151,13 +99,6 @@ internal fun CityScreen(
         snapshotFlow { stateHolder.query }
             .onEach(onQueryChange)
             .launchIn(this)
-    }
-
-    if (state.navigateToCityWeather != null) {
-        LaunchedEffect(key1 = state.navigateToCityWeather) {
-            onNavigated()
-            onNavigateToCityWeather(state.navigateToCityWeather)
-        }
     }
 
     if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -225,18 +166,11 @@ internal fun CityScreen(
             modifier = modifier,
         )
     }
-    if (actions.about) {
-        AboutDialog(
-            onDismiss = {
-                CitySearchDestination.consume(CitySearchDestination.Actions.About)
-            },
-        )
-    }
 }
 
 @Composable
 private fun CityPane(
-    state: CityState,
+    state: SearchScreen.State,
     stateHolder: CityScreenStateHolder,
     onQueryFocused: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
@@ -261,7 +195,7 @@ private fun CityPane(
                 .padding(top = MarginQuad),
         )
         AnimatedVisibility(
-            visible = state.showRecentCities,
+            visible = state.recentCities.isNotEmpty(),
         ) {
             CityChips(
                 cities = state.recentCities,
@@ -286,7 +220,7 @@ private fun CityPane(
 
 @Composable
 private fun Cities(
-    state: CityState,
+    state: SearchScreen.State,
     onCityClick: (SelectedCity) -> Unit,
     onFavoriteClick: (CityResultModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -296,43 +230,41 @@ private fun Cities(
     val citiesNoResults = stringResource(id = R.string.content_description_cities_no_results)
     val citiesError = stringResource(id = R.string.content_description_cities_error)
     Crossfade(
-        targetState = state.loadState,
+        targetState = state.citiesResult,
+        contentKey = { it::class.java },
         modifier = modifier,
-        label = "cityCrossFade",
-    ) { loadState ->
-        when (loadState) {
-            LoadState.Idle -> {
-            }
-
-            LoadState.Loading -> ProgressIndicator(
+    ) { result ->
+        when (result) {
+            SearchScreen.CitiesResult.Idle -> {}
+            SearchScreen.CitiesResult.Loading -> ProgressIndicator(
                 modifier = Modifier
                     .semantics { contentDescription = citiesLoading }
                     .fillMaxSize(),
             )
 
-            LoadState.Loaded -> CitiesList(
-                state = state,
-                onCityClick = onCityClick,
-                onFavoriteClick = onFavoriteClick,
-                modifier = Modifier
-                    .semantics { contentDescription = citiesResults }
-                    .fillMaxSize()
-                    .padding(horizontal = MarginDouble),
-            )
-
-            LoadState.NoResults -> GenericMessage(
+            SearchScreen.CitiesResult.NoResult -> GenericMessage(
                 message = stringResource(id = R.string.no_results_found_label),
                 modifier = Modifier
                     .semantics { contentDescription = citiesNoResults }
                     .fillMaxSize(),
             )
 
-            LoadState.Error -> GenericMessage(
+            SearchScreen.CitiesResult.LoadError -> GenericMessage(
                 message = stringResource(id = R.string.city_error_loading),
                 icon = Icons.Default.Warning,
                 modifier = Modifier
                     .semantics { contentDescription = citiesError }
                     .fillMaxSize(),
+            )
+
+            is SearchScreen.CitiesResult.CitiesLoaded -> CitiesList(
+                cities = result.cities,
+                onCityClick = onCityClick,
+                onFavoriteClick = onFavoriteClick,
+                modifier = Modifier
+                    .semantics { contentDescription = citiesResults }
+                    .fillMaxSize()
+                    .padding(horizontal = MarginDouble),
             )
         }
     }
@@ -348,12 +280,13 @@ private fun PreviewCityScreen() {
             color = MaterialTheme.colorScheme.background,
         ) {
             val state = remember {
-                CityState(
-                    loadState = LoadState.Loaded,
-                    cities = persistentListOf(
-                        VancouverCityModel,
-                        BarcelonaCityModel,
-                        LondonCityModel,
+                SearchScreen.State(
+                    citiesResult = SearchScreen.CitiesResult.CitiesLoaded(
+                        cities = persistentListOf(
+                            VancouverCityModel,
+                            BarcelonaCityModel,
+                            LondonCityModel,
+                        ),
                     ),
                     recentCities = persistentListOf(
                         RecentCityModel("Vancouver"),
@@ -362,13 +295,11 @@ private fun PreviewCityScreen() {
                         RecentCityModel("Tokyo"),
                         RecentCityModel("Jakarta"),
                     ),
-                    showRecentCities = true,
-                    navigateToCityWeather = null,
+                    eventSink = {},
                 )
             }
             CityScreen(
                 state = state,
-                actions = CitySearchDestination.ActionsState(),
                 deviceClass = DeviceClass.Compact,
                 onCityClick = { },
                 onFavoriteClick = { },
@@ -376,8 +307,6 @@ private fun PreviewCityScreen() {
                 onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
-                onNavigateToCityWeather = { },
-                onNavigated = { },
             )
         }
     }

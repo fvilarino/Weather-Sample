@@ -11,6 +11,7 @@ android {
         freeCompilerArgs = freeCompilerArgs + listOf(
             "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
             "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
         )
     }
 }

@@ -10,7 +10,7 @@ import com.francescsoftware.weathersample.ui.shared.mvi.State
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-internal enum class LoadState {
+enum class LoadState {
     Idle,
     Loading,
     Loaded,
