@@ -67,11 +67,9 @@ internal fun Search(
     CityScreen(
         state = state,
         deviceClass = deviceClass,
-        onCityClick = { selectedCity ->
-        },
+        onCityClick = { selectedCity -> state.eventSink(SearchScreen.Event.CityClick(selectedCity)) },
         onFavoriteClick = { state.eventSink(SearchScreen.Event.FavoriteClick(it)) },
         onQueryChange = { state.eventSink(SearchScreen.Event.QueryUpdated(it)) },
-        onQueryFocused = { state.eventSink(SearchScreen.Event.QueryFocused) },
         onChipClick = { state.eventSink(SearchScreen.Event.ChipClick(it)) },
         onDeleteChip = { state.eventSink(SearchScreen.Event.DeleteChipClick(it)) },
         modifier = modifier,
@@ -86,7 +84,6 @@ internal fun CityScreen(
     onCityClick: (SelectedCity) -> Unit,
     onFavoriteClick: (CityResultModel) -> Unit,
     onQueryChange: (TextFieldValue) -> Unit,
-    onQueryFocused: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -106,7 +103,6 @@ internal fun CityScreen(
             CityPane(
                 state = state,
                 stateHolder = stateHolder,
-                onQueryFocused = onQueryFocused,
                 onChipClick = { recentCityModel ->
                     keyboardController?.hide()
                     onChipClick(recentCityModel)
@@ -142,7 +138,6 @@ internal fun CityScreen(
                     CityPane(
                         state = state,
                         stateHolder = stateHolder,
-                        onQueryFocused = onQueryFocused,
                         onChipClick = { recentCityModel ->
                             keyboardController?.hide()
                             onChipClick(recentCityModel)
@@ -172,7 +167,6 @@ internal fun CityScreen(
 private fun CityPane(
     state: SearchScreen.State,
     stateHolder: CityScreenStateHolder,
-    onQueryFocused: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -189,7 +183,6 @@ private fun CityPane(
             query = stateHolder.query,
             onQueryChange = stateHolder::onQueryUpdated,
             onClearQuery = stateHolder::onClearQuery,
-            onQueryFocused = onQueryFocused,
             modifier = Modifier
                 .width(MinColumnWidth)
                 .padding(top = MarginQuad),
@@ -304,7 +297,6 @@ private fun PreviewCityScreen() {
                 onCityClick = { },
                 onFavoriteClick = { },
                 onQueryChange = { },
-                onQueryFocused = { },
                 onChipClick = { },
                 onDeleteChip = { },
             )

@@ -31,7 +31,6 @@ internal fun CitiesSearchBox(
     query: TextFieldValue,
     onQueryChange: (TextFieldValue) -> Unit,
     onClearQuery: () -> Unit,
-    onQueryFocused: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val searchBoxContentDescription = stringResource(
@@ -41,10 +40,7 @@ internal fun CitiesSearchBox(
         value = query,
         onValueChange = onQueryChange,
         modifier = modifier
-            .semantics { contentDescription = searchBoxContentDescription }
-            .onFocusChanged { focusState ->
-                if (focusState.isFocused) onQueryFocused()
-            },
+            .semantics { contentDescription = searchBoxContentDescription },
         label = { Text(text = stringResource(id = R.string.search_city_hint)) },
         singleLine = true,
         leadingIcon = {
@@ -78,7 +74,6 @@ private fun PreviewCitiesSearchBox() {
                 query = query,
                 onQueryChange = { query = it },
                 onClearQuery = { query = TextFieldValue() },
-                onQueryFocused = {},
                 modifier = Modifier.padding(all = MarginDouble),
             )
         }

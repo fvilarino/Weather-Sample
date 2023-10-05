@@ -20,6 +20,8 @@ import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.overlay.rememberOverlayHost
+import com.slack.circuit.retained.LocalRetainedStateRegistry
+import com.slack.circuit.retained.continuityRetainedStateRegistry
 import javax.inject.Inject
 
 @Suppress("MagicNumber")
@@ -63,13 +65,14 @@ class MainActivity : AppCompatActivity() {
                 )
                 onDispose {}
             }
-            CompositionLocalProvider(
-                LocalWindowSizeClass provides calculateWindowSizeClass(this),
-            ) {
-                CircuitCompositionLocals(circuit) {
-                    val overlayHost = rememberOverlayHost()
-                    ContentWithOverlays(
-                        overlayHost = overlayHost,
+            CircuitCompositionLocals(circuit) {
+                val overlayHost = rememberOverlayHost()
+                ContentWithOverlays(
+                    overlayHost = overlayHost,
+                ) {
+                    CompositionLocalProvider(
+                        LocalWindowSizeClass provides calculateWindowSizeClass(this),
+                        LocalRetainedStateRegistry provides continuityRetainedStateRegistry(),
                     ) {
                         WeatherApp(
                             connectivityMonitor = connectivityMonitor,
