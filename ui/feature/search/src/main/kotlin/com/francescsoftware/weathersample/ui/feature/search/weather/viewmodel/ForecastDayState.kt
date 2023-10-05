@@ -6,7 +6,7 @@ import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastH
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
-internal data class ForecastDayState(
+data class ForecastDayState(
     val header: ForecastHeaderState,
     val forecast: ImmutableList<ForecastHourState>,
 )

@@ -12,41 +12,40 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.francescsoftware.weathersample.ui.feature.search.R
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherLoadState
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
+import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.LoadingButton
 import com.francescsoftware.weathersample.ui.shared.composable.weather.TodayWeatherCard
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.ui.feature.search.R
 
 @Composable
 internal fun TodayWeather(
-    state: WeatherState,
+    state: WeatherScreen.Weather.Loaded,
+    refreshing: Boolean,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val isLoaded = state.loadState == WeatherLoadState.Loaded
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TodayWeatherCard(
-            state = state.todayState,
+            state = state.current,
             modifier = Modifier.width(WeatherCardWidth),
         )
         LoadingButton(
             onClick = todayRefreshCallback,
-            enabled = isLoaded,
             modifier = Modifier.padding(top = MarginQuad),
-            loading = state.loadState == WeatherLoadState.Refreshing,
+            loading = refreshing,
         ) {
             Text(text = stringResource(id = R.string.refresh))
         }
     }
 }
+/*
 
 @PhonePreviews
 @Composable
@@ -62,6 +61,7 @@ private fun PreviewTodayWeather(
         ) {
             TodayWeather(
                 state = stateWrapper.state,
+                refreshing = false,
                 todayRefreshCallback = {},
                 modifier = Modifier
                     .fillMaxWidth()
@@ -70,3 +70,4 @@ private fun PreviewTodayWeather(
         }
     }
 }
+*/

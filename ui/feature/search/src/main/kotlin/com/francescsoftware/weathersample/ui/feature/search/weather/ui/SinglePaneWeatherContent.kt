@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.search.R
+import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.MultiSelector
@@ -47,7 +48,8 @@ private const val GradientMidPoint = (GradientEnd - GradientStart) / 2f
 
 @Composable
 internal fun SinglePaneWeatherContent(
-    state: WeatherState,
+    state: WeatherScreen.Weather.Loaded,
+    refreshing: Boolean,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
     stateHolder: WeatherStateHolder = rememberWeatherStateHolder(),
@@ -122,6 +124,7 @@ internal fun SinglePaneWeatherContent(
             when (option) {
                 SelectedWeatherOption.Today -> TodayWeather(
                     state = state,
+                    refreshing = refreshing,
                     todayRefreshCallback = todayRefreshCallback,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -140,6 +143,7 @@ internal fun SinglePaneWeatherContent(
         }
     }
 }
+/*
 
 @PhonePreviews
 @Composable
@@ -166,3 +170,4 @@ private fun PreviewPhoneWeatherContent(
         }
     }
 }
+*/
