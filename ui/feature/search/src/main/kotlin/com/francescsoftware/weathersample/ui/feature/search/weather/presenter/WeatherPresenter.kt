@@ -19,9 +19,8 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherL
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Forecast
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastEntry
+import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayMain
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayWeather
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.ForecastDayState
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.formatDescription
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastDate
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
@@ -158,8 +157,8 @@ class WeatherPresenter @AssistedInject constructor(
     private val TodayWeather.icon: Int
         get() = weatherIconFromCode(main.code).drawableId
 
-    private fun Forecast.toForecastItems(): ImmutableList<ForecastDayState> = items.map { forecastDay ->
-        ForecastDayState(
+    private fun Forecast.toForecastItems(): ImmutableList<WeatherScreen.ForecastDayState> = items.map { forecastDay ->
+        WeatherScreen.ForecastDayState(
             header = forecastDay.toForecastHeaderState(),
             forecast = forecastDay
                 .entries.map { entry ->
@@ -199,4 +198,9 @@ class WeatherPresenter @AssistedInject constructor(
             humidity = humidity,
             visibility = visibility,
         )
+
+    private fun TodayMain.formatDescription(): String =
+        description.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+        }
 }

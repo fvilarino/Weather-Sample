@@ -1,9 +1,11 @@
 package com.francescsoftware.weathersample.ui.feature.search.weather.presenter
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.ForecastDayState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
+import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
@@ -14,6 +16,12 @@ import kotlinx.parcelize.Parcelize
 data class WeatherScreen(
     val selectedCity: SelectedCity,
 ) : Screen, Parcelable {
+
+    @Immutable
+    data class ForecastDayState(
+        val header: ForecastHeaderState,
+        val forecast: ImmutableList<ForecastHourState>,
+    )
 
     sealed interface Weather {
         data object Loading : Weather

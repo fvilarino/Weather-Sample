@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.MultiSelector
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
@@ -143,7 +142,6 @@ internal fun SinglePaneWeatherContent(
         }
     }
 }
-/*
 
 @PhonePreviews
 @Composable
@@ -156,7 +154,8 @@ private fun PreviewPhoneWeatherContent(
             color = MaterialTheme.colorScheme.background,
         ) {
             SinglePaneWeatherContent(
-                state = stateWrapper.state,
+                state = stateWrapper.state.weather as WeatherScreen.Weather.Loaded,
+                refreshing = false,
                 todayRefreshCallback = {},
                 modifier = Modifier
                     .fillMaxWidth()
@@ -170,4 +169,3 @@ private fun PreviewPhoneWeatherContent(
         }
     }
 }
-*/
