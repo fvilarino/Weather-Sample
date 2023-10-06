@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -44,7 +45,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
-import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesRootDestination
 import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.AppBar
@@ -165,6 +165,9 @@ internal fun WeatherApp(
                     NavigableCircuitContent(
                         navigator = navigator,
                         backstack = backstack,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
                     )
                 }
                 if (false/*state.showBottomOverlay*/) {

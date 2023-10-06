@@ -1,12 +1,14 @@
 package com.francescsoftware.weathersample.ui.feature.home.di
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.core.injection.SingleIn
 import com.francescsoftware.weathersample.ui.feature.home.MainActivity
+import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.LocalCircuit
 import com.slack.circuit.foundation.NavigatorDefaults
@@ -72,7 +74,7 @@ interface ActivityModule {
                       All uiFactories: ${circuit?.newBuilder()?.uiFactories}
                       """
                         .trimIndent(),
-                    modifier.background(Color.Red),
+                    modifier.background(Color.Red).padding(all = MarginDouble),
                     style = TextStyle(color = Color.Yellow),
                 )
             }

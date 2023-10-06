@@ -22,4 +22,5 @@ dependencies {
     implementation(project(":domain:interactor:weather:weatherinteractor-api"))
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:weathericon"))
+    implementation(libs.androidx.compose.material3.window.sizeclass)
 }
