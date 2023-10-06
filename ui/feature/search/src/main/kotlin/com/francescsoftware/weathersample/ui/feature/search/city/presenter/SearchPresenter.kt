@@ -94,7 +94,6 @@ class SearchPresenter @AssistedInject constructor(
             snapshotFlow { query }
                 .debounce(DebounceDelay)
                 .distinctUntilChanged()
-
                 .flatMapLatest<String, CitiesSearch> { searchQuery ->
                     if (searchQuery.length < MinCityLengthForSearch) {
                         flowOf(CitiesSearch.QueryTooShort)

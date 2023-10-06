@@ -81,34 +81,24 @@ class WeatherPresenter @AssistedInject constructor(
         }
         var triggerIndex by remember { mutableIntStateOf(0) }
         var refreshTrigger: LoadTrigger by remember { mutableStateOf(LoadTrigger.Retry(triggerIndex)) }
+        var refreshing by remember { mutableStateOf(false) }
         val weatherFlow = rememberRetained(
             inputs = arrayOf(getTodayWeatherInteractor, getForecastInteractor),
         ) {
             snapshotFlow { refreshTrigger }
                 .flatMapLatest { trigger ->
                     flow {
-                        if (trigger is LoadTrigger.Retry) {
-                            emit(WeatherScreen.Weather.Loading)
+                        when(trigger) {
+                            is LoadTrigger.Refresh -> refreshing = true
+                            is LoadTrigger.Retry -> emit(WeatherScreen.Weather.Loading)
                         }
                         emit(loadWeather(location))
-                    }
-                }
-                .shareIn(scope = scope, started = SharingStarted.Lazily)
-        }
-        val refreshFlow = rememberRetained {
-            snapshotFlow { refreshTrigger }
-                .filterIsInstance<LoadTrigger.Refresh>()
-                .flatMapLatest {
-                    flow {
-                        emit(true)
-                        weatherFlow.first { it !is WeatherScreen.Weather.Loading }
-                        emit(false)
+                        refreshing = false
                     }
                 }
                 .shareIn(scope = scope, started = SharingStarted.Lazily)
         }
         val weather by weatherFlow.collectAsRetainedState(initial = WeatherScreen.Weather.Loading)
-        val refreshing by refreshFlow.collectAsRetainedState(initial = false)
         fun eventSink(event: WeatherScreen.Event) {
             when (event) {
                 WeatherScreen.Event.RefreshClick -> refreshTrigger = LoadTrigger.Refresh(triggerIndex++)
