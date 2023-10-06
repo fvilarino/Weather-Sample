@@ -15,8 +15,6 @@ import androidx.navigation.compose.rememberNavController
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityStatus
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
-import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestination
-import com.francescsoftware.weathersample.ui.shared.route.NavigationDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

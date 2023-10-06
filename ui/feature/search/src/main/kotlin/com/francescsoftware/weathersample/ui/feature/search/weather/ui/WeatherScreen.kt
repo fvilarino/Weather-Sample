@@ -2,17 +2,32 @@ package com.francescsoftware.weathersample.ui.feature.search.weather.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.Crossfade
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.LoadingSpinner
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
+import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
+import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
+import com.francescsoftware.weathersample.ui.shared.styles.TabletDpSize
+import com.francescsoftware.weathersample.ui.shared.styles.TabletPreviews
+import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.slack.circuit.codegen.annotations.CircuitInject
 
 @CircuitInject(WeatherScreen::class, ActivityScope::class)
@@ -77,53 +92,60 @@ private fun WeatherScreen(
         }
     }
 }
-/*
 
+
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @PhonePreviews
 @Composable
 private fun PreviewPhoneForecastWeatherScreen(
     @PreviewParameter(
-        provider = WeatherStateWrapperProvider::class,
-    ) weatherStateWrapper: WeatherStateWrapper,
+        provider = WeatherStateProvider::class,
+    ) state: WeatherScreen.State,
 ) {
     WeatherSampleTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
         ) {
-            WeatherScreen(
-                state = weatherStateWrapper.state,
-                deviceClass = DeviceClass.Compact,
-                onRefreshTodayWeather = {},
-                onRetry = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginDouble),
-            )
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                WeatherScreen(
+                    state = state,
+                    onRefreshTodayWeather = {},
+                    onRetry = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = MarginDouble),
+                )
+            }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @TabletPreviews
 @Composable
 private fun PreviewTabletForecastWeatherScreen(
     @PreviewParameter(
-        provider = WeatherStateWrapperProvider::class,
-    ) weatherStateWrapper: WeatherStateWrapper,
+        provider = WeatherStateProvider::class,
+    ) state: WeatherScreen.State,
 ) {
     WeatherSampleTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(TabletDpSize),
         ) {
-            WeatherScreen(
-                state = weatherStateWrapper.state,
-                deviceClass = DeviceClass.Expanded,
-                onRefreshTodayWeather = {},
-                onRetry = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginDouble),
-            )
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                WeatherScreen(
+                    state = state,
+                    onRefreshTodayWeather = {},
+                    onRetry = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = MarginDouble),
+                )
+            }
         }
     }
 }
-*/

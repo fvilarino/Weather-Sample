@@ -8,11 +8,16 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeader
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
+import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
+import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 
 @Composable
 internal fun WeatherForecast(
@@ -53,15 +58,14 @@ internal fun WeatherForecast(
         }
     }
 }
-/*
 
 @PhonePreviews
 @Composable
 private fun PreviewWeatherForecast(
     @PreviewParameter(
-        provider = WeatherStateWrapperProvider::class,
+        provider = LoadedWeatherStateWrapperProvider::class,
         limit = 1,
-    ) stateWrapper: WeatherStateWrapper,
+    ) stateWrapper: LoadedWeatherStateWrapper,
 ) {
     WeatherSampleTheme {
         Surface(
@@ -76,4 +80,3 @@ private fun PreviewWeatherForecast(
         }
     }
 }
-*/

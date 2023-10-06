@@ -14,7 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,14 +31,17 @@ import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.MultiSelector
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
+import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -143,29 +149,34 @@ internal fun SinglePaneWeatherContent(
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @PhonePreviews
 @Composable
 private fun PreviewPhoneWeatherContent(
-    @PreviewParameter(WeatherStateWrapperProvider::class) stateWrapper: WeatherStateWrapper,
+    @PreviewParameter(LoadedWeatherStateWrapperProvider::class) stateWrapper: LoadedWeatherStateWrapper,
 ) {
     WeatherSampleTheme {
-        val stateHolder = rememberWeatherStateHolder(stateWrapper.option)
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
         ) {
-            SinglePaneWeatherContent(
-                state = stateWrapper.state.weather as WeatherScreen.Weather.Loaded,
-                refreshing = false,
-                todayRefreshCallback = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = MarginDouble,
-                        start = MarginDouble,
-                        end = MarginDouble,
-                    ),
-                stateHolder = stateHolder,
-            )
+            val stateHolder = rememberWeatherStateHolder(stateWrapper.option)
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                SinglePaneWeatherContent(
+                    state = stateWrapper.state,
+                    refreshing = false,
+                    todayRefreshCallback = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = MarginDouble,
+                            start = MarginDouble,
+                            end = MarginDouble,
+                        ),
+                    stateHolder = stateHolder,
+                )
+            }
         }
     }
 }
