@@ -42,11 +42,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
+import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.AppBar
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.slack.circuit.backstack.rememberSaveableBackStack
@@ -61,8 +63,6 @@ sealed class BottomNavigationScreens(
     @StringRes val resourceId: Int,
     val icon: ImageVector,
 ) {
-    val route: String = screen::class.java.simpleName
-
     data object Search : BottomNavigationScreens(
         screen = SearchScreen,
         resourceId = com.francescsoftware.weathersample.ui.shared.assets.R.string.search_bottom_nav,
@@ -100,6 +100,21 @@ internal fun WeatherApp(
     val rootScreen by remember(backstack) {
         derivedStateOf { backstack.last().screen }
     }
+    val topScreen by remember(backstack) {
+        derivedStateOf { backstack.first().screen }
+    }
+    val isAtRoot by remember(backstack) {
+        derivedStateOf { backstack.size == 1 }
+    }
+    val context = LocalContext.current
+    val title by remember {
+        derivedStateOf {
+            when (val top = topScreen) {
+                is WeatherScreen -> top.selectedCity.name
+                else -> context.getString(com.francescsoftware.weathersample.ui.shared.assets.R.string.app_name)
+            }
+        }
+    }
     LaunchedEffect(key1 = isConnected) {
         if (!isConnected) {
             snackbarHostState.showSnackbar(
@@ -115,22 +130,24 @@ internal fun WeatherApp(
             snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
                 AppBar(
-                    title = "TODO", //state.currentDestination.title,
-                    navigationIcon = if (false/*state.hasBackButton*/) {
-                        {
-                            NavigationIcon(onClick = state::popBackstack)
+                    title = title,
+                    navigationIcon = {
+                        if (!isAtRoot) {
+                            NavigationIcon(onClick = { navigator.pop() })
                         }
-                    } else {
-                        {}
                     },
-                    actions = { /*state.currentDestination.TopBarActions()*/ },
+                    actions = {
+                        if (isAtRoot) {
+
+                        }
+                    },
                     scrollBehavior = scrollBehavior,
                 )
             },
             bottomBar = if (state.hasBottomNavBar) {
                 {
                     AnimatedVisibility(
-                        visible = true,//state.showBottomNavBar,
+                        visible = isAtRoot,
                         enter = slideInVertically { it } + fadeIn(),
                         exit = slideOutVertically { it } + fadeOut(),
                     ) {
@@ -170,7 +187,7 @@ internal fun WeatherApp(
                             .fillMaxHeight(),
                     )
                 }
-                if (false/*state.showBottomOverlay*/) {
+                if (state.hasBottomNavBar && isAtRoot) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
