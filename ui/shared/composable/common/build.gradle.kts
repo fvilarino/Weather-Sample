@@ -23,4 +23,5 @@ dependencies {
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.collections.immutable)
     implementation(libs.androidx.compose.material3.window.sizeclass)
+    implementation(libs.com.slack.circuit.circuit.overlay)
 }
