@@ -1,13 +1,8 @@
 plugins {
-    id("weathersample.android.library")
-}
-
-android {
-    namespace = "com.francescsoftware.weathersample.domain.interactor.city.api"
+    id("weathersample.kotlin.library")
 }
 
 dependencies {
     implementation(project(":core:type:either"))
-
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }
