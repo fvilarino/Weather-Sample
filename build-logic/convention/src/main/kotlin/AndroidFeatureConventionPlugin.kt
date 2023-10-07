@@ -11,7 +11,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply {
                 apply("weathersample.android.library")
-                apply("weathersample.android.di")
+                apply("weathersample.dependency.injection")
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {

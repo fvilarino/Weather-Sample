@@ -4,7 +4,7 @@ import com.francescsoftware.weathersample.buildconvention.configureAndroidLint
 import com.francescsoftware.weathersample.buildconvention.configureKotlinAndroid
 import com.francescsoftware.weathersample.buildconvention.disableUnnecessaryAndroidTests
 import com.francescsoftware.weathersample.buildconvention.catalog
-import com.francescsoftware.weathersample.buildconvention.configureAndroidDi
+import com.francescsoftware.weathersample.buildconvention.configureDependencyInjection
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -21,7 +21,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-                configureAndroidDi(this)
+                configureDependencyInjection(this)
                 configureAndroidLint(this)
             }
             extensions.configure<LibraryAndroidComponentsExtension> {

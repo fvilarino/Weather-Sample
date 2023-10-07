@@ -1,7 +1,7 @@
 plugins {
     id("weathersample.kotlin.library")
-    id("weathersample.android.di")
-    id("weathersample.kotlin.test.library")
+    id("weathersample.dependency.injection")
+    id("weathersample.kotlin.library.test")
 }
 
 dependencies {

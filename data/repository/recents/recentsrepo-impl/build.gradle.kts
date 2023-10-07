@@ -1,6 +1,6 @@
 plugins {
     id("weathersample.android.library")
-    id("weathersample.android.di")
+    id("weathersample.dependency.injection")
     id("weathersample.android.library.test")
 }
 
