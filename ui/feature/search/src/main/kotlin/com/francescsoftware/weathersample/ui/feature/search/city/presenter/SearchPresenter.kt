@@ -89,7 +89,7 @@ class SearchPresenter @AssistedInject constructor(
             mutableStateOf("")
         }
         val citiesFlow = rememberRetained(
-            inputs = arrayOf(getCitiesInteractor)
+            inputs = arrayOf(query, getCitiesInteractor)
         ) {
             snapshotFlow { query }
                 .debounce(DebounceDelay)
