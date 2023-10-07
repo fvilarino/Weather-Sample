@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.ui.feature.search.navigation
+package com.francescsoftware.weathersample.ui.feature.search.city.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

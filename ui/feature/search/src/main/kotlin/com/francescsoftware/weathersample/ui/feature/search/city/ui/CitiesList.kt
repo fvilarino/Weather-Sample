@@ -16,7 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
-import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
+import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews

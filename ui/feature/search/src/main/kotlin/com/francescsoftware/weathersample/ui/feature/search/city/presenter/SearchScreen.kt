@@ -3,7 +3,7 @@ package com.francescsoftware.weathersample.ui.feature.search.city.presenter
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
-import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
+import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen

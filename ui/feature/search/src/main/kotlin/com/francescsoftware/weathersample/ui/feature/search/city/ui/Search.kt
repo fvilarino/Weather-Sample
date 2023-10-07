@@ -33,7 +33,7 @@ import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
-import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
+import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.Crossfade
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane

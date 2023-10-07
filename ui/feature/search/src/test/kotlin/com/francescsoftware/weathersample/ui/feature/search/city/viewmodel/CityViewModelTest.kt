@@ -24,7 +24,7 @@ import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcher
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
-import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
+import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

@@ -21,16 +21,16 @@ internal fun NavRail(
         modifier = modifier,
     ) {
         navigationDestinations.forEach { destination ->
-            val selected = selectedScreen == destination.screen
+            val selected = selectedScreen == destination.rootScreen
             NavigationRailItem(
                 selected = selected,
                 icon = {
                     Icon(
-                        imageVector = destination.icon,
-                        contentDescription = stringResource(id = destination.resourceId),
+                        imageVector = destination.navItemIcon,
+                        contentDescription = stringResource(id = destination.navItemContentDescription),
                     )
                 },
-                label = { Text(text = stringResource(id = destination.resourceId)) },
+                label = { Text(text = stringResource(id = destination.navItemLabel)) },
                 colors = NavigationRailItemDefaults.colors(
                     indicatorColor = NavigationColors.navigationIndicatorColor(),
                     selectedIconColor = NavigationColors.navigationSelectedItemColor(),
@@ -38,7 +38,7 @@ internal fun NavRail(
                     unselectedIconColor = NavigationColors.navigationContentColor(),
                     unselectedTextColor = NavigationColors.navigationContentColor(),
                 ),
-                onClick = { onClick(destination.screen) },
+                onClick = { onClick(destination.rootScreen) },
             )
         }
     }

@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.ui.feature.home
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -20,8 +19,6 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -44,13 +41,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
-import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
+import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesDestination
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
+import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchDestination
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.modifier.blurIf
 import com.francescsoftware.weathersample.ui.shared.composable.common.overlay.DialogOverlay
@@ -62,31 +59,12 @@ import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.LocalOverlayHost
-import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.persistentListOf
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
-sealed class BottomNavigationScreens(
-    val screen: Screen,
-    @StringRes val resourceId: Int,
-    val icon: ImageVector,
-) {
-    data object Search : BottomNavigationScreens(
-        screen = SearchScreen,
-        resourceId = assetsR.string.search_bottom_nav,
-        icon = Icons.Default.Search,
-    )
-
-    data object Favorites : BottomNavigationScreens(
-        screen = FavoritesScreen,
-        resourceId = assetsR.string.favorite_bottom_nav,
-        icon = Icons.Default.FavoriteBorder,
-    )
-}
-
 internal val navigationDestinations = persistentListOf(
-    BottomNavigationScreens.Search,
-    BottomNavigationScreens.Favorites,
+    SearchDestination,
+    FavoritesDestination,
 )
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -114,17 +92,16 @@ internal fun WeatherApp(
     val isAtRoot by remember(backstack) {
         derivedStateOf { backstack.size == 1 }
     }
-    var menuExpanded by remember { mutableStateOf(false) }
-    var showAbout by rememberSaveable { mutableStateOf(false) }
-    val appName = stringResource(id = assetsR.string.app_name)
-    val title by remember {
+    val navDestination by remember {
         derivedStateOf {
-            when (val top = topScreen) {
-                is WeatherScreen -> top.selectedCity.name
-                else -> appName
+            navigationDestinations.first {
+                it.rootScreen == rootScreen
             }
         }
     }
+    val title = navDestination.actionBarLabel(screen = topScreen)
+    var menuExpanded by remember { mutableStateOf(false) }
+    var showAbout by rememberSaveable { mutableStateOf(false) }
     val overlayHost = LocalOverlayHost.current
     val blurBackground by remember {
         derivedStateOf {

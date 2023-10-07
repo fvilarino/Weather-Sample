@@ -96,6 +96,7 @@ dependencies {
     implementation(project(":ui:shared:composable:common"))
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:deviceclass"))
+    implementation(project(":ui:shared:navigation"))
     implementation(project(":ui:shared:styles"))
     implementation(project(":ui:shared:weathericon"))
 

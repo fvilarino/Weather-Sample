@@ -21,19 +21,19 @@ internal fun BottomNavBar(
         modifier = modifier,
     ) {
         navigationDestinations.forEach { navItem ->
-            val isSelected = navItem.screen == selectedScreen
+            val isSelected = navItem.rootScreen == selectedScreen
             NavigationBarItem(
                 selected = isSelected,
-                onClick = { onClick(navItem.screen) },
+                onClick = { onClick(navItem.rootScreen) },
                 icon = {
                     Icon(
-                        imageVector = navItem.icon,
-                        contentDescription = stringResource(id = navItem.resourceId),
+                        imageVector = navItem.navItemIcon,
+                        contentDescription = stringResource(id = navItem.navItemContentDescription),
                     )
                 },
                 label = {
                     Text(
-                        text = stringResource(navItem.resourceId),
+                        text = stringResource(navItem.navItemLabel),
                         style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
                     )

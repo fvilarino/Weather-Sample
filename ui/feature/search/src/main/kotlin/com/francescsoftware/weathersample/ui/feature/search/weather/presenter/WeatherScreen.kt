@@ -2,7 +2,7 @@ package com.francescsoftware.weathersample.ui.feature.search.weather.presenter
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
-import com.francescsoftware.weathersample.ui.feature.search.navigation.SelectedCity
+import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
