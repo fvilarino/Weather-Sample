@@ -19,7 +19,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 }
             }
             dependencies {
-                add("implementation", project(":core:coroutines"))
                 add("implementation", project(":core:type:either"))
                 add("implementation", project(":ui:shared:assets"))
                 add("implementation", project(":ui:shared:composable:common"))

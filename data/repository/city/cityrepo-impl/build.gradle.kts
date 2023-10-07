@@ -3,7 +3,7 @@ plugins {
     id("weathersample.android.di")
     id("weathersample.android.library.test")
     id("weathersample.keys.loader")
-    id("kotlinx-serialization")
+    alias(libs.plugins.org.jetbrains.kotlin.serialization)
 }
 
 android {

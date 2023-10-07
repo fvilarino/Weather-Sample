@@ -37,7 +37,6 @@ jdk-version = "17"
 junit-version = "4.13.2"
 org-jacoco-version = "0.8.10"
 org-jetbrains-kotlin-kotlin-gradle-plugin-version = "1.9.10"
-org-jetbrains-kotlin-kotlin-serialization-gradle-plugin-version = "1.9.10"
 org-jetbrains-kotlinx-kotlinx-collections-immutable-version = "0.3.6"
 org-jetbrains-kotlinx-kotlinx-coroutines-test-version = "1.7.3"
 org-jetbrains-kotlinx-kotlinx-coroutines-version = "1.7.3"
@@ -110,7 +109,6 @@ io-mockk = { module = "io.mockk:mockk", version.ref = "io-mockk-version" }
 junit-junit = { module = "junit:junit", version.ref = "junit-version" }
 org-jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "org-jacoco-version" }
 org-jetbrains-kotlin-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin-kotlin-gradle-plugin-version" }
-org-jetbrains-kotlin-kotlin-serialization-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "org-jetbrains-kotlin-kotlin-serialization-gradle-plugin-version" }
 org-jetbrains-kotlinx-kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "org-jetbrains-kotlinx-kotlinx-collections-immutable-version" }
 org-jetbrains-kotlinx-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines-version" }
 org-jetbrains-kotlinx-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "org-jetbrains-kotlinx-kotlinx-coroutines-version" }
@@ -176,6 +174,7 @@ test = [
 ]
 
 [plugins]
-com-google-devtools-ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp-plugin-version" }
+com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp-plugin-version" }
 com-squareup-anvil = { id = "com.squareup.anvil", version.ref = "com-squareup-anvil-version" }
-io-gitlab-arturbosch-detekt-plugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt-version" }
+io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt-version" }
+org-jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "org-jetbrains-kotlin-kotlin-gradle-plugin-version" }
