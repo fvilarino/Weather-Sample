@@ -13,6 +13,7 @@ class AndroidDiConventionPlugin : Plugin<Project> {
 
             dependencies {
                 add("implementation", catalog.findLibrary("com.google.dagger.dagger").get())
+                add("implementation", project(":core:injection"))
                 add("kapt", catalog.findLibrary("com.google.dagger.dagger.compiler").get())
             }
         }
