@@ -15,10 +15,10 @@ object SearchScreen : Screen {
     sealed interface CitiesResult {
         data object Idle : CitiesResult
         data object Loading : CitiesResult
-        data object NoResult : CitiesResult
-        data object LoadError : CitiesResult
+        data object NoResults : CitiesResult
+        data object Error : CitiesResult
 
-        data class CitiesLoaded(val cities: ImmutableList<CityResultModel>) : CitiesResult
+        data class Loaded(val cities: ImmutableList<CityResultModel>) : CitiesResult
     }
 
     data class State(

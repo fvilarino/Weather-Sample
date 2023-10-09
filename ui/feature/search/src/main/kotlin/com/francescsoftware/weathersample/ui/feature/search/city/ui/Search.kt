@@ -235,14 +235,14 @@ private fun Cities(
                     .fillMaxSize(),
             )
 
-            SearchScreen.CitiesResult.NoResult -> GenericMessage(
+            SearchScreen.CitiesResult.NoResults -> GenericMessage(
                 message = stringResource(id = R.string.no_results_found_label),
                 modifier = Modifier
                     .semantics { contentDescription = citiesNoResults }
                     .fillMaxSize(),
             )
 
-            SearchScreen.CitiesResult.LoadError -> GenericMessage(
+            SearchScreen.CitiesResult.Error -> GenericMessage(
                 message = stringResource(id = R.string.city_error_loading),
                 icon = Icons.Default.Warning,
                 modifier = Modifier
@@ -250,7 +250,7 @@ private fun Cities(
                     .fillMaxSize(),
             )
 
-            is SearchScreen.CitiesResult.CitiesLoaded -> CitiesList(
+            is SearchScreen.CitiesResult.Loaded -> CitiesList(
                 cities = result.cities,
                 onCityClick = onCityClick,
                 onFavoriteClick = onFavoriteClick,
@@ -274,7 +274,7 @@ private fun PreviewCityScreen() {
         ) {
             val state = remember {
                 SearchScreen.State(
-                    citiesResult = SearchScreen.CitiesResult.CitiesLoaded(
+                    citiesResult = SearchScreen.CitiesResult.Loaded(
                         cities = persistentListOf(
                             VancouverCityModel,
                             BarcelonaCityModel,

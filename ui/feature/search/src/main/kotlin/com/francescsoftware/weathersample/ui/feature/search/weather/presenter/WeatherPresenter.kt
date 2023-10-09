@@ -2,10 +2,8 @@ package com.francescsoftware.weathersample.ui.feature.search.weather.presenter
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import com.francescsoftware.weathersample.core.injection.ActivityScope
@@ -38,10 +36,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.shareIn
 import java.time.ZonedDateTime
 import java.util.Locale
 
@@ -70,19 +66,15 @@ class WeatherPresenter @AssistedInject constructor(
 
     @Composable
     override fun present(): WeatherScreen.State {
-        val scope = rememberCoroutineScope()
         val location = remember {
             WeatherLocation.City(
                 name = screen.selectedCity.name,
                 countryCode = screen.selectedCity.countryCode,
             )
         }
-        var triggerIndex by remember { mutableIntStateOf(0) }
-        var refreshTrigger: LoadTrigger by remember { mutableStateOf(LoadTrigger.Retry(triggerIndex)) }
+        var refreshTrigger: LoadTrigger by rememberRetained { mutableStateOf(LoadTrigger.Retry(0)) }
         var refreshing by remember { mutableStateOf(false) }
-        val weatherFlow = rememberRetained(
-            inputs = arrayOf(getTodayWeatherInteractor, getForecastInteractor),
-        ) {
+        val weatherFlow = rememberRetained {
             snapshotFlow { refreshTrigger }
                 .flatMapLatest { trigger ->
                     flow {
@@ -94,13 +86,12 @@ class WeatherPresenter @AssistedInject constructor(
                         refreshing = false
                     }
                 }
-                .shareIn(scope = scope, started = SharingStarted.Lazily)
         }
         val weather by weatherFlow.collectAsRetainedState(initial = WeatherScreen.Weather.Loading)
         fun eventSink(event: WeatherScreen.Event) {
             when (event) {
-                WeatherScreen.Event.RefreshClick -> refreshTrigger = LoadTrigger.Refresh(triggerIndex++)
-                WeatherScreen.Event.RetryClick -> refreshTrigger = LoadTrigger.Retry(triggerIndex++)
+                WeatherScreen.Event.RefreshClick -> refreshTrigger = LoadTrigger.Refresh(refreshTrigger.index + 1)
+                WeatherScreen.Event.RetryClick -> refreshTrigger = LoadTrigger.Retry(refreshTrigger.index + 1)
             }
         }
         return WeatherScreen.State(
