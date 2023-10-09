@@ -18,11 +18,11 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="refresh">Refresh</string>
-    <string name="content_description_cities_search_box">cities_search_box</string>
-    <string name="content_description_cities_loading">cities_loading</string>
-    <string name="content_description_cities_result">cities_result</string>
-    <string name="content_description_cities_no_results">cities_no_results</string>
-    <string name="content_description_cities_error">cities_error</string>
-    <string name="content_description_city_chips">city_chips</string>
-    <string name="content_description_city_chips_container">city_chips_container</string>
+    <string name="test_tag_cities_search_box">cities_search_box</string>
+    <string name="test_tag_cities_loading">cities_loading</string>
+    <string name="test_tag_cities_result">cities_result</string>
+    <string name="test_tag_cities_no_results">cities_no_results</string>
+    <string name="test_tag_cities_error">cities_error</string>
+    <string name="test_tag_city_chips">city_chips</string>
+    <string name="test_tag_city_chips_container">city_chips_container</string>
 </resources>

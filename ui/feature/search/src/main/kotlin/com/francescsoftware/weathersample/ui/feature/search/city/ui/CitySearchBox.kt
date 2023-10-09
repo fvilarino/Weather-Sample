@@ -17,8 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
@@ -33,13 +33,13 @@ internal fun CitiesSearchBox(
     modifier: Modifier = Modifier,
 ) {
     val searchBoxContentDescription = stringResource(
-        id = R.string.content_description_cities_search_box,
+        id = R.string.test_tag_cities_search_box,
     )
     OutlinedTextField(
         value = query,
         onValueChange = onQueryChange,
         modifier = modifier
-            .semantics { contentDescription = searchBoxContentDescription },
+            .semantics { testTag = searchBoxContentDescription },
         label = { Text(text = stringResource(id = R.string.search_city_hint)) },
         singleLine = true,
         leadingIcon = {

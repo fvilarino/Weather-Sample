@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -176,9 +176,8 @@ private fun CityPane(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val cityChipsContentDescription = stringResource(
-            id = R.string.content_description_city_chips,
+            id = R.string.test_tag_city_chips,
         )
-
         CitiesSearchBox(
             query = stateHolder.query,
             onQueryChange = stateHolder::onQueryUpdated,
@@ -203,7 +202,7 @@ private fun CityPane(
                 },
                 onDeleteChip = onDeleteChip,
                 modifier = Modifier
-                    .semantics { contentDescription = cityChipsContentDescription }
+                    .semantics { testTag = cityChipsContentDescription }
                     .fillMaxWidth()
                     .padding(top = MarginDouble),
             )
@@ -218,10 +217,10 @@ private fun Cities(
     onFavoriteClick: (CityResultModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val citiesLoading = stringResource(id = R.string.content_description_cities_loading)
-    val citiesResults = stringResource(id = R.string.content_description_cities_result)
-    val citiesNoResults = stringResource(id = R.string.content_description_cities_no_results)
-    val citiesError = stringResource(id = R.string.content_description_cities_error)
+    val citiesLoading = stringResource(id = R.string.test_tag_cities_loading)
+    val citiesResults = stringResource(id = R.string.test_tag_cities_result)
+    val citiesNoResults = stringResource(id = R.string.test_tag_cities_no_results)
+    val citiesError = stringResource(id = R.string.test_tag_cities_error)
     Crossfade(
         targetState = state.citiesResult,
         contentKey = { it::class.java },
@@ -231,14 +230,14 @@ private fun Cities(
             SearchScreen.CitiesResult.Idle -> {}
             SearchScreen.CitiesResult.Loading -> ProgressIndicator(
                 modifier = Modifier
-                    .semantics { contentDescription = citiesLoading }
+                    .semantics { testTag = citiesLoading }
                     .fillMaxSize(),
             )
 
             SearchScreen.CitiesResult.NoResults -> GenericMessage(
                 message = stringResource(id = R.string.no_results_found_label),
                 modifier = Modifier
-                    .semantics { contentDescription = citiesNoResults }
+                    .semantics { testTag = citiesNoResults }
                     .fillMaxSize(),
             )
 
@@ -246,7 +245,7 @@ private fun Cities(
                 message = stringResource(id = R.string.city_error_loading),
                 icon = Icons.Default.Warning,
                 modifier = Modifier
-                    .semantics { contentDescription = citiesError }
+                    .semantics { testTag = citiesError }
                     .fillMaxSize(),
             )
 
@@ -255,7 +254,7 @@ private fun Cities(
                 onCityClick = onCityClick,
                 onFavoriteClick = onFavoriteClick,
                 modifier = Modifier
-                    .semantics { contentDescription = citiesResults }
+                    .semantics { testTag = citiesResults }
                     .fillMaxSize()
                     .padding(horizontal = MarginDouble),
             )
