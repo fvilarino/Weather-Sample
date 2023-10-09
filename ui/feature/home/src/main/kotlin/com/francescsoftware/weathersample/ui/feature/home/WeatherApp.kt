@@ -48,7 +48,6 @@ import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMoni
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesDestination
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchDestination
-import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.modifier.blurIf
 import com.francescsoftware.weathersample.ui.shared.composable.common.overlay.DialogOverlay
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionMenuItem

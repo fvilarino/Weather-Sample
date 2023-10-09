@@ -41,7 +41,6 @@ import kotlinx.coroutines.flow.flow
 import java.time.ZonedDateTime
 import java.util.Locale
 
-
 private sealed class LoadTrigger {
     abstract val index: Int
 
@@ -78,7 +77,7 @@ class WeatherPresenter @AssistedInject constructor(
             snapshotFlow { refreshTrigger }
                 .flatMapLatest { trigger ->
                     flow {
-                        when(trigger) {
+                        when (trigger) {
                             is LoadTrigger.Refresh -> refreshing = true
                             is LoadTrigger.Retry -> emit(WeatherScreen.Weather.Loading)
                         }

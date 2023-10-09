@@ -33,7 +33,7 @@ private data class ForecastInfo(
     val forecast: Forecast,
 )
 
-class FavoritesLoader(
+internal class FavoritesLoader(
     getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
     private val getForecastInteractor: GetForecastInteractor,
     private val timeFormatter: TimeFormatter,

@@ -10,6 +10,7 @@ import com.slack.circuit.runtime.screen.Screen
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.parcelize.Parcelize
 
+/** Search screen contract */
 @Parcelize
 object SearchScreen : Screen {
     sealed interface CitiesResult {

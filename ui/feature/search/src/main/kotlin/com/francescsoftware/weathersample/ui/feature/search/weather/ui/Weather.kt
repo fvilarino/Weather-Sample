@@ -14,8 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
@@ -70,7 +68,9 @@ private fun WeatherScreen(
                 retry = onRetry,
             )
 
-            is WeatherScreen.Weather.Loaded -> if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            is WeatherScreen.Weather.Loaded -> if (
+                LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+            ) {
                 DualPaneWeatherContent(
                     state = weatherState,
                     refreshing = state.refreshing,
@@ -92,7 +92,6 @@ private fun WeatherScreen(
         }
     }
 }
-
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @PhonePreviews
