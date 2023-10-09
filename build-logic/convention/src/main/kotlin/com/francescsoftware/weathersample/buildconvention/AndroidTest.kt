@@ -58,6 +58,7 @@ internal fun configureAndroidTest(
 ) {
     commonExtension.apply {
         testOptions {
+            unitTests.isReturnDefaultValues = true
             unitTests.all { test ->
                 test.useJUnitPlatform {
                     includeEngines("junit-jupiter")

@@ -7,6 +7,7 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCit
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -18,6 +19,7 @@ internal class RecentCitiesLoader(
 ) {
     val recentCities: Flow<ImmutableList<RecentCityModel>> = getRecentCitiesInteractor(limit = MaxRecentCities)
         .map { recentCities -> parseRecentCities(recentCities) }
+        .distinctUntilChanged()
 
     private suspend fun parseRecentCities(cities: List<RecentCity>) =
         withContext(dispatcherProvider.default) {
