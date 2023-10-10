@@ -9,10 +9,8 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.model.Favor
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -20,9 +18,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -30,13 +26,12 @@ private val DebounceDelay = 400L.toDuration(DurationUnit.MILLISECONDS)
 private const val MinCityLengthForSearch = 3
 private const val NoFavorite = -1
 
-class CitiesLoader @Inject constructor(
+internal class CitiesLoader(
     private val getCitiesInteractor: GetCitiesInteractor,
     private val getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
     private val dispatcherProvider: DispatcherProvider,
 ) {
 
-    private val scope = CoroutineScope(dispatcherProvider.main)
     private val searchQuery = MutableStateFlow("")
 
     val cities: Flow<SearchScreen.CitiesResult> = searchQuery
@@ -63,10 +58,6 @@ class CitiesLoader @Inject constructor(
                 }
             }
         }
-        .shareIn(
-            scope = scope,
-            started = SharingStarted.Lazily,
-        )
 
     fun setQuery(query: String) {
         searchQuery.value = query

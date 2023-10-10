@@ -2,7 +2,6 @@ package com.francescsoftware.weathersample.ui.feature.search.city.presenter
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.core.injection.ActivityScope
@@ -19,7 +18,6 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResul
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.collectAsRetainedState
-import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dagger.assisted.Assisted
@@ -30,15 +28,26 @@ import kotlinx.coroutines.launch
 
 class SearchPresenter @AssistedInject constructor(
     @Assisted private val navigator: Navigator,
-    private val getCitiesInteractor: GetCitiesInteractor,
     private val insertFavoriteCityInteractor: InsertFavoriteCityInteractor,
     private val deleteFavoriteCityInteractor: DeleteFavoriteCityInteractor,
-    private val getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
-    private val getRecentCitiesInteractor: GetRecentCitiesInteractor,
     private val insertRecentCitiesInteractor: InsertRecentCityInteractor,
     private val deleteRecentCityInteractor: DeleteRecentCityInteractor,
-    private val dispatcherProvider: DispatcherProvider,
+    getCitiesInteractor: GetCitiesInteractor,
+    getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
+    getRecentCitiesInteractor: GetRecentCitiesInteractor,
+    dispatcherProvider: DispatcherProvider,
 ) : Presenter<SearchScreen.State> {
+
+    private val citiesLoader = CitiesLoader(
+        getCitiesInteractor = getCitiesInteractor,
+        getFavoriteCitiesInteractor = getFavoriteCitiesInteractor,
+        dispatcherProvider = dispatcherProvider,
+    )
+
+    private val recentCitiesLoader = RecentCitiesLoader(
+        getRecentCitiesInteractor = getRecentCitiesInteractor,
+        dispatcherProvider = dispatcherProvider,
+    )
 
     @CircuitInject(SearchScreen::class, ActivityScope::class)
     @AssistedFactory
@@ -51,20 +60,8 @@ class SearchPresenter @AssistedInject constructor(
     @Composable
     override fun present(): SearchScreen.State {
         val scope = rememberCoroutineScope()
-        val citiesLoader = rememberRetained {
-            CitiesLoader(
-                getCitiesInteractor = getCitiesInteractor,
-                getFavoriteCitiesInteractor = getFavoriteCitiesInteractor,
-                dispatcherProvider = dispatcherProvider,
-            )
-        }
         val cities by citiesLoader.cities.collectAsRetainedState(initial = SearchScreen.CitiesResult.Idle)
-        val recentCities by remember {
-            RecentCitiesLoader(
-                getRecentCitiesInteractor = getRecentCitiesInteractor,
-                dispatcherProvider = dispatcherProvider,
-            )
-        }.recentCities.collectAsRetainedState(initial = persistentListOf())
+        val recentCities by recentCitiesLoader.recentCities.collectAsRetainedState(initial = persistentListOf())
 
         fun eventSink(event: SearchScreen.Event) {
             when (event) {

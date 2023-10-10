@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.data.repository.weather.impl
 
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.core.injection.AppScope
+import com.francescsoftware.weathersample.core.injection.SingleIn
 import com.francescsoftware.weathersample.core.network.safeApiCall
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
@@ -15,6 +16,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 class WeatherRepositoryImpl @Inject constructor(
     private val weatherService: WeatherService,
     private val dispatcherProvider: DispatcherProvider,

@@ -10,6 +10,7 @@ import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMoni
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityStatus
 import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.ApplicationContext
+import com.francescsoftware.weathersample.core.injection.SingleIn
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -41,6 +42,7 @@ private class NetworkCallback(
 }
 
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 class ConnectivityMonitorImpl @Inject constructor(
     @ApplicationContext context: Context,
 ) : ConnectivityMonitor {

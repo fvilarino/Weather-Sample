@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.data.repository.recents.impl
 
 import com.francescsoftware.weathersample.core.injection.AppScope
+import com.francescsoftware.weathersample.core.injection.SingleIn
 import com.francescsoftware.weathersample.data.repository.recents.api.RecentCity
 import com.francescsoftware.weathersample.data.repository.recents.api.RecentsRepository
 import com.francescsoftware.weathersample.data.repository.recents.impl.dao.RecentCitiesDao
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 class RecentsRepositoryImpl @Inject constructor(
     private val recentCitiesDatabase: RecentCitiesDatabase,
 ) : RecentsRepository {
