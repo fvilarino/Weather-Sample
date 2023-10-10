@@ -83,10 +83,8 @@ class SearchPresenter @AssistedInject constructor(
                     }
                 }
 
-                is SearchScreen.Event.CityClick -> {
-                    scope.launch {
-                        insertRecentCitiesInteractor(RecentCity(name = event.city.name))
-                    }
+                is SearchScreen.Event.CityClick -> scope.launch {
+                    insertRecentCitiesInteractor(RecentCity(name = event.city.name))
                     navigator.goTo(WeatherScreen(event.city))
                 }
             }
