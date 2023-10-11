@@ -21,6 +21,8 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.model.Favor
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
+import com.francescsoftware.weathersample.ui.feature.search.city.presenter.CitiesLoader
+import com.francescsoftware.weathersample.ui.feature.search.city.presenter.RecentCitiesLoader
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchPresenter
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.slack.circuit.runtime.Navigator
@@ -59,7 +61,7 @@ private const val RecentCityBarcelona = "Barcelona"
 
 internal class SearchPresenterTest {
 
-    private val DomainCityVancouver = City(
+    private val domainCityVancouver = City(
         id = VancouverCityId,
         name = VancouverCityName,
         region = VancouverCityRegion,
@@ -72,7 +74,7 @@ internal class SearchPresenterTest {
         ),
     )
 
-    private val DomainCityBarcelona = City(
+    private val domainCityBarcelona = City(
         id = BarcelonaCityId,
         name = BarcelonaCityName,
         region = BarcelonaCityRegion,
@@ -85,7 +87,7 @@ internal class SearchPresenterTest {
         ),
     )
 
-    private val CityModelVancouver = CityResultModel(
+    private val cityModelVancouver = CityResultModel(
         id = VancouverCityId.toLong(),
         favoriteId = -1,
         name = VancouverCityName,
@@ -97,7 +99,7 @@ internal class SearchPresenterTest {
         ),
     )
 
-    private val CityModelBarcelona = CityResultModel(
+    private val cityModelBarcelona = CityResultModel(
         id = BarcelonaCityId.toLong(),
         favoriteId = -1,
         name = BarcelonaCityName,
@@ -109,13 +111,13 @@ internal class SearchPresenterTest {
         ),
     )
 
-    private val FavoriteCityVancouver = FavoriteCity(
+    private val favoriteCityVancouver = FavoriteCity(
         id = FavoriteCityVancouverId,
         name = FavoriteCityVancouverName,
         countryCode = FavoriteCityVancouverCode,
     )
 
-    private val RecentCities = listOf(
+    private val recentCities = listOf(
         RecentCity(
             RecentCityVancouver,
         ),
@@ -128,7 +130,7 @@ internal class SearchPresenterTest {
     @DisplayName("Presenter loads cities from query")
     fun presenterLoadsCitiesFromQuery() = runTest {
         val citiesInteractor = FakeGetCitiesInteractor().apply {
-            citiesResult.add(listOf(DomainCityVancouver, DomainCityBarcelona))
+            citiesResult.add(listOf(domainCityVancouver, domainCityBarcelona))
         }
         val presenter = getPresenter(
             getCitiesInteractor = citiesInteractor,
@@ -141,7 +143,7 @@ internal class SearchPresenterTest {
             item = awaitItem()
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Loaded>()
             assertThat((item.citiesResult as SearchScreen.CitiesResult.Loaded).cities).isEqualTo(
-                persistentListOf(CityModelVancouver, CityModelBarcelona),
+                persistentListOf(cityModelVancouver, cityModelBarcelona),
             )
             cancelAndIgnoreRemainingEvents()
         }
@@ -171,7 +173,7 @@ internal class SearchPresenterTest {
     @DisplayName("Presenter loads recent cities")
     fun presenterLoadsRecentCities() = runTest {
         val recentCitiesInteractor = FakeGetRecentCitiesInteractor().apply {
-            cities.add(RecentCities)
+            cities.add(recentCities)
         }
         val presenter = getPresenter(
             getRecentCitiesInteractor = recentCitiesInteractor,
@@ -180,7 +182,7 @@ internal class SearchPresenterTest {
             var item = awaitItem()
             assertThat(item.recentCities).isEmpty()
             item = awaitItem()
-            val expected = RecentCities
+            val expected = recentCities
                 .map { city -> RecentCityModel(city.name) }
                 .sortedBy { city -> city.name }
                 .toPersistentList()
@@ -192,7 +194,7 @@ internal class SearchPresenterTest {
     @DisplayName("Presenter saves recent city chip click")
     fun presenterLoadsCitiesOnChipClick() = runTest {
         val recentCitiesInteractor = FakeGetRecentCitiesInteractor().apply {
-            cities.add(RecentCities)
+            cities.add(recentCities)
         }
         val insertRecentCityInteractor = FakeInsertRecentCityInterator()
         val presenter = getPresenter(
@@ -214,7 +216,7 @@ internal class SearchPresenterTest {
     @DisplayName("Presenter removes recent city from database on X click")
     fun presenterRemovesRecentCityOnXClick() = runTest {
         val recentCitiesInteractor = FakeGetRecentCitiesInteractor().apply {
-            cities.add(RecentCities)
+            cities.add(recentCities)
         }
         val deleteRecentCityInteractor = FakeDeleteRecentCityInteractor()
         val presenter = getPresenter(
@@ -236,7 +238,7 @@ internal class SearchPresenterTest {
     @DisplayName("Presenter inserts favorite city on favorite click")
     fun presenterInsertsFavoriteCityOnClick() = runTest {
         val citiesInteractor = FakeGetCitiesInteractor().apply {
-            citiesResult.add(listOf(DomainCityVancouver, DomainCityBarcelona))
+            citiesResult.add(listOf(domainCityVancouver, domainCityBarcelona))
         }
         val insertFavoriteCitiesInteractor = FakeInsertFavoriteCityInteractor()
         val presenter = getPresenter(
@@ -248,7 +250,7 @@ internal class SearchPresenterTest {
             var item = awaitItem()
             item.eventSink(SearchScreen.Event.QueryUpdated(TextFieldValue(query)))
             item = skipWhile { state -> state.citiesResult !is SearchScreen.CitiesResult.Loaded }
-            val favorite = CityModelVancouver
+            val favorite = cityModelVancouver
             item.eventSink(SearchScreen.Event.FavoriteClick(favorite))
             val saved: FavoriteCity = insertFavoriteCitiesInteractor.cities.awaitItem()
             assertThat(saved.name).isEqualTo(favorite.name)
@@ -261,10 +263,10 @@ internal class SearchPresenterTest {
     @DisplayName("Presenter marks cities as favorites")
     fun presenterMarksFavoriteCities() = runTest {
         val citiesInteractor = FakeGetCitiesInteractor().apply {
-            citiesResult.add(listOf(DomainCityVancouver, DomainCityBarcelona))
+            citiesResult.add(listOf(domainCityVancouver, domainCityBarcelona))
         }
         val favoriteCitiesInteractor = FakeGetFavoriteCitiesInteractor().apply {
-            favoriteCities.add(listOf(FavoriteCityVancouver))
+            favoriteCities.add(listOf(favoriteCityVancouver))
         }
         val presenter = getPresenter(
             getCitiesInteractor = citiesInteractor,
@@ -277,8 +279,8 @@ internal class SearchPresenterTest {
             item = skipWhile { state -> state.citiesResult !is SearchScreen.CitiesResult.Loaded }
             val favorites = (item.citiesResult as SearchScreen.CitiesResult.Loaded).cities.filter { it.isFavorite }
             assertThat(favorites.size).isEqualTo(1)
-            assertThat(favorites.first().name).isEqualTo(FavoriteCityVancouver.name)
-            assertThat(favorites.first().countryCode).isEqualTo(FavoriteCityVancouver.countryCode)
+            assertThat(favorites.first().name).isEqualTo(favoriteCityVancouver.name)
+            assertThat(favorites.first().countryCode).isEqualTo(favoriteCityVancouver.countryCode)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -287,10 +289,10 @@ internal class SearchPresenterTest {
     @DisplayName("Presenter removes city from favorites")
     fun presenterRemovesFavoriteCities() = runTest {
         val citiesInteractor = FakeGetCitiesInteractor().apply {
-            citiesResult.add(listOf(DomainCityVancouver, DomainCityBarcelona))
+            citiesResult.add(listOf(domainCityVancouver, domainCityBarcelona))
         }
         val favoriteCitiesInteractor = FakeGetFavoriteCitiesInteractor().apply {
-            favoriteCities.add(listOf(FavoriteCityVancouver))
+            favoriteCities.add(listOf(favoriteCityVancouver))
         }
         val deleteFavoriteCitiesInteractor = FakeDeleteFavoriteCityInteractor()
         val presenter = getPresenter(
@@ -307,7 +309,7 @@ internal class SearchPresenterTest {
             val vancouver = loaded.cities.first { it.name == VancouverCityName }
             item.eventSink(SearchScreen.Event.FavoriteClick(vancouver))
             val deleted = deleteFavoriteCitiesInteractor.cities.awaitItem()
-            assertThat(deleted).isEqualTo(FavoriteCityVancouver)
+            assertThat(deleted).isEqualTo(favoriteCityVancouver)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -336,13 +338,18 @@ internal class SearchPresenterTest {
         dispatcherProvider: DispatcherProvider = TestDispatcherProvider(),
     ): SearchPresenter = SearchPresenter(
         navigator = navigator,
-        getCitiesInteractor = getCitiesInteractor,
+        citiesLoader = CitiesLoader(
+            getCitiesInteractor = getCitiesInteractor,
+            getFavoriteCitiesInteractor = getFavoriteCitiesInteractor,
+            dispatcherProvider = dispatcherProvider,
+        ),
+        recentCitiesLoader = RecentCitiesLoader(
+            getRecentCitiesInteractor = getRecentCitiesInteractor,
+            dispatcherProvider = dispatcherProvider,
+        ),
         insertFavoriteCityInteractor = insertFavoriteCityInteractor,
         deleteFavoriteCityInteractor = deleteFavoriteCityInteractor,
-        getFavoriteCitiesInteractor = getFavoriteCitiesInteractor,
-        getRecentCitiesInteractor = getRecentCitiesInteractor,
         insertRecentCitiesInteractor = insertRecentCitiesInteractor,
         deleteRecentCityInteractor = deleteRecentCityInteractor,
-        dispatcherProvider = dispatcherProvider,
     )
 }

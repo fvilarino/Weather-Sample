@@ -3,13 +3,9 @@ package com.francescsoftware.weathersample.ui.feature.search.city.presenter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteFavoriteCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteRecentCityInteractor
-import com.francescsoftware.weathersample.domain.interactor.city.api.GetCitiesInteractor
-import com.francescsoftware.weathersample.domain.interactor.city.api.GetFavoriteCitiesInteractor
-import com.francescsoftware.weathersample.domain.interactor.city.api.GetRecentCitiesInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.InsertFavoriteCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.InsertRecentCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.RecentCity
@@ -28,26 +24,13 @@ import kotlinx.coroutines.launch
 
 class SearchPresenter @AssistedInject constructor(
     @Assisted private val navigator: Navigator,
+    private val citiesLoader: CitiesLoader,
+    private val recentCitiesLoader: RecentCitiesLoader,
     private val insertFavoriteCityInteractor: InsertFavoriteCityInteractor,
     private val deleteFavoriteCityInteractor: DeleteFavoriteCityInteractor,
     private val insertRecentCitiesInteractor: InsertRecentCityInteractor,
     private val deleteRecentCityInteractor: DeleteRecentCityInteractor,
-    getCitiesInteractor: GetCitiesInteractor,
-    getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
-    getRecentCitiesInteractor: GetRecentCitiesInteractor,
-    dispatcherProvider: DispatcherProvider,
 ) : Presenter<SearchScreen.State> {
-
-    private val citiesLoader = CitiesLoader(
-        getCitiesInteractor = getCitiesInteractor,
-        getFavoriteCitiesInteractor = getFavoriteCitiesInteractor,
-        dispatcherProvider = dispatcherProvider,
-    )
-
-    private val recentCitiesLoader = RecentCitiesLoader(
-        getRecentCitiesInteractor = getRecentCitiesInteractor,
-        dispatcherProvider = dispatcherProvider,
-    )
 
     @CircuitInject(SearchScreen::class, ActivityScope::class)
     @AssistedFactory

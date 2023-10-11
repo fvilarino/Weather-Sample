@@ -10,10 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 private const val MaxRecentCities = 10
 
-internal class RecentCitiesLoader(
+class RecentCitiesLoader @Inject constructor(
     getRecentCitiesInteractor: GetRecentCitiesInteractor,
     private val dispatcherProvider: DispatcherProvider,
 ) {

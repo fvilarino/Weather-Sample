@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -26,7 +27,7 @@ private val DebounceDelay = 400L.toDuration(DurationUnit.MILLISECONDS)
 private const val MinCityLengthForSearch = 3
 private const val NoFavorite = -1
 
-internal class CitiesLoader(
+class CitiesLoader @Inject constructor(
     private val getCitiesInteractor: GetCitiesInteractor,
     private val getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
     private val dispatcherProvider: DispatcherProvider,
