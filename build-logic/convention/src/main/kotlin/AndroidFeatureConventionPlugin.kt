@@ -22,7 +22,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:type:either"))
                 add("implementation", project(":ui:shared:assets"))
                 add("implementation", project(":ui:shared:composable:common"))
-                add("implementation", project(":ui:shared:deviceclass"))
                 add("implementation", project(":ui:shared:navigation"))
                 add("implementation", project(":ui:shared:styles"))
                 add("ksp", catalog.findLibrary("com.slack.circuit.circuit.codegen").get())

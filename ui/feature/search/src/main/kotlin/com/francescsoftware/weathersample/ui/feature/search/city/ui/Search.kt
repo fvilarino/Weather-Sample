@@ -13,7 +13,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
@@ -35,15 +38,17 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCit
 import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.isCompact
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.isExpanded
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.Crossfade
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.GenericMessage
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PanesOrientation
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ProgressIndicator
-import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.LandscapePhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
+import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.TabletPreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
@@ -61,12 +66,8 @@ internal fun Search(
     state: SearchScreen.State,
     modifier: Modifier = Modifier,
 ) {
-    val windowSizeClass = LocalWindowSizeClass.current
-    val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
-
     CityScreen(
         state = state,
-        deviceClass = deviceClass,
         onCityClick = { selectedCity -> state.eventSink(SearchScreen.Event.CityClick(selectedCity)) },
         onFavoriteClick = { state.eventSink(SearchScreen.Event.FavoriteClick(it)) },
         onQueryChange = { state.eventSink(SearchScreen.Event.QueryUpdated(it)) },
@@ -80,7 +81,6 @@ internal fun Search(
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun CityScreen(
     state: SearchScreen.State,
-    deviceClass: DeviceClass,
     onCityClick: (SelectedCity) -> Unit,
     onFavoriteClick: (CityResultModel) -> Unit,
     onQueryChange: (TextFieldValue) -> Unit,
@@ -89,6 +89,7 @@ internal fun CityScreen(
     modifier: Modifier = Modifier,
     stateHolder: CityScreenStateHolder = rememberCityScreenStateHolder(),
 ) {
+    val windowSizeClass = LocalWindowSizeClass.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val orientation = LocalConfiguration.current.orientation
 
@@ -124,12 +125,12 @@ internal fun CityScreen(
     } else {
         DualPane(
             panesOrientation = PanesOrientation.horizontal(
-                aspectRatio = if (deviceClass == DeviceClass.Expanded) .33f else .5f,
+                aspectRatio = if (windowSizeClass.isExpanded) .33f else .5f,
             ),
             paneOne = {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Spacer(
-                        modifier = if (deviceClass == DeviceClass.Compact) {
+                        modifier = if (windowSizeClass.isCompact) {
                             Modifier.height(MarginQuad)
                         } else {
                             Modifier.weight(1f)
@@ -262,43 +263,47 @@ private fun Cities(
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @PhonePreviews
 @LandscapePhonePreviews
 @TabletPreviews
 @Composable
 private fun PreviewCityScreen() {
     WeatherSampleTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
         ) {
-            val state = remember {
-                SearchScreen.State(
-                    citiesResult = SearchScreen.CitiesResult.Loaded(
-                        cities = persistentListOf(
-                            VancouverCityModel,
-                            BarcelonaCityModel,
-                            LondonCityModel,
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                val state = remember {
+                    SearchScreen.State(
+                        citiesResult = SearchScreen.CitiesResult.Loaded(
+                            cities = persistentListOf(
+                                VancouverCityModel,
+                                BarcelonaCityModel,
+                                LondonCityModel,
+                            ),
                         ),
-                    ),
-                    recentCities = persistentListOf(
-                        RecentCityModel("Vancouver"),
-                        RecentCityModel("Barcelona"),
-                        RecentCityModel("London"),
-                        RecentCityModel("Tokyo"),
-                        RecentCityModel("Jakarta"),
-                    ),
-                    eventSink = {},
+                        recentCities = persistentListOf(
+                            RecentCityModel("Vancouver"),
+                            RecentCityModel("Barcelona"),
+                            RecentCityModel("London"),
+                            RecentCityModel("Tokyo"),
+                            RecentCityModel("Jakarta"),
+                        ),
+                        eventSink = {},
+                    )
+                }
+                CityScreen(
+                    state = state,
+                    onCityClick = { },
+                    onFavoriteClick = { },
+                    onQueryChange = { },
+                    onChipClick = { },
+                    onDeleteChip = { },
                 )
             }
-            CityScreen(
-                state = state,
-                deviceClass = DeviceClass.Compact,
-                onCityClick = { },
-                onFavoriteClick = { },
-                onQueryChange = { },
-                onChipClick = { },
-                onDeleteChip = { },
-            )
         }
     }
 }

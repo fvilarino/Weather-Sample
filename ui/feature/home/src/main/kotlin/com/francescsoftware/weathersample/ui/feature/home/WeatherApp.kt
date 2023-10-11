@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -170,7 +171,9 @@ internal fun WeatherApp(
                 }
             },
         ) { paddingValues ->
-            Box {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+            ) {
                 Row(
                     modifier = Modifier
                         .padding(paddingValues)
@@ -182,7 +185,7 @@ internal fun WeatherApp(
                             onClick = { screen ->
                                 navigator.resetRoot(screen)
                             },
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.align(Alignment.CenterVertically),
                         )
                     }
                     NavigableCircuitContent(

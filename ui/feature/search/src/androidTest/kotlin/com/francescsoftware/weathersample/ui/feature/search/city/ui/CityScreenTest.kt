@@ -1,6 +1,10 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.ui
 
 import androidx.activity.ComponentActivity
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -10,7 +14,8 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResul
 import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
-import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
+import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Rule
 import org.junit.Test
@@ -29,26 +34,29 @@ private val recentCities = persistentListOf(
     RecentCityModel("Barcelona"),
 )
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 internal class CityScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
+
     @Test
     fun circular_progress_shows_when_state_is_loading() {
         composeTestRule.setContent {
-            CityScreen(
-                state = SearchScreen.State(
-                    citiesResult = SearchScreen.CitiesResult.Loading,
-                    recentCities = persistentListOf(),
-                    eventSink = {},
-                ),
-                deviceClass = DeviceClass.Compact,
-                onCityClick = { },
-                onFavoriteClick = { },
-                onQueryChange = { },
-                onChipClick = { },
-                onDeleteChip = { },
-            )
+            WithPhoneWindowSizeClass {
+                CityScreen(
+                    state = SearchScreen.State(
+                        citiesResult = SearchScreen.CitiesResult.Loading,
+                        recentCities = persistentListOf(),
+                        eventSink = {},
+                    ),
+                    onCityClick = { },
+                    onFavoriteClick = { },
+                    onQueryChange = { },
+                    onChipClick = { },
+                    onDeleteChip = { },
+                )
+            }
         }
 
         composeTestRule
@@ -61,21 +69,22 @@ internal class CityScreenTest {
     @Test
     fun city_list_shows_when_state_is_loaded() {
         composeTestRule.setContent {
-            CityScreen(
-                state = SearchScreen.State(
-                    citiesResult = SearchScreen.CitiesResult.Loaded(
-                        persistentListOf(BarcelonaCityModel),
+            WithPhoneWindowSizeClass {
+                CityScreen(
+                    state = SearchScreen.State(
+                        citiesResult = SearchScreen.CitiesResult.Loaded(
+                            persistentListOf(BarcelonaCityModel),
+                        ),
+                        recentCities = persistentListOf(),
+                        eventSink = {},
                     ),
-                    recentCities = persistentListOf(),
-                    eventSink = {},
-                ),
-                deviceClass = DeviceClass.Compact,
-                onCityClick = { },
-                onFavoriteClick = { },
-                onQueryChange = { },
-                onChipClick = { },
-                onDeleteChip = { },
-            )
+                    onCityClick = { },
+                    onFavoriteClick = { },
+                    onQueryChange = { },
+                    onChipClick = { },
+                    onDeleteChip = { },
+                )
+            }
         }
 
         composeTestRule
@@ -88,19 +97,20 @@ internal class CityScreenTest {
     @Test
     fun no_results_shows_when_state_is_no_results() {
         composeTestRule.setContent {
-            CityScreen(
-                state = SearchScreen.State(
-                    citiesResult = SearchScreen.CitiesResult.NoResults,
-                    recentCities = persistentListOf(),
-                    eventSink = {},
-                ),
-                deviceClass = DeviceClass.Compact,
-                onCityClick = { },
-                onFavoriteClick = { },
-                onQueryChange = { },
-                onChipClick = { },
-                onDeleteChip = { },
-            )
+            WithPhoneWindowSizeClass {
+                CityScreen(
+                    state = SearchScreen.State(
+                        citiesResult = SearchScreen.CitiesResult.NoResults,
+                        recentCities = persistentListOf(),
+                        eventSink = {},
+                    ),
+                    onCityClick = { },
+                    onFavoriteClick = { },
+                    onQueryChange = { },
+                    onChipClick = { },
+                    onDeleteChip = { },
+                )
+            }
         }
 
         composeTestRule
@@ -113,19 +123,20 @@ internal class CityScreenTest {
     @Test
     fun error_shows_when_state_is_error() {
         composeTestRule.setContent {
-            CityScreen(
-                state = SearchScreen.State(
-                    citiesResult = SearchScreen.CitiesResult.Error,
-                    recentCities = persistentListOf(),
-                    eventSink = {},
-                ),
-                deviceClass = DeviceClass.Compact,
-                onCityClick = { },
-                onFavoriteClick = { },
-                onQueryChange = { },
-                onChipClick = { },
-                onDeleteChip = { },
-            )
+            WithPhoneWindowSizeClass {
+                CityScreen(
+                    state = SearchScreen.State(
+                        citiesResult = SearchScreen.CitiesResult.Error,
+                        recentCities = persistentListOf(),
+                        eventSink = {},
+                    ),
+                    onCityClick = { },
+                    onFavoriteClick = { },
+                    onQueryChange = { },
+                    onChipClick = { },
+                    onDeleteChip = { },
+                )
+            }
         }
 
         composeTestRule
@@ -138,21 +149,22 @@ internal class CityScreenTest {
     @Test
     fun city_chips_show_when_available() {
         composeTestRule.setContent {
-            CityScreen(
-                state = SearchScreen.State(
-                    citiesResult = SearchScreen.CitiesResult.Loaded(
-                        persistentListOf(BarcelonaCityModel),
+            WithPhoneWindowSizeClass {
+                CityScreen(
+                    state = SearchScreen.State(
+                        citiesResult = SearchScreen.CitiesResult.Loaded(
+                            persistentListOf(BarcelonaCityModel),
+                        ),
+                        recentCities = recentCities,
+                        eventSink = {},
                     ),
-                    recentCities = recentCities,
-                    eventSink = {},
-                ),
-                deviceClass = DeviceClass.Compact,
-                onCityClick = { },
-                onFavoriteClick = { },
-                onQueryChange = { },
-                onChipClick = { },
-                onDeleteChip = { },
-            )
+                    onCityClick = { },
+                    onFavoriteClick = { },
+                    onQueryChange = { },
+                    onChipClick = { },
+                    onDeleteChip = { },
+                )
+            }
         }
 
         composeTestRule
@@ -173,21 +185,22 @@ internal class CityScreenTest {
     @Test
     fun search_box_updates_on_recent_city_click() {
         composeTestRule.setContent {
-            CityScreen(
-                state = SearchScreen.State(
-                    citiesResult = SearchScreen.CitiesResult.Loaded(
-                        persistentListOf(BarcelonaCityModel),
+            WithPhoneWindowSizeClass {
+                CityScreen(
+                    state = SearchScreen.State(
+                        citiesResult = SearchScreen.CitiesResult.Loaded(
+                            persistentListOf(BarcelonaCityModel),
+                        ),
+                        recentCities = recentCities,
+                        eventSink = {},
                     ),
-                    recentCities = recentCities,
-                    eventSink = {},
-                ),
-                deviceClass = DeviceClass.Compact,
-                onCityClick = { },
-                onFavoriteClick = { },
-                onQueryChange = { },
-                onChipClick = { },
-                onDeleteChip = { },
-            )
+                    onCityClick = { },
+                    onFavoriteClick = { },
+                    onQueryChange = { },
+                    onChipClick = { },
+                    onDeleteChip = { },
+                )
+            }
         }
 
         composeTestRule
@@ -202,5 +215,16 @@ internal class CityScreenTest {
             )
             .assertExists()
             .assertTextContains(recentCities.first().name)
+    }
+
+    @Composable
+    private fun WithPhoneWindowSizeClass(
+        content: @Composable () -> Unit,
+    ) {
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
+        ) {
+            content()
+        }
     }
 }

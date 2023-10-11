@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.isExpanded
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PanesOrientation
-import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.LandscapePhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
@@ -41,10 +41,9 @@ internal fun DualPaneWeatherContent(
     modifier: Modifier = Modifier,
 ) {
     val windowSizeClass = LocalWindowSizeClass.current
-    val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
     DualPane(
         panesOrientation = PanesOrientation.horizontal(
-            aspectRatio = if (deviceClass == DeviceClass.Expanded) {
+            aspectRatio = if (windowSizeClass.isExpanded) {
                 ExpandedDeviceRation
             } else {
                 DefaultDeviceRatio
