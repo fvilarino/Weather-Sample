@@ -7,11 +7,11 @@ runs:
     - name: Gradle Wrapper Validation
       uses: gradle/wrapper-validation-action@v1
 
-    - name: Setup JDK 17
+    - name: Setup JDK
       uses: actions/setup-java@v3
       with:
         distribution: "zulu"
-        java-version: 17
+        java-version: 20
         cache: 'gradle'
 
     - uses: gradle/gradle-build-action@v2
