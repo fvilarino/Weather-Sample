@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.zIndex
+import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeader
@@ -70,8 +71,8 @@ internal data class ForecastDayState(
 
 @Composable
 internal fun FavoritePage(
-    state: FavoriteCardState,
-    onDeleteClick: (City) -> Unit,
+    state: FavoritesScreen.FavoriteCardState,
+    onDeleteClick: (FavoritesScreen.City) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val density = LocalDensity.current

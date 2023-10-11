@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ConditionModel(
+data class ConditionModel(
 
     @SerialName("code")
     val code: Int? = null,

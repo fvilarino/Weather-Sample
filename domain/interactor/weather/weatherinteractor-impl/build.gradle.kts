@@ -1,11 +1,7 @@
 plugins {
-    id("weathersample.android.library")
-    id("weathersample.android.hilt")
-    id("weathersample.android.library.test")
-}
-
-android {
-    namespace = "com.francescsoftware.weathersample.domain.interactor.weather.impl"
+    id("weathersample.kotlin.library")
+    id("weathersample.dependency.injection")
+    id("weathersample.kotlin.library.test")
 }
 
 dependencies {

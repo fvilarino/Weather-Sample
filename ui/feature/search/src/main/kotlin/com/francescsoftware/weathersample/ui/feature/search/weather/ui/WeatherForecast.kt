@@ -13,7 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
+import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeader
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
@@ -21,7 +21,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 
 @Composable
 internal fun WeatherForecast(
-    state: WeatherState,
+    state: WeatherScreen.Weather.Loaded,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -34,7 +34,7 @@ internal fun WeatherForecast(
         horizontalArrangement = Arrangement.spacedBy(MarginDouble),
         verticalArrangement = Arrangement.spacedBy(MarginDouble),
     ) {
-        state.forecastItems.forEach { dayForecast ->
+        state.forecast.forEach { dayForecast ->
             item(
                 key = dayForecast.header.id,
                 span = { GridItemSpan(maxLineSpan) },
@@ -63,9 +63,9 @@ internal fun WeatherForecast(
 @Composable
 private fun PreviewWeatherForecast(
     @PreviewParameter(
-        provider = WeatherStateWrapperProvider::class,
+        provider = LoadedWeatherStateWrapperProvider::class,
         limit = 1,
-    ) stateWrapper: WeatherStateWrapper,
+    ) stateWrapper: LoadedWeatherStateWrapper,
 ) {
     WeatherSampleTheme {
         Surface(

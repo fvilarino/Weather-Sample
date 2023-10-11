@@ -1,9 +1,5 @@
 plugins {
-    id("weathersample.android.library")
-}
-
-android {
-    namespace = "com.francescsoftware.weathersample.data.repository.recents.api"
+    id("weathersample.kotlin.library")
 }
 
 dependencies {

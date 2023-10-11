@@ -9,38 +9,33 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import com.francescsoftware.weathersample.ui.shared.route.RootNavigationDestination
-import kotlinx.collections.immutable.ImmutableList
+import com.slack.circuit.runtime.screen.Screen
 
 @Composable
 internal fun BottomNavBar(
-    items: ImmutableList<RootNavigationDestination>,
-    currentDestination: NavDestination?,
-    onClick: (String) -> Unit,
+    selectedScreen: Screen,
+    onClick: (Screen) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavigationBar(
-        contentColor = NavigationColors.navigationContentColor(),
         modifier = modifier,
     ) {
-        items.forEach { destination ->
-            val content = destination.rootDestination.bottomNavContent
+        navigationDestinations.forEach { navItem ->
+            val isSelected = navItem.rootScreen == selectedScreen
             NavigationBarItem(
-                selected = currentDestination?.hierarchy?.any { navDestination ->
-                    navDestination.route == destination.navGraphRoute
-                } == true,
+                selected = isSelected,
+                onClick = { onClick(navItem.rootScreen) },
                 icon = {
                     Icon(
-                        imageVector = content.icon,
-                        contentDescription = stringResource(id = content.contentDescriptionId),
+                        imageVector = navItem.navItemIcon,
+                        contentDescription = stringResource(id = navItem.navItemContentDescription),
                     )
                 },
                 label = {
                     Text(
-                        text = stringResource(id = content.labelId),
+                        text = stringResource(navItem.navItemLabel),
                         style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 1,
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
@@ -50,7 +45,6 @@ internal fun BottomNavBar(
                     unselectedIconColor = NavigationColors.navigationContentColor(),
                     unselectedTextColor = NavigationColors.navigationContentColor(),
                 ),
-                onClick = { onClick(destination.navGraphRoute) },
             )
         }
     }

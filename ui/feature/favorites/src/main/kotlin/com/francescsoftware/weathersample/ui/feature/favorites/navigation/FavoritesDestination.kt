@@ -3,38 +3,29 @@ package com.francescsoftware.weathersample.ui.feature.favorites.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.navDeepLink
-import com.francescsoftware.weathersample.ui.shared.assets.R
-import com.francescsoftware.weathersample.ui.shared.route.BottomNavContent
-import com.francescsoftware.weathersample.ui.shared.route.BottomNavigationDestination
-import com.francescsoftware.weathersample.ui.shared.route.DeeplinkScheme
+import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
+import com.francescsoftware.weathersample.ui.shared.navigation.NavigationDestination
+import com.slack.circuit.runtime.screen.Screen
+import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
-private const val DeeplinkHost = "favorite"
+object FavoritesDestination : NavigationDestination {
+    override val rootScreen: Screen
+        get() = FavoritesScreen
 
-/** Favorites screen destination */
-internal object FavoritesDestination : BottomNavigationDestination {
+    override val navItemLabel: Int
+        get() = assetsR.string.favorite_bottom_nav
 
-    /** @{inheritDoc} */
-    override val title: String
-        @Composable
-        get() = stringResource(id = R.string.app_name)
+    override val navItemIcon: ImageVector
+        get() = Icons.Default.FavoriteBorder
 
-    /** @{inheritDoc} */
-    override val bottomNavContent = BottomNavContent(
-        labelId = R.string.favorite_bottom_nav,
-        icon = Icons.Default.FavoriteBorder,
-        contentDescriptionId = R.string.content_description_favorite_bottom_nav,
-    )
+    override val navItemContentDescription: Int
+        get() = assetsR.string.content_description_favorite_bottom_nav
 
-    /** @{inheritDoc} */
-    override val deeplinks = listOf(
-        navDeepLink { uriPattern = "$DeeplinkScheme://$DeeplinkHost" },
-    )
-
-    /** The deeplink route for the city screen */
-    override val route: String = "favorites"
-
-    /** @{inheritDoc} */
-    override fun isRoute(route: String?): Boolean = route == FavoritesDestination.route
+    @Composable
+    override fun actionBarLabel(screen: Screen): String = when (screen) {
+        FavoritesScreen -> stringResource(id = assetsR.string.app_name)
+        else -> error("Unknown screen $screen")
+    }
 }

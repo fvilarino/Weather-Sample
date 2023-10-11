@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class CurrentModel(
+data class CurrentModel(
 
     @SerialName("feelslike_c")
     val feelsLikeC: Double? = null,

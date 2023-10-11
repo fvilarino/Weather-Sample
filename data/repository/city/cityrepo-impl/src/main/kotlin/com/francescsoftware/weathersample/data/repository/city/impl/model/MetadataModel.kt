@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class MetadataModel(
+data class MetadataModel(
 
     @SerialName("currentOffset")
     val currentOffset: Int? = null,

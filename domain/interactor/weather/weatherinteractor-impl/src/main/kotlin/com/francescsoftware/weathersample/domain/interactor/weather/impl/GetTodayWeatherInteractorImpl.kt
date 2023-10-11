@@ -1,6 +1,7 @@
 package com.francescsoftware.weathersample.domain.interactor.weather.impl
 
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
+import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
@@ -9,10 +10,12 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.GetToday
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayWeather
+import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class GetTodayWeatherInteractorImpl @Inject constructor(
+@ContributesBinding(AppScope::class)
+class GetTodayWeatherInteractorImpl @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val dispatcherProvider: DispatcherProvider,
 ) : GetTodayWeatherInteractor {

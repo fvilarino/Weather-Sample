@@ -1,12 +1,8 @@
 plugins {
-    id("weathersample.android.library")
-    id("weathersample.android.hilt")
-    id("weathersample.android.library.test")
+    id("weathersample.kotlin.library")
+    id("weathersample.dependency.injection")
 }
 
-android {
-    namespace = "com.francescsoftware.weathersample.core.time.impl"
-}
 dependencies {
     implementation(project(":core:time:time-api"))
 }

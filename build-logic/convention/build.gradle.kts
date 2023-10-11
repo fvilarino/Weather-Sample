@@ -59,16 +59,16 @@ gradlePlugin {
             id = "weathersample.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
-        register("androidHilt") {
-            id = "weathersample.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
+        register("dependencyInjection") {
+            id = "weathersample.dependency.injection"
+            implementationClass = "DependencyInjectionConventionPlugin"
         }
         register("kotlinLibrary") {
             id = "weathersample.kotlin.library"
             implementationClass = "KotlinLibraryConventionPlugin"
         }
         register("kotlinTestLibrary") {
-            id = "weathersample.kotlin.test.library"
+            id = "weathersample.kotlin.library.test"
             implementationClass = "KotlinTestLibraryConventionPlugin"
         }
     }

@@ -14,7 +14,10 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -23,11 +26,15 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PagerIndicator
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
+import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
+import com.francescsoftware.weathersample.ui.shared.styles.TabletDpSize
 import com.francescsoftware.weathersample.ui.shared.styles.TabletPreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -40,13 +47,14 @@ private const val MinPageScale = .85f
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 internal fun FavoritePager(
-    state: FavoritePagerState,
-    deviceClass: DeviceClass,
-    onDeleteClick: (City) -> Unit,
+    state: FavoritesScreen.FavoritePagerState,
+    onDeleteClick: (FavoritesScreen.City) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(horizontal = MarginDouble),
 ) {
     val isPortrait = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
+    val windowSizeClass = LocalWindowSizeClass.current
+    val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
     val pageSize = if (deviceClass == DeviceClass.Compact && isPortrait) {
         PageSize.Fill
     } else {
@@ -125,48 +133,56 @@ private fun Modifier.pagerEffect(
     },
 )
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @PhonePreviews
 @Composable
 private fun PreviewPhoneFavoriteCard() {
     WeatherSampleTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
         ) {
-            FavoritePager(
-                state = FavoritePagerState(
-                    pages = persistentListOf(
-                        VancouverFavoriteCardState,
-                        BarcelonaFavoriteCardState,
-                        LondonFavoriteCardState,
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                FavoritePager(
+                    state = FavoritesScreen.FavoritePagerState(
+                        pages = persistentListOf(
+                            VancouverFavoriteCardState,
+                            BarcelonaFavoriteCardState,
+                            LondonFavoriteCardState,
+                        ),
                     ),
-                ),
-                deviceClass = DeviceClass.Compact,
-                onDeleteClick = { },
-                modifier = Modifier.fillMaxSize(),
-            )
+                    onDeleteClick = { },
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @TabletPreviews
 @Composable
 private fun PreviewTabletFavoriteCard() {
     WeatherSampleTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(TabletDpSize),
         ) {
-            FavoritePager(
-                state = FavoritePagerState(
-                    pages = persistentListOf(
-                        VancouverFavoriteCardState,
-                        BarcelonaFavoriteCardState,
-                        LondonFavoriteCardState,
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                FavoritePager(
+                    state = FavoritesScreen.FavoritePagerState(
+                        pages = persistentListOf(
+                            VancouverFavoriteCardState,
+                            BarcelonaFavoriteCardState,
+                            LondonFavoriteCardState,
+                        ),
                     ),
-                ),
-                deviceClass = DeviceClass.Expanded,
-                onDeleteClick = { },
-                modifier = Modifier.fillMaxSize(),
-            )
+                    onDeleteClick = { },
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
     }
 }

@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
@@ -28,8 +28,8 @@ internal fun CityChips(
     onDeleteChip: (RecentCityModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val cityChipsContainerContentDescription = stringResource(
-        id = R.string.content_description_city_chips_container,
+    val cityChipsContainerTestTag = stringResource(
+        id = R.string.test_tag_city_chips_container,
     )
     Box(
         modifier = modifier,
@@ -37,7 +37,7 @@ internal fun CityChips(
     ) {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(MarginDouble),
-            modifier = Modifier.semantics { contentDescription = cityChipsContainerContentDescription },
+            modifier = Modifier.semantics { testTag = cityChipsContainerTestTag },
         ) {
             items(
                 items = cities,
@@ -48,7 +48,7 @@ internal fun CityChips(
                     onClick = { onChipClick(recent) },
                     onClear = { onDeleteChip(recent) },
                     modifier = Modifier
-                        .semantics { contentDescription = recent.name }
+                        .semantics { testTag = recent.name }
                         .animateItemPlacement(),
                 )
             }

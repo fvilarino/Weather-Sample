@@ -1,10 +1,6 @@
 plugins {
-    id("weathersample.android.library")
-    id("weathersample.android.hilt")
-}
-
-android {
-    namespace = "com.francescsoftware.weathersample.core.dispather"
+    id("weathersample.kotlin.library")
+    id("weathersample.dependency.injection")
 }
 
 dependencies {

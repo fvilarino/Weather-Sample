@@ -8,14 +8,13 @@ buildscript {
     dependencies {
         classpath(libs.com.android.tools.build.gradle)
         classpath(libs.org.jetbrains.kotlin.kotlin.gradle.plugin)
-        classpath(libs.org.jetbrains.kotlin.kotlin.serialization.gradle.plugin)
-        classpath(libs.com.google.dagger.hilt.android.gradle.plugin)
     }
 }
 
 plugins {
-    alias(libs.plugins.com.google.devtools.ksp.plugin)
-    alias(libs.plugins.io.gitlab.arturbosch.detekt.plugin)
+    alias(libs.plugins.com.google.devtools.ksp)
+    alias(libs.plugins.com.squareup.anvil)
+    alias(libs.plugins.io.gitlab.arturbosch.detekt)
 }
 
 tasks.register("clean", Delete::class) {

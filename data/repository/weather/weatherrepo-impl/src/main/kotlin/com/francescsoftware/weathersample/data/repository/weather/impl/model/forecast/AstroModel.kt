@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class AstroModel(
+data class AstroModel(
 
     @SerialName("moonset")
     val moonset: String? = null,

@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class DayModel(
+data class DayModel(
 
     @SerialName("avgvis_km")
     val avgvisKm: Double? = null,

@@ -9,6 +9,7 @@ import com.francescsoftware.weathersample.core.type.weather.Pressure
 import com.francescsoftware.weathersample.core.type.weather.Speed
 import com.francescsoftware.weathersample.core.type.weather.Temperature
 import com.francescsoftware.weathersample.core.type.weather.UvIndex
+import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
 import com.francescsoftware.weathersample.ui.shared.assets.R
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastDate
@@ -86,8 +87,8 @@ private val LightRainHourForecast = ForecastHourState(
     visibility = AverageVisibility.fromKm(4.5),
 )
 
-internal val VancouverFavoriteCardState = FavoriteCardState(
-    city = City(
+internal val VancouverFavoriteCardState = FavoritesScreen.FavoriteCardState(
+    city = FavoritesScreen.City(
         favoriteId = 1,
         name = "Vancouver",
         countryCode = "CA",
@@ -106,7 +107,7 @@ internal val VancouverFavoriteCardState = FavoriteCardState(
         visibility = AverageVisibility.fromKm(10.0),
     ),
     forecast = persistentListOf(
-        ForecastDayState(
+        FavoritesScreen.ForecastDayState(
             header = ForecastHeaderState(
                 id = "header",
                 date = ForecastDate.Day("Aug 18, 2022"),
@@ -125,7 +126,7 @@ internal val VancouverFavoriteCardState = FavoriteCardState(
 )
 
 internal val BarcelonaFavoriteCardState = VancouverFavoriteCardState.copy(
-    city = City(
+    city = FavoritesScreen.City(
         favoriteId = 2,
         name = "Barcelona",
         countryCode = "ES",
@@ -133,7 +134,7 @@ internal val BarcelonaFavoriteCardState = VancouverFavoriteCardState.copy(
 )
 
 internal val LondonFavoriteCardState = VancouverFavoriteCardState.copy(
-    city = City(
+    city = FavoritesScreen.City(
         favoriteId = 3,
         name = "London",
         countryCode = "GB",

@@ -1,8 +1,8 @@
 plugins {
     id("weathersample.android.library")
-    id("weathersample.android.hilt")
+    id("weathersample.dependency.injection")
     id("weathersample.android.library.test")
-    id("kotlinx-serialization")
+    alias(libs.plugins.org.jetbrains.kotlin.serialization)
 }
 
 android {

@@ -1,6 +1,6 @@
 plugins {
     id("weathersample.android.library")
-    id("weathersample.android.hilt")
+    id("weathersample.dependency.injection")
 }
 
 android {
@@ -8,4 +8,5 @@ android {
 }
 dependencies {
     implementation(project(":core:connectivity:connectivity-api"))
+    implementation(libs.bundles.coroutines)
 }

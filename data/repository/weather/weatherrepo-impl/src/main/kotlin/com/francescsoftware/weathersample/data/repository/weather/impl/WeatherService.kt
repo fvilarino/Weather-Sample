@@ -6,7 +6,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface WeatherService {
+interface WeatherService {
     @GET("current.json")
     suspend fun getTodayWeather(
         @Query("q") query: String? = null,

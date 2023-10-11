@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ForecastDaysModel(
+data class ForecastDaysModel(
 
     @SerialName("forecastday")
     val forecastDay: List<ForecastDayModel>? = null,

@@ -10,30 +10,45 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
+import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PanesOrientation
 import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.LandscapePhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
+import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
+import com.francescsoftware.weathersample.ui.shared.styles.TabletDpSize
 import com.francescsoftware.weathersample.ui.shared.styles.TabletPreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 
+private const val ExpandedDeviceRation = .33f
+private const val DefaultDeviceRatio = .5f
+
 @Composable
 internal fun DualPaneWeatherContent(
-    state: WeatherState,
-    deviceClass: DeviceClass,
+    state: WeatherScreen.Weather.Loaded,
+    refreshing: Boolean,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val windowSizeClass = LocalWindowSizeClass.current
+    val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
     DualPane(
         panesOrientation = PanesOrientation.horizontal(
-            aspectRatio = if (deviceClass == DeviceClass.Expanded) .33f else .5f,
+            aspectRatio = if (deviceClass == DeviceClass.Expanded) {
+                ExpandedDeviceRation
+            } else {
+                DefaultDeviceRatio
+            },
         ),
         paneOne = {
             Box(
@@ -53,6 +68,7 @@ internal fun DualPaneWeatherContent(
                     )
                     TodayWeather(
                         state = state,
+                        refreshing = refreshing,
                         todayRefreshCallback = todayRefreshCallback,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -73,50 +89,60 @@ internal fun DualPaneWeatherContent(
     )
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @LandscapePhonePreviews
 @Composable
 private fun PreviewPhoneDualPaneWeatherContent(
     @PreviewParameter(
-        provider = WeatherStateWrapperProvider::class,
+        provider = LoadedWeatherStateWrapperProvider::class,
         limit = 1,
-    ) stateWrapper: WeatherStateWrapper,
+    ) stateWrapper: LoadedWeatherStateWrapper,
 ) {
     WeatherSampleTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
         ) {
-            DualPaneWeatherContent(
-                state = stateWrapper.state,
-                deviceClass = DeviceClass.Compact,
-                todayRefreshCallback = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginDouble),
-            )
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                DualPaneWeatherContent(
+                    state = stateWrapper.state,
+                    refreshing = false,
+                    todayRefreshCallback = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = MarginDouble),
+                )
+            }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @TabletPreviews
 @Composable
 private fun PreviewTableDualPaneWeatherContent(
     @PreviewParameter(
-        provider = WeatherStateWrapperProvider::class,
+        provider = LoadedWeatherStateWrapperProvider::class,
         limit = 1,
-    ) stateWrapper: WeatherStateWrapper,
+    ) stateWrapper: LoadedWeatherStateWrapper,
 ) {
     WeatherSampleTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(TabletDpSize),
         ) {
-            DualPaneWeatherContent(
-                state = stateWrapper.state,
-                deviceClass = DeviceClass.Expanded,
-                todayRefreshCallback = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginDouble),
-            )
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                DualPaneWeatherContent(
+                    state = stateWrapper.state,
+                    refreshing = false,
+                    todayRefreshCallback = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(all = MarginDouble),
+                )
+            }
         }
     }
 }

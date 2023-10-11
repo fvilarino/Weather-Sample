@@ -7,7 +7,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-internal interface RecentCitiesDao {
+interface RecentCitiesDao {
     @Query("SELECT * FROM RecentCityEntity ORDER BY last_used DESC LIMIT :limit")
     fun getCities(limit: Int): Flow<List<RecentCityEntity>>
 

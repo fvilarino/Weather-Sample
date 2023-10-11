@@ -3,7 +3,7 @@ import java.util.Properties
 
 plugins {
     id("weathersample.android.application")
-    id("weathersample.android.hilt")
+    id("weathersample.dependency.injection")
     id("weathersample.android.buildnumber")
 }
 
@@ -70,6 +70,7 @@ dependencies {
     implementation(project(":core:connectivity:connectivity-api"))
     implementation(project(":core:connectivity:connectivity-impl"))
     implementation(project(":core:dispatcher"))
+    implementation(project(":core:injection"))
     implementation(project(":core:network"))
     implementation(project(":core:time:time-api"))
     implementation(project(":core:time:time-impl"))
@@ -95,12 +96,16 @@ dependencies {
     implementation(project(":ui:shared:composable:common"))
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:deviceclass"))
-    implementation(project(":ui:shared:mvi"))
-    implementation(project(":ui:shared:route"))
+    implementation(project(":ui:shared:navigation"))
     implementation(project(":ui:shared:styles"))
     implementation(project(":ui:shared:weathericon"))
 
+    implementation(libs.androidx.activity.activity.compose)
+    implementation(libs.androidx.app.compat)
     implementation(libs.com.jakewharton.timber)
+    implementation(libs.bundles.circuit)
+    implementation(libs.bundles.okhttp)
+    implementation(libs.bundles.retrofit)
     androidTestImplementation(libs.androidx.test.runner)
 }
 

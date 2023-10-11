@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -25,12 +26,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -38,20 +44,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.compose.NavHost
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
-import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesRootDestination
-import com.francescsoftware.weathersample.ui.feature.favorites.navigation.addFavoritesNavGraph
-import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchRootDestination
-import com.francescsoftware.weathersample.ui.feature.search.navigation.addSearchNavGraph
+import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesDestination
+import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
+import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchDestination
+import com.francescsoftware.weathersample.ui.shared.composable.common.modifier.blurIf
+import com.francescsoftware.weathersample.ui.shared.composable.common.overlay.DialogOverlay
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionMenuItem
+import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionsMenu
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.AppBar
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import com.slack.circuit.backstack.rememberSaveableBackStack
+import com.slack.circuit.foundation.NavigableCircuitContent
+import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.persistentListOf
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
-internal val navGraphDestinations = persistentListOf(
-    SearchRootDestination,
-    FavoritesRootDestination,
+internal val navigationDestinations = persistentListOf(
+    SearchDestination,
+    FavoritesDestination,
 )
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -66,6 +78,35 @@ internal fun WeatherApp(
     val isConnected by state.isConnected.collectAsStateWithLifecycle()
     val networkLostMessage = stringResource(id = R.string.network_connection_lost)
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val backstack = rememberSaveableBackStack {
+        push(SearchScreen)
+    }
+    val navigator = rememberCircuitNavigator(backstack)
+    val rootScreen by remember(backstack) {
+        derivedStateOf { backstack.last().screen }
+    }
+    val topScreen by remember(backstack) {
+        derivedStateOf { backstack.first().screen }
+    }
+    val isAtRoot by remember(backstack) {
+        derivedStateOf { backstack.size == 1 }
+    }
+    val navDestination by remember {
+        derivedStateOf {
+            navigationDestinations.first {
+                it.rootScreen == rootScreen
+            }
+        }
+    }
+    val title = navDestination.actionBarLabel(screen = topScreen)
+    var menuExpanded by remember { mutableStateOf(false) }
+    var showAbout by rememberSaveable { mutableStateOf(false) }
+    val overlayHost = LocalOverlayHost.current
+    val blurBackground by remember {
+        derivedStateOf {
+            overlayHost.currentOverlayData != null
+        }
+    }
     LaunchedEffect(key1 = isConnected) {
         if (!isConnected) {
             snackbarHostState.showSnackbar(
@@ -76,42 +117,57 @@ internal fun WeatherApp(
     }
     WeatherSampleTheme {
         Scaffold(
-            modifier = Modifier.nestedScroll(connection = scrollBehavior.nestedScrollConnection),
+            modifier = Modifier
+                .blurIf(blur = blurBackground)
+                .nestedScroll(connection = scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.statusBars,
             snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
                 AppBar(
-                    title = state.currentDestination.title,
-                    navigationIcon = if (state.hasBackButton) {
-                        {
-                            NavigationIcon(onClick = state::popBackstack)
+                    title = title,
+                    navigationIcon = {
+                        if (!isAtRoot) {
+                            NavigationIcon(onClick = { navigator.pop() })
                         }
-                    } else {
-                        {}
                     },
-                    actions = { state.currentDestination.TopBarActions() },
+                    actions = {
+                        if (isAtRoot) {
+                            ActionsMenu(
+                                items = persistentListOf(
+                                    ActionMenuItem.NeverShown(
+                                        title = stringResource(
+                                            id = assetsR.string.action_item_about,
+                                        ),
+                                        onClick = {
+                                            menuExpanded = false
+                                            showAbout = true
+                                        },
+                                    ),
+                                ),
+                                isOpen = menuExpanded,
+                                onToggleOverflow = { menuExpanded = !menuExpanded },
+                            )
+                        }
+                    },
                     scrollBehavior = scrollBehavior,
                 )
             },
-            bottomBar = if (state.hasBottomNavBar) {
-                {
+            bottomBar = {
+                if (state.hasBottomNavBar) {
                     AnimatedVisibility(
-                        visible = state.showBottomNavBar,
+                        visible = isAtRoot,
                         enter = slideInVertically { it } + fadeIn(),
                         exit = slideOutVertically { it } + fadeOut(),
                     ) {
                         BottomNavBar(
-                            items = navGraphDestinations,
-                            currentDestination = state.navBackEntryDestination,
-                            onClick = { destination ->
-                                state.navigateToTopDestination(destination)
+                            selectedScreen = rootScreen,
+                            onClick = { screen ->
+                                navigator.resetRoot(screen)
                             },
                             modifier = Modifier.fillMaxWidth(),
                         )
                     }
                 }
-            } else {
-                {}
             },
         ) { paddingValues ->
             Box {
@@ -122,29 +178,22 @@ internal fun WeatherApp(
                 ) {
                     if (state.hasNavRail) {
                         NavRail(
-                            items = navGraphDestinations,
-                            currentDestination = state.navBackEntryDestination,
-                            onClick = { destination ->
-                                state.navigateToTopDestination(destination)
+                            selectedScreen = rootScreen,
+                            onClick = { screen ->
+                                navigator.resetRoot(screen)
                             },
+                            modifier = Modifier.fillMaxWidth(),
                         )
                     }
-                    NavHost(
-                        state.navHostController,
-                        startDestination = navGraphDestinations.first().navGraphRoute,
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        addSearchNavGraph(
-                            deviceClass = state.deviceClass,
-                        ) { route ->
-                            state.navigate(route)
-                        }
-                        addFavoritesNavGraph(
-                            deviceClass = state.deviceClass,
-                        )
-                    }
+                    NavigableCircuitContent(
+                        navigator = navigator,
+                        backstack = backstack,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                    )
                 }
-                if (state.showBottomOverlay) {
+                if (state.hasBottomNavBar && isAtRoot) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -160,10 +209,38 @@ internal fun WeatherApp(
                             ),
                     )
                 }
+                if (showAbout) {
+                    LaunchedEffect(key1 = Unit) {
+                        overlayHost.show(
+                            aboutOverlay(),
+                        )
+                        showAbout = false
+                    }
+                }
             }
         }
     }
 }
+
+private fun aboutOverlay() = DialogOverlay(
+    confirmButtonText = {
+        Text(
+            text = stringResource(id = android.R.string.ok),
+        )
+    },
+    title = {
+        Text(
+            text = stringResource(id = com.francescsoftware.weathersample.ui.shared.assets.R.string.app_name),
+        )
+    },
+    text = {
+        Text(
+            text = stringResource(
+                id = com.francescsoftware.weathersample.ui.shared.assets.R.string.about_dialog_text,
+            ),
+        )
+    },
+)
 
 @Composable
 private fun NavigationIcon(

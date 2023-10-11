@@ -14,7 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,11 +34,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.search.R
-import com.francescsoftware.weathersample.ui.feature.search.weather.viewmodel.WeatherState
+import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.MultiSelector
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
+import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import kotlinx.collections.immutable.persistentListOf
@@ -47,7 +52,8 @@ private const val GradientMidPoint = (GradientEnd - GradientStart) / 2f
 
 @Composable
 internal fun SinglePaneWeatherContent(
-    state: WeatherState,
+    state: WeatherScreen.Weather.Loaded,
+    refreshing: Boolean,
     todayRefreshCallback: () -> Unit,
     modifier: Modifier = Modifier,
     stateHolder: WeatherStateHolder = rememberWeatherStateHolder(),
@@ -122,6 +128,7 @@ internal fun SinglePaneWeatherContent(
             when (option) {
                 SelectedWeatherOption.Today -> TodayWeather(
                     state = state,
+                    refreshing = refreshing,
                     todayRefreshCallback = todayRefreshCallback,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -141,28 +148,34 @@ internal fun SinglePaneWeatherContent(
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @PhonePreviews
 @Composable
 private fun PreviewPhoneWeatherContent(
-    @PreviewParameter(WeatherStateWrapperProvider::class) stateWrapper: WeatherStateWrapper,
+    @PreviewParameter(LoadedWeatherStateWrapperProvider::class) stateWrapper: LoadedWeatherStateWrapper,
 ) {
     WeatherSampleTheme {
-        val stateHolder = rememberWeatherStateHolder(stateWrapper.option)
-        Surface(
-            color = MaterialTheme.colorScheme.background,
+        CompositionLocalProvider(
+            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
         ) {
-            SinglePaneWeatherContent(
-                state = stateWrapper.state,
-                todayRefreshCallback = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = MarginDouble,
-                        start = MarginDouble,
-                        end = MarginDouble,
-                    ),
-                stateHolder = stateHolder,
-            )
+            val stateHolder = rememberWeatherStateHolder(stateWrapper.option)
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                SinglePaneWeatherContent(
+                    state = stateWrapper.state,
+                    refreshing = false,
+                    todayRefreshCallback = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = MarginDouble,
+                            start = MarginDouble,
+                            end = MarginDouble,
+                        ),
+                    stateHolder = stateHolder,
+                )
+            }
         }
     }
 }

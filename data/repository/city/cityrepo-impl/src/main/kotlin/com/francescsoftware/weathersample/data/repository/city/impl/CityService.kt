@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface CityService {
+interface CityService {
     @GET("v1/geo/cities")
     suspend fun getCities(
         @Query("namePrefix") namePrefix: String?,

@@ -3,6 +3,14 @@ package com.francescsoftware.weathersample.ui.shared.styles
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+
+/** Standard device size for WindowSizeClass compact */
+val PhoneDpSize = DpSize(width = 412.dp, height = 915.dp)
+
+/** Standard device size for WindowSizeClass extended */
+val TabletDpSize = DpSize(width = 800.dp, height = 640.dp)
 
 /** Preview configuration for a simple composable */
 @Preview(widthDp = 360, showBackground = true)

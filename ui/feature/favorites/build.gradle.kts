@@ -1,7 +1,7 @@
 plugins {
     id("weathersample.android.feature")
     id("weathersample.android.library.compose")
-    id("weathersample.android.hilt")
+    id("weathersample.dependency.injection")
     id("weathersample.android.library.test")
 }
 
@@ -22,4 +22,5 @@ dependencies {
     implementation(project(":domain:interactor:weather:weatherinteractor-api"))
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:weathericon"))
+    implementation(libs.androidx.compose.material3.window.sizeclass)
 }

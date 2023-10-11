@@ -59,7 +59,7 @@ Within a layer modules are split into a public API module and a private implemen
 
 * Kotlin
 * Coroutines & Flows
-* Hilt
+* Dependency Injection (Dagger + Anvil)
 * Retrofit
 * Room
 * Jetpack Compose

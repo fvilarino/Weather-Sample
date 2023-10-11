@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class HourModel(
+data class HourModel(
 
     @SerialName("feelslike_c")
     val feelslikeC: Double? = null,
