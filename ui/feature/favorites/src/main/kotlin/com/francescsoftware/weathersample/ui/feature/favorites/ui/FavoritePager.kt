@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
+import com.francescsoftware.weathersample.ui.shared.composable.common.composition.isCompact
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PagerIndicator
-import com.francescsoftware.weathersample.ui.shared.deviceclass.DeviceClass
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
@@ -54,8 +54,7 @@ internal fun FavoritePager(
 ) {
     val isPortrait = LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT
     val windowSizeClass = LocalWindowSizeClass.current
-    val deviceClass = DeviceClass.fromWindowSizeClass(windowSizeClass = windowSizeClass)
-    val pageSize = if (deviceClass == DeviceClass.Compact && isPortrait) {
+    val pageSize = if (windowSizeClass.isCompact && isPortrait) {
         PageSize.Fill
     } else {
         PageSize.Fixed(PageWidth)
@@ -81,7 +80,7 @@ internal fun FavoritePager(
                     .pagerEffect(
                         pagerState = pagerState,
                         index = index,
-                        deviceClass = deviceClass,
+                        isCompact = windowSizeClass.isCompact,
                     ),
             )
         }
@@ -109,9 +108,9 @@ internal fun FavoritePager(
 private fun Modifier.pagerEffect(
     pagerState: PagerState,
     index: Int,
-    deviceClass: DeviceClass,
+    isCompact: Boolean,
 ) = then(
-    if (deviceClass == DeviceClass.Compact) {
+    if (isCompact) {
         Modifier.graphicsLayer {
             val pageOffset = ((pagerState.currentPage - index) + pagerState.currentPageOffsetFraction)
                 .absoluteValue
