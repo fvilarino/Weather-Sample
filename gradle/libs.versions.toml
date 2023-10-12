@@ -51,6 +51,7 @@ androidx-app-compat = { module = "androidx.appcompat:appcompat", version.ref = "
 androidx-arch-core-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch-core-core-testing-version" }
 androidx-benchmark-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark-benchmark-macro-junit4-version" }
 androidx-compose-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom-version" }
+androidx-compose-compiler-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "androidx-compose-compiler-version" }
 androidx-compose-material-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-material3-window-sizeclass = { module = "androidx.compose.material3:material3-window-size-class" }
