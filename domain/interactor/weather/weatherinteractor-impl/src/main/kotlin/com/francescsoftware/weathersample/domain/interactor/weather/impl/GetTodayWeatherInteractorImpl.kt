@@ -8,7 +8,6 @@ import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRepository
 import com.francescsoftware.weathersample.domain.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherException
-import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayWeather
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.withContext
@@ -20,8 +19,8 @@ class GetTodayWeatherInteractorImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ) : GetTodayWeatherInteractor {
 
-    override suspend operator fun invoke(location: WeatherLocation): Either<TodayWeather> {
-        val response = weatherRepository.getTodayWeather(location.toRepositoryLocation())
+    override suspend fun invoke(params: GetTodayWeatherInteractor.Params): Either<TodayWeather> {
+        val response = weatherRepository.getTodayWeather(params.location.toRepositoryLocation())
         return response.fold(
             onSuccess = { weatherResponse ->
                 withContext(dispatcherProvider.default) {

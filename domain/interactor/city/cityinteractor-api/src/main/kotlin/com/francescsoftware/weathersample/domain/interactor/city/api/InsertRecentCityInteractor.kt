@@ -1,12 +1,9 @@
 package com.francescsoftware.weathersample.domain.interactor.city.api
 
-/** Stores a [RecentCity] in persistent memory */
-interface InsertRecentCityInteractor {
+import com.francescsoftware.weathersample.domain.interactor.foundation.Interactor
 
-    /**
-     * Stores a [RecentCity]
-     *
-     * @param city - the city to store
-     */
-    suspend operator fun invoke(city: RecentCity)
+/** Stores a [RecentCity] in persistent memory */
+interface InsertRecentCityInteractor : Interactor<InsertRecentCityInteractor.Params, Unit> {
+
+    data class Params(val city: RecentCity)
 }

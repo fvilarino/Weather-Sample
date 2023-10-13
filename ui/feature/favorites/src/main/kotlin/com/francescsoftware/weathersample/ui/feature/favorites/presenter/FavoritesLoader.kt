@@ -27,18 +27,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.ZonedDateTime
 import java.util.Locale
+import javax.inject.Inject
 
 private data class ForecastInfo(
     val city: FavoriteCity,
     val forecast: Forecast,
 )
 
-internal class FavoritesLoader(
+class FavoritesLoader @Inject constructor(
     getFavoriteCitiesInteractor: GetFavoriteCitiesInteractor,
     private val getForecastInteractor: GetForecastInteractor,
     private val timeFormatter: TimeFormatter,
 ) {
-    val favoritesState: Flow<FavoritesScreen.FavoritesState> = getFavoriteCitiesInteractor()
+    init {
+        getFavoriteCitiesInteractor(GetFavoriteCitiesInteractor.Params)
+    }
+
+    val favoritesState: Flow<FavoritesScreen.FavoritesState> = getFavoriteCitiesInteractor.stream
         .map { cities ->
             parseForecast(fetchForecast(cities))
         }
@@ -50,9 +55,11 @@ internal class FavoritesLoader(
     } else {
         cities.map { city ->
             getForecastInteractor(
-                location = WeatherLocation.City(
-                    name = city.name,
-                    countryCode = city.countryCode,
+                GetForecastInteractor.Params(
+                    location = WeatherLocation.City(
+                        name = city.name,
+                        countryCode = city.countryCode,
+                    ),
                 ),
             ).map { forecast ->
                 ForecastInfo(

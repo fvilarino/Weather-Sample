@@ -51,23 +51,37 @@ class SearchPresenter @AssistedInject constructor(
                 is SearchScreen.Event.QueryUpdated -> citiesLoader.setQuery(event.query.text)
 
                 is SearchScreen.Event.ChipClick -> scope.launch {
-                    insertRecentCitiesInteractor(RecentCity(name = event.city.name))
+                    insertRecentCitiesInteractor(
+                        InsertRecentCityInteractor.Params(
+                            RecentCity(name = event.city.name),
+                        ),
+                    )
                 }
 
                 is SearchScreen.Event.DeleteChipClick -> scope.launch {
-                    deleteRecentCityInteractor(city = RecentCity(name = event.city.name))
+                    deleteRecentCityInteractor(
+                        DeleteRecentCityInteractor.Params(
+                            city = RecentCity(name = event.city.name),
+                        ),
+                    )
                 }
 
                 is SearchScreen.Event.FavoriteClick -> scope.launch {
                     if (event.city.isFavorite) {
-                        deleteFavoriteCityInteractor(event.city.toFavoriteCity())
+                        deleteFavoriteCityInteractor(
+                            DeleteFavoriteCityInteractor.Params(event.city.toFavoriteCity()),
+                        )
                     } else {
-                        insertFavoriteCityInteractor(event.city.toFavoriteCity().copy(id = 0))
+                        insertFavoriteCityInteractor(
+                            InsertFavoriteCityInteractor.Param(event.city.toFavoriteCity().copy(id = 0)),
+                        )
                     }
                 }
 
                 is SearchScreen.Event.CityClick -> scope.launch {
-                    insertRecentCitiesInteractor(RecentCity(name = event.city.name))
+                    insertRecentCitiesInteractor(
+                        InsertRecentCityInteractor.Params(RecentCity(name = event.city.name)),
+                    )
                     navigator.goTo(WeatherScreen(event.city))
                 }
             }

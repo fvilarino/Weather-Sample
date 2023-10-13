@@ -5,17 +5,16 @@ import com.francescsoftware.weathersample.data.repository.recents.api.RecentsRep
 import com.francescsoftware.weathersample.domain.interactor.city.api.GetRecentCitiesInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.RecentCity
 import com.squareup.anvil.annotations.ContributesBinding
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @ContributesBinding(AppScope::class)
 class GetRecentCitiesInteractorImpl @Inject constructor(
     private val recentsRepository: RecentsRepository,
-) : GetRecentCitiesInteractor {
+) : GetRecentCitiesInteractor() {
 
-    override operator fun invoke(limit: Int): Flow<List<RecentCity>> = recentsRepository
-        .getRecentCities(limit = limit)
+    override fun buildStream(params: Params) = recentsRepository
+        .getRecentCities(limit = params.limit)
         .map { cities ->
             cities.map { city ->
                 RecentCity(name = city.name)

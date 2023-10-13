@@ -101,8 +101,8 @@ class WeatherPresenter @AssistedInject constructor(
     }
 
     private suspend fun loadWeather(location: WeatherLocation.City) = coroutineScope {
-        val currentAsync = async { getTodayWeatherInteractor(location) }
-        val forecastAsync = async { getForecastInteractor(location) }
+        val currentAsync = async { getTodayWeatherInteractor(GetTodayWeatherInteractor.Params(location)) }
+        val forecastAsync = async { getForecastInteractor(GetForecastInteractor.Params(location)) }
         val current = currentAsync.await().valueOrNull()
         val forecast = forecastAsync.await().valueOrNull()
         if (current != null && forecast != null) {

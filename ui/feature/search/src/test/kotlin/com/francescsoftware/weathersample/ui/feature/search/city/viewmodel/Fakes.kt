@@ -21,7 +21,7 @@ import java.io.IOException
 internal class FakeGetCitiesInteractor : GetCitiesInteractor {
     val citiesResult = Turbine<List<City>?>()
 
-    override suspend fun invoke(prefix: String, limit: Int): Either<Cities> {
+    override suspend fun invoke(params: GetCitiesInteractor.Params): Either<Cities> {
         val cities = citiesResult.awaitItem()
         return if (cities == null) {
             Either.Failure(IOException("Failed to load cities"))
@@ -39,46 +39,46 @@ internal class FakeGetCitiesInteractor : GetCitiesInteractor {
     }
 }
 
-internal class FakeGetFavoriteCitiesInteractor : GetFavoriteCitiesInteractor {
+internal class FakeGetFavoriteCitiesInteractor : GetFavoriteCitiesInteractor() {
     val favoriteCities = Turbine<List<FavoriteCity>>()
 
-    override fun invoke(): Flow<List<FavoriteCity>> = favoriteCities.asChannel().receiveAsFlow()
+    override fun buildStream(params: Params): Flow<List<FavoriteCity>> = favoriteCities.asChannel().receiveAsFlow()
 }
 
 internal class FakeInsertFavoriteCityInteractor : InsertFavoriteCityInteractor {
     val cities = Turbine<FavoriteCity>()
 
-    override suspend fun invoke(city: FavoriteCity) {
-        cities.add(city)
+    override suspend fun invoke(params: InsertFavoriteCityInteractor.Param) {
+        cities.add(params.city)
     }
 }
 
 internal class FakeDeleteFavoriteCityInteractor : DeleteFavoriteCityInteractor {
     val cities = Turbine<FavoriteCity>()
 
-    override suspend fun invoke(city: FavoriteCity) {
-        cities.add(city)
+    override suspend fun invoke(params: DeleteFavoriteCityInteractor.Params) {
+        cities.add(params.city)
     }
 }
 
-internal class FakeGetRecentCitiesInteractor : GetRecentCitiesInteractor {
+internal class FakeGetRecentCitiesInteractor : GetRecentCitiesInteractor() {
     val cities = Turbine<List<RecentCity>>()
 
-    override fun invoke(limit: Int): Flow<List<RecentCity>> = cities.asChannel().receiveAsFlow()
+    override fun buildStream(params: Params): Flow<List<RecentCity>> = cities.asChannel().receiveAsFlow()
 }
 
 internal class FakeInsertRecentCityInterator : InsertRecentCityInteractor {
     val cities = Turbine<RecentCity>()
 
-    override suspend fun invoke(city: RecentCity) {
-        cities.add(city)
+    override suspend fun invoke(params: InsertRecentCityInteractor.Params) {
+        cities.add(params.city)
     }
 }
 
 internal class FakeDeleteRecentCityInteractor : DeleteRecentCityInteractor {
     val cities = Turbine<RecentCity>()
 
-    override suspend fun invoke(city: RecentCity) {
-        cities.add(city)
+    override suspend fun invoke(params: DeleteRecentCityInteractor.Params) {
+        cities.add(params.city)
     }
 }

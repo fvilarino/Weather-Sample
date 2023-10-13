@@ -19,8 +19,8 @@ class GetCitiesInteractorImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ) : GetCitiesInteractor {
 
-    override suspend operator fun invoke(prefix: String, limit: Int): Either<Cities> {
-        val citiesResponse: Either<CitySearchResponse> = cityRepository.getCities(prefix, limit)
+    override suspend fun invoke(params: GetCitiesInteractor.Params): Either<Cities> {
+        val citiesResponse: Either<CitySearchResponse> = cityRepository.getCities(params.prefix, params.limit)
         return citiesResponse.fold(
             onSuccess = { response ->
                 withContext(dispatcherProvider.default) {

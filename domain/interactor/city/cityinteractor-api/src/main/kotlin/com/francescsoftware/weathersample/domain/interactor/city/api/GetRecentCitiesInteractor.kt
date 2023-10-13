@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.domain.interactor.city.api
 
-import kotlinx.coroutines.flow.Flow
+import com.francescsoftware.weathersample.domain.interactor.foundation.StreamInteractor
 
 /**
  * City model
@@ -11,12 +11,7 @@ import kotlinx.coroutines.flow.Flow
 value class RecentCity(val name: String)
 
 /** Loads the recent cities */
-interface GetRecentCitiesInteractor {
-    /**
-     * Loads the recent cities
-     *
-     * @param limit - max number of cities to load
-     * @return a [Flow] of [List] of [RecentCity]
-     */
-    operator fun invoke(limit: Int): Flow<List<RecentCity>>
+abstract class GetRecentCitiesInteractor : StreamInteractor<GetRecentCitiesInteractor.Params, List<RecentCity>>() {
+
+    data class Params(val limit: Int)
 }

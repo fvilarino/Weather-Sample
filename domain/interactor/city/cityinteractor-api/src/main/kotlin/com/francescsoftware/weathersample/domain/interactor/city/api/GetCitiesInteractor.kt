@@ -2,15 +2,19 @@ package com.francescsoftware.weathersample.domain.interactor.city.api
 
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.Cities
+import com.francescsoftware.weathersample.domain.interactor.foundation.Interactor
 
 /** Gets a list of cities matching the prefix */
-interface GetCitiesInteractor {
+interface GetCitiesInteractor : Interactor<GetCitiesInteractor.Params, Either<Cities>> {
+
     /**
-     * Gets a list of cities matching the [prefix]
+     * Interactor parameters
      *
-     * @param prefix - prefix to filter cities
-     * @param limit - max number of results to return
-     * @return an [Either] with the resulting [Cities]
+     * @param prefix prefix to filter cities
+     * @param limit max number of results to return
      */
-    suspend operator fun invoke(prefix: String = "", limit: Int = 10): Either<Cities>
+    data class Params(
+        val prefix: String,
+        val limit: Int = 10,
+    )
 }
