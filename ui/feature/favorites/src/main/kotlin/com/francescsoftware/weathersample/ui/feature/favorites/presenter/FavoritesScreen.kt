@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.presenter
 
+import androidx.compose.runtime.Immutable
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
@@ -42,6 +43,7 @@ object FavoritesScreen : Screen {
         ) : FavoritesState
     }
 
+    @Immutable
     data class State(
         val favorites: FavoritesState,
         val eventSink: (Event) -> Unit,

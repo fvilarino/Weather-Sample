@@ -34,6 +34,7 @@ data class WeatherScreen(
         ) : Weather
     }
 
+    @Immutable
     data class State(
         val weather: Weather,
         val refreshing: Boolean,

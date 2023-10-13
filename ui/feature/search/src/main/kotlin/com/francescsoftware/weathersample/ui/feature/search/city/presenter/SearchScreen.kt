@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.presenter
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
 import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
@@ -22,6 +23,7 @@ object SearchScreen : Screen {
         data class Loaded(val cities: ImmutableList<CityResultModel>) : CitiesResult
     }
 
+    @Immutable
     data class State(
         val citiesResult: CitiesResult,
         val recentCities: ImmutableList<RecentCityModel>,

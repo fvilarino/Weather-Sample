@@ -22,9 +22,11 @@ internal fun Favorites(
     state: FavoritesScreen.State,
     modifier: Modifier = Modifier,
 ) {
+    val eventSink = state.eventSink
+
     FavoriteScreen(
         state = state,
-        onDeleteClick = { city -> state.eventSink(FavoritesScreen.Event.DeleteFavorite(city)) },
+        onDeleteClick = { city -> eventSink(FavoritesScreen.Event.DeleteFavorite(city)) },
         modifier = modifier,
     )
 }
