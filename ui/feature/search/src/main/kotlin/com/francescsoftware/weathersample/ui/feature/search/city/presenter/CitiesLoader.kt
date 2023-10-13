@@ -20,10 +20,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration.Companion.milliseconds
 
-private val DebounceDelay = 400L.toDuration(DurationUnit.MILLISECONDS)
+private val DebounceDelay = 400.milliseconds
 private const val MinCityLengthForSearch = 3
 private const val NoFavorite = -1
 
@@ -35,6 +34,10 @@ class CitiesLoader @Inject constructor(
 
     private val searchQuery = MutableStateFlow("")
 
+    init {
+        getFavoriteCitiesInteractor(GetFavoriteCitiesInteractor.Params)
+    }
+
     val cities: Flow<SearchScreen.CitiesResult> = searchQuery
         .debounce(DebounceDelay)
         .distinctUntilChanged()
@@ -43,8 +46,8 @@ class CitiesLoader @Inject constructor(
                 flowOf<SearchScreen.CitiesResult>(SearchScreen.CitiesResult.Idle)
             } else {
                 combine(
-                    flow { emit(getCitiesInteractor(query)) },
-                    getFavoriteCitiesInteractor(),
+                    flow { emit(getCitiesInteractor(GetCitiesInteractor.Params(query))) },
+                    getFavoriteCitiesInteractor.stream,
                 ) { cities, favorites ->
                     cities.fold(
                         onSuccess = {

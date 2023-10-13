@@ -12,9 +12,9 @@ import javax.inject.Inject
 @ContributesBinding(AppScope::class)
 class GetFavoriteCitiesInteractorImpl @Inject constructor(
     private val favoriteRepository: FavoriteRepository,
-) : GetFavoriteCitiesInteractor {
+) : GetFavoriteCitiesInteractor() {
 
-    override fun invoke(): Flow<List<FavoriteCity>> = favoriteRepository
+    override fun buildStream(params: Params): Flow<List<FavoriteCity>> = favoriteRepository
         .getFavoriteCities()
         .map { cities ->
             cities.map { city ->

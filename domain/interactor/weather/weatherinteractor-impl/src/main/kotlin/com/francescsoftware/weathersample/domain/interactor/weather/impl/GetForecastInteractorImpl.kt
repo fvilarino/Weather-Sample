@@ -11,7 +11,6 @@ import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRep
 import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.ForecastResponse
 import com.francescsoftware.weathersample.domain.interactor.weather.api.GetForecastInteractor
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherException
-import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Forecast
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import com.squareup.anvil.annotations.ContributesBinding
@@ -32,8 +31,8 @@ class GetForecastInteractorImpl @Inject constructor(
     private val zoneIdProvider: ZoneIdProvider,
 ) : GetForecastInteractor {
 
-    override suspend operator fun invoke(location: WeatherLocation): Either<Forecast> {
-        val response = weatherRepository.getForecast(location.toRepositoryLocation())
+    override suspend fun invoke(params: GetForecastInteractor.Params): Either<Forecast> {
+        val response = weatherRepository.getForecast(params.location.toRepositoryLocation())
         return response.fold(
             onSuccess = { data ->
                 if (data.forecast.forecastDay.isNotEmpty()) {

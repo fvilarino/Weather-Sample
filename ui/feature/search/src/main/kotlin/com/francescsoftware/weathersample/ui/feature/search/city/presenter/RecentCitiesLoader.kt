@@ -18,7 +18,11 @@ class RecentCitiesLoader @Inject constructor(
     getRecentCitiesInteractor: GetRecentCitiesInteractor,
     private val dispatcherProvider: DispatcherProvider,
 ) {
-    val recentCities: Flow<ImmutableList<RecentCityModel>> = getRecentCitiesInteractor(limit = MaxRecentCities)
+    init {
+        getRecentCitiesInteractor(GetRecentCitiesInteractor.Params(limit = MaxRecentCities))
+    }
+
+    val recentCities: Flow<ImmutableList<RecentCityModel>> = getRecentCitiesInteractor.stream
         .map { recentCities -> parseRecentCities(recentCities) }
         .distinctUntilChanged()
 

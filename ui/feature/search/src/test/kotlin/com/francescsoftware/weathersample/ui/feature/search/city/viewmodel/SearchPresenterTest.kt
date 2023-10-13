@@ -141,11 +141,12 @@ internal class SearchPresenterTest {
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Idle>()
             item.eventSink(SearchScreen.Event.QueryUpdated(TextFieldValue(query)))
             item = awaitItem()
+            assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Loading>()
+            item = awaitItem()
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Loaded>()
             assertThat((item.citiesResult as SearchScreen.CitiesResult.Loaded).cities).isEqualTo(
                 persistentListOf(cityModelVancouver, cityModelBarcelona),
             )
-            cancelAndIgnoreRemainingEvents()
         }
     }
 
@@ -164,8 +165,9 @@ internal class SearchPresenterTest {
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Idle>()
             item.eventSink(SearchScreen.Event.QueryUpdated(TextFieldValue(query)))
             item = awaitItem()
+            assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Loading>()
+            item = awaitItem()
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Error>()
-            cancelAndIgnoreRemainingEvents()
         }
     }
 
@@ -255,7 +257,6 @@ internal class SearchPresenterTest {
             val saved: FavoriteCity = insertFavoriteCitiesInteractor.cities.awaitItem()
             assertThat(saved.name).isEqualTo(favorite.name)
             assertThat(saved.countryCode).isEqualTo(favorite.countryCode)
-            cancelAndIgnoreRemainingEvents()
         }
     }
 
@@ -281,7 +282,6 @@ internal class SearchPresenterTest {
             assertThat(favorites.size).isEqualTo(1)
             assertThat(favorites.first().name).isEqualTo(favoriteCityVancouver.name)
             assertThat(favorites.first().countryCode).isEqualTo(favoriteCityVancouver.countryCode)
-            cancelAndIgnoreRemainingEvents()
         }
     }
 
@@ -310,7 +310,6 @@ internal class SearchPresenterTest {
             item.eventSink(SearchScreen.Event.FavoriteClick(vancouver))
             val deleted = deleteFavoriteCitiesInteractor.cities.awaitItem()
             assertThat(deleted).isEqualTo(favoriteCityVancouver)
-            cancelAndIgnoreRemainingEvents()
         }
     }
 
