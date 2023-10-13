@@ -34,10 +34,12 @@ internal fun Weather(
     state: WeatherScreen.State,
     modifier: Modifier = Modifier,
 ) {
+    val eventSink = state.eventSink
+
     WeatherScreen(
         state = state,
-        onRefreshTodayWeather = { state.eventSink(WeatherScreen.Event.RefreshClick) },
-        onRetry = { state.eventSink(WeatherScreen.Event.RetryClick) },
+        onRefreshTodayWeather = { eventSink(WeatherScreen.Event.RefreshClick) },
+        onRetry = { eventSink(WeatherScreen.Event.RetryClick) },
         modifier = modifier,
     )
 }

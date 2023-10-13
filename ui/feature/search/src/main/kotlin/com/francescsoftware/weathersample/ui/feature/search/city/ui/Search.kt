@@ -66,13 +66,14 @@ internal fun Search(
     state: SearchScreen.State,
     modifier: Modifier = Modifier,
 ) {
+    val eventSink = state.eventSink
     CityScreen(
         state = state,
-        onCityClick = { selectedCity -> state.eventSink(SearchScreen.Event.CityClick(selectedCity)) },
-        onFavoriteClick = { state.eventSink(SearchScreen.Event.FavoriteClick(it)) },
-        onQueryChange = { state.eventSink(SearchScreen.Event.QueryUpdated(it)) },
-        onChipClick = { state.eventSink(SearchScreen.Event.ChipClick(it)) },
-        onDeleteChip = { state.eventSink(SearchScreen.Event.DeleteChipClick(it)) },
+        onCityClick = { selectedCity -> eventSink(SearchScreen.Event.CityClick(selectedCity)) },
+        onFavoriteClick = { eventSink(SearchScreen.Event.FavoriteClick(it)) },
+        onQueryChange = { eventSink(SearchScreen.Event.QueryUpdated(it)) },
+        onChipClick = { eventSink(SearchScreen.Event.ChipClick(it)) },
+        onDeleteChip = { eventSink(SearchScreen.Event.DeleteChipClick(it)) },
         modifier = modifier,
     )
 }
