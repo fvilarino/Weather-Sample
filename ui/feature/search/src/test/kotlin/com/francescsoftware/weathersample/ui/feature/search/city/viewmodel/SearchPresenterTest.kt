@@ -129,9 +129,7 @@ internal class SearchPresenterTest {
     @Test
     @DisplayName("Presenter loads cities from query")
     fun presenterLoadsCitiesFromQuery() = runTest {
-        val citiesInteractor = FakeGetCitiesInteractor().apply {
-            citiesResult.add(listOf(domainCityVancouver, domainCityBarcelona))
-        }
+        val citiesInteractor = FakeGetCitiesInteractor()
         val presenter = getPresenter(
             getCitiesInteractor = citiesInteractor,
         )
@@ -142,6 +140,7 @@ internal class SearchPresenterTest {
             item.eventSink(SearchScreen.Event.QueryUpdated(TextFieldValue(query)))
             item = awaitItem()
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Loading>()
+            citiesInteractor.citiesResult.add(listOf(domainCityVancouver, domainCityBarcelona))
             item = awaitItem()
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Loaded>()
             assertThat((item.citiesResult as SearchScreen.CitiesResult.Loaded).cities).isEqualTo(
@@ -153,9 +152,7 @@ internal class SearchPresenterTest {
     @Test
     @DisplayName("Presenter indicates error when failing to load cities")
     fun presenterShowErrorWhenCitiesLoadFails() = runTest {
-        val citiesInteractor = FakeGetCitiesInteractor().apply {
-            citiesResult.add(null)
-        }
+        val citiesInteractor = FakeGetCitiesInteractor()
         val presenter = getPresenter(
             getCitiesInteractor = citiesInteractor,
         )
@@ -165,6 +162,9 @@ internal class SearchPresenterTest {
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Idle>()
             item.eventSink(SearchScreen.Event.QueryUpdated(TextFieldValue(query)))
             item = awaitItem()
+            assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Loading>()
+            citiesInteractor.citiesResult.add(null)
+            item = awaitItem()
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Error>()
         }
     }
@@ -172,15 +172,14 @@ internal class SearchPresenterTest {
     @Test
     @DisplayName("Presenter loads recent cities")
     fun presenterLoadsRecentCities() = runTest {
-        val recentCitiesInteractor = FakeGetRecentCitiesInteractor().apply {
-            cities.add(recentCities)
-        }
+        val recentCitiesInteractor = FakeGetRecentCitiesInteractor()
         val presenter = getPresenter(
             getRecentCitiesInteractor = recentCitiesInteractor,
         )
         presenter.test {
             var item = awaitItem()
             assertThat(item.recentCities).isEmpty()
+            recentCitiesInteractor.cities.add(recentCities)
             item = awaitItem()
             val expected = recentCities
                 .map { city -> RecentCityModel(city.name) }
@@ -255,6 +254,7 @@ internal class SearchPresenterTest {
             val saved: FavoriteCity = insertFavoriteCitiesInteractor.cities.awaitItem()
             assertThat(saved.name).isEqualTo(favorite.name)
             assertThat(saved.countryCode).isEqualTo(favorite.countryCode)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
@@ -280,6 +280,7 @@ internal class SearchPresenterTest {
             assertThat(favorites.size).isEqualTo(1)
             assertThat(favorites.first().name).isEqualTo(favoriteCityVancouver.name)
             assertThat(favorites.first().countryCode).isEqualTo(favoriteCityVancouver.countryCode)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
@@ -308,6 +309,7 @@ internal class SearchPresenterTest {
             item.eventSink(SearchScreen.Event.FavoriteClick(vancouver))
             val deleted = deleteFavoriteCitiesInteractor.cities.awaitItem()
             assertThat(deleted).isEqualTo(favoriteCityVancouver)
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
