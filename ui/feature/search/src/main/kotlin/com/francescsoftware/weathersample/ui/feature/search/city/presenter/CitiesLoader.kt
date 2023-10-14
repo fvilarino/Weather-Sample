@@ -35,7 +35,7 @@ class CitiesLoader @Inject constructor(
     private val searchQuery = MutableStateFlow("")
 
     init {
-        getFavoriteCitiesInteractor(GetFavoriteCitiesInteractor.Params)
+        getFavoriteCitiesInteractor(Unit)
     }
 
     val cities: Flow<SearchScreen.CitiesResult> = searchQuery

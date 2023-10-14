@@ -4,8 +4,4 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.model.Favor
 import com.francescsoftware.weathersample.domain.interactor.foundation.StreamInteractor
 
 /** Loads the favorite cities */
-abstract class GetFavoriteCitiesInteractor :
-    StreamInteractor<GetFavoriteCitiesInteractor.Params, List<FavoriteCity>>() {
-
-    data object Params
-}
+abstract class GetFavoriteCitiesInteractor : StreamInteractor<Unit, List<FavoriteCity>>()
