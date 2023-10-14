@@ -16,6 +16,7 @@ import com.francescsoftware.weathersample.domain.interactor.city.api.model.Favor
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.Metadata
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.yield
 import java.io.IOException
 
 internal class FakeGetCitiesInteractor : GetCitiesInteractor {
@@ -23,6 +24,7 @@ internal class FakeGetCitiesInteractor : GetCitiesInteractor {
 
     override suspend fun invoke(params: GetCitiesInteractor.Params): Either<Cities> {
         val cities = citiesResult.awaitItem()
+        yield()
         return if (cities == null) {
             Either.Failure(IOException("Failed to load cities"))
         } else {
