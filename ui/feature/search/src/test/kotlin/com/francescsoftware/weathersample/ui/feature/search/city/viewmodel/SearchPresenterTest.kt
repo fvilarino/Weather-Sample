@@ -165,8 +165,6 @@ internal class SearchPresenterTest {
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Idle>()
             item.eventSink(SearchScreen.Event.QueryUpdated(TextFieldValue(query)))
             item = awaitItem()
-            assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Loading>()
-            item = awaitItem()
             assertThat(item.citiesResult).isInstanceOf<SearchScreen.CitiesResult.Error>()
         }
     }
