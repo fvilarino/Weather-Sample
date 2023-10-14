@@ -52,6 +52,7 @@ class CitiesLoader @Inject constructor(
                         cities.isEmpty() -> emit(SearchScreen.CitiesResult.NoResults)
                         else -> emitAll(
                             getFavoriteCitiesInteractor.stream
+                                .distinctUntilChanged()
                                 .map<List<FavoriteCity>, SearchScreen.CitiesResult> { favoriteCities ->
                                     SearchScreen.CitiesResult.Loaded(parseCities(cities, favoriteCities))
                                 },
