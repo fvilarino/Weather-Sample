@@ -42,7 +42,7 @@ internal class FakeGetCitiesInteractor : GetCitiesInteractor {
 internal class FakeGetFavoriteCitiesInteractor : GetFavoriteCitiesInteractor() {
     val favoriteCities = Turbine<List<FavoriteCity>>()
 
-    override fun buildStream(params: Params): Flow<List<FavoriteCity>> = favoriteCities.asChannel().receiveAsFlow()
+    override fun buildStream(params: Unit): Flow<List<FavoriteCity>> = favoriteCities.asChannel().receiveAsFlow()
 }
 
 internal class FakeInsertFavoriteCityInteractor : InsertFavoriteCityInteractor {

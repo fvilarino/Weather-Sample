@@ -40,7 +40,7 @@ class FavoritesLoader @Inject constructor(
     private val timeFormatter: TimeFormatter,
 ) {
     init {
-        getFavoriteCitiesInteractor(GetFavoriteCitiesInteractor.Params)
+        getFavoriteCitiesInteractor(Unit)
     }
 
     val favoritesState: Flow<FavoritesScreen.FavoritesState> = getFavoriteCitiesInteractor.stream
