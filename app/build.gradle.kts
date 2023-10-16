@@ -69,6 +69,7 @@ fun loadSigningProperties(file: File) =
 dependencies {
     implementation(project(":core:connectivity:connectivity-api"))
     implementation(project(":core:connectivity:connectivity-impl"))
+    implementation(project(":core:coroutines"))
     implementation(project(":core:dispatcher"))
     implementation(project(":core:injection"))
     implementation(project(":core:network"))
@@ -76,6 +77,8 @@ dependencies {
     implementation(project(":core:time:time-impl"))
     implementation(project(":core:type:either"))
     implementation(project(":core:type:weather"))
+    implementation(project(":data:persistence:settings:settings-api"))
+    implementation(project(":data:persistence:settings:settings-impl"))
     implementation(project(":data:repository:city:cityrepo-api"))
     implementation(project(":data:repository:city:cityrepo-impl"))
     implementation(project(":data:repository:favorite:favoriterepo-api"))
@@ -102,6 +105,7 @@ dependencies {
 
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.app.compat)
+    implementation(libs.androidx.datastore.datastore)
     implementation(libs.com.jakewharton.timber)
     implementation(libs.bundles.circuit)
     implementation(libs.bundles.okhttp)
