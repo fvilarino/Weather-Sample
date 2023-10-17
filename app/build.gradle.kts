@@ -90,6 +90,8 @@ dependencies {
     implementation(project(":domain:interactor:city:cityinteractor-api"))
     implementation(project(":domain:interactor:city:cityinteractor-impl"))
     implementation(project(":domain:interactor:foundation"))
+    implementation(project(":domain:interactor:preferences:preferencesinteractor-api"))
+    implementation(project(":domain:interactor:preferences:preferencesinteractor-impl"))
     implementation(project(":domain:interactor:weather:weatherinteractor-api"))
     implementation(project(":domain:interactor:weather:weatherinteractor-impl"))
 
