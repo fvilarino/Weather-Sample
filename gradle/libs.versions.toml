@@ -50,7 +50,6 @@ org-robolectric-robolectric-version = "4.10.3"
 
 [libraries]
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-activity-compose-version" }
-androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation-version" }
 androidx-app-compat = { module = "androidx.appcompat:appcompat", version.ref = "app-compat-version" }
 androidx-arch-core-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch-core-core-testing-version" }
 androidx-benchmark-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark-benchmark-macro-junit4-version" }
@@ -134,6 +133,9 @@ android-test = [
     "androidx-test-espresso-espresso-core",
     "androidx-test-ext-junit-ktx",
     "androidx-test-runner",
+    "app-cash-turbine-turbine",
+    "com-willowtreeapps-assertk-assertk",
+    "org-jetbrains-kotlinx-kotlinx-coroutines-test",
 ]
 circuit = [
     "com-slack-circuit-circuit-backstack",
