@@ -1,6 +1,7 @@
 plugins {
     id("weathersample.kotlin.library")
     id("weathersample.dependency.injection")
+    id("weathersample.kotlin.library.test")
 }
 
 dependencies {
