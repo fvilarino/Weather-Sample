@@ -14,9 +14,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
@@ -40,24 +39,21 @@ class CitiesLoader @Inject constructor(
     val cities: Flow<SearchScreen.CitiesResult> = searchQuery
         .debounce(DebounceDelay)
         .distinctUntilChanged()
-        .flatMapLatest { query ->
-            flow {
-                if (query.length < MinCityLengthForSearch) {
-                    emit(SearchScreen.CitiesResult.Idle)
-                } else {
-                    emit(SearchScreen.CitiesResult.Loading)
-                    val cities = getCitiesInteractor(GetCitiesInteractor.Params(query)).valueOrNull()?.cities
-                    when {
-                        cities == null -> emit(SearchScreen.CitiesResult.Error)
-                        cities.isEmpty() -> emit(SearchScreen.CitiesResult.NoResults)
-                        else -> emitAll(
-                            getFavoriteCitiesInteractor.stream
-                                .distinctUntilChanged()
-                                .map<List<FavoriteCity>, SearchScreen.CitiesResult> { favoriteCities ->
-                                    SearchScreen.CitiesResult.Loaded(parseCities(cities, favoriteCities))
-                                },
-                        )
-                    }
+        .transformLatest { query ->
+            if (query.length < MinCityLengthForSearch) {
+                emit(SearchScreen.CitiesResult.Idle)
+            } else {
+                emit(SearchScreen.CitiesResult.Loading)
+                val cities = getCitiesInteractor(GetCitiesInteractor.Params(query)).valueOrNull()?.cities
+                when {
+                    cities == null -> emit(SearchScreen.CitiesResult.Error)
+                    cities.isEmpty() -> emit(SearchScreen.CitiesResult.NoResults)
+                    else -> emitAll(
+                        getFavoriteCitiesInteractor.stream
+                            .map<List<FavoriteCity>, SearchScreen.CitiesResult> { favoriteCities ->
+                                SearchScreen.CitiesResult.Loaded(parseCities(cities, favoriteCities))
+                            },
+                    )
                 }
             }
         }

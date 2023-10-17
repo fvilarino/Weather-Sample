@@ -20,6 +20,7 @@ import com.francescsoftware.weathersample.data.repository.weather.api.model.Cond
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Current
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Location
 import com.francescsoftware.weathersample.data.repository.weather.api.model.today.TodayWeatherResponse
+import com.francescsoftware.weathersample.domain.interactor.weather.api.GetTodayWeatherInteractor
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherException
 import com.francescsoftware.weathersample.domain.interactor.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayClouds
@@ -141,7 +142,7 @@ internal class TodayWeatherInteractorTest {
             dispatcherProvider = TestDispatcherProvider(),
         )
 
-        interactor(incomingCity)
+        interactor(GetTodayWeatherInteractor.Params(incomingCity))
 
         assertThat((repository.lastLocation as RepoCity).name).isEqualTo(incomingCity.name)
         assertThat((repository.lastLocation as RepoCity).countryCode).isEqualTo(incomingCity.countryCode)
@@ -157,7 +158,7 @@ internal class TodayWeatherInteractorTest {
             dispatcherProvider = TestDispatcherProvider(),
         )
 
-        interactor(incomingCoordinates)
+        interactor(GetTodayWeatherInteractor.Params(incomingCoordinates))
 
         assertThat((repository.lastLocation as RepoCoordinates).latitude)
             .isEqualTo(incomingCoordinates.latitude)
@@ -174,7 +175,7 @@ internal class TodayWeatherInteractorTest {
             weatherRepository = repository,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        val response = interactor(incomingCity)
+        val response = interactor(GetTodayWeatherInteractor.Params(incomingCity))
 
         assertThat(response.isSuccess).isTrue()
         assertThat(response.valueOrNull()).isEqualTo(successfulTodayWeather)
@@ -189,7 +190,7 @@ internal class TodayWeatherInteractorTest {
             weatherRepository = repository,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        val response = interactor(incomingCity)
+        val response = interactor(GetTodayWeatherInteractor.Params(incomingCity))
 
         assertThat(response.isSuccess).isTrue()
         assertThat(response.valueOrNull()).isEqualTo(successfulTodayWeather)
@@ -204,7 +205,7 @@ internal class TodayWeatherInteractorTest {
             weatherRepository = repository,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        val response = interactor(incomingCity)
+        val response = interactor(GetTodayWeatherInteractor.Params(incomingCity))
 
         assertThat(response.isFailure).isTrue()
         assertThat(response.throwableOrNull()).isNotNull().isInstanceOf<WeatherException>()

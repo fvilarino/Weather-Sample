@@ -333,7 +333,7 @@ internal class ForecastWeatherInteractorTest {
         val interactor = getInteractor(
             repository = repository,
         )
-        interactor(incomingCity)
+        interactor(GetForecastInteractor.Params(incomingCity))
         assertThat((repository.lastLocation as RepoWeatherLocation.City).name)
             .isEqualTo(incomingCity.name)
         assertThat((repository.lastLocation as RepoWeatherLocation.City).countryCode)
@@ -349,7 +349,7 @@ internal class ForecastWeatherInteractorTest {
         val interactor = getInteractor(
             repository = repository,
         )
-        interactor(incomingCoordinates)
+        interactor(GetForecastInteractor.Params(incomingCoordinates))
 
         assertThat((repository.lastLocation as RepoWeatherLocation.Coordinates).latitude)
             .isEqualTo(incomingCoordinates.latitude)
@@ -365,7 +365,7 @@ internal class ForecastWeatherInteractorTest {
         val interactor = getInteractor(
             repository = repository,
         )
-        val response = interactor(incomingCity)
+        val response = interactor(GetForecastInteractor.Params(incomingCity))
 
         assertThat(response.isSuccess).isTrue()
         assertThat(response.valueOrNull()).isEqualTo(forecastSuccessfulResponse)
@@ -377,7 +377,7 @@ internal class ForecastWeatherInteractorTest {
         val interactor = getInteractor(
             repository = repository,
         )
-        val response = interactor(incomingCity)
+        val response = interactor(GetForecastInteractor.Params(incomingCity))
 
         assertThat(response.isFailure).isTrue()
         assertThat(response.throwableOrNull()).isNotNull().isInstanceOf<WeatherException>()
@@ -397,7 +397,7 @@ internal class ForecastWeatherInteractorTest {
             repository = repository,
             timeProvider = timeProvider,
         )
-        val response = interactor(incomingCity)
+        val response = interactor(GetForecastInteractor.Params(incomingCity))
         assertThat(response.isSuccess).isTrue()
         val actualForecastItemsSize = requireNotNull(response.valueOrNull()).items.size
         val expectedForecastItemsSize = forecastSuccessfulResponse.items.first().entries.size - 1
