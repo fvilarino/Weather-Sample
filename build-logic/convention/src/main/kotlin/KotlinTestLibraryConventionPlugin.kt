@@ -5,15 +5,15 @@ import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.project
 
 class KotlinTestLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             dependencies {
                 add("testCompileOnly", catalog.findLibrary("junit.junit").get())
-                add("testImplementation", catalog.findLibrary("com.willowtreeapps.assertk.assertk").get())
-                add("testImplementation", catalog.findLibrary("org.junit.jupiter.junit.jupiter").get())
-                add("testImplementation", catalog.findLibrary("io.mockk").get())
+                add("testImplementation", catalog.findBundle("test").get())
+                add("testImplementation", project(":testing:fake"))
             }
             tasks.named<Test>("test") {
                 useJUnitPlatform()

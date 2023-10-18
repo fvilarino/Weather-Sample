@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -90,6 +91,7 @@ internal fun SinglePaneWeatherContent(
         ) {
             val todayLabel = stringResource(id = R.string.today_weather_button_label)
             val forecastLabel = stringResource(id = R.string.forecast_weather_button_label)
+            Spacer(modifier = Modifier.height(MarginDouble))
             CityLabel(
                 cityName = state.cityName,
                 countryCode = state.cityCountryCode,

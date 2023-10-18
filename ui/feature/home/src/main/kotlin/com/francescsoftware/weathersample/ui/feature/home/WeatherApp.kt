@@ -5,24 +5,24 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -40,15 +40,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
+import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesDestination
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchDestination
+import com.francescsoftware.weathersample.ui.feature.settings.navigation.SettingsDestination
 import com.francescsoftware.weathersample.ui.shared.composable.common.modifier.blurIf
 import com.francescsoftware.weathersample.ui.shared.composable.common.overlay.DialogOverlay
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionMenuItem
@@ -65,18 +65,23 @@ import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 internal val navigationDestinations = persistentListOf(
     SearchDestination,
     FavoritesDestination,
+    SettingsDestination,
 )
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun WeatherApp(
     connectivityMonitor: ConnectivityMonitor,
+    preferencesInteractor: GetPreferencesInteractor,
     state: AppState = rememberAppState(
         connectivityMonitor = connectivityMonitor,
+        preferencesInteractor = preferencesInteractor,
     ),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val isConnected by state.isConnected.collectAsStateWithLifecycle()
+    val theme by state.appTheme.collectAsStateWithLifecycle()
+    val dynamicColors by state.useDynamicColors.collectAsStateWithLifecycle()
     val networkLostMessage = stringResource(id = R.string.network_connection_lost)
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val backstack = rememberSaveableBackStack {
@@ -116,12 +121,15 @@ internal fun WeatherApp(
             )
         }
     }
-    WeatherSampleTheme {
+    WeatherSampleTheme(
+        darkTheme = useDarkTheme(theme),
+        useDynamicColors = useDynamicColors(dynamicColors),
+    ) {
         Scaffold(
             modifier = Modifier
                 .blurIf(blur = blurBackground)
                 .nestedScroll(connection = scrollBehavior.nestedScrollConnection),
-            contentWindowInsets = WindowInsets.statusBars,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
             snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
                 AppBar(
@@ -177,7 +185,12 @@ internal fun WeatherApp(
                 Row(
                     modifier = Modifier
                         .padding(paddingValues)
-                        .consumeWindowInsets(paddingValues),
+                        .consumeWindowInsets(paddingValues)
+                        .windowInsetsPadding(
+                            WindowInsets.safeDrawing.only(
+                                WindowInsetsSides.Horizontal,
+                            ),
+                        ),
                 ) {
                     if (state.hasNavRail) {
                         NavRail(
@@ -196,22 +209,6 @@ internal fun WeatherApp(
                             .fillMaxHeight(),
                     )
                 }
-                if (state.hasBottomNavBar && isAtRoot) {
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .windowInsetsBottomHeight(WindowInsets.navigationBars)
-                            .fillMaxWidth()
-                            .background(
-                                Brush.verticalGradient(
-                                    colors = listOf(
-                                        Color.Transparent,
-                                        MaterialTheme.colorScheme.background,
-                                    ),
-                                ),
-                            ),
-                    )
-                }
                 if (showAbout) {
                     LaunchedEffect(key1 = Unit) {
                         overlayHost.show(
@@ -223,6 +220,24 @@ internal fun WeatherApp(
             }
         }
     }
+}
+
+@Composable
+private fun useDarkTheme(theme: SystemTheme) = when (theme) {
+    SystemTheme.Undefined,
+    SystemTheme.FollowSystem,
+    -> isSystemInDarkTheme()
+
+    SystemTheme.Light -> false
+    SystemTheme.Dark -> true
+}
+
+private fun useDynamicColors(dynamicColors: DynamicColors) = when (dynamicColors) {
+    DynamicColors.Undefined,
+    DynamicColors.InUse,
+    -> true
+
+    DynamicColors.NotInUse -> false
 }
 
 private fun aboutOverlay() = DialogOverlay(

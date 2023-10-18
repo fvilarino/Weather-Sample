@@ -25,6 +25,7 @@ abstract class StreamInteractor<P, T> {
     val stream: Flow<T> = paramsFlow
         .distinctUntilChanged()
         .flatMapLatest { buildStream(it) }
+        .distinctUntilChanged()
 
     operator fun invoke(params: P) {
         paramsFlow.tryEmit(params)

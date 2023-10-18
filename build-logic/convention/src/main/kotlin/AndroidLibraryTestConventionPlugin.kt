@@ -11,8 +11,12 @@ import org.gradle.kotlin.dsl.project
 class AndroidLibraryTestConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
+
             extensions.configure<LibraryExtension> {
                 configureAndroidTest(this)
+                defaultConfig {
+                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                }
                 dependencies {
                     add("androidTestImplementation", kotlin("test"))
                     add("testImplementation", kotlin("test"))

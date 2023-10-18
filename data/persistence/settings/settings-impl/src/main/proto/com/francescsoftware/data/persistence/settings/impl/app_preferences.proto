@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "com.francescsoftware.data.persistence.settings.impl";
+option java_multiple_files = true;
+
+message AppPreferences {
+    enum Theme {
+        SYSTEM = 0;
+        LIGHT = 1;
+        DARK = 2;
+    }
+
+    int32 version = 1;
+    Theme app_theme = 2;
+    bool dynamic_colors = 3;
+}

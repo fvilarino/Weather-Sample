@@ -18,8 +18,10 @@ android {
 
 dependencies {
     implementation(project(":core:connectivity:connectivity-api"))
+    implementation(project(":domain:interactor:preferences:preferencesinteractor-api"))
     implementation(project(":ui:feature:favorites"))
     implementation(project(":ui:feature:search"))
+    implementation(project(":ui:feature:settings"))
 
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.app.compat)

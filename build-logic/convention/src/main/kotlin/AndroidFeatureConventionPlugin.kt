@@ -13,11 +13,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 apply("weathersample.android.library")
                 apply("weathersample.dependency.injection")
             }
-            extensions.configure<LibraryExtension> {
-                defaultConfig {
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-                }
-            }
             dependencies {
                 add("implementation", project(":core:type:either"))
                 add("implementation", project(":ui:shared:assets"))

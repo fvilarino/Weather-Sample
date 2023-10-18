@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_theme">App Theme</string>
+    <string name="use_dynamic_theming">Use Dynamic Theming</string>
+    <string name="use_colors_from_your_wallpapers">Tint the app based on your wallpaper</string>
+    <string name="theme_follow_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+</resources>
