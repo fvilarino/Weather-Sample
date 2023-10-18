@@ -22,4 +22,3 @@ object SettingsScreen : Screen {
         data class SetUseDynamicColors(val dynamicColors: Boolean) : Event
     }
 }
-

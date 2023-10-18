@@ -4,9 +4,7 @@ import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.AppSettings
