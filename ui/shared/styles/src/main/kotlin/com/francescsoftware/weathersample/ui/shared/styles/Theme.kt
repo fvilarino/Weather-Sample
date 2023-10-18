@@ -41,9 +41,10 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun WeatherSampleTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    useDynamicColors: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val colorScheme = if (supportsDynamicTheming()) {
+    val colorScheme = if (useDynamicColors && supportsDynamicTheming()) {
         val context = LocalContext.current
         if (darkTheme) {
             dynamicDarkColorScheme(context)

@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
@@ -46,9 +47,11 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
+import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesDestination
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchDestination
+import com.francescsoftware.weathersample.ui.feature.settings.navigation.SettingsDestination
 import com.francescsoftware.weathersample.ui.shared.composable.common.modifier.blurIf
 import com.francescsoftware.weathersample.ui.shared.composable.common.overlay.DialogOverlay
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionMenuItem
@@ -65,18 +68,23 @@ import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 internal val navigationDestinations = persistentListOf(
     SearchDestination,
     FavoritesDestination,
+    SettingsDestination,
 )
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun WeatherApp(
     connectivityMonitor: ConnectivityMonitor,
+    preferencesInteractor: GetPreferencesInteractor,
     state: AppState = rememberAppState(
         connectivityMonitor = connectivityMonitor,
+        preferencesInteractor = preferencesInteractor,
     ),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val isConnected by state.isConnected.collectAsStateWithLifecycle()
+    val theme by state.appTheme.collectAsStateWithLifecycle()
+    val dynamicColors by state.useDynamicColors.collectAsStateWithLifecycle()
     val networkLostMessage = stringResource(id = R.string.network_connection_lost)
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val backstack = rememberSaveableBackStack {
@@ -116,7 +124,10 @@ internal fun WeatherApp(
             )
         }
     }
-    WeatherSampleTheme {
+    WeatherSampleTheme(
+        darkTheme = useDarkTheme(theme),
+        useDynamicColors = useDynamicColors(dynamicColors),
+    ) {
         Scaffold(
             modifier = Modifier
                 .blurIf(blur = blurBackground)
@@ -223,6 +234,24 @@ internal fun WeatherApp(
             }
         }
     }
+}
+
+@Composable
+private fun useDarkTheme(theme: SystemTheme) = when (theme) {
+    SystemTheme.Undefined,
+    SystemTheme.FollowSystem,
+    -> isSystemInDarkTheme()
+
+    SystemTheme.Light -> false
+    SystemTheme.Dark -> true
+}
+
+private fun useDynamicColors(dynamicColors: DynamicColors) = when (dynamicColors) {
+    DynamicColors.Undefined,
+    DynamicColors.InUse,
+    -> true
+
+    DynamicColors.NotInUse -> false
 }
 
 private fun aboutOverlay() = DialogOverlay(

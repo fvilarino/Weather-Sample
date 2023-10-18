@@ -11,13 +11,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityStatus
+import com.francescsoftware.weathersample.domain.preferencesinteractor.api.AppTheme
+import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-private const val ConnectivityGracePeriodMillis = 5_000L
+private const val FlowSubscribedGracePeriodMillis = 5_000L
 
 private enum class NavigationType {
     BottomNav,
@@ -32,11 +34,29 @@ private enum class NavigationType {
     }
 }
 
+internal enum class SystemTheme {
+    Undefined,
+    FollowSystem,
+    Light,
+    Dark,
+}
+
+internal enum class DynamicColors {
+    Undefined,
+    InUse,
+    NotInUse,
+}
+
 internal class AppState(
     private val windowSizeClass: WindowSizeClass,
     connectivityMonitor: ConnectivityMonitor,
+    preferencesInteractor: GetPreferencesInteractor,
     scope: CoroutineScope,
 ) {
+    init {
+        preferencesInteractor(Unit)
+    }
+
     private val navigationType: NavigationType
         get() = NavigationType.fromWindowSizeClass(windowSizeClass)
 
@@ -46,11 +66,38 @@ internal class AppState(
     val hasNavRail: Boolean
         get() = navigationType == NavigationType.NavRail
 
+    val appTheme: StateFlow<SystemTheme> = preferencesInteractor.stream
+        .map {
+            when (it.appTheme) {
+                AppTheme.System -> SystemTheme.FollowSystem
+                AppTheme.Light -> SystemTheme.Light
+                AppTheme.Dark -> SystemTheme.Dark
+            }
+        }
+        .stateIn(
+            scope = scope,
+            started = SharingStarted.WhileSubscribed(FlowSubscribedGracePeriodMillis),
+            initialValue = SystemTheme.Undefined,
+        )
+
+    val useDynamicColors: StateFlow<DynamicColors> = preferencesInteractor.stream
+        .map {
+            when (it.dynamicColor) {
+                true -> DynamicColors.InUse
+                false -> DynamicColors.NotInUse
+            }
+        }
+        .stateIn(
+            scope = scope,
+            started = SharingStarted.WhileSubscribed(FlowSubscribedGracePeriodMillis),
+            initialValue = DynamicColors.Undefined,
+        )
+
     val isConnected: StateFlow<Boolean> = connectivityMonitor.connectedStatus
         .map { state -> state == ConnectivityStatus.Connected }
         .stateIn(
             scope = scope,
-            started = SharingStarted.WhileSubscribed(ConnectivityGracePeriodMillis),
+            started = SharingStarted.WhileSubscribed(FlowSubscribedGracePeriodMillis),
             initialValue = true,
         )
 }
@@ -58,13 +105,15 @@ internal class AppState(
 @Composable
 internal fun rememberAppState(
     connectivityMonitor: ConnectivityMonitor,
+    preferencesInteractor: GetPreferencesInteractor,
     scope: CoroutineScope = rememberCoroutineScope(),
 ): AppState {
     val windowSizeClass = calculateWindowSizeClass(LocalContext.current as Activity)
-    return remember(key1 = windowSizeClass, key2 = connectivityMonitor, key3 = scope) {
+    return remember(windowSizeClass, connectivityMonitor, preferencesInteractor, scope) {
         AppState(
             windowSizeClass = windowSizeClass,
             connectivityMonitor = connectivityMonitor,
+            preferencesInteractor = preferencesInteractor,
             scope = scope,
         )
     }

@@ -47,10 +47,15 @@ private fun MeasureScope.layoutTiles(
     constraints: Constraints,
 ): MeasureResult {
     val tileHeight = constraints.maxHeight
-    val tileWidths = measurables.map { measurable ->
-        measurable.maxIntrinsicWidth(tileHeight)
+    val tileWidth = if (measurables.isEmpty()) {
+        0
+    } else {
+        measurables.maxBy { measurable ->
+            measurable.maxIntrinsicWidth(tileHeight)
+        }
+            .maxIntrinsicWidth(tileHeight)
+            .coerceAtMost(constraints.maxWidth / measurables.size)
     }
-    val tileWidth = tileWidths.maxOrNull() ?: 0
     val tileConstraints = Constraints(
         minWidth = tileWidth,
         minHeight = 0,
@@ -60,8 +65,9 @@ private fun MeasureScope.layoutTiles(
     val placeables = measurables.map { measurable ->
         measurable.measure(tileConstraints)
     }
+    val maxHeight = placeables.maxBy { it.height }.height
     val width = (placeables.size * tileWidth).coerceAtMost(constraints.maxWidth)
-    return layout(width = width, height = tileHeight) {
+    return layout(width = width, height = maxHeight) {
         placeables.forEachIndexed { index, placeable ->
             placeable.place(tileWidth * index, 0)
         }

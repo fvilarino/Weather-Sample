@@ -13,7 +13,6 @@ class SetAppThemeInteractorImpl @Inject constructor(
     private val dataSource: AppSettingsDataSource,
 ) : SetAppThemeInteractor {
 
-
     override suspend fun invoke(params: AppTheme) {
         dataSource.setTheme(
             when (params) {

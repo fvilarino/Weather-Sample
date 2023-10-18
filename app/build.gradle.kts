@@ -98,6 +98,7 @@ dependencies {
     implementation(project(":ui:feature:favorites"))
     implementation(project(":ui:feature:home"))
     implementation(project(":ui:feature:search"))
+    implementation(project(":ui:feature:settings"))
     implementation(project(":ui:shared:assets"))
     implementation(project(":ui:shared:composable:common"))
     implementation(project(":ui:shared:composable:weather"))
