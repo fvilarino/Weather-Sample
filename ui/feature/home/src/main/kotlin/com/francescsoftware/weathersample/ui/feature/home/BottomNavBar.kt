@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.screen.Screen
 
 @Composable
@@ -19,6 +20,7 @@ internal fun BottomNavBar(
 ) {
     NavigationBar(
         modifier = modifier,
+        tonalElevation = 0.dp,
     ) {
         navigationDestinations.forEach { navItem ->
             val isSelected = navItem.rootScreen == selectedScreen

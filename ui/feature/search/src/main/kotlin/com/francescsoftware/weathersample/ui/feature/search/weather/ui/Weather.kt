@@ -86,9 +86,7 @@ private fun WeatherScreen(
                     state = weatherState,
                     refreshing = state.refreshing,
                     todayRefreshCallback = onRefreshTodayWeather,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = MarginDouble, start = MarginDouble, end = MarginDouble),
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
         }
