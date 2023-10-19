@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -30,6 +32,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -40,8 +43,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
@@ -129,6 +135,8 @@ internal fun WeatherApp(
             modifier = Modifier
                 .blurIf(blur = blurBackground)
                 .nestedScroll(connection = scrollBehavior.nestedScrollConnection),
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onBackground,
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
             snackbarHost = { SnackbarHost(snackbarHostState) },
             topBar = {
@@ -167,6 +175,7 @@ internal fun WeatherApp(
                         visible = isAtRoot,
                         enter = slideInVertically { it } + fadeIn(),
                         exit = slideOutVertically { it } + fadeOut(),
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)),
                     ) {
                         BottomNavBar(
                             selectedScreen = rootScreen,
@@ -179,11 +188,12 @@ internal fun WeatherApp(
                 }
             },
         ) { paddingValues ->
-            Box(
+            AppBackground(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 Row(
                     modifier = Modifier
+                        .fillMaxSize()
                         .padding(paddingValues)
                         .consumeWindowInsets(paddingValues)
                         .windowInsetsPadding(
@@ -219,6 +229,26 @@ internal fun WeatherApp(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun AppBackground(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .background(
+                Brush.verticalGradient(
+                    listOf(
+                        MaterialTheme.colorScheme.surface,
+                        MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp),
+                    ),
+                ),
+            ),
+    ) {
+        content()
     }
 }
 
