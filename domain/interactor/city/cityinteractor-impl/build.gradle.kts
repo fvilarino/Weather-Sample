@@ -13,4 +13,5 @@ dependencies {
     implementation(project(":data:repository:recents:recentsrepo-api"))
     implementation(project(":domain:interactor:city:cityinteractor-api"))
     implementation(libs.bundles.coroutines)
+    implementation(libs.androidx.paging.paging.common.ktx)
 }

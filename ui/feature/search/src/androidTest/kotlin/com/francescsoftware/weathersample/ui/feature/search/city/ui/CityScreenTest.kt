@@ -9,24 +9,34 @@ import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.paging.LoadState
+import androidx.paging.LoadStates
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates
 import com.francescsoftware.weathersample.ui.feature.search.R
-import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
-import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
-import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
 import org.junit.Rule
 import org.junit.Test
+import java.io.IOException
 
-private val BarcelonaCityModel = CityResultModel(
+private val BarcelonaCity = City(
     id = 1L,
-    favoriteId = -1,
     name = "Barcelona",
+    region = "Catalunya",
+    regionCode = "CA",
     country = "Spain",
     countryCode = "ES",
-    coordinates = Coordinates(latitude = 41.39f, longitude = 2.17f),
+    coordinates = Coordinates(latitude = 41.39, longitude = 2.17),
 )
 
 private val recentCities = persistentListOf(
@@ -34,31 +44,41 @@ private val recentCities = persistentListOf(
     RecentCityModel("Barcelona"),
 )
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 internal class CityScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-
     @Test
-    fun circular_progress_shows_when_state_is_loading() {
+    fun loading_shows_when_fetching_data() {
         composeTestRule.setContent {
             WithPhoneWindowSizeClass {
+                val cities = listOf(
+                    BarcelonaCity,
+                )
+                val pagingData: Flow<PagingData<City>> = flow {
+                    PagingData.from(
+                        data = cities,
+                        sourceLoadStates = LoadStates(
+                            refresh = LoadState.Loading,
+                            append = LoadState.NotLoading(false),
+                            prepend = LoadState.NotLoading(false),
+                        )
+                    )
+                }
                 CityScreen(
-                    state = SearchScreen.State(
-                        citiesResult = SearchScreen.CitiesResult.Loading,
-                        recentCities = persistentListOf(),
-                        eventSink = {},
-                    ),
+                    cities = pagingData.collectAsLazyPagingItems(),
+                    favoriteCities = persistentSetOf(),
+                    recentCities = persistentListOf(),
+                    showResults = true,
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
+                    onRetryClick = { },
                     onChipClick = { },
                     onDeleteChip = { },
                 )
             }
         }
-
         composeTestRule
             .onNodeWithTag(
                 composeTestRule.activity.resources.getString(R.string.test_tag_cities_loading),
@@ -67,46 +87,20 @@ internal class CityScreenTest {
     }
 
     @Test
-    fun city_list_shows_when_state_is_loaded() {
+    fun no_results_shows_when_no_cities_available() {
         composeTestRule.setContent {
             WithPhoneWindowSizeClass {
+                val cities = emptyList<City>()
+                val pagingData = MutableStateFlow(PagingData.from(cities))
                 CityScreen(
-                    state = SearchScreen.State(
-                        citiesResult = SearchScreen.CitiesResult.Loaded(
-                            persistentListOf(BarcelonaCityModel),
-                        ),
-                        recentCities = persistentListOf(),
-                        eventSink = {},
-                    ),
+                    cities = pagingData.collectAsLazyPagingItems(),
+                    favoriteCities = persistentSetOf(),
+                    recentCities = persistentListOf(),
+                    showResults = true,
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
-                    onChipClick = { },
-                    onDeleteChip = { },
-                )
-            }
-        }
-
-        composeTestRule
-            .onNodeWithTag(
-                composeTestRule.activity.resources.getString(R.string.test_tag_cities_result),
-            )
-            .assertExists()
-    }
-
-    @Test
-    fun no_results_shows_when_state_is_no_results() {
-        composeTestRule.setContent {
-            WithPhoneWindowSizeClass {
-                CityScreen(
-                    state = SearchScreen.State(
-                        citiesResult = SearchScreen.CitiesResult.NoResults,
-                        recentCities = persistentListOf(),
-                        eventSink = {},
-                    ),
-                    onCityClick = { },
-                    onFavoriteClick = { },
-                    onQueryChange = { },
+                    onRetryClick = { },
                     onChipClick = { },
                     onDeleteChip = { },
                 )
@@ -121,18 +115,61 @@ internal class CityScreenTest {
     }
 
     @Test
-    fun error_shows_when_state_is_error() {
+    fun city_list_shows_when_state_is_loaded() {
         composeTestRule.setContent {
             WithPhoneWindowSizeClass {
+                val cities = listOf(
+                    BarcelonaCity,
+                )
+                val pagingData = MutableStateFlow(PagingData.from(cities))
                 CityScreen(
-                    state = SearchScreen.State(
-                        citiesResult = SearchScreen.CitiesResult.Error,
-                        recentCities = persistentListOf(),
-                        eventSink = {},
-                    ),
+                    cities = pagingData.collectAsLazyPagingItems(),
+                    favoriteCities = persistentSetOf(),
+                    recentCities = persistentListOf(),
+                    showResults = true,
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
+                    onRetryClick = { },
+                    onChipClick = { },
+                    onDeleteChip = { },
+                )
+            }
+        }
+
+        composeTestRule
+            .onNodeWithTag(
+                "${composeTestRule.activity.resources.getString(R.string.test_tag_cities_result)}_${BarcelonaCity.id}",
+            )
+            .assertExists()
+    }
+
+    @Test
+    fun error_shows_when_state_is_error() {
+        composeTestRule.setContent {
+            WithPhoneWindowSizeClass {
+                val cities = listOf(
+                    BarcelonaCity,
+                )
+                val pagingData: Flow<PagingData<City>> = MutableStateFlow(
+                    PagingData.from(
+                        data = cities,
+                        sourceLoadStates = LoadStates(
+                            refresh = LoadState.Error(IOException()),
+                            append = LoadState.NotLoading(false),
+                            prepend = LoadState.NotLoading(false),
+                        )
+                    )
+                )
+                CityScreen(
+                    cities = pagingData.collectAsLazyPagingItems(),
+                    favoriteCities = persistentSetOf(),
+                    recentCities = persistentListOf(),
+                    showResults = true,
+                    onCityClick = { },
+                    onFavoriteClick = { },
+                    onQueryChange = { },
+                    onRetryClick = { },
                     onChipClick = { },
                     onDeleteChip = { },
                 )
@@ -150,17 +187,19 @@ internal class CityScreenTest {
     fun city_chips_show_when_available() {
         composeTestRule.setContent {
             WithPhoneWindowSizeClass {
+                val cities = listOf(
+                    BarcelonaCity,
+                )
+                val pagingData = MutableStateFlow(PagingData.from(cities))
                 CityScreen(
-                    state = SearchScreen.State(
-                        citiesResult = SearchScreen.CitiesResult.Loaded(
-                            persistentListOf(BarcelonaCityModel),
-                        ),
-                        recentCities = recentCities,
-                        eventSink = {},
-                    ),
+                    cities = pagingData.collectAsLazyPagingItems(),
+                    favoriteCities = persistentSetOf(),
+                    recentCities = recentCities,
+                    showResults = true,
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
+                    onRetryClick = { },
                     onChipClick = { },
                     onDeleteChip = { },
                 )
@@ -186,17 +225,19 @@ internal class CityScreenTest {
     fun search_box_updates_on_recent_city_click() {
         composeTestRule.setContent {
             WithPhoneWindowSizeClass {
+                val cities = listOf(
+                    BarcelonaCity,
+                )
+                val pagingData = MutableStateFlow(PagingData.from(cities))
                 CityScreen(
-                    state = SearchScreen.State(
-                        citiesResult = SearchScreen.CitiesResult.Loaded(
-                            persistentListOf(BarcelonaCityModel),
-                        ),
-                        recentCities = recentCities,
-                        eventSink = {},
-                    ),
+                    cities = pagingData.collectAsLazyPagingItems(),
+                    favoriteCities = persistentSetOf(),
+                    recentCities = recentCities,
+                    showResults = true,
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
+                    onRetryClick = { },
                     onChipClick = { },
                     onDeleteChip = { },
                 )
@@ -217,6 +258,7 @@ internal class CityScreenTest {
             .assertTextContains(recentCities.first().name)
     }
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     @Composable
     private fun WithPhoneWindowSizeClass(
         content: @Composable () -> Unit,

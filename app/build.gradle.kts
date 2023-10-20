@@ -109,6 +109,7 @@ dependencies {
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.app.compat)
     implementation(libs.androidx.datastore.datastore)
+    implementation(libs.androidx.paging.paging.common.ktx)
     implementation(libs.com.jakewharton.timber)
     implementation(libs.bundles.circuit)
     implementation(libs.bundles.okhttp)

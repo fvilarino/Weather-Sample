@@ -2,15 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a20b7719e141b43e832358cf3dc87407",
+    "identityHash": "cc5a8d65e4d20572c362ce7bf6eeeaaf",
     "entities": [
       {
         "tableName": "FavoriteCityEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `country_code` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`city_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `country_code` TEXT NOT NULL, PRIMARY KEY(`city_id`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "cityId",
+            "columnName": "city_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -28,9 +28,9 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "id"
+            "city_id"
           ]
         },
         "indices": [],
@@ -40,7 +40,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a20b7719e141b43e832358cf3dc87407')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc5a8d65e4d20572c362ce7bf6eeeaaf')"
     ]
   }
 }

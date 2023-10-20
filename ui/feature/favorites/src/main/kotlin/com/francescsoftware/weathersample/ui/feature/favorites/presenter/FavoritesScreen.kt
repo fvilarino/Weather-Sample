@@ -14,7 +14,7 @@ import kotlinx.parcelize.Parcelize
 object FavoritesScreen : Screen {
 
     data class City(
-        val favoriteId: Int,
+        val cityId: Long,
         val name: String,
         val countryCode: String,
     )

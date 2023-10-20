@@ -13,7 +13,7 @@ package com.francescsoftware.weathersample.data.repository.city.api.model
  * @property coordinates the city coordinates
  */
 data class City(
-    val id: Int,
+    val id: Long,
     val city: String,
     val name: String,
     val region: String,

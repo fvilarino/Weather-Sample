@@ -5,7 +5,6 @@ import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.SingleIn
 import com.francescsoftware.weathersample.core.network.safeApiCall
-import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.data.repository.city.api.CitiesException
 import com.francescsoftware.weathersample.data.repository.city.api.CityRepository
@@ -14,7 +13,13 @@ import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-private const val CacheCapacity = 10
+private const val CacheCapacity = 40
+
+private data class CacheKey(
+    val prefix: String,
+    val offset: Int,
+    val limit: Int,
+)
 
 @ContributesBinding(AppScope::class)
 @SingleIn(AppScope::class)
@@ -23,33 +28,31 @@ class CityRepositoryImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ) : CityRepository {
 
-    private val cache = LruCache<String, CitySearchResponse>(CacheCapacity)
+    private val cache = LruCache<CacheKey, CitySearchResponse>(CacheCapacity)
 
     override suspend fun getCities(
         prefix: String,
+        offset: Int,
         limit: Int,
-    ): Either<CitySearchResponse> {
-        val cached = cache.get(prefix)
-        if (cached != null) {
-            return Either.Success(cached)
-        }
+    ): CitySearchResponse {
+        val cacheKey = CacheKey(prefix = prefix, offset = offset, limit = limit)
+        cache[cacheKey]?.let { return it }
+
         val networkResponse = safeApiCall {
-            cityService.getCities(prefix, limit)
+            cityService.getCities(prefix, offset, limit)
         }
         return networkResponse.fold(
             onSuccess = { response ->
                 if (response.isValid) {
                     withContext(dispatcherProvider.default) {
-                        Either.Success(response.toCityResponse().also { cache.put(prefix, it) })
+                        response.toCityResponse().also { cache.put(cacheKey, it) }
                     }
                 } else {
-                    Either.Failure(
-                        CitiesException("Invalid data received"),
-                    )
+                    throw CitiesException("Invalid data received")
                 }
             },
             onFailure = { throwable ->
-                Either.Failure(CitiesException(cause = throwable))
+                throw CitiesException(cause = throwable)
             },
         )
     }

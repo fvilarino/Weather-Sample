@@ -10,12 +10,11 @@ data class Coordinates(
 
 @Immutable
 data class CityResultModel(
-    val id: Long,
-    val favoriteId: Int,
+    val cityId: Long,
     val name: String,
     val country: String,
     val countryCode: String,
     val coordinates: Coordinates,
 ) {
-    val isFavorite: Boolean = favoriteId >= 0
+    val isFavorite: Boolean = cityId >= 0L
 }

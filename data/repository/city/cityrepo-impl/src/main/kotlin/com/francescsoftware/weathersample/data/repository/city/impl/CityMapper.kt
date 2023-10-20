@@ -21,7 +21,7 @@ internal fun MetadataModel.toCityMetadata(): Metadata = Metadata(
 internal fun List<CityModel>.toCities(): List<City> = map { city -> city.toCity() }
 
 internal fun CityModel.toCity(): City = City(
-    id = id ?: 0,
+    id = id?.toLong() ?: 0L,
     city = city.orEmpty(),
     name = name.orEmpty(),
     region = region.orEmpty(),

@@ -12,6 +12,6 @@ class DeleteFavoriteCityInteractorImpl @Inject constructor(
 ) : DeleteFavoriteCityInteractor {
 
     override suspend fun invoke(params: DeleteFavoriteCityInteractor.Params) {
-        favoriteRepository.deleteFavoriteCity(params.city.toRepoFavoriteCity())
+        favoriteRepository.deleteFavoriteCity(params.cityId)
     }
 }

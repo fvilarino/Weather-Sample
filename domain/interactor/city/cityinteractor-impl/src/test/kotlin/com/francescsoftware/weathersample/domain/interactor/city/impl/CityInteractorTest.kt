@@ -5,7 +5,6 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
 import assertk.assertions.isTrue
-import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.isFailure
 import com.francescsoftware.weathersample.core.type.either.isSuccess
 import com.francescsoftware.weathersample.core.type.either.throwableOrNull
@@ -16,6 +15,7 @@ import com.francescsoftware.weathersample.data.repository.city.api.model.CitySea
 import com.francescsoftware.weathersample.data.repository.city.api.model.Coordinates
 import com.francescsoftware.weathersample.data.repository.city.api.model.Metadata
 import com.francescsoftware.weathersample.domain.interactor.city.api.CitiesException
+import com.francescsoftware.weathersample.domain.interactor.city.api.GetCitiesInteractor
 import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -69,18 +69,15 @@ class CityInteractorTest {
         var cities: List<City> = emptyList()
         var isNetworkError: Boolean = false
 
-        override suspend fun getCities(prefix: String, limit: Int): Either<CitySearchResponse> {
-            return if (isNetworkError) {
-                Either.Failure(RepoException(message = "Failed to load cities"))
+        override suspend fun getCities(prefix: String, offset: Int, limit: Int): CitySearchResponse =
+            if (isNetworkError) {
+                throw RepoException(message = "Failed to load cities")
             } else {
-                Either.Success(
-                    CitySearchResponse(
-                        metadata = Metadata(0, 0),
-                        cities = cities,
-                    ),
+                CitySearchResponse(
+                    metadata = Metadata(0, 0),
+                    cities = cities,
                 )
             }
-        }
     }
 
     @Test
@@ -91,7 +88,7 @@ class CityInteractorTest {
 
         // when we execute the interactor query
         val query = CityName
-        val response = interactor(query)
+        val response = interactor(GetCitiesInteractor.Params(query))
 
         // the response has been converted to the interactor type
         assertThat(response.isSuccess).isTrue()
@@ -105,7 +102,7 @@ class CityInteractorTest {
 
         // when we execute the interactor query
         val query = CityName
-        val response = interactor(query)
+        val response = interactor(GetCitiesInteractor.Params(query))
 
         // the response has been converted to the interactor type
         assertThat(response.isFailure).isTrue()

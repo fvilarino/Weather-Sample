@@ -2,22 +2,33 @@ package com.francescsoftware.weathersample.ui.feature.search.city.ui
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -25,40 +36,38 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemKey
 import com.francescsoftware.weathersample.core.injection.ActivityScope
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
 import com.francescsoftware.weathersample.ui.feature.search.R
-import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
-import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
-import com.francescsoftware.weathersample.ui.shared.composable.common.composition.isCompact
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.isExpanded
-import com.francescsoftware.weathersample.ui.shared.composable.common.widget.Crossfade
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.GenericMessage
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PanesOrientation
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ProgressIndicator
-import com.francescsoftware.weathersample.ui.shared.styles.LandscapePhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
-import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
-import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
-import com.francescsoftware.weathersample.ui.shared.styles.TabletPreviews
-import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.slack.circuit.codegen.annotations.CircuitInject
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-internal val MinColumnWidth = 300.dp
-private const val CityPaneWeight = 3f
+internal val MinColumnWidth = 304.dp
+private val LoadingMoreIndicatorSize = 48.dp
 
 @CircuitInject(SearchScreen::class, ActivityScope::class)
 @Composable
@@ -68,10 +77,14 @@ internal fun Search(
 ) {
     val eventSink = state.eventSink
     CityScreen(
-        state = state,
+        cities = state.cities,
+        favoriteCities = state.favoriteCities,
+        recentCities = state.recentCities,
+        showResults = state.showResults,
         onCityClick = { selectedCity -> eventSink(SearchScreen.Event.CityClick(selectedCity)) },
         onFavoriteClick = { eventSink(SearchScreen.Event.FavoriteClick(it)) },
         onQueryChange = { eventSink(SearchScreen.Event.QueryUpdated(it)) },
+        onRetryClick = { eventSink(SearchScreen.Event.RetryClick) },
         onChipClick = { eventSink(SearchScreen.Event.ChipClick(it)) },
         onDeleteChip = { eventSink(SearchScreen.Event.DeleteChipClick(it)) },
         modifier = modifier,
@@ -81,10 +94,14 @@ internal fun Search(
 @Composable
 @OptIn(ExperimentalComposeUiApi::class)
 internal fun CityScreen(
-    state: SearchScreen.State,
-    onCityClick: (SelectedCity) -> Unit,
-    onFavoriteClick: (CityResultModel) -> Unit,
+    cities: LazyPagingItems<City>,
+    favoriteCities: ImmutableSet<Long>,
+    recentCities: ImmutableList<RecentCityModel>,
+    showResults: Boolean,
+    onCityClick: (City) -> Unit,
+    onFavoriteClick: (City) -> Unit,
     onQueryChange: (TextFieldValue) -> Unit,
+    onRetryClick: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -103,8 +120,9 @@ internal fun CityScreen(
     if (orientation == Configuration.ORIENTATION_PORTRAIT) {
         Column(modifier = modifier) {
             CityPane(
-                state = state,
+                recentCities = recentCities,
                 stateHolder = stateHolder,
+                singleLine = true,
                 onChipClick = { recentCityModel ->
                     keyboardController?.hide()
                     onChipClick(recentCityModel)
@@ -115,9 +133,12 @@ internal fun CityScreen(
                     .padding(horizontal = MarginDouble),
             )
             Cities(
-                state = state,
+                cities = cities,
+                favoriteCities = favoriteCities,
+                showResults = showResults,
                 onCityClick = onCityClick,
                 onFavoriteClick = onFavoriteClick,
+                onRetryClick = onRetryClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
@@ -126,20 +147,17 @@ internal fun CityScreen(
     } else {
         DualPane(
             panesOrientation = PanesOrientation.horizontal(
-                aspectRatio = if (windowSizeClass.isExpanded) .33f else .5f,
+                aspectRatio = if (windowSizeClass.isExpanded) .4f else .5f,
             ),
             paneOne = {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Spacer(
-                        modifier = if (windowSizeClass.isCompact) {
-                            Modifier.height(MarginQuad)
-                        } else {
-                            Modifier.weight(1f)
-                        },
+                        modifier = Modifier.height(MarginQuad),
                     )
                     CityPane(
-                        state = state,
+                        recentCities = recentCities,
                         stateHolder = stateHolder,
+                        singleLine = false,
                         onChipClick = { recentCityModel ->
                             keyboardController?.hide()
                             onChipClick(recentCityModel)
@@ -147,16 +165,19 @@ internal fun CityScreen(
                         onDeleteChip = onDeleteChip,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(CityPaneWeight)
+                            .weight(1f)
                             .padding(horizontal = MarginDouble),
                     )
                 }
             },
             paneTwo = {
                 Cities(
-                    state = state,
+                    cities = cities,
+                    favoriteCities = favoriteCities,
+                    showResults = showResults,
                     onCityClick = onCityClick,
                     onFavoriteClick = onFavoriteClick,
+                    onRetryClick = onRetryClick,
                     modifier = Modifier.fillMaxSize(),
                 )
             },
@@ -167,8 +188,9 @@ internal fun CityScreen(
 
 @Composable
 private fun CityPane(
-    state: SearchScreen.State,
+    recentCities: ImmutableList<RecentCityModel>,
     stateHolder: CityScreenStateHolder,
+    singleLine: Boolean,
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -189,10 +211,13 @@ private fun CityPane(
                 .padding(top = MarginQuad),
         )
         AnimatedVisibility(
-            visible = state.recentCities.isNotEmpty(),
+            visible = recentCities.isNotEmpty(),
+            enter = fadeIn(),
+            exit = fadeOut(),
         ) {
             CityChips(
-                cities = state.recentCities,
+                cities = recentCities,
+                singleLine = singleLine,
                 onChipClick = { cityModel ->
                     stateHolder.onQueryUpdated(
                         TextFieldValue(
@@ -214,97 +239,173 @@ private fun CityPane(
 
 @Composable
 private fun Cities(
-    state: SearchScreen.State,
-    onCityClick: (SelectedCity) -> Unit,
-    onFavoriteClick: (CityResultModel) -> Unit,
+    cities: LazyPagingItems<City>,
+    favoriteCities: ImmutableSet<Long>,
+    showResults: Boolean,
+    onCityClick: (City) -> Unit,
+    onFavoriteClick: (City) -> Unit,
+    onRetryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val citiesLoading = stringResource(id = R.string.test_tag_cities_loading)
     val citiesResults = stringResource(id = R.string.test_tag_cities_result)
     val citiesNoResults = stringResource(id = R.string.test_tag_cities_no_results)
     val citiesError = stringResource(id = R.string.test_tag_cities_error)
-    Crossfade(
-        targetState = state.citiesResult,
-        contentKey = { it::class.java },
+    val refreshing by remember {
+        derivedStateOf { cities.loadState.refresh is LoadState.Loading }
+    }
+    val loadError by remember {
+        derivedStateOf { cities.loadState.refresh is LoadState.Error }
+    }
+    val loadingMore by remember {
+        derivedStateOf { cities.loadState.append is LoadState.Loading }
+    }
+    val appendError by remember {
+        derivedStateOf { cities.loadState.append is LoadState.Error }
+    }
+    val noResults by remember {
+        derivedStateOf {
+            cities.loadState.refresh is LoadState.NotLoading && cities.itemCount == 0
+        }
+    }
+
+    Box(
         modifier = modifier,
-    ) { result ->
-        when (result) {
-            SearchScreen.CitiesResult.Idle -> {}
-            SearchScreen.CitiesResult.Loading -> ProgressIndicator(
-                modifier = Modifier
-                    .semantics { testTag = citiesLoading }
-                    .fillMaxSize(),
-            )
+    ) {
+        if (showResults) {
+            if (refreshing) {
+                ProgressIndicator(
+                    modifier = Modifier
+                        .semantics { testTag = citiesLoading }
+                        .fillMaxSize(),
+                )
+            } else {
+                val listState = rememberLazyGridState()
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(MinColumnWidth),
+                    state = listState,
+                    contentPadding = PaddingValues(all = MarginDouble),
+                    horizontalArrangement = Arrangement.spacedBy(MarginDouble),
+                    verticalArrangement = Arrangement.spacedBy(MarginDouble),
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    when {
+                        loadError -> item(
+                            key = "load_error",
+                            span = { GridItemSpan(maxLineSpan) },
+                        ) {
+                            GenericMessage(
+                                message = stringResource(id = R.string.city_error_loading),
+                                icon = Icons.Default.Warning,
+                                modifier = Modifier
+                                    .semantics { testTag = citiesError }
+                                    .fillMaxWidth()
+                                    .padding(vertical = MarginQuad),
+                            )
+                        }
 
-            SearchScreen.CitiesResult.NoResults -> GenericMessage(
-                message = stringResource(id = R.string.no_results_found_label),
-                modifier = Modifier
-                    .semantics { testTag = citiesNoResults }
-                    .fillMaxSize(),
-            )
+                        noResults -> item(
+                            key = "no_results",
+                            span = { GridItemSpan(maxLineSpan) },
+                        ) {
+                            GenericMessage(
+                                message = stringResource(id = R.string.no_results_found_label),
+                                icon = Icons.Default.Warning,
+                                modifier = Modifier
+                                    .semantics { testTag = citiesNoResults }
+                                    .fillMaxWidth()
+                                    .padding(vertical = MarginQuad),
+                            )
+                        }
 
-            SearchScreen.CitiesResult.Error -> GenericMessage(
-                message = stringResource(id = R.string.city_error_loading),
-                icon = Icons.Default.Warning,
-                modifier = Modifier
-                    .semantics { testTag = citiesError }
-                    .fillMaxSize(),
-            )
+                        else -> {
+                            items(
+                                count = cities.itemCount,
+                                key = cities.itemKey { it.id },
+                            ) { index ->
+                                val city = cities[index]
+                                if (city != null) {
+                                    CityCard(
+                                        city = city,
+                                        isFavorite = favoriteCities.contains(city.id),
+                                        onClick = { selectedCity -> onCityClick(selectedCity) },
+                                        onFavoriteClick = onFavoriteClick,
+                                        modifier = Modifier
+                                            .testTag("${citiesResults}_${city.id}")
+                                            .fillMaxWidth(),
+                                        contentPadding = PaddingValues(all = MarginSingle),
+                                    )
+                                }
+                            }
+                            if (loadingMore) {
+                                item(
+                                    key = "loading_more",
+                                    span = { GridItemSpan(maxLineSpan) },
+                                ) {
+                                    LoadingMore(
+                                        modifier = Modifier.padding(vertical = MarginDouble),
+                                    )
+                                }
+                            }
+                            if (appendError) {
+                                item(
+                                    key = "append_error",
+                                    span = { GridItemSpan(maxLineSpan) },
+                                ) {
+                                    AppendError(
+                                        onClick = onRetryClick,
+                                        modifier = Modifier.padding(vertical = MarginDouble),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    item(key = "footer") {
+                        Spacer(modifier = Modifier.navigationBarsPadding())
+                    }
+                }
+            }
+        }
+    }
+}
 
-            is SearchScreen.CitiesResult.Loaded -> CitiesList(
-                cities = result.cities,
-                onCityClick = onCityClick,
-                onFavoriteClick = onFavoriteClick,
-                modifier = Modifier
-                    .semantics { testTag = citiesResults }
-                    .fillMaxSize()
-                    .padding(horizontal = MarginDouble),
+@Composable
+private fun LoadingMore(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(MarginSingle),
+        ) {
+            ProgressIndicator(
+                modifier = Modifier.size(LoadingMoreIndicatorSize),
+            )
+            Text(
+                text = stringResource(id = R.string.loading_more),
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@PhonePreviews
-@LandscapePhonePreviews
-@TabletPreviews
 @Composable
-private fun PreviewCityScreen() {
-    WeatherSampleTheme {
-        CompositionLocalProvider(
-            LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
+private fun AppendError(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ) {
+        Button(
+            onClick = onClick,
         ) {
-            Surface(
-                color = MaterialTheme.colorScheme.background,
-            ) {
-                val state = remember {
-                    SearchScreen.State(
-                        citiesResult = SearchScreen.CitiesResult.Loaded(
-                            cities = persistentListOf(
-                                VancouverCityModel,
-                                BarcelonaCityModel,
-                                LondonCityModel,
-                            ),
-                        ),
-                        recentCities = persistentListOf(
-                            RecentCityModel("Vancouver"),
-                            RecentCityModel("Barcelona"),
-                            RecentCityModel("London"),
-                            RecentCityModel("Tokyo"),
-                            RecentCityModel("Jakarta"),
-                        ),
-                        eventSink = {},
-                    )
-                }
-                CityScreen(
-                    state = state,
-                    onCityClick = { },
-                    onFavoriteClick = { },
-                    onQueryChange = { },
-                    onChipClick = { },
-                    onDeleteChip = { },
-                )
-            }
+            Text(
+                text = stringResource(id = R.string.retry),
+            )
         }
     }
 }

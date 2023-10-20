@@ -84,7 +84,7 @@ internal val AstroModel?.isValid: Boolean
         sunset?.isNotEmpty() == true &&
         moonrise?.isNotEmpty() == true &&
         moonset?.isNotEmpty() == true &&
-        moonIllumination?.isNotEmpty() == true &&
+        moonIllumination != null &&
         moonPhase?.isNotEmpty() == true
 
 internal val HourModel.isValid: Boolean
