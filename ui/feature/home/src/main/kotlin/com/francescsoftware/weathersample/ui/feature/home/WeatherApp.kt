@@ -1,10 +1,5 @@
 package com.francescsoftware.weathersample.ui.feature.home
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -171,20 +166,13 @@ internal fun WeatherApp(
             },
             bottomBar = {
                 if (state.hasBottomNavBar) {
-                    AnimatedVisibility(
-                        visible = isAtRoot,
-                        enter = slideInVertically { it } + fadeIn(),
-                        exit = slideOutVertically { it } + fadeOut(),
-                        modifier = Modifier.background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)),
-                    ) {
-                        BottomNavBar(
-                            selectedScreen = rootScreen,
-                            onClick = { screen ->
-                                navigator.resetRoot(screen)
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                    }
+                    BottomNavBar(
+                        selectedScreen = rootScreen,
+                        onClick = { screen ->
+                            navigator.resetRoot(screen)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                 }
             },
         ) { paddingValues ->
