@@ -2,13 +2,15 @@
 androidx-activity-activity-compose-version = "1.8.0"
 androidx-arch-core-core-testing-version = "2.2.0"
 androidx-benchmark-benchmark-macro-junit4-version = "1.2.0"
+androidx-compose-animation-animation-version = "1.6.0-alpha08"
 androidx-compose-bom-version = "2023.10.01"
 androidx-compose-compiler-version = "1.5.3"
+androidx-compose-ui-ui-version = "1.6.0-alpha08"
 androidx-core-core-ktx-version = "1.12.0"
 androidx-core-core-splashscreen-version = "1.0.1"
 androidx-datastore-datastore-version = "1.1.0-alpha05"
 androidx-lifecycle-lifecycle-version = "2.6.2"
-androidx-paging-paging-common-ktx-version = "3.2.1"
+androidx-paging-paging-version = "3.3.0-alpha02"
 androidx-room-version = "2.6.0"
 androidx-test-core-ktx-version = "1.5.0"
 androidx-test-espresso-espresso-core-version = "3.5.1"
@@ -34,6 +36,7 @@ com-squareup-okhttp3-version = "5.0.0-alpha.11"
 com-squareup-okio-version = "3.6.0"
 com-squareup-retrofit2-retrofit-version = "2.9.0"
 com-willowtreeapps-assertk-assertk-version = "0.27.0"
+dev-chrisbanes-haze-version = "0.1.0"
 io-gitlab-arturbosch-detekt-version = "1.23.1"
 io-mockk-version = "1.13.8"
 jdk-version = "20"
@@ -52,13 +55,14 @@ androidx-activity-activity-compose = { module = "androidx.activity:activity-comp
 androidx-app-compat = { module = "androidx.appcompat:appcompat", version.ref = "app-compat-version" }
 androidx-arch-core-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch-core-core-testing-version" }
 androidx-benchmark-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark-benchmark-macro-junit4-version" }
+androidx-compose-animation-animation = { module = "androidx.compose.animation:animation", version.ref = "androidx-compose-animation-animation-version" }
 androidx-compose-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom-version" }
 androidx-compose-compiler-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "androidx-compose-compiler-version" }
 androidx-compose-material-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3" }
 androidx-compose-material3-window-sizeclass = { module = "androidx.compose.material3:material3-window-size-class" }
 androidx-compose-runtime-runtime = { module = "androidx.compose.runtime:runtime" }
-androidx-compose-ui-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-ui = { module = "androidx.compose.ui:ui", version = "androidx-compose-ui-ui-version" }
 androidx-compose-ui-ui-android = { module = "androidx.compose.ui:ui-android" }
 androidx-compose-ui-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 androidx-compose-ui-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
@@ -69,7 +73,8 @@ androidx-core-core-ktx = { module = "androidx.core:core-ktx", version.ref = "and
 androidx-core-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-core-splashscreen-version" }
 androidx-datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "androidx-datastore-datastore-version" }
 androidx-lifecycle-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-lifecycle-version" }
-androidx-paging-paging-common-ktx = { module = "androidx.paging:paging-common-ktx", version.ref = "androidx-paging-paging-common-ktx-version" }
+androidx-paging-paging-common-ktx = { module = "androidx.paging:paging-common-ktx", version.ref = "androidx-paging-paging-version" }
+androidx-paging-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging-paging-version" }
 androidx-room-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room-version" }
 androidx-room-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room-version" }
 androidx-room-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room-version" }
@@ -107,6 +112,7 @@ com-squareup-okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.
 com-squareup-okio = { module = "com.squareup.okio:okio", version.ref = "com-squareup-okio-version" }
 com-squareup-retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "com-squareup-retrofit2-retrofit-version" }
 com-willowtreeapps-assertk-assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "com-willowtreeapps-assertk-assertk-version" }
+dev-chrisbanes-haze = { module = "dev.chrisbanes.haze:haze-jetpack-compose", version.ref = "dev-chrisbanes-haze-version" }
 io-gitlab-arturbosch-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "io-gitlab-arturbosch-detekt-version" }
 io-gitlab-arturbosch-detekt-detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "io-gitlab-arturbosch-detekt-version" }
 io-mockk = { module = "io.mockk:mockk", version.ref = "io-mockk-version" }
@@ -145,6 +151,7 @@ circuit = [
     "com-slack-circuit-circuit-runtime-ui",
 ]
 compose = [
+    "androidx-compose-animation-animation",
     "androidx-compose-material-material-icons-extended",
     "androidx-compose-material3-material3",
     "androidx-compose-runtime-runtime",

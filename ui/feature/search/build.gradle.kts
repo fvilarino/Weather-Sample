@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":ui:shared:composable:weather"))
     implementation(project(":ui:shared:weathericon"))
     implementation(libs.androidx.compose.material3.window.sizeclass)
-    implementation("androidx.paging:paging-compose:3.3.0-alpha02")
+    implementation(libs.dev.chrisbanes.haze)
+    implementation(libs.androidx.paging.paging.compose)
     implementation(libs.androidx.paging.paging.common.ktx)
 }

@@ -1,7 +1,7 @@
 package com.francescsoftware.weathersample.ui.shared.composable.common.widget
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,6 +15,10 @@ fun LoadingSpinner(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        CircularProgressIndicator()
+        LoadingIndicator(
+            animating = true,
+            color = MaterialTheme.colorScheme.primary,
+            animationType = AnimationType.LazyBounce,
+        )
     }
 }

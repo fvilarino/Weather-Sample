@@ -263,7 +263,7 @@ fun rememberLoadingIndicatorState(
 }
 
 @Composable
-private fun LoadingIndicator(
+fun LoadingIndicator(
     animating: Boolean,
     animationType: AnimationType,
     modifier: Modifier = Modifier,
