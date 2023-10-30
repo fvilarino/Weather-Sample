@@ -42,8 +42,8 @@ internal class FavoritesRepositoryImplTest {
 
     @Test
     fun `get favorite cities returns database data`() = runTest {
-        val city1 = FavoriteCityEntity(id = 1, name = "Barcelona", countryCode = "ES")
-        val city2 = FavoriteCityEntity(id = 0, name = "Vancouver", countryCode = "CA")
+        val city1 = FavoriteCityEntity(cityId = 1, name = "Barcelona", countryCode = "ES")
+        val city2 = FavoriteCityEntity(cityId = 0, name = "Vancouver", countryCode = "CA")
         dao.insertFavoriteCity(city1)
         dao.insertFavoriteCity(city2)
         val cities = repository.getFavoriteCities().first()
@@ -55,8 +55,8 @@ internal class FavoritesRepositoryImplTest {
     @Test
     fun `get favorite cities emits on update`() = runTest {
         repository.getFavoriteCities().test {
-            val barcelona = FavoriteCityEntity(id = 0, name = "Barcelona", countryCode = "ES")
-            val vancouver = FavoriteCityEntity(id = 1, name = "Vancouver", countryCode = "CA")
+            val barcelona = FavoriteCityEntity(cityId = 0, name = "Barcelona", countryCode = "ES")
+            val vancouver = FavoriteCityEntity(cityId = 1, name = "Vancouver", countryCode = "CA")
             assertThat(awaitItem()).isEmpty()
             dao.insertFavoriteCity(barcelona)
             var items = awaitItem()
@@ -67,7 +67,7 @@ internal class FavoritesRepositoryImplTest {
             assertThat(items.size).isEqualTo(2)
             assertThat(items[0]).isEqualTo(barcelona.toFavoriteCity())
             assertThat(items[1]).isEqualTo(vancouver.toFavoriteCity())
-            dao.deleteFavoriteCity(favoriteCityEntity = vancouver)
+            dao.deleteFavoriteCity(cityId = vancouver.cityId)
             items = awaitItem()
             assertThat(items.size).isEqualTo(1)
             assertThat(items[0]).isEqualTo(barcelona.toFavoriteCity())
@@ -76,8 +76,8 @@ internal class FavoritesRepositoryImplTest {
 
     @Test
     fun `get favorite cities sorts cities by name`() = runTest {
-        val vancouver = FavoriteCityEntity(id = 0, name = "Vancouver", countryCode = "CA")
-        val barcelona = FavoriteCityEntity(id = 1, name = "Barcelona", countryCode = "ES")
+        val vancouver = FavoriteCityEntity(cityId = 0, name = "Vancouver", countryCode = "CA")
+        val barcelona = FavoriteCityEntity(cityId = 1, name = "Barcelona", countryCode = "ES")
         dao.insertFavoriteCity(vancouver)
         dao.insertFavoriteCity(barcelona)
         val items = repository.getFavoriteCities().first()
@@ -88,7 +88,7 @@ internal class FavoritesRepositoryImplTest {
 
     @Test
     fun `favorite city is inserted into database`() = runTest {
-        val vancouver = FavoriteCity(id = 0, name = "Vancouver", countryCode = "CA")
+        val vancouver = FavoriteCity(cityId = 0, name = "Vancouver", countryCode = "CA")
         repository.saveFavoriteCity(favoriteCity = vancouver)
         val entries = dao.getFavoriteCities().first()
         assertThat(entries.first()).isEqualTo(vancouver.toFavoriteCityEntity())
@@ -96,22 +96,22 @@ internal class FavoritesRepositoryImplTest {
 
     @Test
     fun `favorite city is deleted from database`() = runTest {
-        val vancouver = FavoriteCityEntity(id = 0, name = "Vancouver", countryCode = "CA")
+        val vancouver = FavoriteCityEntity(cityId = 0, name = "Vancouver", countryCode = "CA")
         dao.insertFavoriteCity(vancouver)
 
-        repository.deleteFavoriteCity(favoriteCity = vancouver.toFavoriteCity())
+        repository.deleteFavoriteCity(cityId = vancouver.cityId)
         val entries = dao.getFavoriteCities().first()
         assertThat(entries).isEmpty()
     }
 
     private fun FavoriteCityEntity.toFavoriteCity(): FavoriteCity = FavoriteCity(
-        id = id,
+        cityId = cityId,
         name = name,
         countryCode = countryCode,
     )
 
     private fun FavoriteCity.toFavoriteCityEntity(): FavoriteCityEntity = FavoriteCityEntity(
-        id = id,
+        cityId = cityId,
         name = name,
         countryCode = countryCode,
     )

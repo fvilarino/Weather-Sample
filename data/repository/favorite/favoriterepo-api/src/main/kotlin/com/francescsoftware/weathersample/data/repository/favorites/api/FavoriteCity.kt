@@ -3,12 +3,12 @@ package com.francescsoftware.weathersample.data.repository.favorites.api
 /**
  * A favorite city
  *
- * @property id the city id
+ * @property cityId the unique city id
  * @property name the city name
  * @property countryCode the city country code
  */
 data class FavoriteCity(
-    val id: Int,
+    val cityId: Long,
     val name: String,
     val countryCode: String,
 )

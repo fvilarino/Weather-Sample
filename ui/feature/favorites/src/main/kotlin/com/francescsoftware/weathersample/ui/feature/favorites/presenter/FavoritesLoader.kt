@@ -82,7 +82,7 @@ class FavoritesLoader @Inject constructor(
                     val current = forecastInfo.forecast.current
                     FavoritesScreen.FavoriteCardState(
                         city = FavoritesScreen.City(
-                            favoriteId = forecastInfo.city.id,
+                            cityId = forecastInfo.city.cityId,
                             name = forecastInfo.city.name,
                             countryCode = forecastInfo.city.countryCode,
                         ),

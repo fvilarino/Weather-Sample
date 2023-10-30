@@ -24,7 +24,7 @@ class FavoriteRepositoryImpl @Inject constructor(
     override fun getFavoriteCities(): Flow<List<FavoriteCity>> = dao.getFavoriteCities().map { cities ->
         cities.map { city ->
             FavoriteCity(
-                id = city.id,
+                cityId = city.cityId,
                 name = city.name,
                 countryCode = city.countryCode,
             )
@@ -33,17 +33,13 @@ class FavoriteRepositoryImpl @Inject constructor(
 
     override suspend fun saveFavoriteCity(favoriteCity: FavoriteCity) = dao.insertFavoriteCity(
         FavoriteCityEntity(
-            id = 0,
+            cityId = favoriteCity.cityId,
             name = favoriteCity.name,
             countryCode = favoriteCity.countryCode,
         ),
     )
 
-    override suspend fun deleteFavoriteCity(favoriteCity: FavoriteCity) = dao.deleteFavoriteCity(
-        FavoriteCityEntity(
-            id = favoriteCity.id,
-            name = favoriteCity.name,
-            countryCode = favoriteCity.countryCode,
-        ),
+    override suspend fun deleteFavoriteCity(cityId: Long) = dao.deleteFavoriteCity(
+        cityId,
     )
 }

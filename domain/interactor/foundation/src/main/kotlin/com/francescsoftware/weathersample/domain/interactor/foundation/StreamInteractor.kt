@@ -33,3 +33,4 @@ abstract class StreamInteractor<P, T> {
 
     protected abstract fun buildStream(params: P): Flow<T>
 }
+

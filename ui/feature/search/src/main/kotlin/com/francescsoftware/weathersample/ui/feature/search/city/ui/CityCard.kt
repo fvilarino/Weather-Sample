@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
 import com.francescsoftware.weathersample.ui.feature.search.R
-import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.FavoriteToggle
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.InfoLabels
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
@@ -23,9 +23,10 @@ import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
 
 @Composable
 internal fun CityCard(
-    city: CityResultModel,
-    onClick: (CityResultModel) -> Unit,
-    onFavoriteClick: (CityResultModel) -> Unit,
+    city: City,
+    isFavorite: Boolean,
+    onClick: (City) -> Unit,
+    onFavoriteClick: (City) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -75,7 +76,7 @@ internal fun CityCard(
                 )
             }
             FavoriteToggle(
-                isFavorite = city.isFavorite,
+                isFavorite = isFavorite,
                 onClick = { onFavoriteClick(city) },
             )
         }
@@ -85,11 +86,12 @@ internal fun CityCard(
 @WidgetPreviews
 @Composable
 private fun PreviewCityCard(
-    @PreviewParameter(CityStateProvider::class, 2) model: CityResultModel,
+    @PreviewParameter(CityStateProvider::class, 2) model: City,
 ) {
     WeatherSampleTheme {
         CityCard(
             city = model,
+            isFavorite = false,
             onClick = { },
             onFavoriteClick = { },
             contentPadding = PaddingValues(all = MarginDouble),

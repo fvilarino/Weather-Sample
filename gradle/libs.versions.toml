@@ -1,6 +1,5 @@
 [versions]
 androidx-activity-activity-compose-version = "1.8.0"
-androidx-annotation-version = "1.7.0"
 androidx-arch-core-core-testing-version = "2.2.0"
 androidx-benchmark-benchmark-macro-junit4-version = "1.2.0"
 androidx-compose-bom-version = "2023.10.01"
@@ -9,7 +8,7 @@ androidx-core-core-ktx-version = "1.12.0"
 androidx-core-core-splashscreen-version = "1.0.1"
 androidx-datastore-datastore-version = "1.1.0-alpha05"
 androidx-lifecycle-lifecycle-version = "2.6.2"
-androidx-navigation-version = "2.7.4"
+androidx-paging-paging-common-ktx-version = "3.2.1"
 androidx-room-version = "2.6.0"
 androidx-test-core-ktx-version = "1.5.0"
 androidx-test-espresso-espresso-core-version = "3.5.1"
@@ -70,9 +69,7 @@ androidx-core-core-ktx = { module = "androidx.core:core-ktx", version.ref = "and
 androidx-core-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-core-splashscreen-version" }
 androidx-datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "androidx-datastore-datastore-version" }
 androidx-lifecycle-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-lifecycle-version" }
-androidx-lifecycle-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-lifecycle-version" }
-androidx-lifecycle-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle-lifecycle-version" }
-androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation-version" }
+androidx-paging-paging-common-ktx = { module = "androidx.paging:paging-common-ktx", version.ref = "androidx-paging-paging-common-ktx-version" }
 androidx-room-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room-version" }
 androidx-room-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room-version" }
 androidx-room-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room-version" }

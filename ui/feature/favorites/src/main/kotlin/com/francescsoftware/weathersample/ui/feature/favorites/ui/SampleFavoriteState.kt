@@ -89,7 +89,7 @@ private val LightRainHourForecast = ForecastHourState(
 
 internal val VancouverFavoriteCardState = FavoritesScreen.FavoriteCardState(
     city = FavoritesScreen.City(
-        favoriteId = 1,
+        cityId = 1L,
         name = "Vancouver",
         countryCode = "CA",
     ),
@@ -127,7 +127,7 @@ internal val VancouverFavoriteCardState = FavoritesScreen.FavoriteCardState(
 
 internal val BarcelonaFavoriteCardState = VancouverFavoriteCardState.copy(
     city = FavoritesScreen.City(
-        favoriteId = 2,
+        cityId = 2L,
         name = "Barcelona",
         countryCode = "ES",
     ),
@@ -135,8 +135,8 @@ internal val BarcelonaFavoriteCardState = VancouverFavoriteCardState.copy(
 
 internal val LondonFavoriteCardState = VancouverFavoriteCardState.copy(
     city = FavoritesScreen.City(
-        favoriteId = 3,
+        cityId = 3L,
         name = "London",
-        countryCode = "GB",
+        countryCode = "UK",
     ),
 )

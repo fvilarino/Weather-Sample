@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteFavoriteCityInteractor
-import com.francescsoftware.weathersample.domain.interactor.city.api.model.FavoriteCity
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.collectAsRetainedState
 import com.slack.circuit.runtime.presenter.Presenter
@@ -40,11 +39,7 @@ class FavoritesPresenter @Inject constructor(
     private suspend fun deleteFavorite(city: FavoritesScreen.City) {
         deleteFavoriteCityInteractor(
             DeleteFavoriteCityInteractor.Params(
-                FavoriteCity(
-                    id = city.favoriteId,
-                    name = city.name,
-                    countryCode = city.countryCode,
-                ),
+                city.cityId,
             ),
         )
     }

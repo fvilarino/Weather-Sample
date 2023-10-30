@@ -21,7 +21,7 @@ interface FavoriteRepository {
     /**
      * Deletes a [FavoriteCity] from storage
      *
-     * @param favoriteCity the [FavoriteCity] to delete
+     * @param cityId the ID of the city to delete
      */
-    suspend fun deleteFavoriteCity(favoriteCity: FavoriteCity)
+    suspend fun deleteFavoriteCity(cityId: Long)
 }

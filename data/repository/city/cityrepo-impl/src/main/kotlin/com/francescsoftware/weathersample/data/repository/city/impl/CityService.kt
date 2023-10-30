@@ -9,6 +9,7 @@ interface CityService {
     @GET("v1/geo/cities")
     suspend fun getCities(
         @Query("namePrefix") namePrefix: String?,
+        @Query("offset") offset: Int?,
         @Query("limit") limit: Int?,
     ): Response<CitySearchResponseModel>
 }

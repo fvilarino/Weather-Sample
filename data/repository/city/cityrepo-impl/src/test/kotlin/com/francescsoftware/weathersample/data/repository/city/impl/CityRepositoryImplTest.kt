@@ -19,6 +19,7 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import retrofit2.Retrofit
 
 private val ExpectedCities = listOf(
@@ -92,8 +93,7 @@ internal class CityRepositoryImplTest {
             dispatcherProvider = TestDispatcherProvider(),
         )
         val response = repository.getCities(prefix = "", limit = 10)
-        assertThat(response).isInstanceOf(Either.Success::class.java)
-        val cityList = (response as Either.Success).value.cities
+        val cityList = response.cities
         assertThat(cityList.size).isEqualTo(ExpectedCities.size)
         cityList.forEachIndexed { index, city ->
             assertThat(city).isEqualTo(ExpectedCities[index])
@@ -111,8 +111,7 @@ internal class CityRepositoryImplTest {
             cityService = service,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        val response = repository.getCities(prefix = "", limit = 10)
-        assertThat(response).isInstanceOf(Either.Failure::class.java)
+        assertThrows<CitiesException> { repository.getCities(prefix = "", limit = 10) }
     }
 
     @Test
@@ -126,9 +125,7 @@ internal class CityRepositoryImplTest {
             cityService = service,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        val response = repository.getCities(prefix = "", limit = 10)
-        assertThat(response).isInstanceOf<Either.Failure>()
-        assertThat(response.throwableOrNull()).isNotNull().isInstanceOf<CitiesException>()
+        assertThrows<CitiesException> { repository.getCities(prefix = "", limit = 10) }
     }
 
     @Test
@@ -142,8 +139,6 @@ internal class CityRepositoryImplTest {
             cityService = service,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        val response = repository.getCities(prefix = "", limit = 10)
-        assertThat(response).isInstanceOf<Either.Failure>()
-        assertThat(response.throwableOrNull()).isNotNull().isInstanceOf<CitiesException>()
+        assertThrows<CitiesException> { repository.getCities(prefix = "", limit = 10) }
     }
 }

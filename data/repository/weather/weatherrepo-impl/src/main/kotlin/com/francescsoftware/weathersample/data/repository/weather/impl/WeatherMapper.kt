@@ -163,6 +163,6 @@ internal fun AstroModel.toAstro(): Astro = Astro(
     sunset = sunset.orEmpty(),
     moonrise = moonrise.orEmpty(),
     moonset = moonset.orEmpty(),
-    moonIllumination = moonIllumination.orEmpty(),
+    moonIllumination = moonIllumination ?: 0.0,
     moonPhase = moonPhase.orEmpty(),
 )

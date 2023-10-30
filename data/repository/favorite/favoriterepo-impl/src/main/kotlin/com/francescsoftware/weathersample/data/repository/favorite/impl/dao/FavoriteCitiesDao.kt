@@ -1,7 +1,6 @@
 package com.francescsoftware.weathersample.data.repository.favorite.impl.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -15,6 +14,6 @@ interface FavoriteCitiesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavoriteCity(favoriteCityEntity: FavoriteCityEntity)
 
-    @Delete
-    suspend fun deleteFavoriteCity(favoriteCityEntity: FavoriteCityEntity)
+    @Query("DELETE FROM FavoriteCityEntity WHERE city_id = :cityId")
+    suspend fun deleteFavoriteCity(cityId: Long)
 }

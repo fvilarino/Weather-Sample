@@ -18,6 +18,7 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="refresh">Refresh</string>
+    <string name="loading_more">Loading more</string>
     <string name="test_tag_cities_search_box">cities_search_box</string>
     <string name="test_tag_cities_loading">cities_loading</string>
     <string name="test_tag_cities_result">cities_result</string>

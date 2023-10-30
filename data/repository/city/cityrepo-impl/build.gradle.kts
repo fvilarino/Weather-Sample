@@ -35,6 +35,7 @@ dependencies {
     implementation(project(":data:repository:city:cityrepo-api"))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
+    implementation(libs.androidx.paging.paging.common.ktx)
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.retrofit)
     testImplementation(libs.com.squareup.okhttp3.mockwebserver)

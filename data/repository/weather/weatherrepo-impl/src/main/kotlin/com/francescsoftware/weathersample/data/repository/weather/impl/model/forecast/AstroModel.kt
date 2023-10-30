@@ -10,7 +10,7 @@ data class AstroModel(
     val moonset: String? = null,
 
     @SerialName("moon_illumination")
-    val moonIllumination: String? = null,
+    val moonIllumination: Double? = null,
 
     @SerialName("sunrise")
     val sunrise: String? = null,

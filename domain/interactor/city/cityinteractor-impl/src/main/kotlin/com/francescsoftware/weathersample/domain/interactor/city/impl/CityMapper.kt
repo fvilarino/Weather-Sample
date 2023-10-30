@@ -39,13 +39,13 @@ internal fun RepoCoordinates.toCoordinates(): Coordinates = Coordinates(
 )
 
 internal fun RepoFavoriteCity.toFavoriteCity(): FavoriteCity = FavoriteCity(
-    id = id,
+    cityId = cityId,
     name = name,
     countryCode = countryCode,
 )
 
 internal fun FavoriteCity.toRepoFavoriteCity(): RepoFavoriteCity = RepoFavoriteCity(
-    id = id,
+    cityId = cityId,
     name = name,
     countryCode = countryCode,
 )

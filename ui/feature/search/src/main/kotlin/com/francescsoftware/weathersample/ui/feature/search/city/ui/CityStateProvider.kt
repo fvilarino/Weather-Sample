@@ -1,38 +1,41 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.francescsoftware.weathersample.ui.feature.search.city.model.CityResultModel
-import com.francescsoftware.weathersample.ui.feature.search.city.model.Coordinates
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
+import com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates
 
-internal val VancouverCityModel = CityResultModel(
+internal val VancouverCityModel = City(
     id = 1L,
-    favoriteId = 1,
     name = "Vancouver",
+    region = "British Columbia",
+    regionCode = "BC",
     country = "Canada",
     countryCode = "CA",
-    coordinates = Coordinates(latitude = 49.26f, longitude = -123.11f),
+    coordinates = Coordinates(latitude = 49.26, longitude = -123.11),
 )
 
-internal val BarcelonaCityModel = CityResultModel(
-    id = 2L,
-    favoriteId = -1,
+internal val BarcelonaCityModel = City(
+    id = -1L,
     name = "Barcelona",
+    region = "Catalunya",
+    regionCode = "CA",
     country = "Spain",
     countryCode = "ES",
-    coordinates = Coordinates(latitude = 41.39f, longitude = 2.17f),
+    coordinates = Coordinates(latitude = 41.39, longitude = 2.17),
 )
 
-internal val LondonCityModel = CityResultModel(
-    id = 3L,
-    favoriteId = -1,
+internal val LondonCityModel = City(
+    id = -1L,
     name = "London",
+    region = "London",
+    regionCode = "LO",
     country = "England",
     countryCode = "UK",
-    coordinates = Coordinates(latitude = 51.51f, longitude = -0.12f),
+    coordinates = Coordinates(latitude = 51.51, longitude = -0.12),
 )
 
-internal class CityStateProvider : PreviewParameterProvider<CityResultModel> {
-    override val values: Sequence<CityResultModel> = sequenceOf(
+internal class CityStateProvider : PreviewParameterProvider<City> {
+    override val values: Sequence<City> = sequenceOf(
         VancouverCityModel,
         BarcelonaCityModel,
         LondonCityModel,
