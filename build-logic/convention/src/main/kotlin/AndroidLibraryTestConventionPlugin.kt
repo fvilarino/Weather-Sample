@@ -22,7 +22,6 @@ class AndroidLibraryTestConventionPlugin : Plugin<Project> {
                     add("testImplementation", kotlin("test"))
                     add("testImplementation", catalog.findBundle("test").get())
                     add("androidTestImplementation", catalog.findBundle("android.test").get())
-                    add("testImplementation", project(":testing:fake"))
                 }
             }
         }

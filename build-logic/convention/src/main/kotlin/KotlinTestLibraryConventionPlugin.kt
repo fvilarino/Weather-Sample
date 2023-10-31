@@ -13,7 +13,6 @@ class KotlinTestLibraryConventionPlugin : Plugin<Project> {
             dependencies {
                 add("testCompileOnly", catalog.findLibrary("junit.junit").get())
                 add("testImplementation", catalog.findBundle("test").get())
-                add("testImplementation", project(":testing:fake"))
             }
             tasks.named<Test>("test") {
                 useJUnitPlatform()
