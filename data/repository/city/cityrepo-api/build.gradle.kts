@@ -6,4 +6,5 @@ plugins {
 dependencies {
     implementation(project(":core:type:either"))
     implementation(libs.androidx.paging.paging.common.ktx)
+    testFixturesImplementation(libs.app.cash.turbine.turbine)
 }
