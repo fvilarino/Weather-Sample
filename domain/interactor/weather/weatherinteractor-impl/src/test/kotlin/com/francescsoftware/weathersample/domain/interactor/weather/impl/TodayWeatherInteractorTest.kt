@@ -17,6 +17,7 @@ import com.francescsoftware.weathersample.core.type.weather.Pressure
 import com.francescsoftware.weathersample.core.type.weather.Speed
 import com.francescsoftware.weathersample.core.type.weather.Temperature
 import com.francescsoftware.weathersample.core.type.weather.UvIndex
+import com.francescsoftware.weathersample.data.repository.weather.api.FakeWeatherRepository
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Condition
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Current
 import com.francescsoftware.weathersample.data.repository.weather.api.model.Location

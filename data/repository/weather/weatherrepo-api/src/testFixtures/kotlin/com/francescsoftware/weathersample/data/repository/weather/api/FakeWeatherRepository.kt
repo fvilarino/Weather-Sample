@@ -1,13 +1,10 @@
-package com.francescsoftware.weathersample.domain.interactor.weather.impl
+package com.francescsoftware.weathersample.data.repository.weather.api
 
 import com.francescsoftware.weathersample.core.type.either.Either
-import com.francescsoftware.weathersample.data.repository.weather.api.WeatherException
-import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation
-import com.francescsoftware.weathersample.data.repository.weather.api.WeatherRepository
 import com.francescsoftware.weathersample.data.repository.weather.api.model.forecast.ForecastResponse
 import com.francescsoftware.weathersample.data.repository.weather.api.model.today.TodayWeatherResponse
 
-internal class FakeWeatherRepository : WeatherRepository {
+class FakeWeatherRepository : WeatherRepository {
     var todayResponse: TodayWeatherResponse? = null
     var forecastResponse: ForecastResponse? = null
     var networkError: Boolean = false
