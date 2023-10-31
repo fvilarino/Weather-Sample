@@ -1,6 +1,5 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,15 +20,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.francescsoftware.weathersample.ui.feature.favorites.R
 import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
@@ -43,11 +44,8 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import dev.chrisbanes.haze.haze
 import kotlinx.collections.immutable.ImmutableList
-
-private const val GradientStart = 0f
-private const val GradientEnd = 1f
-private const val GradientMidPoint = (GradientEnd - GradientStart) / 2f
 
 @Immutable
 internal data class FavoriteCardState(
@@ -76,10 +74,13 @@ internal fun FavoritePage(
     modifier: Modifier = Modifier,
 ) {
     val density = LocalDensity.current
-    var offset by rememberSaveable {
-        mutableIntStateOf(0)
+    var headerWidth by rememberSaveable {
+        mutableFloatStateOf(0f)
     }
-    val offsetDp = with(density) { offset.toDp() }
+    var headerHeight by rememberSaveable {
+        mutableFloatStateOf(0f)
+    }
+    val headerHeightDp = with(density) { headerHeight.toDp() }
     Box(
         modifier = modifier,
     ) {
@@ -91,25 +92,31 @@ internal fun FavoritePage(
             },
             modifier = Modifier
                 .onPlaced {
-                    offset = it.size.height
+                    headerWidth = it.size.width.toFloat()
+                    headerHeight = it.size.height.toFloat()
                 }
-                .zIndex(1f)
                 .fillMaxWidth()
-                .background(
-                    brush = Brush.verticalGradient(
-                        GradientStart to MaterialTheme.colorScheme.surface,
-                        GradientMidPoint to MaterialTheme.colorScheme.surface,
-                        GradientEnd to Color.Transparent,
-                    ),
-                )
-                .padding(bottom = MarginQuad),
+                .padding(bottom = MarginQuad)
+                .zIndex(1f),
         )
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .haze(
+                    Rect(
+                        left = 0f,
+                        top = 0f,
+                        right = headerWidth,
+                        bottom = headerHeight,
+                    ),
+                    backgroundColor = MaterialTheme.colorScheme.surface,
+                    tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
+                    blurRadius = 16.dp,
+                ),
             verticalArrangement = Arrangement.spacedBy(MarginDouble),
             contentPadding = WindowInsets.safeDrawing.only(
                 WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal,
-            ).asPaddingValues() + PaddingValues(top = offsetDp, bottom = MarginDouble),
+            ).asPaddingValues() + PaddingValues(top = headerHeightDp, bottom = MarginDouble),
         ) {
             item(
                 key = "divider1",
@@ -124,7 +131,7 @@ internal fun FavoritePage(
                 key = "current_label",
             ) {
                 WeatherLabel(
-                    label = "Current Weather",
+                    label = stringResource(R.string.current_weather),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -149,7 +156,7 @@ internal fun FavoritePage(
                 key = "forecast_label",
             ) {
                 WeatherLabel(
-                    label = "Forecast",
+                    label = stringResource(R.string.forecast),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
