@@ -6,6 +6,7 @@ import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
 import assertk.assertions.isTrue
 import com.francescsoftware.weathersample.core.dispatcher.TestDispatcherProvider
+import com.francescsoftware.weathersample.core.time.api.FakeTimeProvider
 import com.francescsoftware.weathersample.core.time.api.Iso8601DateTime
 import com.francescsoftware.weathersample.core.time.api.TimeProvider
 import com.francescsoftware.weathersample.core.type.either.isFailure
@@ -33,7 +34,6 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Cu
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Forecast
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastDay
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.ForecastEntry
-import com.francescsoftware.weathersample.testing.fake.time.FakeTimeProvider
 import com.francescsoftware.weathersample.testing.fake.time.FakeZoneIdProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

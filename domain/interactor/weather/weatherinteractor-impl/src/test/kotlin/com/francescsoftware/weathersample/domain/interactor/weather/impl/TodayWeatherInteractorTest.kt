@@ -5,6 +5,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
 import assertk.assertions.isTrue
+import com.francescsoftware.weathersample.core.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.core.type.either.isFailure
 import com.francescsoftware.weathersample.core.type.either.isSuccess
 import com.francescsoftware.weathersample.core.type.either.throwableOrNull
@@ -27,7 +28,6 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.To
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayMain
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayWeather
 import com.francescsoftware.weathersample.domain.interactor.weather.api.model.TodayWind
-import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
