@@ -1,6 +1,5 @@
-package com.francescsoftware.weathersample.testing.fake.time
+package com.francescsoftware.weathersample.core.time.api
 
-import com.francescsoftware.weathersample.core.time.api.ZoneIdProvider
 import java.time.ZoneId
 
 /** An implementation of [ZoneIdProvider] to be used in tests */
