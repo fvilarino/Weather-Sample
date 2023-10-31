@@ -198,7 +198,7 @@ internal class ForecastWeatherInteractorTest {
             sunset = Sunset,
             moonrise = "",
             moonset = "",
-            moonIllumination = "",
+            moonIllumination = 0.0,
             moonPhase = "",
         ),
         hour = listOf(
