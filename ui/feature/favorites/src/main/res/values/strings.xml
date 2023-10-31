@@ -5,4 +5,6 @@
     <string name="content_description_delete_favorite">Delete favorite</string>
     <string name="no_favorites_available">No favorites available</string>
     <string name="favorites_load_error">We could not load the favorites</string>
+    <string name="current_weather">Current Weather</string>
+    <string name="forecast">Forecast</string>
 </resources>
