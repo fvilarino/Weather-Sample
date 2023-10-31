@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":data:repository:recents:recentsrepo-api"))
     implementation(project(":domain:interactor:city:cityinteractor-api"))
     testImplementation(testFixtures(project(":core:dispatcher")))
+    testImplementation(testFixtures(project(":data:repository:city:cityrepo-api")))
 
     implementation(libs.bundles.coroutines)
     implementation(libs.androidx.paging.paging.common.ktx)
