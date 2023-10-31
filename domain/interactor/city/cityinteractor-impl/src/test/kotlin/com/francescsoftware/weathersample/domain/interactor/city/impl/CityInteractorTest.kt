@@ -65,7 +65,7 @@ class CityInteractorTest {
     @Test
     fun `interactor maps network data to interactor city data`() = runTest {
         // pre
-        val repository = FakeCityRepository().apply { cities = citiesResponse }
+        val repository = FakeCityRepository().apply { cityList.add(citiesResponse) }
         val interactor = GetCitiesInteractorImpl(repository, TestDispatcherProvider())
 
         // when we execute the interactor query
@@ -79,7 +79,7 @@ class CityInteractorTest {
 
     @Test
     fun `interactor maps network error to interactor error`() = runTest {
-        val repository = FakeCityRepository().apply { isNetworkError = true }
+        val repository = FakeCityRepository().apply { cityList.add(null) }
         val interactor = GetCitiesInteractorImpl(repository, TestDispatcherProvider())
 
         // when we execute the interactor query
