@@ -11,6 +11,9 @@ dependencies {
     implementation(project(":core:type:weather"))
     implementation(project(":data:repository:weather:weatherrepo-api"))
     implementation(project(":domain:interactor:weather:weatherinteractor-api"))
+    testImplementation(testFixtures(project(":core:dispatcher")))
+    testImplementation(testFixtures(project(":core:time:time-api")))
+    testImplementation(testFixtures(project(":data:repository:weather:weatherrepo-api")))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }

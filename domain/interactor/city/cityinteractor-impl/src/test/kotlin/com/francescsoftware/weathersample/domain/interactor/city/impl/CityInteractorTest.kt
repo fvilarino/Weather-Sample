@@ -5,22 +5,19 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
 import assertk.assertions.isTrue
+import com.francescsoftware.weathersample.core.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.core.type.either.isFailure
 import com.francescsoftware.weathersample.core.type.either.isSuccess
 import com.francescsoftware.weathersample.core.type.either.throwableOrNull
 import com.francescsoftware.weathersample.core.type.either.valueOrNull
-import com.francescsoftware.weathersample.data.repository.city.api.CityRepository
+import com.francescsoftware.weathersample.data.repository.city.api.FakeCityRepository
 import com.francescsoftware.weathersample.data.repository.city.api.model.City
-import com.francescsoftware.weathersample.data.repository.city.api.model.CitySearchResponse
 import com.francescsoftware.weathersample.data.repository.city.api.model.Coordinates
-import com.francescsoftware.weathersample.data.repository.city.api.model.Metadata
 import com.francescsoftware.weathersample.domain.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.domain.interactor.city.api.GetCitiesInteractor
-import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
-import com.francescsoftware.weathersample.data.repository.city.api.CitiesException as RepoException
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.City as DomainCity
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates as DomainCoordinates
 
@@ -64,21 +61,6 @@ class CityInteractorTest {
                 longitude = CityLongitude,
             ),
         )
-
-    private class FakeCityRepository : CityRepository {
-        var cities: List<City> = emptyList()
-        var isNetworkError: Boolean = false
-
-        override suspend fun getCities(prefix: String, offset: Int, limit: Int): CitySearchResponse =
-            if (isNetworkError) {
-                throw RepoException(message = "Failed to load cities")
-            } else {
-                CitySearchResponse(
-                    metadata = Metadata(0, 0),
-                    cities = cities,
-                )
-            }
-    }
 
     @Test
     fun `interactor maps network data to interactor city data`() = runTest {
