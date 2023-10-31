@@ -3,7 +3,6 @@ package com.francescsoftware.weathersample.ui.feature.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -69,7 +68,8 @@ internal val navigationDestinations = persistentListOf(
     SettingsDestination,
 )
 
-@OptIn(ExperimentalLayoutApi::class)
+private const val BackgroundGradientStart = .33f
+
 @Composable
 internal fun WeatherApp(
     connectivityMonitor: ConnectivityMonitor,
@@ -229,10 +229,8 @@ private fun AppBackground(
         modifier = modifier
             .background(
                 Brush.verticalGradient(
-                    listOf(
-                        MaterialTheme.colorScheme.surface,
-                        MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp),
-                    ),
+                    BackgroundGradientStart to MaterialTheme.colorScheme.surface,
+                    1f to MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp),
                 ),
             ),
     ) {
