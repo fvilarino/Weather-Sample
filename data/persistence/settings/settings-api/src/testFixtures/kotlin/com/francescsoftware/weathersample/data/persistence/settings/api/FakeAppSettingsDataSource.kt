@@ -1,11 +1,8 @@
-package com.francescsoftware.weathersample.domain.preferences.preferencesinteractor.impl
+package com.francescsoftware.weathersample.data.persistence.settings.api
 
-import com.francescsoftware.weathersample.data.persistence.settings.api.AppSettings
-import com.francescsoftware.weathersample.data.persistence.settings.api.AppSettingsDataSource
-import com.francescsoftware.weathersample.data.persistence.settings.api.AppTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 
-internal class FakeAppSettingsDataSource : AppSettingsDataSource {
+class FakeAppSettingsDataSource : AppSettingsDataSource {
 
     override val settings = MutableStateFlow(
         AppSettings(

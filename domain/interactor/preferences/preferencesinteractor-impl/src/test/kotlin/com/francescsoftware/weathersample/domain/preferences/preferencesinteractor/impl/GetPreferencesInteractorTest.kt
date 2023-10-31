@@ -5,6 +5,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isTrue
 import com.francescsoftware.weathersample.data.persistence.settings.api.AppTheme
+import com.francescsoftware.weathersample.data.persistence.settings.api.FakeAppSettingsDataSource
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
