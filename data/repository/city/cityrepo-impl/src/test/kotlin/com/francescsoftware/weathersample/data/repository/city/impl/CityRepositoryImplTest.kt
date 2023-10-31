@@ -2,14 +2,10 @@ package com.francescsoftware.weathersample.data.repository.city.impl
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import assertk.assertions.isInstanceOf
-import assertk.assertions.isNotNull
-import com.francescsoftware.weathersample.core.type.either.Either
-import com.francescsoftware.weathersample.core.type.either.throwableOrNull
+import com.francescsoftware.weathersample.core.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.data.repository.city.api.CitiesException
 import com.francescsoftware.weathersample.data.repository.city.api.model.City
 import com.francescsoftware.weathersample.data.repository.city.api.model.Coordinates
-import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json

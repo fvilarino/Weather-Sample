@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:type:either"))
     implementation(project(":data:repository:weather:weatherrepo-api"))
+    testImplementation(testFixtures(project(":core:dispatcher")))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.bundles.okhttp)

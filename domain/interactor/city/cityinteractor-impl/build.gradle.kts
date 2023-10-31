@@ -12,6 +12,8 @@ dependencies {
     implementation(project(":data:repository:favorite:favoriterepo-api"))
     implementation(project(":data:repository:recents:recentsrepo-api"))
     implementation(project(":domain:interactor:city:cityinteractor-api"))
+    testImplementation(testFixtures(project(":core:dispatcher")))
+
     implementation(libs.bundles.coroutines)
     implementation(libs.androidx.paging.paging.common.ktx)
 }

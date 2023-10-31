@@ -4,10 +4,10 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotNull
+import com.francescsoftware.weathersample.core.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.data.repository.weather.api.model.today.TodayWeatherResponse
-import com.francescsoftware.weathersample.testing.fake.dispatcher.TestDispatcherProvider
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
