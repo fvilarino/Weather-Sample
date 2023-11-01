@@ -20,18 +20,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.favorites.R
 import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
+import com.francescsoftware.weathersample.ui.shared.composable.common.extension.toRect
+import com.francescsoftware.weathersample.ui.shared.composable.common.saver.intSizeSaver
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeader
@@ -40,7 +42,6 @@ import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastH
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastWeather
 import com.francescsoftware.weathersample.ui.shared.composable.weather.TodayWeatherCard
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
-import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
@@ -74,13 +75,12 @@ internal fun FavoritePage(
     modifier: Modifier = Modifier,
 ) {
     val density = LocalDensity.current
-    var headerWidth by rememberSaveable {
-        mutableFloatStateOf(0f)
+    var headerSize: IntSize by rememberSaveable(
+        stateSaver = intSizeSaver(),
+    ) {
+        mutableStateOf(IntSize.Zero)
     }
-    var headerHeight by rememberSaveable {
-        mutableFloatStateOf(0f)
-    }
-    val headerHeightDp = with(density) { headerHeight.toDp() }
+    val headerHeightDp = with(density) { headerSize.height.toDp() }
     Box(
         modifier = modifier,
     ) {
@@ -92,23 +92,17 @@ internal fun FavoritePage(
             },
             modifier = Modifier
                 .onPlaced {
-                    headerWidth = it.size.width.toFloat()
-                    headerHeight = it.size.height.toFloat()
+                    headerSize = it.size
                 }
                 .fillMaxWidth()
-                .padding(bottom = MarginQuad)
+                .padding(vertical = MarginDouble)
                 .zIndex(1f),
         )
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .haze(
-                    Rect(
-                        left = 0f,
-                        top = 0f,
-                        right = headerWidth,
-                        bottom = headerHeight,
-                    ),
+                    headerSize.toRect(),
                     backgroundColor = MaterialTheme.colorScheme.surface,
                     tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
                     blurRadius = 16.dp,
