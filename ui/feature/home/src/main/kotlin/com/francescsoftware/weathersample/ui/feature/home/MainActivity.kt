@@ -22,8 +22,6 @@ import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.overlay.rememberOverlayHost
-import com.slack.circuit.retained.LocalRetainedStateRegistry
-import com.slack.circuit.retained.continuityRetainedStateRegistry
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -81,7 +79,6 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     CompositionLocalProvider(
                         LocalWindowSizeClass provides calculateWindowSizeClass(this),
-                        LocalRetainedStateRegistry provides continuityRetainedStateRegistry(),
                     ) {
                         WeatherApp(
                             connectivityMonitor = connectivityMonitor,
