@@ -57,7 +57,7 @@ Within a layer modules are split into a public API module and a private implemen
 * AAC Navigation
 * MVI
 
-https://github.com/fvilarino/Weather-Sample/assets/2680481/67d9828c-a02d-4eec-8e49-db7bab7563d1
+https://github.com/fvilarino/Weather-Sample/assets/2680481/55667d9f-6997-41d0-836f-78f46119dc5d
 
 ## License
 
