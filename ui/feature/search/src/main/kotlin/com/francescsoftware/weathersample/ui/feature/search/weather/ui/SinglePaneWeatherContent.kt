@@ -24,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
@@ -36,6 +35,7 @@ import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
+import com.francescsoftware.weathersample.ui.shared.composable.common.extension.toRect
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.MultiSelector
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
@@ -128,12 +128,7 @@ internal fun SinglePaneWeatherContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .haze(
-                            Rect(
-                                left = 0f,
-                                top = 0f,
-                                right = headerSize.width.toFloat(),
-                                bottom = headerSize.height.toFloat(),
-                            ),
+                            headerSize.toRect(),
                             backgroundColor = MaterialTheme.colorScheme.surface,
                             tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
                             blurRadius = 16.dp,
