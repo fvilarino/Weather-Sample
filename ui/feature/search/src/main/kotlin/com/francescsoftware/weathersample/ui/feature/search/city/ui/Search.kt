@@ -24,17 +24,22 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -42,7 +47,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
@@ -53,6 +60,8 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCit
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.isExpanded
+import com.francescsoftware.weathersample.ui.shared.composable.common.extension.toRect
+import com.francescsoftware.weathersample.ui.shared.composable.common.saver.intSizeSaver
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.GenericMessage
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.PanesOrientation
@@ -61,6 +70,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.slack.circuit.codegen.annotations.CircuitInject
+import dev.chrisbanes.haze.haze
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.coroutines.flow.launchIn
@@ -92,7 +102,6 @@ internal fun Search(
 }
 
 @Composable
-@OptIn(ExperimentalComposeUiApi::class)
 internal fun CityScreen(
     cities: LazyPagingItems<City>,
     favoriteCities: ImmutableSet<Long>,
@@ -118,7 +127,15 @@ internal fun CityScreen(
     }
 
     if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-        Column(modifier = modifier) {
+        var headerSize: IntSize by rememberSaveable(
+            stateSaver = intSizeSaver(),
+        ) {
+            mutableStateOf(IntSize.Zero)
+        }
+        val headerHeightDp = with(LocalDensity.current) { headerSize.height.toDp() }
+        Box(
+            modifier = modifier,
+        ) {
             CityPane(
                 recentCities = recentCities,
                 stateHolder = stateHolder,
@@ -129,6 +146,10 @@ internal fun CityScreen(
                 },
                 onDeleteChip = onDeleteChip,
                 modifier = Modifier
+                    .onPlaced {
+                        headerSize = it.size
+                    }
+                    .zIndex(1f)
                     .fillMaxWidth()
                     .padding(horizontal = MarginDouble),
             )
@@ -140,8 +161,19 @@ internal fun CityScreen(
                 onFavoriteClick = onFavoriteClick,
                 onRetryClick = onRetryClick,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
+                    .haze(
+                        headerSize.toRect(),
+                        backgroundColor = MaterialTheme.colorScheme.surface,
+                        tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
+                        blurRadius = 16.dp,
+                    )
+                    .fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = MarginDouble,
+                    top = MarginDouble + headerHeightDp,
+                    end = MarginDouble,
+                    bottom = MarginDouble,
+                ),
             )
         }
     } else {
@@ -246,6 +278,7 @@ private fun Cities(
     onFavoriteClick: (City) -> Unit,
     onRetryClick: () -> Unit,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(all = 0.dp),
 ) {
     val citiesLoading = stringResource(id = R.string.test_tag_cities_loading)
     val citiesResults = stringResource(id = R.string.test_tag_cities_result)
@@ -276,6 +309,7 @@ private fun Cities(
             if (refreshing) {
                 ProgressIndicator(
                     modifier = Modifier
+                        .padding(contentPadding)
                         .semantics { testTag = citiesLoading }
                         .fillMaxSize(),
                 )
@@ -284,7 +318,7 @@ private fun Cities(
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(MinColumnWidth),
                     state = listState,
-                    contentPadding = PaddingValues(all = MarginDouble),
+                    contentPadding = contentPadding,
                     horizontalArrangement = Arrangement.spacedBy(MarginDouble),
                     verticalArrangement = Arrangement.spacedBy(MarginDouble),
                     modifier = Modifier.fillMaxSize(),
