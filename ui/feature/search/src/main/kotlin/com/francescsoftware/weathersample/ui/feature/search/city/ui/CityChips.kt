@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -45,6 +46,7 @@ internal fun CityChips(
         if (singleLine) {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(MarginDouble),
+                contentPadding = PaddingValues(horizontal = MarginDouble),
                 modifier = Modifier.semantics { testTag = cityChipsContainerTestTag },
             ) {
                 items(

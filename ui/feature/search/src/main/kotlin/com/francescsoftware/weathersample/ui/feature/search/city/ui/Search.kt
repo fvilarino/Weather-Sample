@@ -150,8 +150,7 @@ internal fun CityScreen(
                         headerSize = it.size
                     }
                     .zIndex(1f)
-                    .fillMaxWidth()
-                    .padding(horizontal = MarginDouble),
+                    .fillMaxWidth(),
             )
             Cities(
                 cities = cities,
