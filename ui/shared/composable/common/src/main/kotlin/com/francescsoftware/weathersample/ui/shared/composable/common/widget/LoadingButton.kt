@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginHalf
@@ -48,6 +49,7 @@ import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 /**
  * Animation type
@@ -78,7 +80,7 @@ enum class AnimationType {
 }
 
 private const val NumIndicators = 3
-private const val IndicatorSize = 12
+private const val IndicatorSize = 12f
 private const val MinIndicatorAlpha = .2f
 private const val BounceAnimationDurationMillis = 300
 private const val FadeAnimationDurationMillis = 600
@@ -168,15 +170,19 @@ private val AnimationType.animationDelay: Int
 
 private val AnimationType.initialValue: Float
     get() = when (this) {
-        AnimationType.Bounce -> IndicatorSize / 2f
-        AnimationType.LazyBounce -> -IndicatorSize / 2f
+        AnimationType.Bounce,
+        AnimationType.LazyBounce,
+        -> -IndicatorSize
+
         AnimationType.Fade -> 1f
     }
 
 private val AnimationType.targetValue: Float
     get() = when (this) {
-        AnimationType.Bounce -> -IndicatorSize / 2f
-        AnimationType.LazyBounce -> IndicatorSize / 2f
+        AnimationType.Bounce,
+        AnimationType.LazyBounce,
+        -> IndicatorSize
+
         AnimationType.Fade -> MinIndicatorAlpha
     }
 
@@ -290,11 +296,15 @@ fun LoadingIndicator(
                         when (animationType) {
                             AnimationType.Bounce,
                             AnimationType.LazyBounce,
-                            -> Modifier.offset(
-                                y = state[index].coerceAtMost(
-                                    IndicatorSize / 2f,
-                                ).dp,
-                            )
+                            -> Modifier
+                                .offset {
+                                    IntOffset(
+                                        x = 0,
+                                        y = state[index]
+                                            .coerceAtMost(IndicatorSize)
+                                            .roundToInt(),
+                                    )
+                                }
 
                             AnimationType.Fade -> Modifier.graphicsLayer { alpha = state[index] }
                         },
