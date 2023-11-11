@@ -49,13 +49,12 @@ Within a layer modules are split into a public API module and a private implemen
 
 * Kotlin
 * Coroutines & Flows
-* Dependency Injection (Dagger + Anvil)
-* Retrofit
-* Room
 * Jetpack Compose
-* AAC Viewmodels
-* AAC Navigation
-* MVI
+* Dependency Injection (Dagger + Anvil)
+* Circuit
+* Room
+* Protobuf Datastore
+* Retrofit
 
 https://github.com/fvilarino/Weather-Sample/assets/2680481/55667d9f-6997-41d0-836f-78f46119dc5d
 
