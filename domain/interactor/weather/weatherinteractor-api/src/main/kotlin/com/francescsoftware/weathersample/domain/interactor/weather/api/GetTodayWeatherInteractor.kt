@@ -7,5 +7,10 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.To
 /** Gets the current weather */
 interface GetTodayWeatherInteractor : Interactor<GetTodayWeatherInteractor.Params, Either<TodayWeather>> {
 
+    /**
+     * Configuration parameters for the [GetTodayWeatherInteractor]
+     *
+     * @property location the [WeatherLocation] for the current weather
+     */
     data class Params(val location: WeatherLocation)
 }

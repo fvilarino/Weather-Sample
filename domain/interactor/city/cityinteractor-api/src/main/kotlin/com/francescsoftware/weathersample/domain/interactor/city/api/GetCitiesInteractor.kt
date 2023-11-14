@@ -8,7 +8,7 @@ import com.francescsoftware.weathersample.domain.interactor.foundation.Interacto
 interface GetCitiesInteractor : Interactor<GetCitiesInteractor.Params, Either<Cities>> {
 
     /**
-     * Interactor parameters
+     * Configuration parameters for [GetCitiesInteractor]
      *
      * @param prefix prefix to filter cities
      * @param limit max number of results to return
