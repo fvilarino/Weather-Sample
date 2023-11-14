@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.domain.preferences.preferencesinterac
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import com.francescsoftware.weathersample.data.persistence.settings.api.FakeAppSettingsDataSource
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.AppTheme
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
