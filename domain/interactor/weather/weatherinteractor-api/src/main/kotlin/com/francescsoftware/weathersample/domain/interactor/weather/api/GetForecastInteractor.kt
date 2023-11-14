@@ -7,5 +7,10 @@ import com.francescsoftware.weathersample.domain.interactor.weather.api.model.Fo
 /** Gets the forecast for the [WeatherLocation] */
 interface GetForecastInteractor : Interactor<GetForecastInteractor.Params, Either<Forecast>> {
 
+    /**
+     * [GetForecastInteractor] configuration parameters
+     *
+     * @property location [WeatherLocation] for the weather forecast
+     */
     data class Params(val location: WeatherLocation)
 }

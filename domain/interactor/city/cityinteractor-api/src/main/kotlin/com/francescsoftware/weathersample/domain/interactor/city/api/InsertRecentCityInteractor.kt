@@ -5,5 +5,10 @@ import com.francescsoftware.weathersample.domain.interactor.foundation.Interacto
 /** Stores a [RecentCity] in persistent memory */
 interface InsertRecentCityInteractor : Interactor<InsertRecentCityInteractor.Params, Unit> {
 
+    /**
+     * Configuration parameters for [InsertRecentCityInteractor]
+     *
+     * @property city the [RecentCity] to store
+     */
     data class Params(val city: RecentCity)
 }
