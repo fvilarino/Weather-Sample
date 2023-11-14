@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.settings.presenter
 
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.AppTheme
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 object SettingsScreen : Screen {
-    @Immutable
+    @Stable
     data class State(
         val theme: AppTheme,
         val dynamicColors: Boolean,

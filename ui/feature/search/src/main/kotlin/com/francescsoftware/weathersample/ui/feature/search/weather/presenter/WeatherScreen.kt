@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.ui.feature.search.weather.presenter
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
@@ -34,7 +35,7 @@ data class WeatherScreen(
         ) : Weather
     }
 
-    @Immutable
+    @Stable
     data class State(
         val weather: Weather,
         val refreshing: Boolean,
