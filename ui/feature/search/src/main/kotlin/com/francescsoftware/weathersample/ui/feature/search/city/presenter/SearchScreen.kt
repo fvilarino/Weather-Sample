@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.presenter
 
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.paging.compose.LazyPagingItems
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
@@ -16,7 +16,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 object SearchScreen : Screen {
 
-    @Immutable
+    @Stable
     data class State(
         val showResults: Boolean,
         val cities: LazyPagingItems<City>,
