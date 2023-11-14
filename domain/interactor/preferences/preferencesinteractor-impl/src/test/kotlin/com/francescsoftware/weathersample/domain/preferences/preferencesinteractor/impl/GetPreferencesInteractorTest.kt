@@ -7,16 +7,16 @@ import assertk.assertions.isTrue
 import com.francescsoftware.weathersample.data.persistence.settings.api.AppTheme
 import com.francescsoftware.weathersample.data.persistence.settings.api.FakeAppSettingsDataSource
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
-import javax.inject.Named
 
 internal class GetPreferencesInteractorTest {
 
     private val fakeDataSource = FakeAppSettingsDataSource()
     private val getPreferencesInteractor = GetPreferencesInteractorImpl(fakeDataSource)
 
-    @Named("Interactor maps data source objects to domain objects")
+    @DisplayName("Interactor maps data source objects to domain objects")
     @ParameterizedTest
     @EnumSource(AppTheme::class)
     fun interactorMapping(

@@ -6,9 +6,9 @@ import com.francescsoftware.weathersample.data.persistence.settings.api.FakeAppS
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.AppTheme
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
-import javax.inject.Named
 import com.francescsoftware.weathersample.data.persistence.settings.api.AppTheme as DataAppTheme
 
 internal class SetAppThemeInteractorTest {
@@ -16,7 +16,7 @@ internal class SetAppThemeInteractorTest {
     private val fakeDataSource = FakeAppSettingsDataSource()
     private val setAppThemeInteractor = SetAppThemeInteractorImpl(fakeDataSource)
 
-    @Named("Interactor sets app theme")
+    @DisplayName("Interactor sets app theme")
     @ParameterizedTest
     @EnumSource(AppTheme::class)
     fun interactorSetsAppTheme(

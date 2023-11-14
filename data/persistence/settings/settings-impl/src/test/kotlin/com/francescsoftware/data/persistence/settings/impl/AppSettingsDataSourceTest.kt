@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import javax.inject.Named
 
 internal class AppSettingsDataSourceTest {
 
@@ -50,7 +50,7 @@ internal class AppSettingsDataSourceTest {
     }
 
     @Test
-    @Named("Data source returns expected defaults")
+    @DisplayName("Data source returns expected defaults")
     fun dataSourceReturnsDefaults() = runTest {
         appSettingsDataSource.settings.test {
             val item = awaitItem()
@@ -60,7 +60,7 @@ internal class AppSettingsDataSourceTest {
     }
 
     @Test
-    @Named("Data source persists app theme")
+    @DisplayName("Data source persists app theme")
     fun dataSourcePersistsTheme() = runTest {
         appSettingsDataSource.settings.test {
             skipItems(1)
@@ -77,7 +77,7 @@ internal class AppSettingsDataSourceTest {
     }
 
     @Test
-    @Named("Data source persists dynamic colors")
+    @DisplayName("Data source persists dynamic colors")
     fun dataSourcePersistsDynamicColors() = runTest {
         appSettingsDataSource.settings.test {
             skipItems(1)
