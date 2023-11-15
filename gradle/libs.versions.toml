@@ -1,7 +1,7 @@
 [versions]
 androidx-activity-compose-version = "1.8.0"
 androidx-arch-core-testing-version = "2.2.0"
-androidx-benchmark-macro-junit4-version = "1.2.0"
+androidx-benchmark-macro-junit4-version = "1.2.1"
 androidx-compose-animation-version = "1.6.0-beta01"
 androidx-compose-bom-version = "2023.10.01"
 androidx-compose-compiler-version = "1.5.4"
