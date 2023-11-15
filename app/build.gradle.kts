@@ -59,6 +59,10 @@ android {
             isDebuggable = false
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 fun loadSigningProperties(file: File) =
@@ -77,6 +81,7 @@ dependencies {
     implementation(project(":core:time:time-impl"))
     implementation(project(":core:type:either"))
     implementation(project(":core:type:weather"))
+
     implementation(project(":data:persistence:settings:settings-api"))
     implementation(project(":data:persistence:settings:settings-impl"))
     implementation(project(":data:repository:city:cityrepo-api"))
@@ -87,6 +92,7 @@ dependencies {
     implementation(project(":data:repository:recents:recentsrepo-impl"))
     implementation(project(":data:repository:weather:weatherrepo-api"))
     implementation(project(":data:repository:weather:weatherrepo-impl"))
+
     implementation(project(":domain:interactor:city:cityinteractor-api"))
     implementation(project(":domain:interactor:city:cityinteractor-impl"))
     implementation(project(":domain:interactor:foundation"))
