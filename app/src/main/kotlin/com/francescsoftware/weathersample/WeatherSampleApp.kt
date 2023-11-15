@@ -12,7 +12,9 @@ class WeatherSampleApp : Application(), ActivityComponentFactoryProvider {
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerApplicationComponent.factory().create(this)
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 
     override fun getActivityComponentFactory(): ActivityComponent.Factory = appComponent.getActivityComponentFactory()
