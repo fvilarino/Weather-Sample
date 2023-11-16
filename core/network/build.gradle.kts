@@ -7,6 +7,9 @@ plugins {
 
 android {
     namespace = "com.francescsoftware.weathersample.core.network"
+    buildFeatures {
+        androidResources = false
+    }
 }
 
 dependencies {

@@ -7,6 +7,9 @@ plugins {
 
 android {
     namespace = "com.francescsoftware.weathersample.data.persistence.settings.impl"
+    buildFeatures {
+        androidResources = false
+    }
 }
 
 dependencies {
