@@ -1,8 +1,8 @@
 package com.francescsoftware.weathersample.data.repository.city.impl
 
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.data.repository.city.api.model.City
 import com.francescsoftware.weathersample.data.repository.city.api.model.CitySearchResponse
-import com.francescsoftware.weathersample.data.repository.city.api.model.Coordinates
 import com.francescsoftware.weathersample.data.repository.city.api.model.Metadata
 import com.francescsoftware.weathersample.data.repository.city.impl.model.CityModel
 import com.francescsoftware.weathersample.data.repository.city.impl.model.CitySearchResponseModel

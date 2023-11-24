@@ -36,7 +36,6 @@ android {
 dependencies {
     implementation(project(":core:dispatcher"))
     implementation(project(":core:network"))
-    implementation(project(":core:type:either"))
     implementation(project(":data:repository:weather:weatherrepo-api"))
     testImplementation(testFixtures(project(":core:dispatcher")))
 

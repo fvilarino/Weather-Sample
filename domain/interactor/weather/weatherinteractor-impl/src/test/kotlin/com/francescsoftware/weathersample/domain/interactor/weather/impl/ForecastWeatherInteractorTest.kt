@@ -14,6 +14,7 @@ import com.francescsoftware.weathersample.core.type.either.isFailure
 import com.francescsoftware.weathersample.core.type.either.isSuccess
 import com.francescsoftware.weathersample.core.type.either.throwableOrNull
 import com.francescsoftware.weathersample.core.type.either.valueOrNull
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
 import com.francescsoftware.weathersample.core.type.weather.Humidity
 import com.francescsoftware.weathersample.core.type.weather.Precipitation
@@ -320,9 +321,11 @@ internal class ForecastWeatherInteractorTest {
         countryCode = CountryCode,
     )
 
-    private val incomingCoordinates = WeatherLocation.Coordinates(
-        latitude = CityLatitude,
-        longitude = CityLongitude,
+    private val incomingLocation = WeatherLocation.Location(
+        coordinates = Coordinates(
+            latitude = CityLatitude,
+            longitude = CityLongitude,
+        ),
     )
 
     @Test
@@ -350,12 +353,10 @@ internal class ForecastWeatherInteractorTest {
         val interactor = getInteractor(
             repository = repository,
         )
-        interactor(GetForecastInteractor.Params(incomingCoordinates))
+        interactor(GetForecastInteractor.Params(incomingLocation))
 
-        assertThat((repository.lastLocation as RepoWeatherLocation.Coordinates).latitude)
-            .isEqualTo(incomingCoordinates.latitude)
-        assertThat((repository.lastLocation as RepoWeatherLocation.Coordinates).longitude)
-            .isEqualTo(incomingCoordinates.longitude)
+        assertThat((repository.lastLocation as RepoWeatherLocation.Location).coordinates)
+            .isEqualTo(incomingLocation.coordinates)
     }
 
     @Test

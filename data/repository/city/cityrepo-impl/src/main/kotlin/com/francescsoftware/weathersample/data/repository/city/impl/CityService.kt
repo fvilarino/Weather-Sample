@@ -7,8 +7,15 @@ import retrofit2.http.Query
 
 interface CityService {
     @GET("v1/geo/cities")
-    suspend fun getCities(
+    suspend fun getCitiesByPrefix(
         @Query("namePrefix") namePrefix: String?,
+        @Query("offset") offset: Int?,
+        @Query("limit") limit: Int?,
+    ): Response<CitySearchResponseModel>
+
+    @GET("v1/geo/cities")
+    suspend fun getCitiesByLocation(
+        @Query("location") location: String?,
         @Query("offset") offset: Int?,
         @Query("limit") limit: Int?,
     ): Response<CitySearchResponseModel>

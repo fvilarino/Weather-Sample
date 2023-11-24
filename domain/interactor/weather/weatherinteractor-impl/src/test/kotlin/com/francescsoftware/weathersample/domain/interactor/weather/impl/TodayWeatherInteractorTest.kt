@@ -10,6 +10,7 @@ import com.francescsoftware.weathersample.core.type.either.isFailure
 import com.francescsoftware.weathersample.core.type.either.isSuccess
 import com.francescsoftware.weathersample.core.type.either.throwableOrNull
 import com.francescsoftware.weathersample.core.type.either.valueOrNull
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.core.type.weather.AverageVisibility
 import com.francescsoftware.weathersample.core.type.weather.Humidity
 import com.francescsoftware.weathersample.core.type.weather.Precipitation
@@ -33,7 +34,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation.City as RepoCity
-import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation.Coordinates as RepoCoordinates
+import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation.Location as RepoCoordinates
 
 private const val CityName = "Vancouver"
 private const val CountryCode = "CA"
@@ -128,9 +129,11 @@ internal class TodayWeatherInteractorTest {
         countryCode = CountryCode,
     )
 
-    private val incomingCoordinates: WeatherLocation.Coordinates = WeatherLocation.Coordinates(
-        latitude = CityLatitude,
-        longitude = CityLongitude,
+    private val incomingLocation: WeatherLocation.Location = WeatherLocation.Location(
+        coordinates = Coordinates(
+            latitude = CityLatitude,
+            longitude = CityLongitude,
+        ),
     )
 
     @Test
@@ -159,12 +162,10 @@ internal class TodayWeatherInteractorTest {
             dispatcherProvider = TestDispatcherProvider(),
         )
 
-        interactor(GetTodayWeatherInteractor.Params(incomingCoordinates))
+        interactor(GetTodayWeatherInteractor.Params(incomingLocation))
 
-        assertThat((repository.lastLocation as RepoCoordinates).latitude)
-            .isEqualTo(incomingCoordinates.latitude)
-        assertThat((repository.lastLocation as RepoCoordinates).longitude)
-            .isEqualTo(incomingCoordinates.longitude)
+        assertThat((repository.lastLocation as RepoCoordinates).coordinates)
+            .isEqualTo(incomingLocation.coordinates)
     }
 
     @Test

@@ -7,7 +7,6 @@
     <string name="coordinates_lat_lon">Lat: %1$.2f, Lon: %2$.2f</string>
     <string name="city_error_loading">Could not load cities</string>
     <string name="no_results_found_label">No results found</string>
-    <string name="content_description_clear">Clear</string>
     <string name="weather_error_loading">Could not load weather</string>
     <string name="weather_city_label">City</string>
     <string name="weather_city_name">%1$s, %2$s</string>
@@ -19,6 +18,12 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="refresh">Refresh</string>
     <string name="loading_more">Loading more</string>
+    <string name="coarse_location_request">Weather Sample needs access to your location to load nearby cities.</string>
+    <string name="coarse_location_rationale_request">Without location permission Weather Sample cannot load nearby cities. Please grant location permission to continue.</string>
+
+    <string name="content_description_clear">Clear</string>
+    <string name="content_description_my_location">My location</string>
+
     <string name="test_tag_cities_search_box">cities_search_box</string>
     <string name="test_tag_cities_loading">cities_loading</string>
     <string name="test_tag_cities_result">cities_result</string>

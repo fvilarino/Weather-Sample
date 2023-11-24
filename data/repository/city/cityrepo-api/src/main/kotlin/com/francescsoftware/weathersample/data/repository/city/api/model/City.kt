@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.data.repository.city.api.model
 
+import com.francescsoftware.weathersample.core.type.location.Coordinates
+
 /**
  * City response model
  *

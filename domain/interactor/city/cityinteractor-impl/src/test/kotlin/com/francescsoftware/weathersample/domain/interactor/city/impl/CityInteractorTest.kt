@@ -10,16 +10,15 @@ import com.francescsoftware.weathersample.core.type.either.isFailure
 import com.francescsoftware.weathersample.core.type.either.isSuccess
 import com.francescsoftware.weathersample.core.type.either.throwableOrNull
 import com.francescsoftware.weathersample.core.type.either.valueOrNull
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.data.repository.city.api.FakeCityRepository
 import com.francescsoftware.weathersample.data.repository.city.api.model.City
-import com.francescsoftware.weathersample.data.repository.city.api.model.Coordinates
 import com.francescsoftware.weathersample.domain.interactor.city.api.CitiesException
 import com.francescsoftware.weathersample.domain.interactor.city.api.GetCitiesInteractor
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.City as DomainCity
-import com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates as DomainCoordinates
 
 private const val CityName = "Vancouver"
 private const val CityRegion = "British Columbia"
@@ -56,7 +55,7 @@ class CityInteractorTest {
             regionCode = CityRegionCode,
             country = CityCountry,
             countryCode = CityCountryCode,
-            coordinates = DomainCoordinates(
+            coordinates = Coordinates(
                 latitude = CityLatitude,
                 longitude = CityLongitude,
             ),

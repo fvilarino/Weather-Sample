@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:type:either"))
+    api(project(":core:type:either"))
+    api(project(":core:type:location"))
     testFixturesImplementation(project(":core:type:either"))
 }

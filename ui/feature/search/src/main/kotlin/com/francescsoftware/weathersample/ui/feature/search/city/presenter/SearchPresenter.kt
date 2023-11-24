@@ -2,6 +2,7 @@ package com.francescsoftware.weathersample.ui.feature.search.city.presenter
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -12,6 +13,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.francescsoftware.weathersample.core.injection.ActivityScope
+import com.francescsoftware.weathersample.core.location.api.LocationProvider
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteFavoriteCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.DeleteRecentCityInteractor
 import com.francescsoftware.weathersample.domain.interactor.city.api.GetCitiesPagingInteractor
@@ -55,6 +58,7 @@ class SearchPresenter @AssistedInject constructor(
     private val deleteFavoriteCityInteractor: DeleteFavoriteCityInteractor,
     private val insertRecentCitiesInteractor: InsertRecentCityInteractor,
     private val deleteRecentCityInteractor: DeleteRecentCityInteractor,
+    private val locationProvider: LocationProvider,
 ) : Presenter<SearchScreen.State> {
 
     @CircuitInject(SearchScreen::class, ActivityScope::class)
@@ -66,6 +70,7 @@ class SearchPresenter @AssistedInject constructor(
     }
 
     @Composable
+    @Suppress("CyclomaticComplexMethod")
     override fun present(): SearchScreen.State {
         val scope = rememberCoroutineScope()
         var firstLoad by remember { mutableStateOf(true) }
@@ -73,33 +78,51 @@ class SearchPresenter @AssistedInject constructor(
         val cities = remember(getCitiesInteractor.stream, scope) {
             getCitiesInteractor.stream.cachedIn(scope)
         }.collectAsLazyPagingItems()
-        var showResults by rememberRetained { mutableStateOf(false) }
+        var lastLocation: Coordinates? by rememberRetained { mutableStateOf(null) }
+        val showResults by remember {
+            derivedStateOf { lastLocation != null || query.length >= MinLengthForSearch }
+        }
         val favorites by getFavoriteCityIdsInteractor.stream
             .collectAsRetainedState(initial = emptySet())
         val recentCities by recentCitiesLoader.recentCities
             .collectAsRetainedState(initial = persistentListOf())
-
         LaunchedEffect(key1 = Unit) {
             getFavoriteCityIdsInteractor(Unit)
         }
         LaunchedEffect(key1 = query) {
-            if (!(firstLoad && query.length >= MinLengthForSearch)) {
+            val canSearch = query.length >= MinLengthForSearch
+            if (canSearch) {
+                lastLocation = null
+            }
+            if (!(firstLoad && canSearch)) {
                 delay(QueryDebounceTime)
             }
             firstLoad = false
-            showResults = query.length >= MinLengthForSearch
-            if (showResults) {
+            if (canSearch) {
                 getCitiesInteractor(
-                    GetCitiesPagingInteractor.Parameters(
+                    GetCitiesPagingInteractor.Parameters.PrefixParameters(
                         pagingConfig = CitiesPagingConfig,
                         prefix = query,
                     ),
                 )
             }
         }
-
+        LaunchedEffect(key1 = lastLocation) {
+            lastLocation?.let { coordinates ->
+                getCitiesInteractor(
+                    GetCitiesPagingInteractor.Parameters.CoordinateParameters(
+                        pagingConfig = CitiesPagingConfig,
+                        coordinates = coordinates,
+                    ),
+                )
+            }
+        }
         fun eventSink(event: SearchScreen.Event) {
             when (event) {
+                SearchScreen.Event.LocationClick -> scope.launch {
+                    lastLocation = locationProvider.getCurrentLocation()
+                }
+
                 SearchScreen.Event.RetryClick -> cities.retry()
                 is SearchScreen.Event.QueryUpdated -> query = event.query.text
 
@@ -120,7 +143,7 @@ class SearchPresenter @AssistedInject constructor(
                 }
 
                 is SearchScreen.Event.FavoriteClick -> scope.launch {
-                    val cityId = event.city.id.toLong()
+                    val cityId = event.city.id
                     val isFavorite = favorites.contains(cityId)
                     if (isFavorite) {
                         deleteFavoriteCityInteractor(

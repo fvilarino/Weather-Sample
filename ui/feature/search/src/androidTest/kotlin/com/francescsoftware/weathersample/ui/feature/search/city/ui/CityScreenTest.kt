@@ -12,10 +12,9 @@ import androidx.compose.ui.test.performClick
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
-import com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
@@ -70,6 +69,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = persistentListOf(),
                     showResults = true,
+                    onLocationClick = {},
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -97,6 +97,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = persistentListOf(),
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -127,6 +128,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = persistentListOf(),
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -166,6 +168,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = persistentListOf(),
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -196,6 +199,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = recentCities,
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -234,6 +238,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = recentCities,
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },

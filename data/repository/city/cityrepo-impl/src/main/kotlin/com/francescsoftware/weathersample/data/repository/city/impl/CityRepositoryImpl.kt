@@ -6,6 +6,7 @@ import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.SingleIn
 import com.francescsoftware.weathersample.core.network.safeApiCall
 import com.francescsoftware.weathersample.core.type.either.fold
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.data.repository.city.api.CitiesException
 import com.francescsoftware.weathersample.data.repository.city.api.CityRepository
 import com.francescsoftware.weathersample.data.repository.city.api.model.CitySearchResponse
@@ -15,8 +16,14 @@ import javax.inject.Inject
 
 private const val CacheCapacity = 40
 
-private data class CacheKey(
+private data class PrefixCacheKey(
     val prefix: String,
+    val offset: Int,
+    val limit: Int,
+)
+
+private data class LocationCacheKey(
+    val location: Coordinates,
     val offset: Int,
     val limit: Int,
 )
@@ -28,24 +35,48 @@ class CityRepositoryImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ) : CityRepository {
 
-    private val cache = LruCache<CacheKey, CitySearchResponse>(CacheCapacity)
+    private val prefixCache = LruCache<PrefixCacheKey, CitySearchResponse>(CacheCapacity)
+    private val locationCache = LruCache<LocationCacheKey, CitySearchResponse>(CacheCapacity)
 
-    override suspend fun getCities(
+    override suspend fun getCitiesByPrefix(
         prefix: String,
         offset: Int,
         limit: Int,
     ): CitySearchResponse {
-        val cacheKey = CacheKey(prefix = prefix, offset = offset, limit = limit)
-        cache[cacheKey]?.let { return it }
+        val prefixCacheKey = PrefixCacheKey(prefix = prefix, offset = offset, limit = limit)
+        prefixCache[prefixCacheKey]?.let { return it }
 
         val networkResponse = safeApiCall {
-            cityService.getCities(prefix, offset, limit)
+            cityService.getCitiesByPrefix(prefix, offset, limit)
         }
         return networkResponse.fold(
             onSuccess = { response ->
                 if (response.isValid) {
                     withContext(dispatcherProvider.default) {
-                        response.toCityResponse().also { cache.put(cacheKey, it) }
+                        response.toCityResponse().also { prefixCache.put(prefixCacheKey, it) }
+                    }
+                } else {
+                    throw CitiesException("Invalid data received")
+                }
+            },
+            onFailure = { throwable ->
+                throw CitiesException(cause = throwable)
+            },
+        )
+    }
+
+    override suspend fun getCitiesByLocation(location: Coordinates, offset: Int, limit: Int): CitySearchResponse {
+        val locationCacheKey = LocationCacheKey(location = location, offset = offset, limit = limit)
+        locationCache[locationCacheKey]?.let { return it }
+
+        val networkResponse = safeApiCall {
+            cityService.getCitiesByLocation(location.asIso6709, offset, limit)
+        }
+        return networkResponse.fold(
+            onSuccess = { response ->
+                if (response.isValid) {
+                    withContext(dispatcherProvider.default) {
+                        response.toCityResponse().also { locationCache.put(locationCacheKey, it) }
                     }
                 } else {
                     throw CitiesException("Invalid data received")

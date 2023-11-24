@@ -76,10 +76,13 @@ dependencies {
     implementation(project(":core:coroutines"))
     implementation(project(":core:dispatcher"))
     implementation(project(":core:injection"))
+    implementation(project(":core:location:location-api"))
+    implementation(project(":core:location:location-impl"))
     implementation(project(":core:network"))
     implementation(project(":core:time:time-api"))
     implementation(project(":core:time:time-impl"))
     implementation(project(":core:type:either"))
+    implementation(project(":core:type:location"))
     implementation(project(":core:type:weather"))
 
     implementation(project(":data:persistence:settings:settings-api"))
