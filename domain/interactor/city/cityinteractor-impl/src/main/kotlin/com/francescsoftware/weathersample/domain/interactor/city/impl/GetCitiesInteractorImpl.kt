@@ -19,7 +19,7 @@ class GetCitiesInteractorImpl @Inject constructor(
 ) : GetCitiesInteractor {
 
     override suspend fun invoke(params: GetCitiesInteractor.Params): Either<Cities> = try {
-        val cities = cityRepository.getCities(
+        val cities = cityRepository.getCitiesByPrefix(
             prefix = params.prefix,
             offset = 0,
             limit = params.limit,

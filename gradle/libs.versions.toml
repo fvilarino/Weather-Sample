@@ -20,9 +20,11 @@ androidx-test-uiautomator-version = "2.2.0"
 app-cash-turbine-version = "1.0.0"
 app-compat-version = "1.7.0-alpha03"
 com-android-tools-build-gradle-version = "8.3.0-alpha14"
+com-google-accompanist-permissions-version = "0.33.2-alpha"
 com-google-android-material-version = "1.10.0"
 com-google-dagger-version = "2.48.1"
 com-google-devtools-ksp-plugin-version = "1.9.20-1.0.14"
+com-google-android-gms-play-services-location-version = "21.0.1"
 com-google-protobuf-kotlin-lite-version = "3.25.1"
 com-google-protobuf-plugin-version = "0.9.4"
 com-google-protobuf-protoc-version = "21.0-rc-1"
@@ -86,9 +88,11 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 androidx-test-uiautomator-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx-test-uiautomator-version" }
 app-cash-turbine-turbine = { module = "app.cash.turbine:turbine", version.ref = "app-cash-turbine-version" }
 com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "com-android-tools-build-gradle-version" }
+com-google-accompanist-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "com-google-accompanist-permissions-version" }
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "com-google-android-material-version" }
 com-google-dagger-dagger = { module = "com.google.dagger:dagger", version.ref = "com-google-dagger-version" }
 com-google-dagger-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "com-google-dagger-version" }
+com-google-android-gms-play-services-location = { module = " com.google.android.gms:play-services-location", version.ref = "com-google-android-gms-play-services-location-version"}
 com-google-protobuf-protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "com-google-protobuf-kotlin-lite-version" }
 com-google-protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "com-google-protobuf-protoc-version" }
 com-jakewharton-retrofit-retrofit2-kotlin-coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", version.ref = "com-jakewharton-retrofit-kotlin-coroutines-adapter-version" }

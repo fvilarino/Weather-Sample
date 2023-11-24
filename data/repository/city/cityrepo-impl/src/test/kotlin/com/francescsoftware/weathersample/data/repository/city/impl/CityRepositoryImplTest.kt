@@ -3,9 +3,9 @@ package com.francescsoftware.weathersample.data.repository.city.impl
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.francescsoftware.weathersample.core.dispatcher.TestDispatcherProvider
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.data.repository.city.api.CitiesException
 import com.francescsoftware.weathersample.data.repository.city.api.model.City
-import com.francescsoftware.weathersample.data.repository.city.api.model.Coordinates
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
@@ -88,7 +88,7 @@ internal class CityRepositoryImplTest {
             cityService = service,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        val response = repository.getCities(prefix = "", limit = 10)
+        val response = repository.getCitiesByPrefix(prefix = "", limit = 10)
         val cityList = response.cities
         assertThat(cityList.size).isEqualTo(ExpectedCities.size)
         cityList.forEachIndexed { index, city ->
@@ -107,7 +107,7 @@ internal class CityRepositoryImplTest {
             cityService = service,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        assertThrows<CitiesException> { repository.getCities(prefix = "", limit = 10) }
+        assertThrows<CitiesException> { repository.getCitiesByPrefix(prefix = "", limit = 10) }
     }
 
     @Test
@@ -121,7 +121,7 @@ internal class CityRepositoryImplTest {
             cityService = service,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        assertThrows<CitiesException> { repository.getCities(prefix = "", limit = 10) }
+        assertThrows<CitiesException> { repository.getCitiesByPrefix(prefix = "", limit = 10) }
     }
 
     @Test
@@ -135,6 +135,6 @@ internal class CityRepositoryImplTest {
             cityService = service,
             dispatcherProvider = TestDispatcherProvider(),
         )
-        assertThrows<CitiesException> { repository.getCities(prefix = "", limit = 10) }
+        assertThrows<CitiesException> { repository.getCitiesByPrefix(prefix = "", limit = 10) }
     }
 }

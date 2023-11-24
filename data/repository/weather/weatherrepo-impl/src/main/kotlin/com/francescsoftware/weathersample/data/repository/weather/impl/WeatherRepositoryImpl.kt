@@ -93,6 +93,6 @@ class WeatherRepositoryImpl @Inject constructor(
     private val WeatherLocation.formattedQuery: String
         get() = when (this) {
             is WeatherLocation.City -> "$name,$countryCode"
-            is WeatherLocation.Coordinates -> "$latitude,$longitude"
+            is WeatherLocation.Location -> coordinates.asIso6709
         }
 }

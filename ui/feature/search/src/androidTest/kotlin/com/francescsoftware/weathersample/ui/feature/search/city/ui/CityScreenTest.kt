@@ -12,14 +12,17 @@ import androidx.compose.ui.test.performClick
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
-import com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCityModel
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
+import com.slack.circuit.overlay.LocalOverlayHost
+import com.slack.circuit.overlay.Overlay
+import com.slack.circuit.overlay.OverlayHost
+import com.slack.circuit.overlay.OverlayHostData
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.Flow
@@ -51,7 +54,7 @@ internal class CityScreenTest {
     @Test
     fun loading_shows_when_fetching_data() {
         composeTestRule.setContent {
-            WithPhoneWindowSizeClass {
+            WithTestCompositionLocals {
                 val cities = listOf(
                     BarcelonaCity,
                 )
@@ -62,7 +65,7 @@ internal class CityScreenTest {
                             refresh = LoadState.Loading,
                             append = LoadState.NotLoading(false),
                             prepend = LoadState.NotLoading(false),
-                        )
+                        ),
                     )
                 }
                 CityScreen(
@@ -70,6 +73,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = persistentListOf(),
                     showResults = true,
+                    onLocationClick = {},
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -89,7 +93,7 @@ internal class CityScreenTest {
     @Test
     fun no_results_shows_when_no_cities_available() {
         composeTestRule.setContent {
-            WithPhoneWindowSizeClass {
+            WithTestCompositionLocals {
                 val cities = emptyList<City>()
                 val pagingData = MutableStateFlow(PagingData.from(cities))
                 CityScreen(
@@ -97,6 +101,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = persistentListOf(),
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -117,7 +122,7 @@ internal class CityScreenTest {
     @Test
     fun city_list_shows_when_state_is_loaded() {
         composeTestRule.setContent {
-            WithPhoneWindowSizeClass {
+            WithTestCompositionLocals {
                 val cities = listOf(
                     BarcelonaCity,
                 )
@@ -127,6 +132,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = persistentListOf(),
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -147,7 +153,7 @@ internal class CityScreenTest {
     @Test
     fun error_shows_when_state_is_error() {
         composeTestRule.setContent {
-            WithPhoneWindowSizeClass {
+            WithTestCompositionLocals {
                 val cities = listOf(
                     BarcelonaCity,
                 )
@@ -158,14 +164,15 @@ internal class CityScreenTest {
                             refresh = LoadState.Error(IOException()),
                             append = LoadState.NotLoading(false),
                             prepend = LoadState.NotLoading(false),
-                        )
-                    )
+                        ),
+                    ),
                 )
                 CityScreen(
                     cities = pagingData.collectAsLazyPagingItems(),
                     favoriteCities = persistentSetOf(),
                     recentCities = persistentListOf(),
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -186,7 +193,7 @@ internal class CityScreenTest {
     @Test
     fun city_chips_show_when_available() {
         composeTestRule.setContent {
-            WithPhoneWindowSizeClass {
+            WithTestCompositionLocals {
                 val cities = listOf(
                     BarcelonaCity,
                 )
@@ -196,6 +203,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = recentCities,
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -224,7 +232,7 @@ internal class CityScreenTest {
     @Test
     fun search_box_updates_on_recent_city_click() {
         composeTestRule.setContent {
-            WithPhoneWindowSizeClass {
+            WithTestCompositionLocals {
                 val cities = listOf(
                     BarcelonaCity,
                 )
@@ -234,6 +242,7 @@ internal class CityScreenTest {
                     favoriteCities = persistentSetOf(),
                     recentCities = recentCities,
                     showResults = true,
+                    onLocationClick = { },
                     onCityClick = { },
                     onFavoriteClick = { },
                     onQueryChange = { },
@@ -260,13 +269,23 @@ internal class CityScreenTest {
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     @Composable
-    private fun WithPhoneWindowSizeClass(
+    private fun WithTestCompositionLocals(
         content: @Composable () -> Unit,
     ) {
         CompositionLocalProvider(
             LocalWindowSizeClass provides WindowSizeClass.calculateFromSize(PhoneDpSize),
+            LocalOverlayHost provides FakeOverlayHost(),
         ) {
             content()
         }
+    }
+}
+
+private class FakeOverlayHost : OverlayHost {
+    override val currentOverlayData: OverlayHostData<Any>?
+        get() = null
+
+    override suspend fun <Result : Any> show(overlay: Overlay<Result>): Result {
+        error("No OverlayHost provided")
     }
 }

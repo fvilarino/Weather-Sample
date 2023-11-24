@@ -1,5 +1,7 @@
 package com.francescsoftware.weathersample.domain.interactor.city.api.model
 
+import com.francescsoftware.weathersample.core.type.location.Coordinates
+
 /**
  * Model for a city
  *

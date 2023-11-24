@@ -26,6 +26,7 @@ object SearchScreen : Screen {
     ) : CircuitUiState
 
     sealed interface Event : CircuitUiEvent {
+        data object LocationClick : Event
         data object RetryClick : Event
         data class QueryUpdated(val query: TextFieldValue) : Event
         data class CityClick(val city: City) : Event

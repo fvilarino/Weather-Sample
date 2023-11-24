@@ -14,8 +14,8 @@ import javax.inject.Inject
 class CitiesPagingSourceFactoryImpl @Inject constructor(
     private val cityRepository: CityRepository,
 ) : CitiesPagingSourceFactory {
-    override fun create(prefix: String): PagingSource<Int, City> = CitiesPagingSource(
-        prefix = prefix,
+    override fun create(params: CitiesPagingSourceFactory.Params): PagingSource<Int, City> = CitiesPagingSource(
+        queryParams = params,
         cityRepository = cityRepository,
     )
 }

@@ -1,8 +1,8 @@
 package com.francescsoftware.weathersample.ui.feature.search.city.ui
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.domain.interactor.city.api.model.City
-import com.francescsoftware.weathersample.domain.interactor.city.api.model.Coordinates
 
 internal val VancouverCityModel = City(
     id = 1L,

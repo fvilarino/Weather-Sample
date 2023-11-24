@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -91,6 +91,7 @@ internal fun Search(
         favoriteCities = state.favoriteCities,
         recentCities = state.recentCities,
         showResults = state.showResults,
+        onLocationClick = { eventSink(SearchScreen.Event.LocationClick) },
         onCityClick = { selectedCity -> eventSink(SearchScreen.Event.CityClick(selectedCity)) },
         onFavoriteClick = { eventSink(SearchScreen.Event.FavoriteClick(it)) },
         onQueryChange = { eventSink(SearchScreen.Event.QueryUpdated(it)) },
@@ -107,6 +108,7 @@ internal fun CityScreen(
     favoriteCities: ImmutableSet<Long>,
     recentCities: ImmutableList<RecentCityModel>,
     showResults: Boolean,
+    onLocationClick: () -> Unit,
     onCityClick: (City) -> Unit,
     onFavoriteClick: (City) -> Unit,
     onQueryChange: (TextFieldValue) -> Unit,
@@ -140,6 +142,7 @@ internal fun CityScreen(
                 recentCities = recentCities,
                 stateHolder = stateHolder,
                 singleLine = true,
+                onLocationClick = onLocationClick,
                 onChipClick = { recentCityModel ->
                     keyboardController?.hide()
                     onChipClick(recentCityModel)
@@ -189,6 +192,7 @@ internal fun CityScreen(
                         recentCities = recentCities,
                         stateHolder = stateHolder,
                         singleLine = false,
+                        onLocationClick = onLocationClick,
                         onChipClick = { recentCityModel ->
                             keyboardController?.hide()
                             onChipClick(recentCityModel)
@@ -222,6 +226,7 @@ private fun CityPane(
     recentCities: ImmutableList<RecentCityModel>,
     stateHolder: CityScreenStateHolder,
     singleLine: Boolean,
+    onLocationClick: () -> Unit,
     onChipClick: (RecentCityModel) -> Unit,
     onDeleteChip: (RecentCityModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -237,8 +242,9 @@ private fun CityPane(
             query = stateHolder.query,
             onQueryChange = stateHolder::onQueryUpdated,
             onClearQuery = stateHolder::onClearQuery,
+            onLocationClick = onLocationClick,
             modifier = Modifier
-                .width(MinColumnWidth)
+                .widthIn(min = MinColumnWidth)
                 .padding(top = MarginQuad),
         )
         AnimatedVisibility(
