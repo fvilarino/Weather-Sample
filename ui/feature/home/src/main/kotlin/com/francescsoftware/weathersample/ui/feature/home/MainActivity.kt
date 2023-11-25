@@ -1,5 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.home
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
@@ -15,6 +16,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
+import com.francescsoftware.weathersample.ui.feature.home.deeplink.DeeplinkParser
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponent
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponentFactoryProvider
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
@@ -43,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     internal lateinit var circuit: Circuit
+
+    @Inject
+    internal lateinit var deeplinkParser: DeeplinkParser
 
     private lateinit var activityComponent: ActivityComponent
     private var settingsLoaded = false
@@ -82,11 +87,20 @@ class MainActivity : AppCompatActivity() {
                     ) {
                         WeatherApp(
                             connectivityMonitor = connectivityMonitor,
+                            deeplinkParser = deeplinkParser,
                             preferencesInteractor = preferencesInteractor,
                         )
                     }
                 }
             }
+        }
+        deeplinkParser.parse(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent != null) {
+            deeplinkParser.parse(intent)
         }
     }
 

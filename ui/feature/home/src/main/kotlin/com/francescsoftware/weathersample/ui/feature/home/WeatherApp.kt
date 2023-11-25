@@ -46,8 +46,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesDestination
+import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
+import com.francescsoftware.weathersample.ui.feature.home.deeplink.DeeplinkEvent
+import com.francescsoftware.weathersample.ui.feature.home.deeplink.DeeplinkParser
+import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchDestination
+import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.feature.settings.navigation.SettingsDestination
 import com.francescsoftware.weathersample.ui.shared.composable.common.modifier.blurIf
 import com.francescsoftware.weathersample.ui.shared.composable.common.overlay.DialogOverlay
@@ -60,6 +65,8 @@ import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
 internal val navigationDestinations = persistentListOf(
@@ -73,6 +80,7 @@ private const val BackgroundGradientStart = .33f
 @Composable
 internal fun WeatherApp(
     connectivityMonitor: ConnectivityMonitor,
+    deeplinkParser: DeeplinkParser,
     preferencesInteractor: GetPreferencesInteractor,
     state: AppState = rememberAppState(
         connectivityMonitor = connectivityMonitor,
@@ -121,6 +129,27 @@ internal fun WeatherApp(
                 duration = SnackbarDuration.Indefinite,
             )
         }
+    }
+    LaunchedEffect(key1 = deeplinkParser) {
+        deeplinkParser.events
+            .filterNotNull()
+            .collectLatest { event ->
+                when (event) {
+                    DeeplinkEvent.Favorites -> navigator.resetRoot(FavoritesScreen)
+                    is DeeplinkEvent.Weather -> {
+                        navigator.resetRoot(SearchScreen)
+                        navigator.goTo(
+                            WeatherScreen(
+                                selectedCity = SelectedCity(
+                                    name = event.city,
+                                    countryCode = event.countryCode,
+                                ),
+                            ),
+                        )
+                    }
+                }
+                deeplinkParser.deeplinkConsumed()
+            }
     }
     WeatherSampleTheme(
         darkTheme = useDarkTheme(theme),

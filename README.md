@@ -44,6 +44,15 @@ Within a layer modules are split into a public API module and a private implemen
 
 ![System Architecture](./docs/architecture/Architecture.png "Architecture Diagram")
 
+## Deeplinks
+The app can be opened to the weather and favorite screens via deeplinks, using these schemas
+
+* weather: `weatherapp://weather/<city>/<country code>` (e.g. `weatherapp://weather/vancouver/ca`)
+* favorites: `weatherapp://favorite`
+
+This can be exercised with this ADB command (note that the package name for debug builds ends in `.dev`):
+
+    $ adb shell am start -W -a android.intent.action.VIEW -d "weatherapp://weather/vancouver/ca" com.francescsoftware.weathersample
 
 ## Tech stack:
 
