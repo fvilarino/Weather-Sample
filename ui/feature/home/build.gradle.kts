@@ -22,6 +22,7 @@ dependencies {
     implementation(project(":ui:feature:favorites"))
     implementation(project(":ui:feature:search"))
     implementation(project(":ui:feature:settings"))
+    implementation(project(":ui:shared:deeplink"))
 
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.app.compat)

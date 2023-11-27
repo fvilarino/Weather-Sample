@@ -1,17 +1,26 @@
 package com.francescsoftware.weathersample.ui.feature.favorites.presenter
 
 import androidx.compose.runtime.Stable
+import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHeaderState
 import com.francescsoftware.weathersample.ui.shared.composable.weather.ForecastHourState
+import com.francescsoftware.weathersample.ui.shared.deeplink.LinkableDestination
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 import com.slack.circuit.runtime.screen.Screen
+import com.squareup.anvil.annotations.ContributesMultibinding
+import dagger.multibindings.StringKey
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.parcelize.Parcelize
 
+private const val DeeplinkFavoritesHost = "favorite"
+
 @Parcelize
-object FavoritesScreen : Screen {
+@ContributesMultibinding(scope = ActivityScope::class, boundType = LinkableDestination::class)
+@StringKey(DeeplinkFavoritesHost)
+object FavoritesScreen : Screen, LinkableDestination {
+    override fun parse(segments: List<String>): List<Screen> = listOf(FavoritesScreen)
 
     data class City(
         val cityId: Long,

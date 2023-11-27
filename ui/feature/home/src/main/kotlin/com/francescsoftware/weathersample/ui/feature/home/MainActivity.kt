@@ -16,10 +16,10 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
-import com.francescsoftware.weathersample.ui.feature.home.deeplink.DeeplinkParser
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponent
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponentFactoryProvider
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
+import com.francescsoftware.weathersample.ui.shared.deeplink.DeeplinkParser
 import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.overlay.ContentWithOverlays

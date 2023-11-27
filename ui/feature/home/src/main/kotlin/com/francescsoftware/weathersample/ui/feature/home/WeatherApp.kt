@@ -46,19 +46,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
 import com.francescsoftware.weathersample.ui.feature.favorites.navigation.FavoritesDestination
-import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
-import com.francescsoftware.weathersample.ui.feature.home.deeplink.DeeplinkEvent
-import com.francescsoftware.weathersample.ui.feature.home.deeplink.DeeplinkParser
-import com.francescsoftware.weathersample.ui.feature.search.city.model.SelectedCity
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.feature.search.navigation.SearchDestination
-import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.feature.settings.navigation.SettingsDestination
 import com.francescsoftware.weathersample.ui.shared.composable.common.modifier.blurIf
 import com.francescsoftware.weathersample.ui.shared.composable.common.overlay.DialogOverlay
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionMenuItem
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionsMenu
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.AppBar
+import com.francescsoftware.weathersample.ui.shared.deeplink.DeeplinkParser
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.NavigableCircuitContent
@@ -133,19 +129,14 @@ internal fun WeatherApp(
     LaunchedEffect(key1 = deeplinkParser) {
         deeplinkParser.events
             .filterNotNull()
-            .collectLatest { event ->
-                when (event) {
-                    DeeplinkEvent.Favorites -> navigator.resetRoot(FavoritesScreen)
-                    is DeeplinkEvent.Weather -> {
-                        navigator.resetRoot(SearchScreen)
-                        navigator.goTo(
-                            WeatherScreen(
-                                selectedCity = SelectedCity(
-                                    name = event.city,
-                                    countryCode = event.countryCode,
-                                ),
-                            ),
-                        )
+            .collectLatest { screens ->
+                if (screens.isNotEmpty()) {
+                    screens.forEachIndexed { index, screen ->
+                        if (index == 0) {
+                            navigator.resetRoot(screen)
+                        } else {
+                            navigator.goTo(screen)
+                        }
                     }
                 }
                 deeplinkParser.deeplinkConsumed()

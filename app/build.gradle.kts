@@ -111,6 +111,7 @@ dependencies {
     implementation(project(":ui:shared:assets"))
     implementation(project(":ui:shared:composable:common"))
     implementation(project(":ui:shared:composable:weather"))
+    implementation(project(":ui:shared:deeplink"))
     implementation(project(":ui:shared:navigation"))
     implementation(project(":ui:shared:styles"))
     implementation(project(":ui:shared:weathericon"))
