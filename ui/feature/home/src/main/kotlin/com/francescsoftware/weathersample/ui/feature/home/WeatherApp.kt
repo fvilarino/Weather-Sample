@@ -62,7 +62,7 @@ import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.filterNot
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
 internal val navigationDestinations = persistentListOf(
@@ -128,18 +128,15 @@ internal fun WeatherApp(
     }
     LaunchedEffect(key1 = deeplinkParser) {
         deeplinkParser.events
-            .filterNotNull()
-            .collectLatest { screens ->
-                if (screens.isNotEmpty()) {
-                    screens.forEachIndexed { index, screen ->
-                        if (index == 0) {
-                            navigator.resetRoot(screen)
-                        } else {
-                            navigator.goTo(screen)
-                        }
+            .filterNot { payload -> payload.isConsumed }
+            .collectLatest { payload ->
+                payload.consume()?.forEachIndexed { index, screen ->
+                    if (index == 0) {
+                        navigator.resetRoot(screen)
+                    } else {
+                        navigator.goTo(screen)
                     }
                 }
-                deeplinkParser.deeplinkConsumed()
             }
     }
     WeatherSampleTheme(

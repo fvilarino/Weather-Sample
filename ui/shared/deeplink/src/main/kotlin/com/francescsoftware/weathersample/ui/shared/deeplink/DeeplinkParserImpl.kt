@@ -3,7 +3,6 @@ package com.francescsoftware.weathersample.ui.shared.deeplink
 import android.content.Intent
 import com.francescsoftware.weathersample.core.injection.ActivityScope
 import com.francescsoftware.weathersample.core.injection.SingleIn
-import com.slack.circuit.runtime.screen.Screen
 import com.squareup.anvil.annotations.ContributesBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,11 +16,11 @@ class DeeplinkParserImpl @Inject constructor(
     private val parsers: @JvmSuppressWildcards Map<String, LinkableDestination>,
 ) : DeeplinkParser {
 
-    private val _events = MutableSharedFlow<List<Screen>?>(
+    private val _events = MutableSharedFlow<DeeplinkPayload>(
         replay = 1,
     )
 
-    override val events: Flow<List<Screen>?>
+    override val events: Flow<DeeplinkPayload>
         get() = _events
 
     override fun parse(intent: Intent) {
@@ -31,13 +30,13 @@ class DeeplinkParserImpl @Inject constructor(
             val segments = uri?.pathSegments.orEmpty()
             if (DeeplinkScheme == intent.scheme && host != null) {
                 parsers[host]?.parse(segments)?.let { screens ->
-                    _events.tryEmit(screens)
+                    _events.tryEmit(
+                        DeeplinkPayload(
+                            screens,
+                        ),
+                    )
                 }
             }
         }
-    }
-
-    override fun deeplinkConsumed() {
-        _events.tryEmit(null)
     }
 }
