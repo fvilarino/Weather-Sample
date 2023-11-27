@@ -9,6 +9,7 @@ import com.francescsoftware.weathersample.ui.feature.search.city.presenter.Searc
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.navigation.NavigationDestination
 import com.slack.circuit.runtime.screen.Screen
+import java.util.Locale
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
 object SearchDestination : NavigationDestination {
@@ -27,7 +28,11 @@ object SearchDestination : NavigationDestination {
     @Composable
     override fun actionBarLabel(screen: Screen): String = when (screen) {
         SearchScreen -> stringResource(id = assetsR.string.app_name)
-        is WeatherScreen -> screen.selectedCity.name
+        is WeatherScreen ->
+            screen.selectedCity.name
+                .lowercase()
+                .replaceFirstChar { it.titlecase(Locale.getDefault()) }
+
         else -> error("Unknown screen $screen")
     }
 }

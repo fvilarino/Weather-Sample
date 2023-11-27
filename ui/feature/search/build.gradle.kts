@@ -27,6 +27,7 @@ dependencies {
     implementation(project(":domain:interactor:city:cityinteractor-api"))
     implementation(project(":domain:interactor:weather:weatherinteractor-api"))
     implementation(project(":ui:shared:composable:weather"))
+    implementation(project(":ui:shared:deeplink"))
     implementation(project(":ui:shared:weathericon"))
     implementation(libs.androidx.compose.material3.window.sizeclass)
     implementation(libs.com.google.accompanist.accompanist.permissions)

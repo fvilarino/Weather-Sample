@@ -54,12 +54,15 @@ import com.francescsoftware.weathersample.ui.shared.composable.common.overlay.Di
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionMenuItem
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.ActionsMenu
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.AppBar
+import com.francescsoftware.weathersample.ui.shared.deeplink.DeeplinkParser
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
 import com.slack.circuit.overlay.LocalOverlayHost
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNot
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
 internal val navigationDestinations = persistentListOf(
@@ -73,6 +76,7 @@ private const val BackgroundGradientStart = .33f
 @Composable
 internal fun WeatherApp(
     connectivityMonitor: ConnectivityMonitor,
+    deeplinkParser: DeeplinkParser,
     preferencesInteractor: GetPreferencesInteractor,
     state: AppState = rememberAppState(
         connectivityMonitor = connectivityMonitor,
@@ -121,6 +125,19 @@ internal fun WeatherApp(
                 duration = SnackbarDuration.Indefinite,
             )
         }
+    }
+    LaunchedEffect(key1 = deeplinkParser) {
+        deeplinkParser.events
+            .filterNot { payload -> payload.isConsumed }
+            .collectLatest { payload ->
+                payload.consume()?.forEachIndexed { index, screen ->
+                    if (index == 0) {
+                        navigator.resetRoot(screen)
+                    } else {
+                        navigator.goTo(screen)
+                    }
+                }
+            }
     }
     WeatherSampleTheme(
         darkTheme = useDarkTheme(theme),
