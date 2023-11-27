@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
-private const val DeeplinkScheme = "weatherapp"
+internal const val DeeplinkScheme = "weatherapp"
 
 @ContributesBinding(ActivityScope::class)
 @SingleIn(ActivityScope::class)
