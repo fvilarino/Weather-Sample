@@ -9,7 +9,8 @@ interface LinkableDestination {
      * Parses a list of segments from the deeplink.
      *
      * @param segments the deeplink payload from the Intent's URI
+     * @param queryParams a [Map] of query key to query value from the Intent's URI
      * @return a list of screens to navigate to if the segments can be parsed, null otherwise
      */
-    fun parse(segments: List<String>): List<Screen>?
+    fun parse(segments: List<String>, queryParams: Map<String, String>): List<Screen>?
 }

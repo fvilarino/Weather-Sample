@@ -20,7 +20,10 @@ private const val DeeplinkFavoritesHost = "favorite"
 @ContributesMultibinding(scope = ActivityScope::class, boundType = LinkableDestination::class)
 @StringKey(DeeplinkFavoritesHost)
 object FavoritesScreen : Screen, LinkableDestination {
-    override fun parse(segments: List<String>): List<Screen> = listOf(FavoritesScreen)
+    override fun parse(
+        segments: List<String>,
+        queryParams: Map<String, String>,
+    ): List<Screen> = listOf(FavoritesScreen)
 
     data class City(
         val cityId: Long,
