@@ -14,7 +14,6 @@ import com.slack.circuit.foundation.LocalCircuit
 import com.slack.circuit.foundation.NavigatorDefaults
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
-import com.slack.circuit.runtime.screen.Screen
 import com.slack.circuit.runtime.ui.Ui
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeSubcomponent
@@ -55,20 +54,11 @@ interface ActivityModule {
             .addUiFactories(uiFactories)
             .setDefaultNavDecoration(NavigatorDefaults.DefaultDecoration)
             .setOnUnavailableContent { screen, modifier ->
-                val navigator = object : Navigator {
-                    override fun goTo(screen: Screen) = Unit
-
-                    override fun pop(): Screen? {
-                        return null
-                    }
-
-                    override fun resetRoot(newRoot: Screen): List<Screen> = emptyList()
-                }
                 val circuit = LocalCircuit.current
                 BasicText(
                     """
                       Route not available: ${screen.javaClass.name}.
-                      Presenter: ${circuit?.presenter(screen, navigator)?.javaClass}
+                      Presenter: ${circuit?.presenter(screen, Navigator.NoOp)?.javaClass}
                       UI: ${circuit?.ui(screen)?.javaClass}
                       All presenterFactories: ${circuit?.newBuilder()?.presenterFactories}
                       All uiFactories: ${circuit?.newBuilder()?.uiFactories}

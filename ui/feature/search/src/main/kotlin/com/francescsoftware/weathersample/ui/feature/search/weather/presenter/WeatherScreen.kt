@@ -57,7 +57,10 @@ data class WeatherScreen(
     @ContributesMultibinding(scope = ActivityScope::class, boundType = LinkableDestination::class)
     @StringKey(DeeplinkWeatherHost)
     companion object WeatherDeeplink : LinkableDestination {
-        override fun parse(segments: List<String>): List<Screen>? = if (segments.size == 2) {
+        override fun parse(
+            segments: List<String>,
+            queryParams: Map<String, String>,
+        ): List<Screen>? = if (segments.size == 2) {
             listOf(
                 SearchScreen,
                 WeatherScreen(

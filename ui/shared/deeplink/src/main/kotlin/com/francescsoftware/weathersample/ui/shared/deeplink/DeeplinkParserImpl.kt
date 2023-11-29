@@ -25,11 +25,15 @@ class DeeplinkParserImpl @Inject constructor(
 
     override fun parse(intent: Intent) {
         if (intent.action == Intent.ACTION_VIEW) {
-            val uri = intent.data
-            val host = uri?.host
-            val segments = uri?.pathSegments.orEmpty()
+            val uri = intent.data ?: return
+            val host = uri.host
+            val segments = uri.pathSegments.orEmpty()
+            val queryParamNames = uri.queryParameterNames.orEmpty()
+            val params = queryParamNames.mapNotNull { key ->
+                uri.getQueryParameter(key)?.let { value -> key to value }
+            }.toMap()
             if (DeeplinkScheme == intent.scheme && host != null) {
-                parsers[host]?.parse(segments)?.let { screens ->
+                parsers[host]?.parse(segments, params)?.let { screens ->
                     _events.tryEmit(
                         DeeplinkPayload(
                             screens,
