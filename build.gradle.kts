@@ -15,6 +15,12 @@ plugins {
     alias(libs.plugins.com.google.devtools.ksp)
     alias(libs.plugins.com.squareup.anvil)
     alias(libs.plugins.io.gitlab.arturbosch.detekt)
+    alias(libs.plugins.com.osacky.doctor)
+}
+
+doctor {
+    // disabling as it complains even when present
+    warnWhenNotUsingParallelGC = false
 }
 
 tasks.register("clean", Delete::class) {
