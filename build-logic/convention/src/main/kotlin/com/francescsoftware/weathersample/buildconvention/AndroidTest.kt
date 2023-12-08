@@ -102,6 +102,6 @@ internal fun configureAndroidTest(
 internal fun LibraryAndroidComponentsExtension.disableUnnecessaryAndroidTests(
     project: Project,
 ) = beforeVariants { libraryVariantBuilder ->
-    libraryVariantBuilder.enableAndroidTest = libraryVariantBuilder.enableAndroidTest &&
+    libraryVariantBuilder.androidTest.enable = libraryVariantBuilder.androidTest.enable &&
         project.projectDir.resolve("src/androidTest").exists()
 }
