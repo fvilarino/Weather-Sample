@@ -54,7 +54,7 @@ private val CiTestDevices = AllTestDevices.filter { testDevice ->
 }
 
 internal fun configureAndroidTest(
-    commonExtension: CommonExtension<*, *, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *, *>,
 ) {
     commonExtension.apply {
         testOptions {
@@ -102,6 +102,6 @@ internal fun configureAndroidTest(
 internal fun LibraryAndroidComponentsExtension.disableUnnecessaryAndroidTests(
     project: Project,
 ) = beforeVariants { libraryVariantBuilder ->
-    libraryVariantBuilder.enableAndroidTest = libraryVariantBuilder.enableAndroidTest &&
+    libraryVariantBuilder.androidTest.enable = libraryVariantBuilder.androidTest.enable &&
         project.projectDir.resolve("src/androidTest").exists()
 }
