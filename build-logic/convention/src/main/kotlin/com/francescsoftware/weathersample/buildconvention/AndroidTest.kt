@@ -54,7 +54,7 @@ private val CiTestDevices = AllTestDevices.filter { testDevice ->
 }
 
 internal fun configureAndroidTest(
-    commonExtension: CommonExtension<*, *, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *, *>,
 ) {
     commonExtension.apply {
         testOptions {
