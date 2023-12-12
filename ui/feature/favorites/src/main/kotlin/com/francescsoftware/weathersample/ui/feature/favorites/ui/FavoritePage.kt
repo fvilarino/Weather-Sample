@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -32,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.favorites.R
 import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
-import com.francescsoftware.weathersample.ui.shared.composable.common.extension.toRect
 import com.francescsoftware.weathersample.ui.shared.composable.common.saver.intSizeSaver
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.weather.CurrentWeatherState
@@ -45,7 +45,9 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
+import dev.chrisbanes.haze.hazeChild
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
@@ -80,29 +82,16 @@ internal fun FavoritePage(
     ) {
         mutableStateOf(IntSize.Zero)
     }
+    val hazeState = remember { HazeState() }
     val headerHeightDp = with(density) { headerSize.height.toDp() }
     Box(
         modifier = modifier,
     ) {
-        CityNameLabel(
-            name = state.city.name,
-            countryCode = state.city.countryCode,
-            onDeleteClick = {
-                onDeleteClick(state.city)
-            },
-            modifier = Modifier
-                .onPlaced {
-                    headerSize = it.size
-                }
-                .fillMaxWidth()
-                .padding(vertical = MarginDouble)
-                .zIndex(1f),
-        )
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .haze(
-                    headerSize.toRect(),
+                    state = hazeState,
                     backgroundColor = MaterialTheme.colorScheme.surface,
                     tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
                     blurRadius = 16.dp,
@@ -187,6 +176,21 @@ internal fun FavoritePage(
                 }
             }
         }
+        CityNameLabel(
+            name = state.city.name,
+            countryCode = state.city.countryCode,
+            onDeleteClick = {
+                onDeleteClick(state.city)
+            },
+            modifier = Modifier
+                .hazeChild(hazeState)
+                .onPlaced {
+                    headerSize = it.size
+                }
+                .fillMaxWidth()
+                .padding(vertical = MarginDouble)
+                .zIndex(1f),
+        )
     }
 }
 

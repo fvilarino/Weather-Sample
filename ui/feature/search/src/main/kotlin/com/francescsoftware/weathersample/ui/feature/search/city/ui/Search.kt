@@ -49,7 +49,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
@@ -60,7 +59,6 @@ import com.francescsoftware.weathersample.ui.feature.search.city.model.RecentCit
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.isExpanded
-import com.francescsoftware.weathersample.ui.shared.composable.common.extension.toRect
 import com.francescsoftware.weathersample.ui.shared.composable.common.saver.intSizeSaver
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.DualPane
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.GenericMessage
@@ -70,7 +68,9 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.slack.circuit.codegen.annotations.CircuitInject
+import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
+import dev.chrisbanes.haze.hazeChild
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.coroutines.flow.launchIn
@@ -135,9 +135,32 @@ internal fun CityScreen(
             mutableStateOf(IntSize.Zero)
         }
         val headerHeightDp = with(LocalDensity.current) { headerSize.height.toDp() }
+        val hazeState = remember { HazeState() }
         Box(
-            modifier = modifier,
+            modifier = modifier
         ) {
+            Cities(
+                cities = cities,
+                favoriteCities = favoriteCities,
+                showResults = showResults,
+                onCityClick = onCityClick,
+                onFavoriteClick = onFavoriteClick,
+                onRetryClick = onRetryClick,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .haze(
+                        state = hazeState,
+                        backgroundColor = MaterialTheme.colorScheme.surface,
+                        tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
+                        blurRadius = 16.dp,
+                    ),
+                contentPadding = PaddingValues(
+                    start = MarginDouble,
+                    top = MarginDouble + headerHeightDp,
+                    end = MarginDouble,
+                    bottom = MarginDouble,
+                ),
+            )
             CityPane(
                 recentCities = recentCities,
                 stateHolder = stateHolder,
@@ -149,33 +172,11 @@ internal fun CityScreen(
                 },
                 onDeleteChip = onDeleteChip,
                 modifier = Modifier
+                    .hazeChild(state = hazeState)
                     .onPlaced {
                         headerSize = it.size
                     }
-                    .zIndex(1f)
                     .fillMaxWidth(),
-            )
-            Cities(
-                cities = cities,
-                favoriteCities = favoriteCities,
-                showResults = showResults,
-                onCityClick = onCityClick,
-                onFavoriteClick = onFavoriteClick,
-                onRetryClick = onRetryClick,
-                modifier = Modifier
-                    .haze(
-                        headerSize.toRect(),
-                        backgroundColor = MaterialTheme.colorScheme.surface,
-                        tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
-                        blurRadius = 16.dp,
-                    )
-                    .fillMaxSize(),
-                contentPadding = PaddingValues(
-                    start = MarginDouble,
-                    top = MarginDouble + headerHeightDp,
-                    end = MarginDouble,
-                    bottom = MarginDouble,
-                ),
             )
         }
     } else {
