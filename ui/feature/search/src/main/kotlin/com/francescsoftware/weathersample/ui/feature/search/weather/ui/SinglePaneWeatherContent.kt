@@ -31,11 +31,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.feature.search.weather.presenter.WeatherScreen
 import com.francescsoftware.weathersample.ui.shared.composable.common.composition.LocalWindowSizeClass
-import com.francescsoftware.weathersample.ui.shared.composable.common.extension.toRect
 import com.francescsoftware.weathersample.ui.shared.composable.common.tools.plus
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.MultiSelector
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
@@ -43,7 +41,9 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
+import dev.chrisbanes.haze.hazeChild
 import kotlinx.collections.immutable.persistentListOf
 
 private val OptionSelectorHeight = 40.dp
@@ -59,13 +59,45 @@ internal fun SinglePaneWeatherContent(
     var headerSize by remember {
         mutableStateOf(IntSize.Zero)
     }
+    val hazeState = remember { HazeState() }
     val density = LocalDensity.current
     Box(
         modifier = modifier,
     ) {
+        Crossfade(
+            targetState = stateHolder.option,
+            modifier = Modifier.fillMaxSize(),
+            label = "option",
+        ) { option ->
+            when (option) {
+                SelectedWeatherOption.Today -> TodayWeather(
+                    state = state,
+                    refreshing = refreshing,
+                    todayRefreshCallback = todayRefreshCallback,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = with(density) { headerSize.height.toDp() } + MarginQuad),
+                )
+
+                SelectedWeatherOption.Forecast -> WeatherForecast(
+                    state = state,
+                    contentPadding = WindowInsets.safeDrawing.asPaddingValues() +
+                        PaddingValues(top = with(density) { headerSize.height.toDp() }),
+                    modifier = Modifier
+                        .haze(
+                            state = hazeState,
+                            backgroundColor = MaterialTheme.colorScheme.surface,
+                            tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
+                            blurRadius = 16.dp,
+                        )
+                        .fillMaxSize()
+                        .padding(horizontal = MarginDouble),
+                )
+            }
+        }
         Column(
             modifier = Modifier
-                .zIndex(2f)
+                .hazeChild(hazeState)
                 .fillMaxWidth()
                 .onPlaced { layoutCoordinates ->
                     headerSize = layoutCoordinates.size
@@ -105,37 +137,6 @@ internal fun SinglePaneWeatherContent(
                     .padding(top = MarginQuad)
                     .height(OptionSelectorHeight),
             )
-        }
-        Crossfade(
-            targetState = stateHolder.option,
-            modifier = Modifier.fillMaxSize(),
-            label = "option",
-        ) { option ->
-            when (option) {
-                SelectedWeatherOption.Today -> TodayWeather(
-                    state = state,
-                    refreshing = refreshing,
-                    todayRefreshCallback = todayRefreshCallback,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = with(density) { headerSize.height.toDp() } + MarginQuad),
-                )
-
-                SelectedWeatherOption.Forecast -> WeatherForecast(
-                    state = state,
-                    contentPadding = WindowInsets.safeDrawing.asPaddingValues() +
-                        PaddingValues(top = with(density) { headerSize.height.toDp() }),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .haze(
-                            headerSize.toRect(),
-                            backgroundColor = MaterialTheme.colorScheme.surface,
-                            tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
-                            blurRadius = 16.dp,
-                        )
-                        .padding(horizontal = MarginDouble),
-                )
-            }
         }
     }
 }
