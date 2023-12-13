@@ -1,20 +1,25 @@
 package com.francescsoftware.weathersample.ui.feature.home
 
+import android.app.UiModeManager
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.core.content.getSystemService
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
+import com.francescsoftware.weathersample.domain.preferencesinteractor.api.AppTheme
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.GetPreferencesInteractor
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponent
 import com.francescsoftware.weathersample.ui.feature.home.di.ActivityComponentFactoryProvider
@@ -24,7 +29,7 @@ import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.overlay.rememberOverlayHost
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,6 +56,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var activityComponent: ActivityComponent
     private var settingsLoaded = false
+
+    private val uiModeManager: UiModeManager?
+        get() = getSystemService<UiModeManager>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val factory = (applicationContext as ActivityComponentFactoryProvider).getActivityComponentFactory()
@@ -108,11 +116,28 @@ class MainActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         preferencesInteractor(Unit)
         lifecycleScope.launch {
-            preferencesInteractor.stream.first()
-            settingsLoaded = true
+            preferencesInteractor.stream
+                .map { settings -> settings.appTheme }
+                .collect { theme ->
+
+                    val uiTheme = theme.toUiTheme
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        uiModeManager?.setApplicationNightMode(uiTheme)
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(uiTheme)
+                    }
+                    settingsLoaded = true
+                }
         }
         splashScreen.setKeepOnScreenCondition {
             !settingsLoaded
         }
     }
+
+    private val AppTheme.toUiTheme: Int
+        get() = when (this) {
+            AppTheme.System -> UiModeManager.MODE_NIGHT_AUTO
+            AppTheme.Light -> UiModeManager.MODE_NIGHT_NO
+            AppTheme.Dark -> UiModeManager.MODE_NIGHT_YES
+        }
 }
