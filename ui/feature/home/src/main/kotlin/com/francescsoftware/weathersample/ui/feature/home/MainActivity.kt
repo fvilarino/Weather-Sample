@@ -119,7 +119,6 @@ class MainActivity : AppCompatActivity() {
             preferencesInteractor.stream
                 .map { settings -> settings.appTheme }
                 .collect { theme ->
-
                     val uiTheme = theme.toUiTheme
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         uiModeManager?.setApplicationNightMode(uiTheme)

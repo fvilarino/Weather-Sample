@@ -40,7 +40,9 @@ internal fun Settings(
     val eventSink = state.eventSink
 
     Settings(
-        state = state,
+        theme = state.theme,
+        dynamicColors = state.dynamicColors,
+        supportsDynamicColors = state.dynamicColorsSupported,
         onThemeClick = { eventSink(SettingsScreen.Event.AppThemeClick(it)) },
         onDynamicColorChange = { eventSink(SettingsScreen.Event.SetUseDynamicColors(it)) },
         modifier = modifier,
@@ -49,7 +51,9 @@ internal fun Settings(
 
 @Composable
 private fun Settings(
-    state: SettingsScreen.State,
+    theme: AppTheme,
+    dynamicColors: Boolean,
+    supportsDynamicColors: Boolean,
     onThemeClick: (AppTheme) -> Unit,
     onDynamicColorChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -63,15 +67,15 @@ private fun Settings(
             verticalArrangement = Arrangement.spacedBy(MarginSingle),
         ) {
             ThemePreference(
-                selectedTheme = state.theme,
+                selectedTheme = theme,
                 onClick = onThemeClick,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = MarginDouble),
             )
             SwitchPreference(
                 title = stringResource(id = R.string.use_dynamic_theming),
                 description = stringResource(id = R.string.use_colors_from_your_wallpapers),
-                isChecked = state.dynamicColors,
-                enabled = state.dynamicColorsSupported,
+                isChecked = dynamicColors,
+                enabled = supportsDynamicColors,
                 onCheckChange = onDynamicColorChange,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -90,12 +94,9 @@ private fun PreviewSettings() {
             color = MaterialTheme.colorScheme.background,
         ) {
             Settings(
-                state = SettingsScreen.State(
-                    theme = theme,
-                    dynamicColors = isDynamic,
-                    dynamicColorsSupported = true,
-                    eventSink = {},
-                ),
+                theme = theme,
+                dynamicColors = isDynamic,
+                supportsDynamicColors = true,
                 onThemeClick = { theme = it },
                 onDynamicColorChange = { isDynamic = it },
                 modifier = Modifier
