@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.AppTheme
 import com.francescsoftware.weathersample.ui.feature.settings.R
 import com.francescsoftware.weathersample.ui.shared.composable.common.widget.EqualSizeTiles
@@ -44,7 +46,7 @@ internal fun ThemePreference(
     ) {
         Text(
             text = stringResource(id = R.string.app_theme),
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.fillMaxWidth(),
@@ -82,11 +84,12 @@ private fun ThemeButton(
             .minimumInteractiveComponentSize()
             .clickable(onClick = onClick)
             .background(
-                if (selected) {
+                color = if (selected) {
                     MaterialTheme.colorScheme.onSurface.copy(alpha = SelectedItemAlpha)
                 } else {
                     Color.Transparent
                 },
+                shape = RoundedCornerShape(8.dp),
             )
             .padding(horizontal = MarginDouble, vertical = MarginSingle),
         contentAlignment = Alignment.Center,
