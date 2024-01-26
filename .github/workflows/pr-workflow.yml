@@ -64,7 +64,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
 
       - name: Clean Managed Devices
         run: ./gradlew cleanManagedDevices --unused-only
