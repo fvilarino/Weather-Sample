@@ -313,6 +313,7 @@ fun MultiSelector(
 
 @PhonePreviews
 @Composable
+@Suppress("ComposeModifierMissing")
 fun PreviewMultiSelector() {
     WeatherSampleTheme {
         Surface(

@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.ui.shared.composable.common.overlay
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.window.DialogProperties
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.slack.circuit.overlay.Overlay
@@ -14,6 +15,7 @@ enum class DialogResult {
     Dismiss,
 }
 
+@Stable
 class DialogOverlay(
     private val confirmButtonText: @Composable () -> Unit,
     private val dismissButtonText: (@Composable () -> Unit)? = null,

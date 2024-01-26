@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.ui.feature.search.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.francescsoftware.weathersample.ui.feature.search.city.presenter.SearchScreen
@@ -12,6 +13,7 @@ import com.slack.circuit.runtime.screen.Screen
 import java.util.Locale
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
+@Stable
 object SearchDestination : NavigationDestination {
     override val rootScreen: Screen
         get() = SearchScreen
