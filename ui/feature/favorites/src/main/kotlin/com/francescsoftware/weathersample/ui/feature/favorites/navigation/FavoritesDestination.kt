@@ -3,6 +3,7 @@ package com.francescsoftware.weathersample.ui.feature.favorites.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.francescsoftware.weathersample.ui.feature.favorites.presenter.FavoritesScreen
@@ -10,6 +11,7 @@ import com.francescsoftware.weathersample.ui.shared.navigation.NavigationDestina
 import com.slack.circuit.runtime.screen.Screen
 import com.francescsoftware.weathersample.ui.shared.assets.R as assetsR
 
+@Stable
 object FavoritesDestination : NavigationDestination {
     override val rootScreen: Screen
         get() = FavoritesScreen

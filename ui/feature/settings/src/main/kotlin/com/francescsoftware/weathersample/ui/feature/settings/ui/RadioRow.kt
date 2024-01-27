@@ -56,7 +56,7 @@ internal fun RadioRow(
 
 @WidgetPreviews
 @Composable
-fun PreviewRadioRow() {
+private fun PreviewRadioRow() {
     WeatherSampleTheme {
         var isSelected by remember { mutableStateOf(false) }
         Surface(

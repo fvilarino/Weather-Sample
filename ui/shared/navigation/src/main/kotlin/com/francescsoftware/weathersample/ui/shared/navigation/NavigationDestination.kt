@@ -2,10 +2,12 @@ package com.francescsoftware.weathersample.ui.shared.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.slack.circuit.runtime.screen.Screen
 
 /** Root navigation destinations */
+@Stable
 interface NavigationDestination {
     /** Root screen for the destination */
     val rootScreen: Screen
@@ -19,7 +21,7 @@ interface NavigationDestination {
     /** Navigation icon for the navigation bar */
     val navItemIcon: ImageVector
 
-    /** Label to dispay on the action bar */
+    /** Label to display on the action bar */
     @Composable
     fun actionBarLabel(screen: Screen): String
 }
