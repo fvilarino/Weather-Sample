@@ -30,10 +30,12 @@ class LocationProviderImpl @Inject constructor(
         )
             .addOnSuccessListener { location ->
                 cont.resume(
-                    Coordinates(
-                        longitude = location.longitude,
-                        latitude = location.latitude,
-                    ),
+                    location?.let { loc ->
+                        Coordinates(
+                            longitude = loc.longitude,
+                            latitude = loc.latitude,
+                        )
+                    }
                 )
             }
             .addOnFailureListener {
