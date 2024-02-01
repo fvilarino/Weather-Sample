@@ -68,7 +68,9 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.slack.circuit.codegen.annotations.CircuitInject
+import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.collections.immutable.ImmutableList
@@ -137,7 +139,7 @@ internal fun CityScreen(
         val headerHeightDp = with(LocalDensity.current) { headerSize.height.toDp() }
         val hazeState = remember { HazeState() }
         Box(
-            modifier = modifier
+            modifier = modifier,
         ) {
             Cities(
                 cities = cities,
@@ -150,9 +152,11 @@ internal fun CityScreen(
                     .fillMaxSize()
                     .haze(
                         state = hazeState,
-                        backgroundColor = MaterialTheme.colorScheme.surface,
-                        tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
-                        blurRadius = 16.dp,
+                        style = HazeStyle(
+                            tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
+                            blurRadius = 16.dp,
+                            noiseFactor = HazeDefaults.noiseFactor,
+                        ),
                     ),
                 contentPadding = PaddingValues(
                     start = MarginDouble,

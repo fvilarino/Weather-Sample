@@ -45,7 +45,9 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.MarginSingle
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.collections.immutable.ImmutableList
@@ -92,9 +94,11 @@ internal fun FavoritePage(
                 .fillMaxSize()
                 .haze(
                     state = hazeState,
-                    backgroundColor = MaterialTheme.colorScheme.surface,
-                    tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
-                    blurRadius = 16.dp,
+                    style = HazeStyle(
+                        tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
+                        blurRadius = 16.dp,
+                        noiseFactor = HazeDefaults.noiseFactor,
+                    ),
                 ),
             verticalArrangement = Arrangement.spacedBy(MarginDouble),
             contentPadding = WindowInsets.safeDrawing.only(
