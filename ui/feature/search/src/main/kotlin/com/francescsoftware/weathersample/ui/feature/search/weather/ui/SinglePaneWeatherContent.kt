@@ -41,7 +41,9 @@ import com.francescsoftware.weathersample.ui.shared.styles.MarginQuad
 import com.francescsoftware.weathersample.ui.shared.styles.PhoneDpSize
 import com.francescsoftware.weathersample.ui.shared.styles.PhonePreviews
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
+import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.collections.immutable.persistentListOf
@@ -86,9 +88,11 @@ internal fun SinglePaneWeatherContent(
                     modifier = Modifier
                         .haze(
                             state = hazeState,
-                            backgroundColor = MaterialTheme.colorScheme.surface,
-                            tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
-                            blurRadius = 16.dp,
+                            style = HazeStyle(
+                                tint = MaterialTheme.colorScheme.surface.copy(alpha = .5f),
+                                blurRadius = 16.dp,
+                                noiseFactor = HazeDefaults.noiseFactor,
+                            ),
                         )
                         .fillMaxSize()
                         .padding(horizontal = MarginDouble),
