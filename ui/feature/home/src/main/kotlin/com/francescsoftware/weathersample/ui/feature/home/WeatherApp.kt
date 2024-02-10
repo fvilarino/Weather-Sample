@@ -89,18 +89,18 @@ internal fun WeatherApp(
     val dynamicColors by state.useDynamicColors.collectAsStateWithLifecycle()
     val networkLostMessage = stringResource(id = R.string.network_connection_lost)
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val backstack = rememberSaveableBackStack {
+    val backStack = rememberSaveableBackStack {
         push(SearchScreen)
     }
-    val navigator = rememberCircuitNavigator(backstack)
-    val rootScreen by remember(backstack) {
-        derivedStateOf { backstack.last().screen }
+    val navigator = rememberCircuitNavigator(backStack)
+    val rootScreen by remember(backStack) {
+        derivedStateOf { backStack.last().screen }
     }
-    val topScreen by remember(backstack) {
-        derivedStateOf { backstack.first().screen }
+    val topScreen by remember(backStack) {
+        derivedStateOf { backStack.first().screen }
     }
-    val isAtRoot by remember(backstack) {
-        derivedStateOf { backstack.size == 1 }
+    val isAtRoot by remember(backStack) {
+        derivedStateOf { backStack.size == 1 }
     }
     val navDestination by remember {
         derivedStateOf {
@@ -218,7 +218,7 @@ internal fun WeatherApp(
                     }
                     NavigableCircuitContent(
                         navigator = navigator,
-                        backstack = backstack,
+                        backStack = backStack,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),
