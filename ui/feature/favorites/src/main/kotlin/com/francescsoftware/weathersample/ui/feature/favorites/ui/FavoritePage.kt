@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -108,7 +108,7 @@ internal fun FavoritePage(
             item(
                 key = "divider1",
             ) {
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = MarginDouble),
@@ -133,7 +133,7 @@ internal fun FavoritePage(
             item(
                 key = "divider2",
             ) {
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = MarginDouble),
@@ -167,7 +167,7 @@ internal fun FavoritePage(
                             state = hourForecast,
                             modifier = Modifier.fillMaxWidth(),
                         )
-                        Divider(
+                        HorizontalDivider(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(
