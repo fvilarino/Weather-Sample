@@ -29,6 +29,8 @@ internal fun CityChip(
         label = {
             Text(
                 text = label,
+                // remove after https://issuetracker.google.com/issues/325934990 is fixed
+                modifier = Modifier.padding(top = MarginDouble),
             )
         },
         trailingIcon = {
