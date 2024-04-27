@@ -37,13 +37,13 @@ private val Pixel6 = TestDevice(
 
 private val Pixel4 = TestDevice(
     name = "Pixel 4",
-    apiLevel = 30,
+    apiLevel = 32,
     systemImage = TestSystemImage.AospAtd,
 )
 
 private val PixelC = TestDevice(
     name = "Pixel C",
-    apiLevel = 30,
+    apiLevel = 33,
     systemImage = TestSystemImage.AospAtd,
 )
 
