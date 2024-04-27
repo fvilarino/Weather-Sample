@@ -23,6 +23,7 @@
 
     <string name="content_description_clear">Clear</string>
     <string name="content_description_my_location">My location</string>
+    <string name="content_description_remove_chip">Remove Chip</string>
 
     <string name="test_tag_cities_search_box">cities_search_box</string>
     <string name="test_tag_cities_loading">cities_loading</string>
