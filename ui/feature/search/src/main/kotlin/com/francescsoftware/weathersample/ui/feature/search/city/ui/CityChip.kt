@@ -14,10 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.francescsoftware.weathersample.ui.feature.search.R
 import com.francescsoftware.weathersample.ui.shared.styles.MarginDouble
 import com.francescsoftware.weathersample.ui.shared.styles.WeatherSampleTheme
 import com.francescsoftware.weathersample.ui.shared.styles.WidgetPreviews
-import com.francescsoftware.weathersample.ui.feature.search.R
 
 @Composable
 internal fun CityChip(
