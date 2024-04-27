@@ -105,11 +105,9 @@ class MainActivity : AppCompatActivity() {
         deeplinkParser.parse(intent)
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        if (intent != null) {
-            deeplinkParser.parse(intent)
-        }
+        deeplinkParser.parse(intent)
     }
 
     private fun handleSplashScreen() {
