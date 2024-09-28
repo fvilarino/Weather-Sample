@@ -53,13 +53,14 @@ internal fun CityChips(
                     items = cities,
                     key = { city -> city.name },
                 ) { recent ->
+
                     CityChip(
                         label = recent.name,
                         onClick = { onChipClick(recent) },
                         onClear = { onDeleteChip(recent) },
                         modifier = Modifier
-                            .semantics { testTag = recent.name }
-                            .animateItemPlacement(),
+                            .animateItem()
+                            .semantics { testTag = recent.name },
                     )
                 }
             }
