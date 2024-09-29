@@ -9,6 +9,7 @@ class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply("com.android.library")
             pluginManager.apply("kotlin-parcelize")
+            pluginManager.apply("com.android.compose.screenshot")
             val extension = extensions.getByType<LibraryExtension>()
             configureAndroidCompose(extension)
         }
