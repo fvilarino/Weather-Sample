@@ -12,9 +12,10 @@ java {
 }
 
 dependencies {
-    compileOnly(libs.com.android.tools.build.gradle)
+    compileOnly(libs.com.android.tools.build.gradle.plugin)
     compileOnly(libs.org.jetbrains.kotlin.kotlin.gradle.plugin)
-    compileOnly(libs.io.gitlab.arturbosch.detekt)
+    compileOnly(libs.io.gitlab.arturbosch.detekt.plugin)
+    implementation(libs.com.android.compose.screenshot.plugin)
 }
 
 gradlePlugin {

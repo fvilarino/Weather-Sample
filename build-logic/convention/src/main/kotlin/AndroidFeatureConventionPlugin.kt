@@ -1,8 +1,6 @@
-import com.android.build.gradle.LibraryExtension
 import com.francescsoftware.weathersample.buildconvention.catalog
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.project
 

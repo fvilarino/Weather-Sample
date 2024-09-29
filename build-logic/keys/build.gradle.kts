@@ -12,7 +12,7 @@ java {
 }
 
 dependencies {
-    compileOnly(libs.com.android.tools.build.gradle)
+    compileOnly(libs.com.android.tools.build.gradle.plugin)
     compileOnly(libs.org.jetbrains.kotlin.kotlin.gradle.plugin)
 }
 

@@ -28,6 +28,7 @@ internal fun Project.configureAndroidCompose(
         composeOptions {
             kotlinCompilerExtensionVersion = catalog.findVersion("androidx.compose.compiler.version").get().toString()
         }
+        experimentalProperties["android.experimental.enableScreenshotTest"] = true
         dependencies {
             val bom = catalog.findLibrary("androidx.compose.compose.bom").get()
             add("implementation", platform(bom))
@@ -35,6 +36,7 @@ internal fun Project.configureAndroidCompose(
             add("implementation", catalog.findLibrary("androidx.compose.ui.ui.tooling.preview").get())
             add("debugImplementation", catalog.findLibrary("androidx.compose.ui.ui.tooling").get())
             add("debugImplementation", catalog.findLibrary("androidx.compose.ui.ui.test.manifest").get())
+            add("screenshotTestImplementation", catalog.findLibrary("androidx.compose.ui.ui.tooling").get())
         }
     }
 }

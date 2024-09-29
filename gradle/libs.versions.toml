@@ -18,6 +18,7 @@ androidx-test-runner-version = "1.6.2"
 androidx-test-uiautomator-version = "2.3.0"
 app-cash-turbine-version = "1.1.0"
 app-compat-version = "1.7.0"
+com-android-compose-screenshot-version = "0.0.1-alpha07"
 com-android-tools-build-gradle-version = "8.6.1"
 com-google-accompanist-permissions-version = "0.36.0"
 com-google-android-material-version = "1.12.0"
@@ -87,7 +88,8 @@ androidx-test-ext-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner-version" }
 androidx-test-uiautomator-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx-test-uiautomator-version" }
 app-cash-turbine-turbine = { module = "app.cash.turbine:turbine", version.ref = "app-cash-turbine-version" }
-com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "com-android-tools-build-gradle-version" }
+com-android-compose-screenshot-plugin = { module = "com.android.compose.screenshot:com.android.compose.screenshot.gradle.plugin", version.ref = "com-android-compose-screenshot-version" }
+com-android-tools-build-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "com-android-tools-build-gradle-version" }
 com-google-accompanist-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "com-google-accompanist-permissions-version" }
 com-google-android-material = { module = "com.google.android.material:material", version.ref = "com-google-android-material-version" }
 com-google-dagger-dagger = { module = "com.google.dagger:dagger", version.ref = "com-google-dagger-version" }
@@ -117,7 +119,7 @@ com-squareup-okio = { module = "com.squareup.okio:okio", version.ref = "com-squa
 com-squareup-retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "com-squareup-retrofit2-version" }
 com-willowtreeapps-assertk-assertk = { module = "com.willowtreeapps.assertk:assertk", version.ref = "com-willowtreeapps-assertk-version" }
 dev-chrisbanes-haze = { module = "dev.chrisbanes.haze:haze-jetpack-compose", version.ref = "dev-chrisbanes-haze-version" }
-io-gitlab-arturbosch-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "io-gitlab-arturbosch-detekt-version" }
+io-gitlab-arturbosch-detekt-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "io-gitlab-arturbosch-detekt-version" }
 io-gitlab-arturbosch-detekt-detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "io-gitlab-arturbosch-detekt-version" }
 io-mockk = { module = "io.mockk:mockk", version.ref = "io-mockk-version" }
 junit-junit = { module = "junit:junit", version.ref = "junit-version" }
@@ -192,6 +194,7 @@ test = [
 ]
 
 [plugins]
+com-android-compose-screenshot = { id = "com.android.compose.screenshot", version.ref = "com-android-compose-screenshot-version"}
 com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp-plugin-version" }
 com-google-protobuf = { id = "com.google.protobuf", version.ref = "com-google-protobuf-plugin-version" }
 com-osacky-doctor = { id = "com.osacky.doctor", version.ref = "com-osacky-doctor-version" }
