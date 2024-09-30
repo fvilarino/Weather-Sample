@@ -1,0 +1,4 @@
+ui/feature/search/*.png filter=lfs diff=lfs merge=lfs -text
+ui/feature/favorites/*.png filter=lfs diff=lfs merge=lfs -text
+ui/feature/settings/*.png filter=lfs diff=lfs merge=lfs -text
+ui/shared/composable/*.png filter=lfs diff=lfs merge=lfs -text
