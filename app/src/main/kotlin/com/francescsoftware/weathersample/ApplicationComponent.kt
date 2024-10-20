@@ -10,7 +10,6 @@ import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.Binds
 import dagger.BindsInstance
-import dagger.Component
 import dagger.Module
 
 @MergeComponent(AppScope::class)
@@ -18,7 +17,7 @@ import dagger.Module
 interface ApplicationComponent {
     fun getActivityComponentFactory(): ActivityComponent.Factory
 
-    @Component.Factory
+    @MergeComponent.Factory
     fun interface Factory {
         fun create(@BindsInstance application: Application): ApplicationComponent
     }

@@ -12,6 +12,7 @@ object Config {
     object CompilerArgs {
         val KotlinFreeCompilerArgs = listOf(
             "-opt-in=kotlin.RequiresOptIn",
+            "-Xjvm-default=all",
         )
     }
 }

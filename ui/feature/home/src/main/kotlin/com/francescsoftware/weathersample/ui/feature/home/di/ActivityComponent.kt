@@ -20,7 +20,6 @@ import com.squareup.anvil.annotations.MergeSubcomponent
 import dagger.BindsInstance
 import dagger.Module
 import dagger.Provides
-import dagger.Subcomponent
 import dagger.multibindings.Multibinds
 
 @MergeSubcomponent(ActivityScope::class)
@@ -28,7 +27,7 @@ import dagger.multibindings.Multibinds
 interface ActivityComponent {
     fun inject(activity: MainActivity)
 
-    @Subcomponent.Factory
+    @MergeSubcomponent.Factory
     fun interface Factory {
         fun create(@BindsInstance activity: MainActivity): ActivityComponent
     }
@@ -64,7 +63,9 @@ interface ActivityModule {
                       All uiFactories: ${circuit?.newBuilder()?.uiFactories}
                       """
                         .trimIndent(),
-                    modifier.background(Color.Red).padding(all = MarginDouble),
+                    modifier
+                        .background(Color.Red)
+                        .padding(all = MarginDouble),
                     style = TextStyle(color = Color.Yellow),
                 )
             }

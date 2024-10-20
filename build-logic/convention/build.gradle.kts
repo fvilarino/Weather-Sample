@@ -15,6 +15,7 @@ dependencies {
     compileOnly(libs.com.android.tools.build.gradle.plugin)
     compileOnly(libs.org.jetbrains.kotlin.kotlin.gradle.plugin)
     compileOnly(libs.io.gitlab.arturbosch.detekt.plugin)
+    compileOnly(libs.com.squareup.anvil.gradle.plugin)
     implementation(libs.com.android.compose.screenshot.plugin)
 }
 
