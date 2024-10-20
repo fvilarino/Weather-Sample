@@ -21,7 +21,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-                configureDependencyInjection(this)
                 configureAndroidLint(this)
             }
             extensions.configure<LibraryAndroidComponentsExtension> {

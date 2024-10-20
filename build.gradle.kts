@@ -12,10 +12,11 @@ buildscript {
 }
 
 plugins {
-    alias(libs.plugins.com.google.devtools.ksp)
-    alias(libs.plugins.com.squareup.anvil)
-    alias(libs.plugins.io.gitlab.arturbosch.detekt)
+    alias(libs.plugins.com.google.devtools.ksp) apply false
+    alias(libs.plugins.com.squareup.anvil) apply false
+    alias(libs.plugins.io.gitlab.arturbosch.detekt) apply false
     alias(libs.plugins.com.osacky.doctor)
+    alias(libs.plugins.org.jetbrains.kotlin.compose.compiler) apply false
 }
 
 doctor {
