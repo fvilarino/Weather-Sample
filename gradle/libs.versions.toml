@@ -49,7 +49,7 @@ org-jetbrains-kotlinx-collections-immutable-version = "0.3.8"
 org-jetbrains-kotlinx-coroutines-test-version = "1.9.0"
 org-jetbrains-kotlinx-coroutines-version = "1.9.0"
 org-jetbrains-kotlinx-serialization-json-version = "1.7.3"
-org-junit-jupiter-version = "5.11.2"
+org-junit-jupiter-version = "5.11.3"
 org-robolectric-version = "4.13"
 
 [libraries]
