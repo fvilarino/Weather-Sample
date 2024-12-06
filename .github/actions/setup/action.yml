@@ -14,12 +14,6 @@ runs:
         java-version: 21
         cache: 'gradle'
 
-    - uses: gradle/gradle-build-action@v3
-      with:
-          cache-read-only: false
-          cache-overwrite-existing: true
-          gradle-home-cache-cleanup: true
-
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
