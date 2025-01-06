@@ -48,7 +48,7 @@ org-jetbrains-kotlin-gradle-plugin-version = "2.1.0"
 org-jetbrains-kotlinx-collections-immutable-version = "0.3.8"
 org-jetbrains-kotlinx-coroutines-test-version = "1.10.1"
 org-jetbrains-kotlinx-coroutines-version = "1.10.1"
-org-jetbrains-kotlinx-serialization-json-version = "1.7.3"
+org-jetbrains-kotlinx-serialization-json-version = "1.8.0"
 org-junit-jupiter-version = "5.11.4"
 org-robolectric-version = "4.14.1"
 
