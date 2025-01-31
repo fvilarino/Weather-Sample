@@ -1,6 +1,6 @@
 package com.francescsoftware.weathersample.ui.feature.home
 
-import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -8,7 +8,6 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityMonitor
 import com.francescsoftware.weathersample.core.connectivity.api.ConnectivityStatus
 import com.francescsoftware.weathersample.domain.preferencesinteractor.api.AppTheme
@@ -48,7 +47,7 @@ internal enum class DynamicColors {
 }
 
 internal class AppState(
-    private val windowSizeClass: WindowSizeClass,
+    private val windowSizeClass: WindowSizeClass?,
     connectivityMonitor: ConnectivityMonitor,
     preferencesInteractor: GetPreferencesInteractor,
     scope: CoroutineScope,
@@ -58,7 +57,7 @@ internal class AppState(
     }
 
     private val navigationType: NavigationType
-        get() = NavigationType.fromWindowSizeClass(windowSizeClass)
+        get() = windowSizeClass?.let { NavigationType.fromWindowSizeClass(it) } ?: NavigationType.BottomNav
 
     val hasBottomNavBar: Boolean
         get() = navigationType == NavigationType.BottomNav
@@ -108,7 +107,7 @@ internal fun rememberAppState(
     preferencesInteractor: GetPreferencesInteractor,
     scope: CoroutineScope = rememberCoroutineScope(),
 ): AppState {
-    val windowSizeClass = calculateWindowSizeClass(LocalContext.current as Activity)
+    val windowSizeClass = LocalActivity.current?.let { calculateWindowSizeClass(it) }
     return remember(windowSizeClass, connectivityMonitor, preferencesInteractor, scope) {
         AppState(
             windowSizeClass = windowSizeClass,
