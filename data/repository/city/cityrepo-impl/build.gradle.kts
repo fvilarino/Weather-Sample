@@ -31,7 +31,7 @@ android {
 
 dependencies {
     implementation(project(":core:dispatcher"))
-    implementation(project(":core:network"))
+    implementation(project(":data:network"))
     implementation(project(":data:repository:city:cityrepo-api"))
     testImplementation(testFixtures(project(":core:dispatcher")))
 

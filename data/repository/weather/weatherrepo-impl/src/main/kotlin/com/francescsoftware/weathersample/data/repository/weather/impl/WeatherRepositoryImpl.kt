@@ -3,7 +3,7 @@ package com.francescsoftware.weathersample.data.repository.weather.impl
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.SingleIn
-import com.francescsoftware.weathersample.core.network.safeApiCall
+import com.francescsoftware.weathersample.data.network.safeApiCall
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherException

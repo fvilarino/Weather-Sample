@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.core.network
+package com.francescsoftware.weathersample.data.network
 
 import com.francescsoftware.weathersample.core.type.either.Either
 import retrofit2.HttpException
