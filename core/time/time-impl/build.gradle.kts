@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:time:time-api"))
+    implementation(projects.core.time.timeApi)
 }

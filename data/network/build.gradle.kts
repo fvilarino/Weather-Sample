@@ -13,7 +13,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:type:either"))
+    implementation(projects.core.type.either)
 
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.retrofit)

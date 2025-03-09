@@ -4,6 +4,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:dispatcher"))
+    implementation(projects.core.dispatcher)
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }

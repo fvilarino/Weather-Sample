@@ -17,7 +17,7 @@ ksp {
 
 dependencies {
 
-    implementation(project(":data:repository:recents:recentsrepo-api"))
+    implementation(projects.data.repository.recents.recentsrepoApi)
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
     implementation(libs.androidx.room.room.ktx)
     implementation(libs.androidx.room.room.runtime)

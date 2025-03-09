@@ -30,10 +30,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:dispatcher"))
-    implementation(project(":data:network"))
-    implementation(project(":data:repository:city:cityrepo-api"))
-    testImplementation(testFixtures(project(":core:dispatcher")))
+    implementation(projects.core.dispatcher)
+    implementation(projects.data.network)
+    implementation(projects.data.repository.city.cityrepoApi)
+    testImplementation(testFixtures(projects.core.dispatcher))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.androidx.paging.paging.common.ktx)

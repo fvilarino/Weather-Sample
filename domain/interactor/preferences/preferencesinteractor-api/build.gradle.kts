@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":domain:interactor:foundation"))
+    api(projects.domain.interactor.foundation)
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }

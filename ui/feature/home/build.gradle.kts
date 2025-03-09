@@ -17,12 +17,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:connectivity:connectivity-api"))
-    implementation(project(":domain:interactor:preferences:preferencesinteractor-api"))
-    implementation(project(":ui:feature:favorites"))
-    implementation(project(":ui:feature:search"))
-    implementation(project(":ui:feature:settings"))
-    implementation(project(":ui:shared:deeplink"))
+    implementation(projects.core.connectivity.connectivityApi)
+    implementation(projects.domain.interactor.preferences.preferencesinteractorApi)
+    implementation(projects.ui.feature.favorites)
+    implementation(projects.ui.feature.search)
+    implementation(projects.ui.feature.settings)
+    implementation(projects.ui.shared.deeplink)
 
     implementation(libs.androidx.activity.activity.compose)
     implementation(libs.androidx.app.compat)

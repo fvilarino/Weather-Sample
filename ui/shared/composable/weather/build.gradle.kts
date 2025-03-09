@@ -15,11 +15,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:type:weather"))
-    implementation(project(":ui:shared:assets"))
-    implementation(project(":ui:shared:composable:common"))
-    implementation(project(":ui:shared:styles"))
-    implementation(project(":ui:shared:weathericon"))
+    implementation(projects.core.type.weather)
+    implementation(projects.ui.shared.assets)
+    implementation(projects.ui.shared.composable.common)
+    implementation(projects.ui.shared.styles)
+    implementation(projects.ui.shared.weathericon)
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.collections.immutable)
 }

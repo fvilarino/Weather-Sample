@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":domain:interactor:foundation"))
-    api(project(":core:type:location"))
-    implementation(project(":core:type:either"))
-    implementation(project(":core:type:weather"))
+    api(projects.domain.interactor.foundation)
+    api(projects.core.type.location)
+    implementation(projects.core.type.either)
+    implementation(projects.core.type.weather)
 }

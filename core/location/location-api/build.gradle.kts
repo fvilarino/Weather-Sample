@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    api(project(":core:type:location"))
+    api(projects.core.type.location)
 }

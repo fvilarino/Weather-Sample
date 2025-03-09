@@ -5,14 +5,14 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:dispatcher"))
-    implementation(project(":core:time:time-api"))
-    implementation(project(":core:type:weather"))
-    implementation(project(":data:repository:weather:weatherrepo-api"))
-    implementation(project(":domain:interactor:weather:weatherinteractor-api"))
-    testImplementation(testFixtures(project(":core:dispatcher")))
-    testImplementation(testFixtures(project(":core:time:time-api")))
-    testImplementation(testFixtures(project(":data:repository:weather:weatherrepo-api")))
+    implementation(projects.core.dispatcher)
+    implementation(projects.core.time.timeApi)
+    implementation(projects.core.type.weather)
+    implementation(projects.data.repository.weather.weatherrepoApi)
+    implementation(projects.domain.interactor.weather.weatherinteractorApi)
+    testImplementation(testFixtures(projects.core.dispatcher))
+    testImplementation(testFixtures(projects.core.time.timeApi))
+    testImplementation(testFixtures(projects.data.repository.weather.weatherrepoApi))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }

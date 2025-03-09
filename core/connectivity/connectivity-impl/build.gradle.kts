@@ -11,6 +11,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:connectivity:connectivity-api"))
+    implementation(projects.core.connectivity.connectivityApi)
     implementation(libs.bundles.coroutines)
 }

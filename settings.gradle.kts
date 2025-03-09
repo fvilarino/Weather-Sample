@@ -15,7 +15,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Weather Sample"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "Weather-Sample"
 include(":analysis")
 include(":app")
 include(":core:connectivity:connectivity-api")

@@ -16,13 +16,13 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:time:time-api"))
-    implementation(project(":core:type:weather"))
-    implementation(project(":domain:interactor:city:cityinteractor-api"))
-    implementation(project(":domain:interactor:weather:weatherinteractor-api"))
-    implementation(project(":ui:shared:composable:weather"))
-    implementation(project(":ui:shared:deeplink"))
-    implementation(project(":ui:shared:weathericon"))
+    implementation(projects.core.time.timeApi)
+    implementation(projects.core.type.weather)
+    implementation(projects.domain.interactor.city.cityinteractorApi)
+    implementation(projects.domain.interactor.weather.weatherinteractorApi)
+    implementation(projects.ui.shared.composable.weather)
+    implementation(projects.ui.shared.deeplink)
+    implementation(projects.ui.shared.weathericon)
     implementation(libs.androidx.compose.material3.window.sizeclass)
     implementation(libs.dev.chrisbanes.haze)
 }
