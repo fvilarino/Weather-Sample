@@ -6,7 +6,6 @@ import com.francescsoftware.weathersample.core.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.core.type.location.Coordinates
 import com.francescsoftware.weathersample.data.repository.city.api.CitiesException
 import com.francescsoftware.weathersample.data.repository.city.api.model.City
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -17,6 +16,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 private val ExpectedCities = listOf(
     City(
@@ -63,11 +63,14 @@ private val ExpectedCities = listOf(
 internal class CityRepositoryImplTest {
 
     private val json = Json { ignoreUnknownKeys = true }
-    private val mediaType = "application/json".toMediaType()
     private val mockWebServer = MockWebServer()
     private val service = Retrofit.Builder()
         .baseUrl(mockWebServer.url("/"))
-        .addConverterFactory(json.asConverterFactory(mediaType))
+        .addConverterFactory(
+            json.asConverterFactory(
+                "application/json; charset=UTF8".toMediaType(),
+            ),
+        )
         .client(OkHttpClient.Builder().build())
         .build()
         .create(CityService::class.java)
