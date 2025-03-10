@@ -5,15 +5,15 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:dispatcher"))
-    implementation(project(":core:time:time-api"))
-    implementation(project(":core:type:either"))
-    implementation(project(":data:repository:city:cityrepo-api"))
-    implementation(project(":data:repository:favorite:favoriterepo-api"))
-    implementation(project(":data:repository:recents:recentsrepo-api"))
-    implementation(project(":domain:interactor:city:cityinteractor-api"))
-    testImplementation(testFixtures(project(":core:dispatcher")))
-    testImplementation(testFixtures(project(":data:repository:city:cityrepo-api")))
+    implementation(projects.core.dispatcher)
+    implementation(projects.core.time.timeApi)
+    implementation(projects.core.type.either)
+    implementation(projects.data.repository.city.cityrepoApi)
+    implementation(projects.data.repository.favorite.favoriterepoApi)
+    implementation(projects.data.repository.recents.recentsrepoApi)
+    implementation(projects.domain.interactor.city.cityinteractorApi)
+    testImplementation(testFixtures(projects.core.dispatcher))
+    testImplementation(testFixtures(projects.data.repository.city.cityrepoApi))
 
     implementation(libs.bundles.coroutines)
     implementation(libs.androidx.paging.paging.common.ktx)

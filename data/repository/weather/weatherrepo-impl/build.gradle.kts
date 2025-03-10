@@ -34,10 +34,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:dispatcher"))
-    implementation(project(":core:network"))
-    implementation(project(":data:repository:weather:weatherrepo-api"))
-    testImplementation(testFixtures(project(":core:dispatcher")))
+    implementation(projects.core.dispatcher)
+    implementation(projects.data.network)
+    implementation(projects.data.repository.weather.weatherrepoApi)
+    testImplementation(testFixtures(projects.core.dispatcher))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.serialization.json)
     implementation(libs.bundles.okhttp)

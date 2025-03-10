@@ -5,9 +5,9 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":data:persistence:settings:settings-api"))
-    implementation(project(":domain:interactor:preferences:preferencesinteractor-api"))
-    testImplementation(testFixtures(project(":data:persistence:settings:settings-api")))
+    implementation(projects.data.persistence.settings.settingsApi)
+    implementation(projects.domain.interactor.preferences.preferencesinteractorApi)
+    testImplementation(testFixtures(projects.data.persistence.settings.settingsApi))
 
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }

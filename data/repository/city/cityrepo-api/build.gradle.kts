@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":core:type:either"))
-    api(project(":core:type:location"))
+    api(projects.core.type.either)
+    api(projects.core.type.location)
     implementation(libs.androidx.paging.paging.common.ktx)
     testFixturesImplementation(libs.app.cash.turbine.turbine)
 }

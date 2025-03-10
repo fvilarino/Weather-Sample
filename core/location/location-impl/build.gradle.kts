@@ -11,6 +11,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:location:location-api"))
+    implementation(projects.core.location.locationApi)
     implementation(libs.com.google.android.gms.play.services.location)
 }

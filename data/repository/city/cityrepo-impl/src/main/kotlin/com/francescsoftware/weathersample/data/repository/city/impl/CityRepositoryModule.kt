@@ -2,7 +2,6 @@ package com.francescsoftware.weathersample.data.repository.city.impl
 
 import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.SingleIn
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
@@ -12,9 +11,9 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Qualifier
 
-private val MediaType = "application/json".toMediaType()
 private const val HeaderKey = "x-rapidapi-key"
 private const val HeaderHost = "x-rapidapi-host"
 
@@ -45,7 +44,11 @@ object CityRepositoryModule {
         @CityAuthorizationInterceptor interceptor: Interceptor,
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.CITY_SERVICE_BASE_URL)
-        .addConverterFactory(json.asConverterFactory(MediaType))
+        .addConverterFactory(
+            json.asConverterFactory(
+                "application/json; charset=UTF8".toMediaType(),
+            ),
+        )
         .client(okHttpClientBuilder.addInterceptor(interceptor).build())
         .build()
 

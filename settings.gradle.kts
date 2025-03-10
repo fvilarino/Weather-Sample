@@ -15,7 +15,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Weather Sample"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "Weather-Sample"
 include(":analysis")
 include(":app")
 include(":core:connectivity:connectivity-api")
@@ -25,12 +27,12 @@ include(":core:dispatcher")
 include(":core:injection")
 include(":core:location:location-api")
 include(":core:location:location-impl")
-include(":core:network")
 include(":core:time:time-api")
 include(":core:time:time-impl")
 include(":core:type:either")
 include(":core:type:location")
 include(":core:type:weather")
+include(":data:network")
 include(":data:persistence:settings:settings-api")
 include(":data:persistence:settings:settings-impl")
 include(":data:repository:city:cityrepo-api")

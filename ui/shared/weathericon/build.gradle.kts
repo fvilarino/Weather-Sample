@@ -7,5 +7,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":ui:shared:assets"))
+    implementation(projects.ui.shared.assets)
 }

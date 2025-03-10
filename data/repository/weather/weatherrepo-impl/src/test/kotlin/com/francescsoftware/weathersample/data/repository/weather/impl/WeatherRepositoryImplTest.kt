@@ -8,7 +8,6 @@ import com.francescsoftware.weathersample.core.dispatcher.TestDispatcherProvider
 import com.francescsoftware.weathersample.core.type.either.Either
 import com.francescsoftware.weathersample.data.repository.weather.api.WeatherLocation
 import com.francescsoftware.weathersample.data.repository.weather.api.model.today.TodayWeatherResponse
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -18,15 +17,19 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 internal class WeatherRepositoryImplTest {
 
     private val json = Json { ignoreUnknownKeys = true }
-    private val mediaType = "application/json".toMediaType()
     private val mockWebServer = MockWebServer()
     private val service = Retrofit.Builder()
         .baseUrl(mockWebServer.url("/"))
-        .addConverterFactory(json.asConverterFactory(mediaType))
+        .addConverterFactory(
+            json.asConverterFactory(
+                "application/json; charset=UTF8".toMediaType(),
+            ),
+        )
         .client(OkHttpClient.Builder().build())
         .build()
         .create(WeatherService::class.java)

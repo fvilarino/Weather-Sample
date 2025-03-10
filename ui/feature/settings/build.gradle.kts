@@ -10,5 +10,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain:interactor:preferences:preferencesinteractor-api"))
+    implementation(projects.domain.interactor.preferences.preferencesinteractorApi)
 }

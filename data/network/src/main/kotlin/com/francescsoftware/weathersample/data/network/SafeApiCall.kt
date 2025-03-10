@@ -1,9 +1,8 @@
-package com.francescsoftware.weathersample.core.network
+package com.francescsoftware.weathersample.data.network
 
 import com.francescsoftware.weathersample.core.type.either.Either
 import retrofit2.HttpException
 import java.io.IOException
-import kotlin.coroutines.cancellation.CancellationException
 
 /** Wraps a retrofit call and returns an [Either] with the response or error code. */
 suspend fun <T : Any> safeApiCall(
@@ -20,8 +19,6 @@ suspend fun <T : Any> safeApiCall(
     } else {
         Either.Failure(IOException("Failed to read response, error code [${response.code()}]"))
     }
-} catch (ex: CancellationException) {
-    throw ex
 } catch (ex: HttpException) {
     Either.Failure(ex)
 } catch (ex: IOException) {

@@ -17,7 +17,7 @@ ksp {
 
 dependencies {
 
-    implementation(project(":data:repository:favorite:favoriterepo-api"))
+    implementation(projects.data.repository.favorite.favoriterepoApi)
     implementation(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
     implementation(libs.androidx.room.room.ktx)
     implementation(libs.androidx.room.room.runtime)

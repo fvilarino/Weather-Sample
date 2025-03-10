@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":ui:shared:assets"))
+    implementation(projects.ui.shared.assets)
 
     implementation(libs.androidx.compose.ui.ui)
     implementation(libs.androidx.compose.material3.material3)

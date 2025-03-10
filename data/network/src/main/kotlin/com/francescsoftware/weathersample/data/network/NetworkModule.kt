@@ -1,4 +1,4 @@
-package com.francescsoftware.weathersample.core.network
+package com.francescsoftware.weathersample.data.network
 
 import android.content.Context
 import com.francescsoftware.weathersample.core.injection.AppScope

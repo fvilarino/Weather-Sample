@@ -13,9 +13,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:coroutines"))
-    implementation(project(":core:dispatcher"))
-    implementation(project(":data:persistence:settings:settings-api"))
+    implementation(projects.core.coroutines)
+    implementation(projects.core.dispatcher)
+    implementation(projects.data.persistence.settings.settingsApi)
 
     implementation(libs.androidx.datastore.datastore)
     implementation(libs.com.google.protobuf.protobuf.kotlin.lite)
