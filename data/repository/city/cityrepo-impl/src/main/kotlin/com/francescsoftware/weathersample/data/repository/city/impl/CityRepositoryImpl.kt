@@ -4,9 +4,9 @@ import android.util.LruCache
 import com.francescsoftware.weathersample.core.dispather.DispatcherProvider
 import com.francescsoftware.weathersample.core.injection.AppScope
 import com.francescsoftware.weathersample.core.injection.SingleIn
-import com.francescsoftware.weathersample.data.network.safeApiCall
 import com.francescsoftware.weathersample.core.type.either.fold
 import com.francescsoftware.weathersample.core.type.location.Coordinates
+import com.francescsoftware.weathersample.data.network.safeApiCall
 import com.francescsoftware.weathersample.data.repository.city.api.CitiesException
 import com.francescsoftware.weathersample.data.repository.city.api.CityRepository
 import com.francescsoftware.weathersample.data.repository.city.api.model.CitySearchResponse
